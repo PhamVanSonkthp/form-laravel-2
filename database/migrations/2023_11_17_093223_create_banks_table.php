@@ -15,7 +15,15 @@ class CreateBanksTable extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('en_name')->nullable();
+            $table->string('vn_name')->nullable();
+            $table->string('bank_id')->nullable();
+            $table->string('atm_bin')->nullable();
+            $table->string('card_length')->nullable();
+            $table->string('short_name')->nullable();
+            $table->string('bank_code')->nullable();
+            $table->string('type')->nullable();
+            $table->boolean('napas_supported')->default(false);
             $table->string('path_api_web2m')->nullable();
             $table->timestamps();
         });
