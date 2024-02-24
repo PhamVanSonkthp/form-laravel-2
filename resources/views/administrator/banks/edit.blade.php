@@ -18,7 +18,7 @@
                 <div class="col-xxl-6">
                     <div class="card">
                         <div class="card-body">
-                            @include('administrator.components.require_input_text' , ['name' => 'name' , 'label' => 'Tên'])
+                            @include('administrator.components.require_input_text' , ['name' => 'vn_name' , 'label' => 'Tên'])
 
                             @include('administrator.components.input_text' , ['name' => 'path_api_web2m' , 'label' => 'Path Api Web2m'])
 

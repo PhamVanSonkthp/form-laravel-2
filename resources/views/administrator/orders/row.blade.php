@@ -72,13 +72,20 @@
 
     <td>
         <div>
-            {{\App\Models\Formatter::formatMoney($item->amount)}}
+            <strong>
+                {{\App\Models\Formatter::formatMoney($item->amount)}}
+            </strong>
         </div>
 
         <div>
+            <i class="fa-solid fa-truck" title="Phí vận chuyển">
+
+            </i>
+
             <i title="Phí vận chuyển">
                 ({{\App\Models\Formatter::formatMoney($item->shipping_fee)}})
             </i>
+
         </div>
     </td>
     <td>

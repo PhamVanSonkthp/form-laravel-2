@@ -172,82 +172,8 @@
 
     <div class="container-search-method" id="container_search_method"
          style="left:240px;width: 80vw;height: 80vh; position: absolute; z-index: 1000;background-color: white; top: 60px;border-radius: 21px;">
-        <div style="height: 100%;overflow: auto;">
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
-            <div class="item-search-method p-3">
-                <a href="#" style="color: black;font-size: 21px;">
-                    Danh mục sản phẩm
-                </a>
-            </div>
+        <div style="height: 100%;overflow: auto;" id="container_search_method_item">
+
 
 
         </div>
@@ -283,48 +209,6 @@
 <script src="{{asset('/assets/administrator/NobleUI/assets/js/template.js')}}"></script>
 <!-- endinject -->
 
-<!-- Custom js for this page -->
-{{--<script src="{{asset('/assets/administrator/NobleUI/assets/js/dashboard-light.js')}}"></script>--}}
-<!-- End custom js for this page -->
-
-<!-- Bootstrap js-->
-{{--<script src="{{asset('/assets/administrator/js/bootstrap/bootstrap.bundle.min.js')}}"></script>--}}
-{{--<!-- feather icon js-->--}}
-{{--<script src="{{asset('/assets/administrator/js/icons/feather-icon/feather.min.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/icons/feather-icon/feather-icon.js')}}"></script>--}}
-<!-- scrollbar js-->
-{{--<script src="{{asset('/assets/administrator/js/scrollbar/simplebar.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/scrollbar/custom.js')}}"></script>--}}
-{{--<!-- Sidebar jquery-->--}}
-{{--<script src="{{asset('/assets/administrator/js/config.js')}}"></script>--}}
-{{--<!-- Plugins JS start-->--}}
-{{--<script src="{{asset('/assets/administrator/js/sidebar-menu.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/prism/prism.min.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/counter/jquery.waypoints.min.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/counter/jquery.counterup.min.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/counter/counter-custom.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/datepicker/date-picker/datepicker.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/datepicker/date-picker/datepicker.en.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/datepicker/date-picker/datepicker.custom.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/owlcarousel/owl.carousel.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/general-widget.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/tooltip-init.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/datatable/datatables.min.js')}}"></script>--}}
-
-<!-- Plugins JS Ends-->
-
-<!-- Plugin used-->
-{{--<script src="{{asset('/vendor/rating/jquery.barrating.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/rating/rating-script.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/ecommerce.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/product-list-custom.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/script.js')}}"></script>--}}
-{{--<script src="{{asset('/vendor/theme-customizer/customizer.js')}}"></script>--}}
-
-<!-- Theme js-->
-{{--<script src="{{asset('/assets/administrator/js/script.js')}}"></script>--}}
-{{--<script src="{{asset('/assets/administrator/js/theme-customizer/customizer.js')}}"></script>--}}
-
 <script src="{{asset('vendor/tinymce/tinymce.min.js') }}"></script>
 <script src="{{asset('vendor/sweet-alert-2/sweetalert2@11.js')}}"></script>
 <script src="{{asset('vendor/select2/select2.min.js')}}"></script>
@@ -334,54 +218,57 @@
 
 <script>
 
-    /////////////
+    function onLinkMethod(e) {
+        let a = $(e).children('a')[0];
 
-    function scrollToElm(container, elm, duration) {
-        var pos = getRelativePos(elm);
-        scrollTo(container, pos.top, duration / 1000);  // duration in seconds
+        window.location.href = $(a).attr('href')
     }
-
-    function getRelativePos(elm) {
-        var pPos = elm.parentNode.getBoundingClientRect(), // parent pos
-            cPos = elm.getBoundingClientRect(), // target pos
-            pos = {};
-
-        pos.top = cPos.top - pPos.top + elm.parentNode.scrollTop,
-            pos.right = cPos.right - pPos.right,
-            pos.bottom = cPos.bottom - pPos.bottom,
-            pos.left = cPos.left - pPos.left;
-
-        return pos;
-    }
-
-    function scrollTo(element, to, duration, onDone) {
-        var start = element.scrollTop,
-            change = to - start,
-            startTime = performance.now(),
-            val, now, elapsed, t;
-
-        function animateScroll() {
-            now = performance.now();
-            elapsed = (now - startTime) / 1000;
-            t = (elapsed / duration);
-
-            element.scrollTop = start + change * easeInOutQuad(t);
-
-            if (t < 1)
-                window.requestAnimationFrame(animateScroll);
-            else
-                onDone && onDone();
-        }
-
-        animateScroll();
-    }
-
-    function easeInOutQuad(t) {
-        return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-    };
 
     function onSearchMethod(){
-        $('.container-search-method').show()
+        $('#container_search_method_item').html('')
+
+        const value = toNonAccentVietnamese($('#input_search_method').val().toLowerCase())
+
+        if (value){
+            $('.container-search-method').show()
+        }else{
+            $('.container-search-method').hide()
+        }
+
+        let is_have_data = false
+
+        $(".nav-item").each(function () {
+            const parent = $(this);
+            const element = parent.children('a')[0];
+
+            if (element) {
+
+                let span = $(element).children('span');
+
+                if ($(span).html()){
+                    if (toNonAccentVietnamese($(span).html().toLowerCase()).includes(value)) {
+
+                        $('#container_search_method_item').append(`<div class="item-search-method p-3" onclick="onLinkMethod(this)">
+                            <a href="${$(element).attr('href')}" style="color: black;font-size: 21px;">
+                                ${$(span).html()}
+                            </a>
+                        </div>`)
+
+                        is_have_data = true;
+                    }
+                }
+
+
+            }
+        });
+
+        if (!is_have_data){
+            $('#container_search_method_item').append(`<div class="item-search-method p-3">
+                            <a href="#" style="color: red;font-size: 21px;">
+                                Không có dữ liệu
+                            </a>
+                        </div>`)
+        }
     }
 
     $(document).ready(function () {

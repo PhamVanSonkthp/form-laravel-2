@@ -34,10 +34,12 @@ php artisan db:seed --class=CreatePermissionSeeder
 -- Begin --
 * Đối với App có sử dụng thông báo, cần đăng ký topic "app" khi vào app
 
-* Thư viện Laravel-attribute lỗi, thay đổi ở đây "vendor/rinvex/laravel-attributes/src/Events"  
-&& ($values = \Illuminate\Support\Collection::wrap($entity->getRelationValue($relation))) && ! $values->isEmpty()) {
+* Thư viện Laravel-attribute lỗi, thay đổi ở đây "vendor/rinvex/laravel-attributes/src/Events/EntityWasDeleted"  
+bỏ "&& ($values = $entity->getRelationValue($relation)) && ! $values->isEmpty()) {"
+thay thế && ($values = \Illuminate\Support\Collection::wrap($entity->getRelationValue($relation))) && ! $values->isEmpty()) {
 
-* Thư viện Laravel-File-Manager lỗi, thay đổi ở đây "vendor/unisharp/laravel-filemanager/src/Lfm.php"
+
+* Thư viện Laravel-File-Manager lỗi, thay đổi ở đây "vendor/unisharp/laravel-filemanager/src/Lfm.php". sửa func translateFromUtf8()
 $rInput = [];
 if ($this->isRunningOnWindows()) {
     // $input = iconv('UTF-8', mb_detect_encoding($input), $input);
@@ -55,7 +57,10 @@ if ($this->isRunningOnWindows()) {
 return $rInput;
 // return $input;
 
+
+
 * Thư viện Laravel-File-Manager lỗi, thay đổi ở đây "vendor/unisharp/laravel-filemanager/src/Controllers/DeleteController.php"
+bỏ ở func if ($this->lfm->setName($name_to_delete)->isDirectory()) {...}
 //                    array_push($errors, parent::error('delete-folder'));
 //                    continue;
 

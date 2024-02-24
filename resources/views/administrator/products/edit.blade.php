@@ -47,9 +47,9 @@
 
                     </div>
 
-                    <input id="_headers" name="_headers" type="text" value="" class="hidden">
+                    <input id="_headers" name="_headers" type="text" value="" class="hidden d-none">
 
-                    <input id="_attributes" name="_attributes" type="text" value="" class="hidden">
+                    <input id="_attributes" name="_attributes" type="text" value="" class="hidden d-none">
 
                     {{--                    <div id="table_bassic_price" class="card p-3 m-3" style="display: none;">--}}
 
@@ -130,9 +130,9 @@
 
                         @include('administrator.components.require_input_number' , ['name' => 'inventory' , 'label' => 'Tồn kho'])
 
-                    </div>
+                        @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU'])
 
-                    @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU'])
+                    </div>
 
                     @include('administrator.components.button_save')
 

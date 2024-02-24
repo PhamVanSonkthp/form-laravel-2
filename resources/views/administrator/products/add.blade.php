@@ -45,9 +45,9 @@
 
                     </div>
 
-                    <input id="_headers" name="_headers" type="text" value="" class="hidden">
+                    <input id="_headers" name="_headers" type="text" value="" class="d-none">
 
-                    <input id="_attributes" name="_attributes" type="text" value="" class="hidden">
+                    <input id="_attributes" name="_attributes" type="text" value="" class="d-none">
 
                     <div id="table_bassic_price" class="card p-3 m-3" style="display: none;">
 
@@ -281,20 +281,23 @@
                         <div class="col-4">
                             ${_headers[0]}
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             Giá nhập
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             Giá bán lẻ
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             Giá bán buôn
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             Giá CTV
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             Kho hàng
+                        </div>
+                        <div class="col-1">
+                            SKU
                         </div>
                     </div>`
 
@@ -303,20 +306,23 @@
                 for (let i = 0; i < _attributes[0].length; i++) {
                     let row = '<div class="row mt-2">'
                     row += `<div class="col-4">${_attributes[0][i]}</div>`
-                    row += `<div class="col-1">
-                            <input name="import_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)] ?? ''}" required>
+                    row += `<div class="col-2">
+                            <input name="import_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)] ?? ''}">
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             <input name="client_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+1] ?? ''}" required>
                         </div>
-                        <div class="col-2">
-                            <input name="agent_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+2] ?? ''}" required>
+                        <div class="col-1">
+                            <input name="agent_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+2] ?? ''}">
                         </div>
-                        <div class="col-2">
-                            <input name="partner_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+3] ?? ''}" required>
+                        <div class="col-1">
+                            <input name="partner_prices[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+3] ?? ''}">
                         </div>
-                        <div class="col-2">
-                            <input name="inventories[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+4] ?? ''}" required>
+                        <div class="col-1">
+                            <input name="inventories[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+4] ?? ''}">
+                        </div>
+                        <div class="col-1">
+                            <input name="skus[]" type="text" autocomplete="off" class="form-control number input-table" value="${valuesTable[i + (i*4)+5] ?? ''}">
                         </div>`
 
                     row += "</div>"

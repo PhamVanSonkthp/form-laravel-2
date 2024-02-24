@@ -14,7 +14,7 @@
     </div>
 
     <div class="float-start d-flex ms-2">
-        <input id="input_search_query" type="text" class="form-control" placeholder="search..."
+        <input id="input_search_query" type="text" class="form-control" placeholder="Tìm kiếm..."
                value="{{request('search_query')}}">
         <button class="btn btn-outline-primary ms-2" type="button" onclick="onSearchQuery()"><i
                 class="fa-solid fa-magnifying-glass" title="Tìm kiếm"></i></button>

@@ -5,6 +5,7 @@ use App\Http\Controllers\API\VoucherController;
 use App\Http\Requests\PusherChatRequest;
 use App\Models\Chat;
 use App\Models\ChatImage;
+use App\Models\Formatter;
 use App\Models\Helper;
 use App\Models\Image;
 use App\Models\Notification;
@@ -160,10 +161,10 @@ Route::prefix('ajax/administrator')->group(function () {
                     'user_phone' => optional($user)->phone,
                     'user_address' => optional($user)->address,
                     'user_email' => optional($user)->email,
-                    'shipping_fee' => $request->shipping_fee,
+                    'shipping_fee' => Formatter::formatMoneyToDatabase($request->shipping_fee),
                 ]);
 
-                $amount = $request->shipping_fee ?? 0;
+                $amount = Formatter::formatMoneyToDatabase($request->shipping_fee) ?? 0;
 
                 foreach ($request->product_ids as $index => $product_id) {
 
@@ -202,7 +203,7 @@ Route::prefix('ajax/administrator')->group(function () {
 
                     if ($voucher->isUnavailable()) return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
 
-                    $amount = UserCart::calculateAmountByIds($request->product_ids, false);
+//                    $amount = UserCart::calculateAmountByIds($request->product_ids, false);
 
                     if ($voucher->isAcceptAmount($amount)) return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
 
@@ -218,6 +219,12 @@ Route::prefix('ajax/administrator')->group(function () {
                     ]);
 
                     $voucher->increment('used');
+
+                    $item->update([
+                        'voucher_id' => $voucher->id,
+                        'amount_voucher' => $discount,
+                    ]);
+
                 }
 
                 $item->update([

@@ -531,7 +531,7 @@ class Product extends Model implements Auditable
                         'price_partner' => Formatter::formatMoneyToDatabase($request->partner_prices[$i]),
                         'category_id' => $this->firstOrCreateCategory($request->category_id),
                         'inventory' => Formatter::formatNumberToDatabase($request->inventories[$i]),
-                        'sku' => Formatter::formatNumberToDatabase($request->skus[$i]),
+                        'sku' => $request->skus[$i],
                         'group_product_id' => $group_product_id,
                         'product_visibility_id' => $product_visibility_id,
                     ];
@@ -563,7 +563,7 @@ class Product extends Model implements Auditable
                             'price_partner' => Formatter::formatMoneyToDatabase($request->partner_prices[$pointer]),
                             'category_id' => $this->firstOrCreateCategory($request->category_id),
                             'inventory' => Formatter::formatNumberToDatabase($request->inventories[$pointer]),
-                            'sku' => Formatter::formatNumberToDatabase($request->skus[$pointer]),
+                            'sku' => $request->skus[$pointer],
                             'group_product_id' => $group_product_id,
                             'product_visibility_id' => $product_visibility_id,
                         ];

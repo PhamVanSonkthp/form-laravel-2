@@ -4,7 +4,7 @@
 
     <div class="d-flex m-3">
 
-        <img src="{{$result->avatar()}}" class="rounded-circle">
+        <img style="height: 45px;" src="{{$result->avatar()}}" class="rounded-circle">
 
         <div class="{{!$result->isProductVariation() ? 'item-product' : ''}}"
              @if(!$result->isProductVariation())
