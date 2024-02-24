@@ -67,6 +67,20 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Danh mục</th>
+                                    <th>Thời gian tạo</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

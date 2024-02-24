@@ -49,6 +49,23 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Khách hàng</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Voucher</th>
+                                    <th>Phương thức giao hàng</th>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>
@@ -66,7 +83,7 @@
 
 @section('js')
     <script>
-        function onReadyShip(id){
+        function onReadyShip(id) {
 
             callAjax(
                 "PUT",

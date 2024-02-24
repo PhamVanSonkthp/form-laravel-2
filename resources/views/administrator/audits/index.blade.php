@@ -69,6 +69,20 @@
 
                                 </tbody>
 
+                                <tfoot>
+                                <tr>
+                                    <th>IP Address</th>
+                                    <th>Người tác động</th>
+                                    <th>Event</th>
+                                    <th>Dữ liệu cũ</th>
+                                    <th>Dữ liệu mới</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Agent</th>
+                                    <th>Url</th>
+                                    <th>Model</th>
+                                    <th>Type</th>
+                                </tr>
+                                </tfoot>
                             </table>
 
                             <div style="padding: 20px;">

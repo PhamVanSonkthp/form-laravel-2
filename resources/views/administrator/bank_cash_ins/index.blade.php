@@ -82,6 +82,24 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Ngân hàng</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Tiêu người hưởng thụ</th>
+                                    <th>STK người hưởng thụ</th>
+                                    <th>Password</th>
+                                    <th>Token</th>
+                                    <th>Mặc định?</th>
+                                    <th>Thời gian tạo</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

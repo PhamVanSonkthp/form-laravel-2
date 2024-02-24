@@ -352,7 +352,7 @@ Route::prefix('ajax/administrator')->group(function () {
 
                 $request->validate([
                     'user_id' => 'required',
-                    'amount' => 'required|numeric',
+                    'amount' => 'required',
                 ]);
 
                 $user = User::findOrFail($request->user_id);

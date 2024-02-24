@@ -37,12 +37,23 @@
                                     <th>Thời gian tạo</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="container_row">
                                 @foreach($items as $item)
                                     @include('administrator.user_transactions.row', compact('item'))
                                 @endforeach
 
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Mã GD</th>
+                                    <th>Mã khách</th>
+                                    <th>Số tiền</th>
+                                    <th>Nội dung</th>
+                                    <th>Tài khoản</th>
+                                    <th>Số dư tại thời điểm GD</th>
+                                    <th>Thời gian tạo</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>
@@ -80,7 +91,7 @@
 
                     <div class="mt-3">
                         <label>Số tiền @include('administrator.components.lable_require')</label>
-                        <input id="amount" type="text" class="form-control" autocomplete="off">
+                        <input id="amount" type="text" class="form-control number" autocomplete="off">
                         <i>(* Để trừ tiền hãy nhập số âm: -100.000)</i>
                     </div>
 
@@ -93,7 +104,7 @@
 
                 <div class="modal-footer">
                     <div class="text-end">
-                        <button onclick="onSubmitAddTransaction()" class="btn btn-warning-gradien">Xác nhận
+                        <button onclick="onSubmitAddTransaction()" class="btn btn-outline-success">Xác nhận
                         </button>
                     </div>
                 </div>

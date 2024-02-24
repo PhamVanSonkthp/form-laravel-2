@@ -9,7 +9,7 @@
             <span></span>
         </div>
     </div>
-    <div class="sidebar-body ps">
+    <div id="container_slidebar" class="sidebar-body ps">
         <ul class="nav">
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
@@ -414,7 +414,7 @@
 
             @can('settings-list')
                 <li class="nav-item">
-                    <a href="{{route('administrator.settings.index')}}" class="nav-link">
+                    <a href="{{route('administrator.settings.edit', ['id' => 1])}}" class="nav-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="feather feather-box link-icon">
@@ -500,16 +500,16 @@
                 </label>
             </div>
         </div>
-        <div class="theme-wrapper">
-            <h6 class="text-muted mb-2">Light Theme:</h6>
-            <a class="theme-item active" href="../demo1/dashboard.html">
-                <img src="../assets/images/screenshots/light.jpg" alt="light theme">
-            </a>
-            <h6 class="text-muted mb-2">Dark Theme:</h6>
-            <a class="theme-item" href="../demo2/dashboard.html">
-                <img src="../assets/images/screenshots/dark.jpg" alt="light theme">
-            </a>
-        </div>
+{{--        <div class="theme-wrapper">--}}
+{{--            <h6 class="text-muted mb-2">Light Theme:</h6>--}}
+{{--            <a class="theme-item active" href="../demo1/dashboard.html">--}}
+{{--                <img src="../assets/images/screenshots/light.jpg" alt="light theme">--}}
+{{--            </a>--}}
+{{--            <h6 class="text-muted mb-2">Dark Theme:</h6>--}}
+{{--            <a class="theme-item" href="../demo2/dashboard.html">--}}
+{{--                <img src="../assets/images/screenshots/dark.jpg" alt="light theme">--}}
+{{--            </a>--}}
+{{--        </div>--}}
     </div>
 </nav>
 

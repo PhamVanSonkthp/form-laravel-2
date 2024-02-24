@@ -87,6 +87,24 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Code</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Đã dùng</th>
+                                    <th>Lượt dùng tối đa</th>
+                                    <th>Loại mã</th>
+                                    <th>Giảm</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

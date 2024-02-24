@@ -70,6 +70,18 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Link</th>
+                                    <th style="min-width: 200px;">Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

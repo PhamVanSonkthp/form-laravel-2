@@ -11,39 +11,40 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ env('APP_URL') . \App\Models\Helper::logoImagePath() }}">
 
-    @yield('title')
+@yield('title')
 
-    <!-- Google font-->
+<!-- Google font-->
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- End fonts -->
 
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/font-awesome.css')}}">--}}
-{{--    <!-- ico-font-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/icofont.css')}}">--}}
-{{--    <!-- Themify icon-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/themify.css')}}">--}}
-{{--    <!-- Flag icon-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/flag-icon.css')}}">--}}
-{{--    <!-- Feather icon-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/feather-icon.css')}}">--}}
-{{--    <!-- Plugins css start-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/scrollbar.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/date-picker.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/owlcarousel.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/prism.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/whether-icon.css')}}">--}}
-{{--    <!-- Bootstrap css-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/bootstrap.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/font-awesome.css')}}">--}}
+    {{--    <!-- ico-font-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/icofont.css')}}">--}}
+    {{--    <!-- Themify icon-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/themify.css')}}">--}}
+    {{--    <!-- Flag icon-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/flag-icon.css')}}">--}}
+    {{--    <!-- Feather icon-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/feather-icon.css')}}">--}}
+    {{--    <!-- Plugins css start-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/scrollbar.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/date-picker.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/owlcarousel.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/prism.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/whether-icon.css')}}">--}}
+    {{--    <!-- Bootstrap css-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/bootstrap.css')}}">--}}
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/vendors/jquery-ui.css')}}">
 
     <!-- NobleUI css start-->
 
     <!-- inject:css -->
     <link rel="stylesheet" href="{{asset('/assets/administrator/NobleUI/assets/fonts/feather-font/css/iconfont.css')}}">
-    <link rel="stylesheet" href="{{asset('/assets/administrator/NobleUI/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('/assets/administrator/NobleUI/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
     <!-- endinject -->
 
     <!-- core:css -->
@@ -57,21 +58,23 @@
 
     <!-- NobleUI css end-->
 
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/datatable/datatables.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/owlcarousel/owlcarousel.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/rating/rating.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/datatable/datatables.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/owlcarousel/owlcarousel.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/vendor/rating/rating.css')}}">--}}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" type="text/css" media="all" href="{{asset('vendor/datetimepicker/daterangepicker.css')}}"/>
     <link rel="stylesheet" type="text/css" media="all" href="{{asset('vendor/select2/select2.min.css')}}"/>
-{{--    <!-- Plugins css Ends-->--}}
-{{--    <!-- App css-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/style.css')}}">--}}
-{{--    <link id="color" rel="stylesheet" href="{{asset('/assets/administrator/css/color-1.css')}}" media="screen">--}}
-{{--    <!-- Responsive css-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/responsive.css')}}">--}}
+    {{--    <!-- Plugins css Ends-->--}}
+    {{--    <!-- App css-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/style.css')}}">--}}
+    {{--    <link id="color" rel="stylesheet" href="{{asset('/assets/administrator/css/color-1.css')}}" media="screen">--}}
+    {{--    <!-- Responsive css-->--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/responsive.css')}}">--}}
 
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/order-image.css')}}" >--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/order-image.css')}}" >--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- core:js -->
@@ -80,7 +83,7 @@
 
     <script src="{{asset('/assets/administrator/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('/assets/administrator/js/jquery.ui.min.js')}}"></script>
-{{--    <script src="{{asset('/vendor/jquery-ui-1.13.2/jquery-ui.js')}}"></script>--}}
+    {{--    <script src="{{asset('/vendor/jquery-ui-1.13.2/jquery-ui.js')}}"></script>--}}
 
     <script src="{{asset('/vendor/masknumber/jquery.masknumber.js')}}"></script>
 
@@ -113,10 +116,25 @@
         }
 
 
-        .table-bordered > thead > tr > th{
+        .table-bordered > thead > tr > th {
             cursor: pointer;
         }
 
+        .item-search-method{
+            cursor: pointer;
+        }
+
+        .item-search-method:hover{
+            background-color: #d5d5d5;
+        }
+
+        #container_search_method{
+            overflow: hidden;
+        }
+
+        .container-search-method{
+            display: none;
+        }
     </style>
     @yield('css')
 </head>
@@ -127,27 +145,113 @@
 <div class="main-wrapper">
 
 
-    @include('administrator.components.slidebars')
+@include('administrator.components.slidebars')
 
 <!-- page-wrapper Start-->
     <div class="page-wrapper">
 
-        @include('administrator.components.header')
+    @include('administrator.components.header')
 
     <!-- Page Body Start-->
         <div class="page-content">
             <!-- Page Sidebar Start-->
 
-                @yield('content')
+            @yield('content')
 
         </div>
 
         <!-- footer start-->
 
-            @include('administrator.components.footer')
+        @include('administrator.components.footer')
     </div>
 
 
+    <div class="container-search-method" id="bg" style="top: 60px;position: absolute;width: 100%;height: 100%;background: #2b3d53;z-index: 999;opacity: 0.95;filter: blur(8px);-webkit-filter: blur(8px);">
+
+    </div>
+
+    <div class="container-search-method" id="container_search_method"
+         style="left:240px;width: 80vw;height: 80vh; position: absolute; z-index: 1000;background-color: white; top: 60px;border-radius: 21px;">
+        <div style="height: 100%;overflow: auto;">
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+            <div class="item-search-method p-3">
+                <a href="#" style="color: black;font-size: 21px;">
+                    Danh mục sản phẩm
+                </a>
+            </div>
+
+
+        </div>
+    </div>
 </div>
 
 <!--Modal-->
@@ -167,7 +271,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- Plugin js for this page -->
@@ -229,6 +332,88 @@
 <script type="text/javascript" src="{{asset('vendor/datetimepicker/daterangepicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/helper/main_helper.js')}}"></script>
 
+<script>
+
+    /////////////
+
+    function scrollToElm(container, elm, duration) {
+        var pos = getRelativePos(elm);
+        scrollTo(container, pos.top, duration / 1000);  // duration in seconds
+    }
+
+    function getRelativePos(elm) {
+        var pPos = elm.parentNode.getBoundingClientRect(), // parent pos
+            cPos = elm.getBoundingClientRect(), // target pos
+            pos = {};
+
+        pos.top = cPos.top - pPos.top + elm.parentNode.scrollTop,
+            pos.right = cPos.right - pPos.right,
+            pos.bottom = cPos.bottom - pPos.bottom,
+            pos.left = cPos.left - pPos.left;
+
+        return pos;
+    }
+
+    function scrollTo(element, to, duration, onDone) {
+        var start = element.scrollTop,
+            change = to - start,
+            startTime = performance.now(),
+            val, now, elapsed, t;
+
+        function animateScroll() {
+            now = performance.now();
+            elapsed = (now - startTime) / 1000;
+            t = (elapsed / duration);
+
+            element.scrollTop = start + change * easeInOutQuad(t);
+
+            if (t < 1)
+                window.requestAnimationFrame(animateScroll);
+            else
+                onDone && onDone();
+        }
+
+        animateScroll();
+    }
+
+    function easeInOutQuad(t) {
+        return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+    };
+
+    function onSearchMethod(){
+        $('.container-search-method').show()
+    }
+
+    $(document).ready(function () {
+        $(".nav-item").each(function () {
+            const parent = $(this);
+            parent.removeClass('active')
+            const element = parent.children('a')[0];
+
+            if (element) {
+                if (window.location.href.includes($(element).attr('href'))) {
+                    parent.addClass('active')
+
+                    $('#container_slidebar').animate({scrollTop: parent.offset().top - 200}, '1500');
+
+                    return
+                }
+            }
+        });
+
+
+        $('#bg').on('click', function(e) {
+            if (e.target === this) {
+                $('.container-search-method').hide()
+            }
+
+        });
+
+
+    });
+
+
+</script>
 @yield('js')
 
 </body>

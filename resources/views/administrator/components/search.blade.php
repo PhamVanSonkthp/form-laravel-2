@@ -17,7 +17,9 @@
         <input id="input_search_query" type="text" class="form-control" placeholder="search..."
                value="{{request('search_query')}}">
         <button class="btn btn-outline-primary ms-2" type="button" onclick="onSearchQuery()"><i
-                class="fa-solid fa-magnifying-glass"></i></button>
+                class="fa-solid fa-magnifying-glass" title="Tìm kiếm"></i></button>
+        <button class="btn btn-outline-danger ms-2" type="button" onclick="onClearQuery()"><i
+                class="fa-solid fa-x" title="Xóa"></i></button>
     </div>
 
 </div>
@@ -32,6 +34,10 @@
             {name: "to", value: input_query_to},
             {name: "page", value: 1},
         ])
+    }
+
+    function onClearQuery() {
+        window.location = window.location.href.split("?")[0];
     }
 
     $('select[name="limit"]').on('change', function () {

@@ -50,6 +50,16 @@
                                     @include('administrator.user_points.row', compact('item'))
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Mã GD</th>
+                                    <th>Mã khách</th>
+                                    <th>Số điểm</th>
+                                    <th>Nội dung</th>
+                                    <th>Tài khoản</th>
+                                    <th>Thời gian tạo</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -102,7 +112,7 @@
 
                 <div class="modal-footer">
                     <div class="text-end">
-                        <button onclick="onSubmitAddTransaction()" class="btn btn-warning-gradien">Xác nhận
+                        <button onclick="onSubmitAddTransaction()" class="btn btn-outline-success">Xác nhận
                         </button>
                     </div>
                 </div>

@@ -74,6 +74,20 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Tên</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Api Web2m</th>
+                                    <th>Thời gian tạo</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

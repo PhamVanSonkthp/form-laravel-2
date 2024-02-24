@@ -81,6 +81,23 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Avatar</th>
+                                    <th>Vai trò</th>
+                                    <th>Tên NV</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Ngày sử dụng</th>
+                                    <th style="min-width: 200px;">Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

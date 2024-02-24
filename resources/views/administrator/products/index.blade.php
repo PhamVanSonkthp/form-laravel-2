@@ -181,6 +181,39 @@
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>#</th>
+                                    <th>Tên</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Danh mục</th>
+                                    <th>Xu hướng?</th>
+                                    <th width="50%">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                Phân loại
+                                            </div>
+                                            <div class="col-2">
+                                                Tồn kho
+                                            </div>
+                                            <div class="col-2">
+                                                Giá bán lẻ
+                                            </div>
+                                            <div class="col-2">
+                                                Giá bán buôn
+                                            </div>
+                                            <div class="col-2">
+                                                Giá bán CTV
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>
