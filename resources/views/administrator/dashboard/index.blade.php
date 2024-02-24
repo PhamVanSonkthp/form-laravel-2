@@ -34,7 +34,7 @@
                                     <a href="{{route('administrator.orders.index', ['order_status_id' => 1])}}">
                                         <div class="text-center" style="font-size: 20px;">
                                             <strong>
-                                                0
+                                                {{\App\Models\Formatter::formatNumber($numberOrderWaiting)}}
                                             </strong>
                                         </div>
 
@@ -49,7 +49,7 @@
                                     <a href="{{route('administrator.orders.index', ['order_status_id' => 2])}}">
                                         <div class="text-center" style="font-size: 20px;">
                                             <strong>
-                                                0
+                                                {{\App\Models\Formatter::formatNumber($numberOrderShipping)}}
                                             </strong>
                                         </div>
 
@@ -61,30 +61,30 @@
                                 </div>
 
                                 <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 3])}}">
+                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 4])}}">
                                         <div class="text-center" style="font-size: 20px;">
                                             <strong>
-                                                0
+                                                {{\App\Models\Formatter::formatNumber($numberOrderCancel)}}
                                             </strong>
                                         </div>
 
                                         <div class="text-center text-dark">
-                                            Hoàn thành
+                                            Hủy
                                         </div>
                                     </a>
 
                                 </div>
 
                                 <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 4])}}">
+                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 5])}}">
                                         <div class="text-center" style="font-size: 20px;">
                                             <strong>
-                                                0
+                                                {{\App\Models\Formatter::formatNumber($numberOrderRefund)}}
                                             </strong>
                                         </div>
 
                                         <div class="text-center text-dark">
-                                            Hủy
+                                            Hoàn tiền
                                         </div>
                                     </a>
 
@@ -117,7 +117,7 @@
 
                                     <div>
                                         <strong style="font-size: 20px;">
-                                            0
+                                            {{\App\Models\Formatter::formatNumber($revenue)}}đ
                                         </strong>
                                     </div>
                                 </div>
