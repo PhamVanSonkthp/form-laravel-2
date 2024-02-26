@@ -62,7 +62,7 @@ class RoleController extends Controller
             'display_name' => $request->display_name,
         ]);
         $role->permissions()->attach($request->permission_id);
-        return redirect()->route('administrator.roles.index');
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function edit($id){
@@ -81,7 +81,7 @@ class RoleController extends Controller
         $role = $this->model->find($id);
 
         $role->permissions()->sync($request->permission_id);
-        return back();
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function delete($id){

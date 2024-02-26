@@ -64,7 +64,7 @@ class EmployeeController extends Controller
     public function update($id, Request $request)
     {
         $item = $this->model->updateByQuery($request, $id);
-        return back();
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function delete($id)

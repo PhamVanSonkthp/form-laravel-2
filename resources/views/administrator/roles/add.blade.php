@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="mt-3">
+                    <div class="mt-3" style="max-height: 62vh;overflow-y: auto;overflow-x: hidden;">
 
                         @foreach($premissionsParent as $premissionsParentItem)
                             <div class="card border-primary mb-3 col-md-12">

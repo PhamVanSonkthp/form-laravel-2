@@ -46,13 +46,13 @@ class ChatPusherEvent implements ShouldBroadcast
         $setting = Setting::first();
 
         $options = array(
-            'cluster' => $setting->pusher_app_cluster,
+            'cluster' => $setting->pusher_app_cluster ?? env('PUSHER_APP_CLUSTER'),
             'useTLS' => true
         );
         $pusher = new Pusher(
-            $setting->pusher_app_key,
-            $setting->pusher_app_secret,
-            $setting->pusher_app_id,
+            $setting->pusher_app_key ?? env('PUSHER_APP_KEY'),
+            $setting->pusher_app_secret ?? env('PUSHER_APP_SECRET'),
+            $setting->pusher_app_id ?? env('PUSHER_APP_ID'),
             $options
         );
 

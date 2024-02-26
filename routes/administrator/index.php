@@ -277,7 +277,7 @@ Route::prefix('administrator')->group(function () {
             'middleware' => 'can:roles-edit',
         ]);
 
-        Route::get('/delete/{id}', [
+        Route::delete('/delete/{id}', [
             'as' => 'administrator.roles.delete',
             'uses' => 'App\Http\Controllers\Admin\RoleController@delete',
             'middleware' => 'can:roles-delete',

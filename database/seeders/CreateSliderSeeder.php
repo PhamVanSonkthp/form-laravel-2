@@ -16,7 +16,7 @@ class CreateSliderSeeder extends Seeder
     {
         DB::table('sliders')->insert([
             [
-                'link' => '/',
+                'link' => 'https://ifnt.vn/',
                 'feature_image_name' => 'Slider',
                 'feature_image_path' => '/assets/images/slider/original/Slider-Infinity-Main-min.png'
             ],

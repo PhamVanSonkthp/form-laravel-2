@@ -519,7 +519,7 @@ Route::prefix('ajax/administrator')->group(function () {
 
                 });
 
-                Route::post('/create', function (PusherChatRequest $request) {
+                Route::post('/create', function (Request $request) {
 
                     $chat = Chat::create([
                         'content' => $request->contents,

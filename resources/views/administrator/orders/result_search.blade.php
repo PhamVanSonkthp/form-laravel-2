@@ -1,4 +1,10 @@
-
+@if(count($results) == 0)
+    <div class="d-flex m-3">
+        <strong>
+            Không tìm thấy sản phẩm phù hợp
+        </strong>
+    </div>
+@endif
 
 @foreach($results as $result)
 

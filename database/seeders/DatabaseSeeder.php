@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateSingleImageSeeder::class);
         $this->call(CreateShippingMethodSeeder::class);
         $this->call(CreatePaymentMethodSeeder::class);
+        $this->call(CreateCategorySeeder::class);
 
     }
 }

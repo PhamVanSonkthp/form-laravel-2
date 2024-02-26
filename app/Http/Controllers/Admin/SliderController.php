@@ -56,7 +56,7 @@ class SliderController extends Controller
     public function update(Request $request, $id)
     {
         $this->model->updateByQuery($request, $id);
-        return back();
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function delete(Request $request, $id)

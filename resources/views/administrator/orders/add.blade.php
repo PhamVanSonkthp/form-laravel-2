@@ -170,7 +170,6 @@
                         if (keywordSearch) {
                             if (keywordSearch == response.search_query) {
                                 $('#container_result_search').html(response.html)
-
                             }
                         } else {
                             $('#container_result_search').html("")

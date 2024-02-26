@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Components\Recusive;
+use App\Traits\DeleteModelTrait;
+use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +16,8 @@ class Role extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
+    use DeleteModelTrait;
+    use StorageImageTrait;
 
     protected $guarded = [];
 

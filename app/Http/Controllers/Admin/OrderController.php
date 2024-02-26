@@ -43,8 +43,8 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $item = $this->model->storeByQuery($request);
-        return redirect()->route('administrator.' . $this->prefixView . '.edit', ["id" => $item->id]);
+        $this->model->storeByQuery($request);
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function edit($id)
@@ -55,8 +55,8 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        $item = $this->model->updateByQuery($request, $id);
-        return redirect()->route('administrator.' . $this->prefixView . '.edit', ['id' => $id]);
+        $this->model->updateByQuery($request, $id);
+        return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
     public function delete(Request $request, $id)
