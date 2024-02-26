@@ -121,7 +121,7 @@
             @foreach($images as $image)
                 <li class="image-view" id="drop_image__{{$image->id}}">
                     <img src="{{$image->image_path}}">
-                    <i id="btn_delete_image_{{$upload_mutiple_id}}" class="fa fa-minus-square-o delete-button"></i>
+                    <i id="btn_delete_image_{{$upload_mutiple_id}}" class="fa-solid fa-xmark delete-button"></i>
                 </li>
             @endforeach
 

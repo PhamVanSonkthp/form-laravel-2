@@ -19,7 +19,7 @@
                         <div class="card-body">
                             @include('administrator.components.require_input_text' , ['name' => 'name' , 'label' => 'Tên'])
 
-                            @include('administrator.components.require_input_text' , ['name' => 'description' , 'label' => 'Mô tả ngắn'])
+                            @include('administrator.components.input_text' , ['name' => 'description' , 'label' => 'Mô tả ngắn'])
 
                             <div class="form-group mt-3">
 
