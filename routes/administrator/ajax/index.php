@@ -409,6 +409,16 @@ Route::prefix('ajax/administrator')->group(function () {
 
         });
 
+        Route::prefix('/email')->group(function () {
+
+            Route::post('/send-test-email', [
+                'as' => 'ajax.administrator.email.send_test_email',
+                'uses' => 'App\Http\Controllers\Ajax\EmailController@sendTestEmail',
+                'middleware' => 'can:products-edit',
+            ]);
+
+        });
+
         Route::prefix('upload-image')->group(function () {
             Route::post('/store', function (Request $request) {
 

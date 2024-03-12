@@ -1705,5 +1705,209 @@ Route::prefix('administrator')->group(function () {
         ]);
     });
 
+    Route::prefix('register-cities')->group(function () {
+        Route::get('/', [
+            'as' => 'administrator.register_cities.index',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@index',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/create', [
+            'as' => 'administrator.register_cities.create',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@create',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::post('/store', [
+            'as' => 'administrator.register_cities.store',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@store',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'administrator.register_cities.edit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@edit',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::put('/update/{id}', [
+            'as' => 'administrator.register_cities.update',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@update',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::delete('/delete/{id}', [
+            'as' => 'administrator.register_cities.delete',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@delete',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::delete('/delete-many', [
+            'as' => 'administrator.register_cities.delete_many',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@deleteManyByIds',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::get('/export', [
+            'as' => 'administrator.register_cities.export',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@export',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/audit/{id}', [
+            'as'=>'administrator.register_cities.audit',
+            'uses'=>'App\Http\Controllers\Admin\RegisterCityController@audit',
+            'middleware'=>'can:history_datas-list',
+        ]);
+
+        Route::get('/import', [
+            'as' => 'administrator.register_cities.import',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@import',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/{id}', [
+            'as' => 'administrator.register_cities.get',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@get',
+            'middleware' => 'can:history_datas-list',
+        ]);
+    });
+
+    Route::prefix('register-districts')->group(function () {
+        Route::get('/', [
+            'as' => 'administrator.register_districts.index',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@index',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/create', [
+            'as' => 'administrator.register_districts.create',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@create',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::post('/store', [
+            'as' => 'administrator.register_districts.store',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@store',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'administrator.register_districts.edit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@edit',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::put('/update/{id}', [
+            'as' => 'administrator.register_districts.update',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@update',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::delete('/delete/{id}', [
+            'as' => 'administrator.register_districts.delete',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@delete',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::delete('/delete-many', [
+            'as' => 'administrator.register_districts.delete_many',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@deleteManyByIds',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::get('/export', [
+            'as' => 'administrator.register_districts.export',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@export',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/audit/{id}', [
+            'as'=>'administrator.register_districts.audit',
+            'uses'=>'App\Http\Controllers\Admin\RegisterDistrictController@audit',
+            'middleware'=>'can:history_datas-list',
+        ]);
+
+        Route::get('/import', [
+            'as' => 'administrator.register_districts.import',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@import',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/{id}', [
+            'as' => 'administrator.register_districts.get',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@get',
+            'middleware' => 'can:history_datas-list',
+        ]);
+    });
+
+    Route::prefix('register-wards')->group(function () {
+        Route::get('/', [
+            'as' => 'administrator.register_wards.index',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@index',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/create', [
+            'as' => 'administrator.register_wards.create',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@create',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::post('/store', [
+            'as' => 'administrator.register_wards.store',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@store',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'administrator.register_wards.edit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@edit',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::put('/update/{id}', [
+            'as' => 'administrator.register_wards.update',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@update',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::delete('/delete/{id}', [
+            'as' => 'administrator.register_wards.delete',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@delete',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::delete('/delete-many', [
+            'as' => 'administrator.register_wards.delete_many',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@deleteManyByIds',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::get('/export', [
+            'as' => 'administrator.register_wards.export',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@export',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/audit/{id}', [
+            'as'=>'administrator.register_wards.audit',
+            'uses'=>'App\Http\Controllers\Admin\RegisterWardController@audit',
+            'middleware'=>'can:history_datas-list',
+        ]);
+
+        Route::get('/import', [
+            'as' => 'administrator.register_wards.import',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@import',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/{id}', [
+            'as' => 'administrator.register_wards.get',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@get',
+            'middleware' => 'can:history_datas-list',
+        ]);
+    });
+
 });
 

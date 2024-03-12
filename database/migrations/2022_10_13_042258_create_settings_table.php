@@ -34,6 +34,16 @@ class CreateSettingsTable extends Migration
             $table->text('terms_of_use_html')->nullable();
             $table->bigInteger('default_shipping_fee')->default(0);
 
+            $table->string('mail_host')->default('smtp.gmail.com');
+            $table->string('mail_port')->default('587');
+            $table->string('mail_username')->default('infinitytechnologyhp@gmail.com');
+            $table->string('mail_password')->default('qzpwcspmsxffetkw');
+            $table->string('mail_encryption')->default('TLS');
+            $table->string('mail_from_address')->default('infinitytechnologyhp@gmail.com');
+            $table->string('mail_from_name')->default('Infinity Technology');
+
+            $table->integer('type_ai_id')->default(1);
+
             $table->timestamps();
         });
     }

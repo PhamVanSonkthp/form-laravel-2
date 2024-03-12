@@ -89,6 +89,15 @@ class Setting extends Model implements Auditable
             'pusher_app_secret' => $request->pusher_app_secret,
             'pusher_app_cluster' => $request->pusher_app_cluster,
             'is_login_only_one_device' => $request->is_login_only_one_device ?? 0,
+            'mail_host' => $request->mail_host,
+            'mail_port' => $request->mail_port,
+            'mail_username' => $request->mail_username,
+            'mail_password' => $request->mail_password,
+            'mail_encryption' => $request->mail_encryption,
+            'mail_from_address' => $request->mail_from_address,
+            'mail_from_name' => $request->mail_from_name,
+            'type_ai_id' => $request->type_ai_id ?? 1,
+            'token_chat' => $request->token_chat,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

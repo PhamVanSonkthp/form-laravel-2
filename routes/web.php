@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\RegisterCity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/assets/{type}/{user_id}/{id}/{size}/{slug}', [
     'uses' => 'App\Http\Controllers\ImagesController@show',
 ]);
+
+Route::prefix('/demo')->group(function () {
+    Route::get('/', function (Request $request){
+
+    });
+
+});

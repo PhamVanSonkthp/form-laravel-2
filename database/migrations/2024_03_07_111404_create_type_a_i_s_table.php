@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegisterCitiesTable extends Migration
+class CreateTypeAISTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRegisterCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('register_cities', function (Blueprint $table) {
+        Schema::create('type_a_i_s', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('lat')->nullable();
-            $table->string('long')->nullable();
+            $table->string('code');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRegisterCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('register_cities');
+        Schema::dropIfExists('type_a_i_s');
     }
 }

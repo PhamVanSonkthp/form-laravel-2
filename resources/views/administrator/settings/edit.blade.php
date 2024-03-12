@@ -119,6 +119,70 @@
 
                             <div>
                                 <h2>
+                                    Email SMTP
+                                </h2>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_HOST' , 'name' => 'mail_host'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_PORT' , 'name' => 'mail_port'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_USERNAME' , 'name' => 'mail_username'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_PASSWORD' , 'name' => 'mail_password'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_ENCRYPTION' , 'name' => 'mail_encryption'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_FROM_ADDRESS' , 'name' => 'mail_from_address'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'MAIL_FROM_NAME' , 'name' => 'mail_from_name'])
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mt-3">
+                                        <label>Test mail</label><span class="text-danger">*</span>
+                                        <input id="input_test_email" type="email" autocomplete="off" class="form-control " placeholder="Nhập mail nhận">
+                                    </div>
+
+                                    <div>
+                                        <span id="lable_test_email" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary mt-3" onclick="onSendTestMail()">Gửi</button>
+
+                                </div>
+
+                            </div>
+
+
+                            @include('administrator.components.button_save')
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div>
+                                <h2>
                                     Vận chuyển
                                 </h2>
                             </div>
@@ -131,6 +195,59 @@
 
                             </div>
 
+
+                            @include('administrator.components.button_save')
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div>
+                                <h2>
+                                    Sử dụng AI
+                                </h2>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-12 mt-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type_ai_id" id="flexRadioDefault1" {{$item->type_ai_id == 1 ? 'checked' : ''}} value="1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Gemini
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type_ai_id" id="flexRadioDefault2" {{$item->type_ai_id == 2 ? 'checked' : ''}} value="2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Chat GPT
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type_ai_id" id="flexRadioDefault3" {{$item->type_ai_id == 3 ? 'checked' : ''}} value="3">
+                                        <label class="form-check-label" for="flexRadioDefault3">
+                                            Bing
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'Token' , 'name' => 'token_chat'])
+                                </div>
+
+                            </div>
 
                             @include('administrator.components.button_save')
                         </div>
@@ -198,5 +315,34 @@
 @endsection
 
 @section('js')
+    <script>
+        function onSendTestMail() {
+            let value = $('#input_test_email').val()
 
+            if (value.length) {
+
+                if (!validateEmail(value)){
+                    $('#lable_test_email').html("Email không đúng định dạng")
+                }
+
+                callAjax(
+                    "POST",
+                    "{{route('ajax.administrator.email.send_test_email')}}",
+                    {
+                        'email': value,
+                    },
+                    (response) => {
+                        $('#lable_test_email').html(response.message)
+                    },
+                    (error) => {
+                        $('#lable_test_email').html("Lỗi")
+                    },
+                    true,
+                )
+
+            } else {
+                $('#lable_test_email').html("Vui lòng điền email")
+            }
+        }
+    </script>
 @endsection

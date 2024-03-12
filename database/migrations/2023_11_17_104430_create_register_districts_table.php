@@ -17,6 +17,8 @@ class CreateRegisterDistrictsTable extends Migration
             $table->id();
             $table->bigInteger('city_id');
             $table->string('name');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->timestamps();
         });
     }

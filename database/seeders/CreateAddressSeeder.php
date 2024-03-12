@@ -49,5 +49,18 @@ class CreateAddressSeeder extends Seeder
                 'name' => $ward['name'],
             ]);
         }
+
+        $latLong = File::get(public_path('lat-long-cities.json'));
+        $latLongs = json_decode($latLong, true);
+
+
+        foreach ($latLongs as $latLong){
+            RegisterCity::where('name', $latLong['name'])->update([
+                'lat' => $latLong['lat'],
+                'long' => $latLong['lng'],
+            ]);
+        }
+
+
     }
 }

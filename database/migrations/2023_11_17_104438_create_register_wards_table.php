@@ -17,6 +17,8 @@ class CreateRegisterWardsTable extends Migration
             $table->id();
             $table->bigInteger('district_id');
             $table->string('name');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->timestamps();
         });
     }

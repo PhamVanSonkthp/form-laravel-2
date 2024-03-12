@@ -37,7 +37,7 @@ class Product extends Model implements Auditable
         return $item;
     }
 
-    public static function search($request)
+    public static function search($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
     {
 
         $results = Product::where('product_visibility_id', 2);

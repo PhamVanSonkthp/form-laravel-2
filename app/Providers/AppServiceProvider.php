@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\Setting;
+use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Rinvex\Attributes\Models\Attribute;

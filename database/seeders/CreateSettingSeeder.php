@@ -22,7 +22,7 @@ class CreateSettingSeeder extends Seeder
             'bank_name' => "Vietcombank",
             'bank_number' => "0031000332320",
             'phone_contact' => "0378115213",
-            'about_contact' => "Phùng Kế Thế",
+            'about_contact' => "Infinity",
             'address_contact' => "Hà Nội",
             'email_contact' => "ifnt@gmail.com",
             'privacy_policy_html' => "<h1>Chính sách riêng tư</h1>
