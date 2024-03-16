@@ -98,6 +98,7 @@ class Setting extends Model implements Auditable
             'mail_from_name' => $request->mail_from_name,
             'type_ai_id' => $request->type_ai_id ?? 1,
             'token_chat' => $request->token_chat,
+            'api_key_weather' => $request->api_key_weather,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

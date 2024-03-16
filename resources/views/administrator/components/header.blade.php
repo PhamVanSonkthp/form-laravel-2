@@ -14,6 +14,21 @@
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="languageDropdown_1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{\App\Models\Helper::getWeather(request()->ip())}}
+                     <span class="ms-1 me-1 d-none d-md-inline-block">Thời tiết</span>
+                </a>
+                                <div class="dropdown-menu" aria-labelledby="languageDropdown_1">
+                                    <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> <span class="ms-1"> English </span></a>
+                                    <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ms-1"> French </span></a>
+                                    <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-de" title="de" id="de"></i> <span class="ms-1"> German </span></a>
+                                    <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-pt" title="pt" id="pt"></i> <span class="ms-1"> Portuguese </span></a>
+                                    <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-es" title="es" id="es"></i> <span class="ms-1"> Spanish </span></a>
+                                </div>
+            </li>
+
+
+            <li class="nav-item dropdown">
                 <span class="ms-1 me-1 d-none d-md-inline-block">
                     <i class="fa-regular fa-floppy-disk"></i>
                     {{round(\App\Models\Helper::diskUsedSize(),2)}} /

@@ -558,4 +558,18 @@ class Helper extends Model
         return $disktotalsize;
     }
 
+    public static function getWeather($ip)
+    {
+
+
+        $currentUserInfo = Location::get($ip);
+        dd($currentUserInfo);
+
+        $new_arr[] = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $ip));
+
+
+        return "Latitude:" . $new_arr[0]['geoplugin_latitude'] . " and Longitude:" . $new_arr[0]['geoplugin_longitude'];
+
+    }
+
 }

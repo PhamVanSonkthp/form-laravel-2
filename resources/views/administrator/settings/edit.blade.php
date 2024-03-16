@@ -209,6 +209,32 @@
 
                             <div>
                                 <h2>
+                                    Thời tiết
+                                </h2>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'API key thời tiết' , 'name' => 'api_key_weather'])
+                                </div>
+
+                            </div>
+
+
+                            @include('administrator.components.button_save')
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div>
+                                <h2>
                                     Sử dụng AI
                                 </h2>
                             </div>
