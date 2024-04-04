@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use PHPUnit\Exception;
+use Stevebauman\Location\Facades\Location;
 
 class Helper extends Model
 {
@@ -558,18 +560,28 @@ class Helper extends Model
         return $disktotalsize;
     }
 
-    public static function getWeather($ip)
-    {
+    public static function callGetHTTP($url, $params = []){
+        $params = [
+            'query' => $params
+        ];
 
+        try {
 
-        $currentUserInfo = Location::get($ip);
-        dd($currentUserInfo);
+            $headers = [
+                'Content-Type' => 'application/json',
+            ];
 
-        $new_arr[] = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $ip));
+            $client = new Client([
+                'headers' => $headers
+            ]);
 
+            $response = $client->request('GET', $url, $params);
 
-        return "Latitude:" . $new_arr[0]['geoplugin_latitude'] . " and Longitude:" . $new_arr[0]['geoplugin_longitude'];
-
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
 }

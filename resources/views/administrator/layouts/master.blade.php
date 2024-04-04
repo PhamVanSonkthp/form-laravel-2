@@ -9,7 +9,8 @@
     <meta content="Pham Son" name="author">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ env('APP_URL') . \App\Models\Helper::logoImagePath() }}">
+{{--    <link rel="shortcut icon" href="{{ env('APP_URL') . \App\Models\Helper::logoImagePath() }}">--}}
+    <link rel="shortcut icon" href="{{ \App\Models\Helper::logoImagePath() }}">
 
 @yield('title')
 
