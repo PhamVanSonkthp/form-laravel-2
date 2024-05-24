@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group mt-3">
-                                        <label>Email<span class="text-danger">*</span></label>
+                                        <label>Email (dùng làm tên đăng nhập)<span class="text-danger">*</span></label>
                                         <input type="text" name="email"
                                                class="form-control @error('email') is-invalid @enderror"
                                                value="{{old('email')}}" required>

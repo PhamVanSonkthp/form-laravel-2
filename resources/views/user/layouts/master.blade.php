@@ -68,6 +68,8 @@
 
     @include('administrator.components.helper')
 
+    @yield('css')
+
 </head>
 
 <body>

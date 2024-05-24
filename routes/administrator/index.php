@@ -1909,5 +1909,73 @@ Route::prefix('administrator')->group(function () {
         ]);
     });
 
+    Route::prefix('calendars')->group(function () {
+        Route::get('/', [
+            'as' => 'administrator.calendars.index',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@index',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/create', [
+            'as' => 'administrator.calendars.create',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@create',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::post('/store', [
+            'as' => 'administrator.calendars.store',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@store',
+            'middleware' => 'can:history_datas-add',
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'administrator.calendars.edit',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@edit',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::put('/update/{id}', [
+            'as' => 'administrator.calendars.update',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@update',
+            'middleware' => 'can:history_datas-edit',
+        ]);
+
+        Route::delete('/delete/{id}', [
+            'as' => 'administrator.calendars.delete',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@delete',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::delete('/delete-many', [
+            'as' => 'administrator.calendars.delete_many',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@deleteManyByIds',
+            'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::get('/export', [
+            'as' => 'administrator.calendars.export',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@export',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/audit/{id}', [
+            'as'=>'administrator.calendars.audit',
+            'uses'=>'App\Http\Controllers\Admin\CalendarController@audit',
+            'middleware'=>'can:history_datas-list',
+        ]);
+
+        Route::get('/import', [
+            'as' => 'administrator.calendars.import',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@import',
+            'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::get('/{id}', [
+            'as' => 'administrator.calendars.get',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@get',
+            'middleware' => 'can:history_datas-list',
+        ]);
+    });
+
 });
 

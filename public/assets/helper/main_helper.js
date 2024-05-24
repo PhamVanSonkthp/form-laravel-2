@@ -76,6 +76,10 @@ const getOnlyDate = (dataD, format = "dd/mm/yyyy") => {
         myDate = addZero(dateObj.getUTCFullYear()) + "/" + addZero(dateObj.getMonth() + 1) + "/" + addZero(dateObj.getUTCDate());
     } else if (format == "mm/dd/yyyy") {
         myDate = addZero(dateObj.getMonth() + 1) + "/" + addZero(dateObj.getUTCDate()) + "/" + addZero(dateObj.getUTCFullYear());
+    } else if (format == "mm-dd-yyyy") {
+        myDate = addZero(dateObj.getMonth() + 1) + "-" + addZero(dateObj.getUTCDate()) + "-" + addZero(dateObj.getUTCFullYear());
+    } else if (format == "yyyy-mm-dd") {
+        myDate = addZero(dateObj.getUTCFullYear()) + "-" + addZero(dateObj.getMonth() + 1) + "-" + addZero(dateObj.getUTCDate());
     }
 
     return myDate;

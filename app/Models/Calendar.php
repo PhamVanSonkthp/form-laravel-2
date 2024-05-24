@@ -1,15 +1,15 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Facades\Excel;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class {{ class }} extends Model implements Auditable
+class Calendar extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;

@@ -144,6 +144,16 @@ return [
         'flash_sales-edit' => 'flash_sales_edit',
         'flash_sales-delete' => 'flash_sales_delete',
 
+        'calendars-list' => 'calendars_list',
+        'calendars-add' => 'calendars_add',
+        'calendars-edit' => 'calendars_edit',
+        'calendars-delete' => 'calendars_delete',
+
+        'products-list' => 'products_list',
+        'products-add' => 'products_add',
+        'products-edit' => 'products_edit',
+        'products-delete' => 'products_delete',
+
     ],
     'table_module'=>[
         'dashboard',
@@ -174,6 +184,8 @@ return [
         'shipping_methods',
         'product_comments',
         'flash_sales',
+        'calendars',
+        'products',
     ],
 
     'table_module_name'=>[
@@ -205,6 +217,8 @@ return [
         'Quản lý phương thức thanh toán',
         'Quản lý bình luận sản phẩm',
         'Quản lý FlashSale',
+        'Quản lý lịch làm việc',
+        'Quản lý sản phẩm',
     ],
 
     'module_children'=>[

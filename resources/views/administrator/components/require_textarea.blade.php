@@ -11,10 +11,10 @@
 @endphp
 
 <div class="form-group mt-3">
-    <label>{{$label}}</label>
+    <label>{{$label}} @include('administrator.components.lable_require')</label>
     <textarea style="min-height: {{$height}}px;" name="{{$name}}"
               class="form-control @error($name) is-invalid @enderror"
-              rows="5">{{$value}}</textarea>
+              rows="5" required>{{$value}}</textarea>
     @error($name)
     <div class="alert alert-danger">{{$message}}</div>
     @enderror

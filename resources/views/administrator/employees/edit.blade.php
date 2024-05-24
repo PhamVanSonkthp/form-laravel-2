@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group mt-3">
-                                        <label>Email<span class="text-danger">*</span> (Tên đăng nhập)</label>
+                                        <label>Email (dùng làm tên đăng nhập)<span class="text-danger">*</span> (Tên đăng nhập)</label>
                                         <input type="text" name="email" autocomplete="off"
                                                class="form-control @error('email') is-invalid @enderror"
                                                value="{{$item->email}}" required readonly>

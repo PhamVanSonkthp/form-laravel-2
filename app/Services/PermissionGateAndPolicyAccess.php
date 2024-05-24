@@ -25,7 +25,6 @@ class PermissionGateAndPolicyAccess{
         $this->defineGateCategoryNews();
         $this->defineGateSystemBranches();
         $this->defineGateSystemQuotations();
-        $this->defineGateCalendars();
         $this->defineGateOrders();
         $this->defineGateVouchers();
         $this->defineGateMedias();
@@ -38,7 +37,16 @@ class PermissionGateAndPolicyAccess{
         $this->defineGateShippingMethods();
         $this->defineGateProductComments();
         $this->defineGateFlashSales();
+        $this->defineGateCalendars();
     }
+
+    public function defineGateCalendars(){
+        Gate::define('calendars-list','App\Policies\CalendarPolicy@view');
+        Gate::define('calendars-add','App\Policies\CalendarPolicy@create');
+        Gate::define('calendars-edit','App\Policies\CalendarPolicy@update');
+        Gate::define('calendars-delete','App\Policies\CalendarPolicy@delete');
+    }
+
     public function defineGateFlashSales(){
         Gate::define('flash_sales-list','App\Policies\FlashSalePolicy@view');
         Gate::define('flash_sales-add','App\Policies\FlashSalePolicy@create');
@@ -233,13 +241,6 @@ class PermissionGateAndPolicyAccess{
         Gate::define('quotations-add','App\Policies\QuotationPolicy@create');
         Gate::define('quotations-edit','App\Policies\QuotationPolicy@update');
         Gate::define('quotations-delete','App\Policies\QuotationPolicy@delete');
-    }
-
-    public function defineGateCalendars(){
-        Gate::define('calendars-list','App\Policies\CalendarsPolicy@view');
-        Gate::define('calendars-add','App\Policies\CalendarsPolicy@create');
-        Gate::define('calendars-edit','App\Policies\CalendarsPolicy@update');
-        Gate::define('calendars-delete','App\Policies\CalendarsPolicy@delete');
     }
 
     public function defineGateOrders(){

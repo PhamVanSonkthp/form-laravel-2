@@ -356,10 +356,18 @@ class Helper extends Model
         return $items;
     }
 
-    public static function addSlug($object, $key, $value, $isNew = false)
+    public static function addSlug($object, $key, $value, $id = null)
     {
 
         $slug = Str::slug($value);
+
+        if (!empty($id)){
+            $itemUpdate = $object->find($id);
+
+            if (!empty($itemUpdate)){
+                if ($itemUpdate->$key == $slug) return $slug;
+            }
+        }
 
         if (empty($slug)) $slug = $object->latest()->first() ? optional($object->latest()->first())->id + 1 : 1;
 
