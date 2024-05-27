@@ -26,7 +26,7 @@ class ChatPusherEvent implements ShouldBroadcast
     public $sender_id;
     public $pusher_id;
 
-    public function __construct(Request $request, $participantChat, $sender_id, $image_link, $images)
+    public function __construct(Request $request, $id,$participantChat, $sender_id, $image_link, $images)
     {
         $this->content = $request->contents;
         $this->user_id = $sender_id;
@@ -57,6 +57,7 @@ class ChatPusherEvent implements ShouldBroadcast
         );
 
         $data = [
+            'id' => $id,
             'content' => $request->contents,
             'user_id' => $sender_id,
             'pusher_id' => $participantChat->user_id,

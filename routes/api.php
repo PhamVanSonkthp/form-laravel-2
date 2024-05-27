@@ -100,6 +100,29 @@ Route::prefix('public')->group(function () {
         Route::post('/check-exist', [AuthController::class, 'checkExist']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     });
+
+    Route::get('/version', function (){
+        return response()->json([
+            "ios" => [
+                [
+                    'version' => "1.0.0",
+                    'is_debug' => true,
+                    'is_update' => true,
+                    'is_require' => true,
+                ],
+            ],
+            "android" => [
+                [
+                    'version' => "1.0.0",
+                    'is_debug' => true,
+                    'is_update' => true,
+                    'is_require' => true,
+                ],
+
+            ],
+        ]);
+    });
+
 });
 
 Route::prefix('user')->group(function () {

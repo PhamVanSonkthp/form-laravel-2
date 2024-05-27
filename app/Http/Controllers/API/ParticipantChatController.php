@@ -16,6 +16,7 @@ use App\Models\Product;
 use App\Models\RestfulAPI;
 use App\Models\User;
 use App\Models\UserCart;
+use App\Models\UserDocument;
 use App\Models\UserProductRecent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,28 +42,21 @@ class ParticipantChatController extends Controller
 
     public function get(Request $request, $chatGroupId)
     {
-        if (empty(ParticipantChat::where('user_id', auth()->id())->where('chat_group_id', $chatGroupId)->first())) {
+
+        $item = ParticipantChat::where('user_id', auth()->id())->where('chat_group_id', $chatGroupId)->first();
+
+        if (empty($item)) {
             return response()->json([
                 "code" => 404,
                 "message" => "Không tìm thấy nhóm chat"
             ], 404);
         }
 
-        $item = ParticipantChat::where('chat_group_id', $chatGroupId)->where("user_id", auth()->id())->first();
-
-        $item->chatGroup;
-
-        $item->users = $item->users();
-
-
         $queries = ["chat_group_id" => $item->chatGroup->id];
-        $requestMessage = $request;
-        $requestMessage->limit = 2;
-        $resultsMessage = RestfulAPI::response(new Chat(), $requestMessage, $queries);
 
-        foreach ($resultsMessage as $message) {
-            $message->images;
-        }
+        $resultsMessage = RestfulAPI::response(new Chat(), $request, $queries);
+
+
         $item->messages = $resultsMessage;
 
         return $item;

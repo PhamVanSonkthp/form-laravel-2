@@ -32,15 +32,18 @@ class ParticipantChat extends Model implements Auditable
         $users = [];
         $participantChats = ParticipantChat::where('chat_group_id' , $this->chat_group_id)->where('user_id' , '!=',auth()->id())->get();
         foreach ($participantChats as $item){
-            $item->user;
-            optional($item->user)->role;
-            $users[] = $item->user;
+            if ($item && $item->user){
+                $item->user;
+                optional($item->user)->role;
+                $users[] = $item->user;
+            }
+
         }
 
         return $users;
     }
 
-    public function chatGroupIdWithUser($user_id){
+    public static function chatGroupIdWithUser($user_id){
 
         if (empty($user_id)){
             return 0;
@@ -64,6 +67,11 @@ class ParticipantChat extends Model implements Auditable
         return $this->hasOne(ParticipantChatStatus::class, 'id','status');
     }
 
+    public function latestMessage(){
+        $item = Chat::where('chat_group_id', $this->chat_group_id)->latest()->first();
+        return $item;
+    }
+
     // end
 
     public function getTableName()
@@ -76,7 +84,10 @@ class ParticipantChat extends Model implements Auditable
         $array = parent::toArray();
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
-        $array['chatGroup'] = $this->chatGroup;
+        $array['users']  = $this->users();
+        $array['chat_group'] = $this->chatGroup;
+        $array['latest_message'] = $this->latestMessage();
+
         return $array;
     }
 
