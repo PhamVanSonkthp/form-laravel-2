@@ -249,6 +249,46 @@ class Helper extends Model
         return "";
     }
 
+
+
+    public static function searchAlgorithm($results, $request, $key){
+        $results = $results->where(function ($query) use ($request, $key) {
+            $words = explode(" ", $request->search_query);
+
+            $query = $query->where(function ($results) use ($words, $key) {
+                foreach ($words as $word) {
+                    $results = $results->where($key, 'LIKE', "%{$word}%");
+                }
+            });
+
+            $query = $query->orWhere($key, "LIKE", "%{$request->search_query}%");
+
+            $query = $query->orWhere(function ($results) use ($words, $key) {
+                foreach ($words as $word) {
+                    $results = $results->orWhere($key, 'LIKE', "%{$word}%");
+                }
+            });
+
+        });
+
+
+        $words = explode(" ", $request->search_query);
+        $sort1 = "";
+        foreach ($words as $index => $word) {
+            $sort1 .= $key . " LIKE '%{$word}%'";
+
+            if ($index != count($words) - 1){
+                $sort1 .= " AND ";
+            }
+        }
+
+        $sort = "CASE WHEN ".$key." LIKE '%{$request->search_query}%' THEN 1 WHEN {$sort1} THEN 2 ELSE 3 END, " . $key;
+
+        $results = $results->orderByRaw($sort);
+
+        return $results;
+    }
+
     public static function searchAllByQuery($object, $request, $queries = [])
     {
         $columns = Schema::getColumnListing($object->getTableName());
@@ -262,10 +302,11 @@ class Helper extends Model
             if ($key == "search_query") {
                 if (!empty($item) || strlen($item) > 0) {
 
-                    $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns) {
+                    $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns, $request) {
                         foreach ($searchLikeColumns as $searchColumn) {
                             if (in_array($searchColumn, $columns)) {
-                                $query->orWhere($searchColumn, 'LIKE', "%{$item}%");
+                                $query = self::searchAlgorithm($query, $request, 'name');
+                                //$query->orWhere($searchColumn, 'LIKE', "%{$item}%");
                             }
                         }
                     });

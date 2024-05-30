@@ -12,9 +12,9 @@
 
 <div class="form-group mt-3">
     <label>{{$label}} @include('administrator.components.lable_require')</label>
-    <textarea style="min-height: {{$height}}px;" name="{{$name}}"
+    <textarea id="{{isset($id) ? $id : \App\Models\Helper::randomString()}}" style="min-height: {{$height}}px;" name="{{$name}}"
               class="form-control @error($name) is-invalid @enderror"
-              rows="5" required>{{$value}}</textarea>
+              rows="5" required placeholder="{{isset($placeholder) ? $placeholder : 'Nhập...'}}" style="{{isset($hidden) ? "display: none;" : ''}}">{{$value}}</textarea>
     @error($name)
     <div class="alert alert-danger">{{$message}}</div>
     @enderror

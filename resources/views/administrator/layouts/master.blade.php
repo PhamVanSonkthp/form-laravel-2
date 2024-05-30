@@ -113,7 +113,7 @@
         }
 
         .select2-container--default .select2-selection--single {
-            border: 1px solid white;
+            border: 1px solid #e9ecef;
         }
 
 

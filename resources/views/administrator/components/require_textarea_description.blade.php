@@ -77,9 +77,9 @@
 
             callAjax(
                 "POST",
-                "http://localhost:8000/api/chat-ai/gen-content",
+                "{{route('ajax.chat_ai.get')}}",
                 {
-                    'code': "{{ optional(\App\Models\TypeAI::find(\App\Models\Setting::first()->type_ai_id))->code ?? 1}}",
+                    'code': 1,
                     'text': value,
                     'token': "{{\App\Models\Setting::first()->token_chat}}",
                 },

@@ -426,6 +426,12 @@ Route::prefix('ajax/administrator')->group(function () {
 
         });
 
+        Route::prefix('chat-ai')->group(function () {
+            Route::post('/gen-content', [
+                'uses'=>'App\Http\Controllers\API\ChatAIController@genContent',
+            ])->name('ajax.chat_ai.get');
+        });
+
         Route::prefix('chat')->group(function () {
             Route::prefix('participant')->group(function () {
 

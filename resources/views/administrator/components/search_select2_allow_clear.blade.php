@@ -4,7 +4,7 @@
 
 <div class="mt-3">
     <label>{{$label}}</label>
-    <select name="{{$name}}" class="form-control select2_init_allow_clear">
+    <select id="{{isset($id) ? $id : \App\Models\Helper::randomString()}}" name="{{$name}}" class="form-control select2_init_allow_clear">
         <option value="">
             Chọn
         </option>

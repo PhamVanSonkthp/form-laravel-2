@@ -12,7 +12,7 @@
 
 <div class="form-group mt-3">
     <label>{{$label}} @include('administrator.components.lable_require') </label>
-    <input type="date" autocomplete="off" name="{{$name}}" class="bg-white form-control open-jquery-date @error($name) is-invalid @enderror"
+    <input id="{{isset($id) ? $id : \App\Models\Helper::randomString()}}" type="date" autocomplete="off" name="{{$name}}" class="bg-white form-control open-jquery-date @error($name) is-invalid @enderror"
            value="" required placeholder="--/--/--">
     @error($name)
     <div class="alert alert-danger">{{$message}}</div>

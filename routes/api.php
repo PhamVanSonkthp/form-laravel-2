@@ -6,6 +6,7 @@ use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryNewsController;
 use App\Http\Controllers\API\CategoryProductsController;
 use App\Http\Controllers\API\ChatController;
+use App\Http\Controllers\API\MemberShipController;
 use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
@@ -177,6 +178,11 @@ Route::prefix('user')->group(function () {
             Route::post('/check-with-carts', [VoucherController::class, 'checkWithCarts']);
             Route::post('/check-with-products', [VoucherController::class, 'checkWithProducts']);
         });
+
+        Route::prefix('membership')->group(function () {
+            Route::get('/', [MemberShipController::class, 'list']);
+        });
+
     });
 
 

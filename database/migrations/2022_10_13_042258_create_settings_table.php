@@ -45,6 +45,7 @@ class CreateSettingsTable extends Migration
             $table->integer('type_ai_id')->default(1);
 
             $table->string('api_key_weather')->nullable();
+            $table->string('token_chat')->nullable();
 
             $table->timestamps();
         });
