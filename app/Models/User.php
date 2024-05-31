@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -55,21 +56,24 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     // begin
 
-    public function logoutAllDevices(){
+    public function logoutAllDevices()
+    {
         DB::table('sessions')->where('user_id', $this->id)->delete();
         $this->tokens()->delete();
     }
 
-    public function textTimeOnline(){
-        if (Cache::has('user-is-online-' . $this->id)){
+    public function textTimeOnline()
+    {
+        if (Cache::has('user-is-online-' . $this->id)) {
             return "Online";
         }
 
         return $this->last_seen;
     }
 
-    public function textStatusOnline(){
-        if (Cache::has('user-is-online-' . $this->id)){
+    public function textStatusOnline()
+    {
+        if (Cache::has('user-is-online-' . $this->id)) {
             return "Online";
         }
 
@@ -155,8 +159,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $this->hasOne(UserStatus::class, 'id', 'user_status_id');
     }
 
-    public function userType(){
-        return $this->hasOne(UserType::class,'id','user_type_id');
+    public function userType()
+    {
+        return $this->hasOne(UserType::class, 'id', 'user_type_id');
     }
 
     public function membership()
@@ -177,7 +182,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
         return [
             "id" => 0,
-            "name" => "Bạn chưa có hạng",
+            "name" => "Chưa có",
             "require_number_ticket" => 0,
             "created_at" => "2023-08-04T08:20:22.000000Z",
             "updated_at" => "2023-10-21T02:52:55.000000Z",
@@ -236,21 +241,24 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $array;
     }
 
-    public function avatar($size = "100x100"){
+    public function avatar($size = "100x100")
+    {
         $image = $this->image;
-        if (!empty($image)){
-            return Formatter::getThumbnailImage($image->image_path,$size);
+        if (!empty($image)) {
+            return Formatter::getThumbnailImage($image->image_path, $size);
         }
 
-        return config('_my_config.default_avatar');
+        return $this->portrait_image_path;
     }
 
-    public function image(){
-        return $this->hasOne(SingleImage::class,'relate_id','id')->where('table' , $this->getTable());
+    public function image()
+    {
+        return $this->hasOne(SingleImage::class, 'relate_id', 'id')->where('table', $this->getTable());
     }
 
-    public function images(){
-        return $this->hasMany(Image::class,'relate_id','id')->where('table' , $this->getTable())->orderBy('index');
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'relate_id', 'id')->where('table', $this->getTable())->orderBy('index');
     }
 
     public function gender()
@@ -282,25 +290,28 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return false;
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return auth()->check() && optional(auth()->user())->is_admin == 2;
     }
 
-    public function isEmployee(){
+    public function isEmployee()
+    {
         return auth()->check() && optional(auth()->user())->is_admin != 0;
     }
 
-    public function searchByQuery($request, $queries = [])
+    public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
     {
-        return Helper::searchByQuery($this, $request, $queries);
+        return Helper::searchByQuery($this, $request, $queries, $randomRecord, $makeHiddens, $isCustom);
     }
 
-    public function storeByQuery($request)
+    public function storeByQuery(Request $request)
     {
         $dataInsert = [
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'address' => $request->address,
             'user_type_id' => $request->user_type_id ?? 0,
             'date_of_birth' => $request->date_of_birth,
             'gender_id' => $request->gender_id ?? 1,
@@ -308,40 +319,112 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             'password' => Hash::make($request->password),
         ];
 
-        if ($this->isAdmin()){
+        if ($this->isAdmin()) {
             $dataInsert['role_id'] = $request->role_id ?? 0;
             $dataInsert['is_admin'] = $request->is_admin ?? 0;
         }
 
-        $item = Helper::storeByQuery($this, $request, $dataInsert);
+        $user = Helper::storeByQuery($this, $request, $dataInsert);
 
-        if (!empty($request->is_admin && $request->is_admin == 1 && isset($request->role_ids))){
-            $item->roles()->attach($request->role_ids);
+        if (!empty($request->is_admin && $request->is_admin == 1 && isset($request->role_ids))) {
+            $user->roles()->attach($request->role_ids);
         }
 
-        return $this->findById($item->id);
+        if (isset($request->front_id_image_path)){
+
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'front_id_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+        if (isset($request->back_id_image_path)){
+
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'back_id_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+
+        if (isset($request->back_id_image_path)){
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'portrait_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+        return $this->findById($user->id);
     }
 
-    public function updateByQuery($request, $id)
+    public function updateByQuery(Request $request, $id)
     {
         $dataUpdate = [
             'name' => $request->name,
             'user_type_id' => $request->user_type_id ?? 0,
         ];
 
-        if (!empty($request->date_of_birth)){
+        if (!empty($request->date_of_birth)) {
             $dataUpdate['date_of_birth'] = $request->date_of_birth;
         }
 
-        if (!empty($request->email)){
+        if (!empty($request->email)) {
             $dataUpdate['email'] = $request->email;
         }
 
-        if (!empty($request->phone)){
+        if (!empty($request->phone)) {
             $dataUpdate['phone'] = $request->phone;
         }
 
-        if (!empty($request->gender_id)){
+        if (!empty($request->gender_id)) {
             $dataUpdate['gender_id'] = $request->gender_id;
         }
 
@@ -349,13 +432,85 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             $dataUpdate['password'] = Hash::make($request->password);
         }
 
-        $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
+        $user = Helper::updateByQuery($this, $request, $id, $dataUpdate);
 
-        if ($item->is_admin != 0 && isset($request->role_ids)){
-            $item->roles()->sync($request->role_ids);
+        if ($user->is_admin != 0 && isset($request->role_ids)) {
+            $user->roles()->sync($request->role_ids);
         }
 
-        return $item;
+        if ($request->hasFile('front_id_image_path')){
+
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'front_id_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+        if ($request->hasFile('back_id_image_path')){
+
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'back_id_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+
+        if ($request->hasFile('portrait_image_path')){
+            $item = Image::create([
+                'uuid' => Helper::randomString(),
+                'table' => $user->getTableName(),
+                'image_path' => "waiting",
+                'image_name' => "waiting",
+                'relate_id' => $user->id,
+            ]);
+
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'),'multiple', $item->id);
+
+            $dataUpdate = [
+                'image_path' => $dataUploadFeatureImage['file_path'],
+                'image_name' => $dataUploadFeatureImage['file_name'],
+            ];
+
+            $item->update($dataUpdate);
+
+            $user->update([
+                'portrait_image_path' => $dataUploadFeatureImage['file_path']
+            ]);
+        }
+
+        return $user;
     }
 
     public function deleteByQuery($request, $id, $forceDelete = false)

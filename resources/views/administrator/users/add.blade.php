@@ -21,35 +21,42 @@
 
                                 <div class="col-md-3">
                                     @include('administrator.components.require_input_text', ['name' => 'name', 'label' => 'Tên'])
+
+                                    @include('administrator.components.require_input_text_email', ['name' => 'email', 'label' => 'Email'])
+
+                                    @include('administrator.components.require_input_text', ['name' => 'address', 'label' => 'Địa chỉ'])
+
                                 </div>
 
                                 <div class="col-md-3">
                                     @include('administrator.components.require_input_text_phone', ['name' => 'phone', 'label' => 'Số điện thoại'])
-                                </div>
 
-                                <div class="col-md-3">
-                                    @include('administrator.components.require_input_text_email', ['name' => 'email', 'label' => 'Email'])
-                                </div>
-
-                                <div class="col-md-3">
                                     @include('administrator.components.require_input_text_password', ['name' => 'password', 'label' => 'Mật khẩu'])
+
+                                    @include('administrator.components.require_input_date', ['name' => 'date_of_birth', 'label' => 'Ngày sịnh'])
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @include('administrator.components.require_input_image', ['name' => 'portrait_image_path', 'label' => 'Ảnh chân dung'])
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            @include('administrator.components.require_input_image', ['name' => 'front_id_image_path', 'label' => 'Ảnh CCCD mặt trước'])
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            @include('administrator.components.require_input_image', ['name' => 'back_id_image_path', 'label' => 'Ảnh CCCD mặt sau'])
+
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
-
-                            @if($isSingleImage)
-                                <div class="mt-3 mb-3">
-                                    @include('administrator.components.upload_image', ['post_api' => $imagePostUrl, 'table' => $table, 'image' => $imagePathSingple , 'relate_id' => $relateImageTableId])
-                                </div>
-                            @endif
-
-                            @if($isMultipleImages)
-                                <div class="mt-3 mb-3">
-                                    @include('administrator.components.upload_multiple_images', ['post_api' => $imageMultiplePostUrl, 'delete_api' => $imageMultipleDeleteUrl , 'sort_api' => $imageMultipleSortUrl, 'table' => $table , 'images' => $imagesPath,'relate_id' => $relateImageTableId])
-                                </div>
-                            @endif
-
-                            @include('administrator.components.require_select2' , ['name' => 'user_type_id' , 'label' => 'Loại', 'select2Items' => $userTypes])
 
                             @include('administrator.components.button_save')
                         </div>

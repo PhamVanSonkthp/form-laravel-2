@@ -29,7 +29,10 @@
            href="{{route('administrator.'.$prefixView.'.edit' , ['id'=> $item->id])}}"
            data-bs-toggle="modal"
            data-bs-target="#editUserModal"
-           class="btn btn-outline-secondary btn-sm edit"><i
+           class="btn btn-outline-info btn-sm edit"><i
+                class="fa-solid fa-circle-info"></i></a>
+
+        <a href="{{route('administrator.'.$prefixView.'.edit' , ['id'=> $item->id])}}"class="btn btn-outline-secondary btn-sm edit"><i
                 class="fa-solid fa-pen"></i></a>
 
         <a href="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}" title="Xóa"
@@ -38,10 +41,10 @@
             <i class="fa-solid fa-x"></i>
         </a>
 
-        <a href="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}" title="Lịch sử tác động"
-           data-url="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}"
-           class="btn btn-outline-info btn-sm action_audit">
-            <i class="fa-solid fa-circle-info"></i>
-        </a>
+        {{--        <a href="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}" title="Lịch sử tác động"--}}
+        {{--           data-url="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}"--}}
+        {{--           class="btn btn-outline-info btn-sm action_audit">--}}
+        {{--            <i class="fa-solid fa-circle-info"></i>--}}
+        {{--        </a>--}}
     </td>
 </tr>

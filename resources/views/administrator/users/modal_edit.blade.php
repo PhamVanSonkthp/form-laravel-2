@@ -4,10 +4,8 @@
             <h3>
                 Thông tin chung
             </h3>
-            <div>
-                <label class="bold">Tên: @include('administrator.components.lable_require')</label>
-                <input id="input_name" required type="text" class="form-control" autocomplete="off" value="{{$item->name}}">
-            </div>
+
+            @include('administrator.components.require_input_text', ['label'=>'Tên','name' => 'name', 'id' => "input_name", 'value' => $item->name])
 
             <div class="mt-3">
                 <div class="form-check form-check-inline">
@@ -24,37 +22,29 @@
                 </div>
             </div>
 
-            <div class="mt-3">
-                <label class="bold">Số điện
-                    thoại: @include('administrator.components.lable_require')</label>
-                <input id="input_phone" required type="text" class="form-control"
-                       autocomplete="off" value="{{$item->phone}}">
-            </div>
+            @include('administrator.components.require_input_text', ['label'=>'Số điện thoại','name' => 'phone', 'id' => "input_phone", 'value' => $item->phone])
+
+
             <div class="mt-3">
                 <label class="bold">Mật
                     khẩu: @include('administrator.components.lable_require')</label>
+
+                @if(empty($item->password))
+                    <label class="text-danger">
+                        Khách hàng cần cấp mật khẩu
+                    </label>
+                @endif
                 <input id="input_password" required type="text" class="form-control"
                        autocomplete="off">
             </div>
 
-            <div class="mt-3">
-                <label class="bold">Email</label>
-                <input id="input_email" type="text" class="form-control" autocomplete="off" value="{{$item->email}}">
-            </div>
+            @include('administrator.components.require_input_text_email', ['label'=>'Email','name' => 'email', 'id' => "input_email", 'value' => $item->email])
 
-            <div class="mt-3">
-                <label class="bold">Ngày sinh:</label>
-                <input id="input_date_of_birth" type="date"
-                       class="bg-white form-control open-jquery-date" placeholder="--/--/--" value="{{\App\Models\Formatter::getOnlyDate($item->date_of_birth)}}">
-            </div>
+            @include('administrator.components.require_input_date', ['label'=>'Ngày sinh','name' => 'date_of_birth', 'id' => "input_date_of_birth", 'value' => \App\Models\Formatter::getOnlyDate($item->date_of_birth), "placeholder" => "--/--/--"])
 
-            <div class="mt-3">
-                <label class="bold">Địa chỉ:</label>
-                <input id="input_address" required type="text" class="form-control"
-                       autocomplete="off" value="{{$item->address}}">
-            </div>
+            @include('administrator.components.input_text', ['label'=>'Địa chỉ','name' => 'address', 'id' => "input_address", 'value' => $item->address])
 
-            <div class="mt-3">
+            <div class="mt-3 d-none">
                 <label class="bold">Loại khách
                     hàng: @include('administrator.components.lable_require')</label>
                 <select id="select_user_type_id" class="form-control select2_init" required>
@@ -64,7 +54,7 @@
                 </select>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 d-none">
                 <label class="bold">Trạng thái: @include('administrator.components.lable_require')</label>
                 <select id="select_user_status_id" class="form-control select2_init" required>
                     @foreach($userStatuses as $itemUserStatuses)
@@ -74,36 +64,52 @@
                 </select>
             </div>
 
-            <div class="mt-3">
-                <label class="bold">Số tiên:</label>
-                <strong id="lable_amount">{{\App\Models\Formatter::formatMoney($item->amount)}}</strong>
-            </div>
+{{--            <div class="mt-3">--}}
+{{--                <label class="bold">Số tiên:</label>--}}
+{{--                <strong id="lable_amount">{{\App\Models\Formatter::formatMoney($item->amount)}}</strong>--}}
+{{--            </div>--}}
 
-            <div class="mt-3">
-                <label class="bold">Điểm:</label>
-                <strong id="lable_point">{{\App\Models\Formatter::formatNumber($item->point)}}</strong>
-            </div>
+{{--            <div class="mt-3">--}}
+{{--                <label class="bold">Điểm:</label>--}}
+{{--                <strong id="lable_point">{{\App\Models\Formatter::formatNumber($item->point)}}</strong>--}}
+{{--            </div>--}}
 
         </div>
     </div>
 
     <div class="col-md-6">
         <div>
+
+            <h3>
+                Ảnh chân dung
+            </h3>
+
+            <div class="mb-3 mt-3">
+                <div>
+                    <img style="max-height: 400px;object-fit: contain;width: 100%;" id="img_id_front" src="{{$item->portrait_image_path}}">
+                </div>
+            </div>
+
             <h3>
                 Ảnh chứng minh thư
             </h3>
 
-            <div>
-                <label class="bold">Ảnh mặt trước:</label>
-                <div>
-                    <img style="max-height: 400px;object-fit: contain;width: 100%;" id="img_id_front" src="{{$item->front_id_image_path}}">
+            <div class="row">
+                <div class="col-6">
+                    <div>
+                        <label class="bold">Ảnh mặt trước:</label>
+                        <div>
+                            <img style="max-height: 400px;object-fit: contain;width: 100%;" id="img_id_front" src="{{$item->front_id_image_path}}">
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mt-3">
-                <label class="bold">Ảnh mặt sau:</label>
-                <div>
-                    <img style="max-height: 400px;object-fit: contain;width: 100%;" id="img_id_back" src="{{$item->back_id_image_path}}">
+                <div class="col-6">
+
+                    <label class="bold">Ảnh mặt sau:</label>
+                    <div>
+                        <img style="max-height: 400px;object-fit: contain;width: 100%;" id="img_id_back" src="{{$item->back_id_image_path}}">
+                    </div>
                 </div>
             </div>
 
