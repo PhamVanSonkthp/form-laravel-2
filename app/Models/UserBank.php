@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Bank extends Model implements Auditable
+class UserBank extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
@@ -19,6 +19,7 @@ class Bank extends Model implements Auditable
     protected $guarded = [];
 
     // begin
+
 
 
     // end
@@ -38,9 +39,7 @@ class Bank extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-        $pathDefault = asset('/assets/administrator/images/bank_images/' . $this->id . ".jpg");
-
-        return Helper::getDefaultIcon($this, $size, $pathDefault);
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -53,9 +52,8 @@ class Bank extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -66,9 +64,9 @@ class Bank extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'vn_name' => $request->vn_name,
-            'path_api_web2m' => $request->path_api_web2m,
-            'is_active' => $request->is_active ? 1 : 0,
+            'title' => $request->title,
+            'content' => $request->contents,
+            'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -79,9 +77,9 @@ class Bank extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'vn_name' => $request->vn_name,
-            'path_api_web2m' => $request->path_api_web2m,
-            'is_active' => $request->is_active ? 1 : 0,
+            'title' => $request->title,
+            'content' => $request->contents,
+            'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -97,8 +95,7 @@ class Bank extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id)
-    {
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }

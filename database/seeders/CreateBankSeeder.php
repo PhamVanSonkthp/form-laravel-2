@@ -929,7 +929,7 @@ class CreateBankSeeder extends Seeder
                 "atm_bin" => isset($bank['atmBin']) ? $bank['atmBin'] : null,
                 "card_length" => $bank['cardLength'],
                 "short_name" => $bank['shortName'],
-                "bank_code" => $bank['bankCode'],
+                "code" => $bank['bankCode'],
                 "type" => isset($bank['type']) ? $bank['type'] : null,
                 "napas_supported" => $bank['napasSupported'],
             ]);

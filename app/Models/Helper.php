@@ -48,7 +48,7 @@ class Helper extends Model
         return $object->getTable();
     }
 
-    public static function getDefaultIcon($object, $size = "100x100")
+    public static function getDefaultIcon($object, $size = "100x100", $path_default = null)
     {
         $image = $object->image;
 
@@ -56,7 +56,7 @@ class Helper extends Model
 
         if (!empty($object->feature_image_path)) return $object->feature_image_path;
 
-        return config('_my_config.default_avatar');
+        return $path_default ?? config('_my_config.default_avatar');
     }
 
     public static function image($object)
@@ -100,7 +100,7 @@ class Helper extends Model
         $columns = Schema::getColumnListing($object->getTableName());
         $query = $object->query();
 
-        $searchLikeColumns = ['name', 'title', 'search_query', 'id', 'sku', 'phone', 'email', 'code'];
+        $searchLikeColumns = ['name', 'title', 'search_query', 'id', 'sku', 'phone', 'email', 'code', 'short_name'];
         $searchColumnBanned = ['limit', 'page', 'with_trashed'];
 
         foreach ($request->all() as $key => $item) {

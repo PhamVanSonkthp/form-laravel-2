@@ -2,6 +2,7 @@
 
 use App\Events\ChatPusherEvent;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryNewsController;
 use App\Http\Controllers\API\CategoryProductsController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\API\ParticipantChatController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SliderController;
 use App\Http\Controllers\API\SystemBranchController;
+use App\Http\Controllers\API\UserBankController;
 use App\Http\Controllers\API\VoucherController;
 use App\Http\Requests\Chat\ParticipantAddRequest;
 use App\Http\Requests\PusherChatRequest;
@@ -93,6 +95,11 @@ Route::prefix('public')->group(function () {
     Route::prefix('sliders')->group(function () {
         Route::get('/', [SliderController::class, 'list']);
         Route::get('/{id}', [SliderController::class, 'get']);
+    });
+
+    Route::prefix('banks')->group(function () {
+        Route::get('/', [BankController::class, 'list']);
+        Route::get('/{id}', [BankController::class, 'get']);
     });
 
     Route::prefix('auth')->group(function () {
@@ -181,6 +188,12 @@ Route::prefix('user')->group(function () {
 
         Route::prefix('membership')->group(function () {
             Route::get('/', [MemberShipController::class, 'list']);
+        });
+
+        Route::prefix('bank')->group(function () {
+            Route::get('/', [UserBankController::class, 'list']);
+            Route::get('/{id}', [UserBankController::class, 'get']);
+            Route::post('/', [UserBankController::class, 'create']);
         });
 
     });

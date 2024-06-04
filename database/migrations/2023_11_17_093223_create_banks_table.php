@@ -21,10 +21,11 @@ class CreateBanksTable extends Migration
             $table->string('atm_bin')->nullable();
             $table->string('card_length')->nullable();
             $table->string('short_name')->nullable();
-            $table->string('bank_code')->nullable();
+            $table->string('code')->nullable();
             $table->string('type')->nullable();
             $table->boolean('napas_supported')->default(false);
             $table->string('path_api_web2m')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

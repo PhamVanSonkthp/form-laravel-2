@@ -20,6 +20,7 @@ class BankController extends Controller
     public function __construct(Bank $model)
     {
         $this->initBaseModel($model);
+        $this->isSingleImage = true;
         $this->isMultipleImages = false;
         $this->shareBaseModel($model);
     }
