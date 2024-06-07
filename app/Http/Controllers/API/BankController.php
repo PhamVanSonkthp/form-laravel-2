@@ -29,10 +29,4 @@ class BankController extends Controller
         $results = RestfulAPI::response($this->model, $request);
         return response()->json($results);
     }
-
-    public function list(Request $request)
-    {
-        $results = RestfulAPI::response($this->model, $request);
-        return response()->json($results);
-    }
 }

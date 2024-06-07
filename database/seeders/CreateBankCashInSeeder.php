@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BankCashIn;
 use Illuminate\Database\Seeder;
 
 class CreateBankCashInSeeder extends Seeder
@@ -13,8 +14,13 @@ class CreateBankCashInSeeder extends Seeder
      */
     public function run()
     {
-        Model::firstOrCreate([
-            "field" => "",
+        BankCashIn::firstOrCreate([
+            "bank_id" => 90,
+            "account_name" => "IFNT",
+            "account_number" => "0031000332333",
+            "account_password" => "",
+            "account_token_web2m" => "",
+            "is_default" => 1,
         ]);
     }
 }

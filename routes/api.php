@@ -12,22 +12,18 @@ use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ParticipantChatController;
+use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\PointController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\ReferController;
+use App\Http\Controllers\API\RegisterCityController;
+use App\Http\Controllers\API\RegisterDistrictController;
+use App\Http\Controllers\API\RegisterWardController;
 use App\Http\Controllers\API\SliderController;
 use App\Http\Controllers\API\SystemBranchController;
 use App\Http\Controllers\API\UserBankController;
 use App\Http\Controllers\API\VoucherController;
-use App\Http\Requests\Chat\ParticipantAddRequest;
-use App\Http\Requests\PusherChatRequest;
-use App\Models\Chat;
-use App\Models\ChatGroup;
-use App\Models\ChatImage;
-use App\Models\Helper;
-use App\Models\Image;
-use App\Models\Notification;
-use App\Models\ParticipantChat;
-use App\Models\RestfulAPI;
-use App\Traits\StorageImageTrait;
+use App\Http\Controllers\API\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +58,22 @@ Route::prefix('public')->group(function () {
             Route::get('/{id}', [ProductController::class, 'getProductComment']);
             Route::post('/{id}', [ProductController::class, 'createProductComment']);
         });
+    });
+
+    Route::prefix('address')->group(function () {
+
+        Route::prefix('city')->group(function () {
+            Route::get('/', [RegisterCityController::class, 'list']);
+        });
+
+        Route::prefix('district')->group(function () {
+            Route::get('/', [RegisterDistrictController::class, 'list']);
+        });
+
+        Route::prefix('ward')->group(function () {
+            Route::get('/', [RegisterWardController::class, 'list']);
+        });
+
     });
 
     Route::prefix('cart')->group(function () {
@@ -194,6 +206,34 @@ Route::prefix('user')->group(function () {
             Route::get('/', [UserBankController::class, 'list']);
             Route::get('/{id}', [UserBankController::class, 'get']);
             Route::post('/', [UserBankController::class, 'create']);
+        });
+
+        Route::prefix('refer')->group(function () {
+            Route::get('/', [ReferController::class, 'list']);
+            Route::post('/', [ReferController::class, 'create']);
+        });
+
+        Route::prefix('point')->group(function () {
+            Route::get('/', [PointController::class, 'list']);
+
+            Route::prefix('exchange')->group(function () {
+                Route::get('/', [PointController::class, 'get']);
+                Route::get('/check', [PointController::class, 'check']);
+                Route::post('/', [PointController::class, 'create']);
+            });
+
+        });
+
+        Route::prefix('membership')->group(function () {
+            Route::get('/', [MemberShipController::class, 'list']);
+        });
+
+        Route::prefix('wallet')->group(function () {
+            Route::get('/', [WalletController::class, 'list']);
+        });
+
+        Route::prefix('payment')->group(function () {
+            Route::get('/infor', [PaymentController::class, 'getInforPayment']);
         });
 
     });
