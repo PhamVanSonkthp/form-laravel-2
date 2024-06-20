@@ -43,47 +43,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($items as $item)
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
-                                        </td>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>
-                                            <strong>
-                                                {{$item->code}}
-                                            </strong>
-                                        </td>
-                                        <td>{{\App\Models\Formatter::getDateTime($item->begin)}}</td>
-                                        <td>{{\App\Models\Formatter::getDateTime($item->end)}}</td>
-                                        <td>{{\App\Models\Formatter::formatNumber($item->used)}}</td>
-                                        <td>{{\App\Models\Formatter::formatNumber($item->max_use_by_time)}}</td>
-                                        <td>{{$item->textTypeVoucher()}}</td>
-                                        <td>
-                                            @if($item->typeVoucher() == 1)
-                                                {{\App\Models\Formatter::formatMoney($item->discount_amount)}}
-                                            @else
-                                                Giảm: {{\App\Models\Formatter::formatNumber($item->discount_percent)}}% - Giảm tối đa: {{\App\Models\Formatter::formatMoney($item->max_discount_percent_amount)}}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-outline-secondary btn-sm edit" title="Sửa"
-                                               href="{{route('administrator.'.$prefixView.'.edit' , ['id'=> $item->id])}}"
-                                               data-id="{{$item->id}}"><i class="fa-solid fa-pen"></i></a>
-
-                                            <a href="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}" title="Xóa"
-                                               data-url="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}"
-                                               class="btn btn-outline-danger btn-sm delete action_delete">
-                                                <i class="fa-solid fa-x"></i>
-                                            </a>
-
-                                            <a href="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}" title="Lịch sử tác động"
-                                               data-url="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}"
-                                               class="btn btn-outline-info btn-sm action_audit">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView])
                                 @endforeach
 
                                 </tbody>

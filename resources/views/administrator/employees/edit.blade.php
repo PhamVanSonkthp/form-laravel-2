@@ -16,7 +16,7 @@
                 @method('PUT')
                 @csrf
 
-                <div class="col-xxl-6">
+                <div class="col-xxl-9">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -46,10 +46,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group mt-3">
-                                        <label>Email (dùng làm tên đăng nhập)<span class="text-danger">*</span> (Tên đăng nhập)</label>
+                                        <label>Email (dùng làm tên đăng nhập)<span class="text-danger">*</span></label>
                                         <input type="text" name="email" autocomplete="off"
                                                class="form-control @error('email') is-invalid @enderror"
-                                               value="{{$item->email}}" required readonly>
+                                               value="{{$item->email}}" required>
                                         @error('email')
                                         <div class="alert alert-danger">{{$message}}</div>
                                         @enderror

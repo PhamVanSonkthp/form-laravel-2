@@ -18,7 +18,7 @@
 
     </div>
 
-    <textarea id="{{$randomId}}" style="min-height: 500px;" name="{{$name}}"
+    <textarea id="{{$randomId}}" style="min-height: {{isset($height) ? $height : '200'}}px;" name="{{$name}}"
               class="form-control tinymce_editor_init @error($name) is-invalid @enderror"
               rows="5">{{$value}}</textarea>
     @error($name)

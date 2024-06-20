@@ -616,7 +616,7 @@ class Product extends Model implements Auditable
             'name' => $request->name,
             'short_description' => $request->short_description,
             'description' => $request->description,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->name,$id),
             'price_import' => Formatter::formatMoneyToDatabase($request->price_import),
             'price_client' => Formatter::formatMoneyToDatabase($request->price_client),
             'price_agent' => Formatter::formatMoneyToDatabase($request->price_agent),

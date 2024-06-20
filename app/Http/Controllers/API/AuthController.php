@@ -64,6 +64,25 @@ class AuthController extends Controller
 
         $token = $user->createToken($this->plainToken)->plainTextToken;
 
+        $userRefer = User::find($user->referral_id);
+
+        if (!empty($userRefer)){
+            $setting =  Setting::first();
+
+            $number_point_refer_success = $setting->number_point_refer_success ?? 0;
+            $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
+
+            if (!empty($number_point_refer_success)){
+                $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id());
+            }
+
+            if (!empty($number_point_taken_refer_success)){
+                auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
+            }
+
+        }
+
+
         $response = [
             'user' => $user,
             'token' => $token,
@@ -99,11 +118,11 @@ class AuthController extends Controller
     public function signIn(Request $request)
     {
         $request->validate([
-            'phone' => 'required|string',
+            'user_name' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('phone', $request->phone)->first();
+        $user = User::where('email', $request->user_name)->orWhere('phone', $request->user_name)->first();
 
         if (empty($user)) {
             return response([
@@ -196,6 +215,7 @@ class AuthController extends Controller
             'date_of_birth' => 'date_format:Y-m-d',
             'image' => 'nullable|mimes:jpg,jpeg,png',
         ]);
+        $user = auth()->user();
 
         $dataUpdate = [];
 
@@ -215,7 +235,7 @@ class AuthController extends Controller
             $dataUpdate['password'] = Formatter::hash($request->password);
         }
 
-        auth()->user()->update($dataUpdate);
+        $user->update($dataUpdate);
 
         if ($request->hasFile('image')){
             $item = SingleImage::firstOrCreate([
@@ -237,6 +257,35 @@ class AuthController extends Controller
             $item->refresh();
 
         }
+
+        if (!empty($request->referral_id) && $user->referral_id == 0) {
+
+            $userRefer = User::where('id', $request->referral_id)->orWhere('phone', $request->referral_id)->first();
+
+            if (!empty($userRefer)) {
+                $referral_id = $userRefer->id;
+                $user->update([
+                    'referral_id' => $referral_id
+                ]);
+
+                $setting =  Setting::first();
+
+                $number_point_refer_success = $setting->number_point_refer_success ?? 0;
+                $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
+
+                if (!empty($number_point_refer_success)){
+                    $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id());
+                }
+
+                if (!empty($number_point_taken_refer_success)){
+                    auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
+                }
+
+            }
+
+        }
+
+        $user->refresh();
 
         return auth()->user();
     }

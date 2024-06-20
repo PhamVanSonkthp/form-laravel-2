@@ -57,8 +57,66 @@ class UserBankController extends Controller
             'is_default' => $request->is_default ?? 0,
         ]);
 
+        optional($this->model->where('user_id', auth()->id())->first())->update([
+            'is_default' => 1
+        ]);
+
         $item->refresh();
 
         return response()->json($item);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'bank_id' => 'required|exists:banks,id',
+            'account_name' => 'required',
+            'account_number' => 'required',
+        ]);
+
+        $result = $this->model->findOrFail($id);
+
+        if ($result->user_id != auth()->id()) return abort(404);
+
+        if ($request->is_default == 1){
+            $this->model->where('user_id', auth()->id())->update([
+                'is_default' => 0
+            ]);
+        }
+
+        $result->update([
+            'bank_id' => $request->bank_id,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+            'is_default' => $request->is_default ?? 0,
+        ]);
+
+        if (empty(auth()->user()->bankDefault())){
+            optional($this->model->where('user_id', auth()->id())->first())->update([
+                'is_default' => 1
+            ]);
+        }
+
+        $result->refresh();
+
+        return response()->json($result);
+    }
+
+    public function delete(Request $request, $id)
+    {
+
+        $result = $this->model->findOrFail($id);
+
+        if ($result->user_id != auth()->id()) return abort(404);
+
+        $result = $result->delete();
+
+        if (empty(auth()->user()->bankDefault())){
+            optional($this->model->where('user_id', auth()->id())->first())->update([
+                'is_default' => 1
+            ]);
+        }
+
+        return response()->json($result);
     }
 }

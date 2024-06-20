@@ -20,7 +20,9 @@ class UserBank extends Model implements Auditable
 
     // begin
 
-
+    public function bank(){
+        return $this->belongsTo(Bank::class);
+    }
 
     // end
 
@@ -34,12 +36,13 @@ class UserBank extends Model implements Auditable
         $array = parent::toArray();
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
+        $array['bank'] = $this->bank;
         return $array;
     }
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()

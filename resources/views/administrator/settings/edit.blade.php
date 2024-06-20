@@ -68,7 +68,15 @@
                                 </div>
 
                                 <div class="col-6">
-                                    @include('administrator.components.require_input_text', ['label' => 'Email' , 'name' => 'email_contact'])
+                                    @include('administrator.components.require_input_text_email', ['label' => 'Email' , 'name' => 'email_contact'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.require_input_number', ['label' => 'Số điểm khi giới thiệu thành công / người đăng ký mới' , 'name' => 'number_point_refer_success'])
+                                </div>
+
+                                <div class="col-6">
+                                    @include('administrator.components.require_input_number', ['label' => 'Số điểm khi nhập mã giới thiệu' , 'name' => 'number_point_taken_refer_success'])
                                 </div>
 
                             </div>

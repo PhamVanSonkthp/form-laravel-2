@@ -1,8 +1,8 @@
 <style>
     #single-drop-region {
         background-color: #fff;
-        border-radius: 20px;
-        box-shadow: 0 0 35px rgba(0, 0, 0, 0.05);
+        /*border-radius: 20px;*/
+        /*box-shadow: 0 0 35px rgba(0, 0, 0, 0.05);*/
         /*width:400px;*/
         padding: 20px;
         /*text-align: center;*/
@@ -14,6 +14,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        border: 1px solid #e9ecef;
 
     }
 
@@ -34,7 +35,7 @@
         display: inline-block;
         position: relative;
         margin-right: 13px;
-        margin-left: 13px;
+        /*margin-left: 13px;*/
     }
 
     #single-image-preview .single-image-view img {
@@ -95,9 +96,14 @@
 
 @endphp
 
+<div>
+    <label>
+        {{isset($label) ? $label : "Logo"}} @include('administrator.components.lable_require')
+    </label>
+</div>
 <div id="single-drop-region" style="max-width: 314px;max-height: 314px;">
     <div id="single-drop-message">
-        Icon
+        <img style="width: 60px;position: absolute;left: -30px;top: -30px;" src="{{asset('/assets/administrator/images/placeholder.png')}}">
     </div>
     <ul id="single-image-preview">
         @if(isset($image))
@@ -110,7 +116,7 @@
 
 <script>
     @if(isset($image))
-        $('#single-drop-message').hide()
+    $('#single-drop-message').hide()
     @endif
 
     if (typeof single_url_upload_file === 'undefined') {

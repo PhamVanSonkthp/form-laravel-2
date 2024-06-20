@@ -7,9 +7,10 @@
     <td>
         <img class="rounded-circle" src="{{$item->avatar()}}" alt="">
     </td>
+    <td>{{$item->is_default ? "YES" : "NO"}}</td>
+    <td>{{$item->doc_link}}</td>
     <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
     <td>
-
         @include('administrator.components.action_table', ['prefixView' => $prefixView, '$item' => $item])
     </td>
 </tr>

@@ -47,6 +47,10 @@ class CreateSettingsTable extends Migration
             $table->string('api_key_weather')->nullable();
             $table->string('token_chat')->nullable();
 
+            $table->integer('number_point_refer_success')->default(1);
+            $table->integer('number_point_taken_refer_success')->default(1);
+
+            $table->tinyInteger('is_show_audit_row')->default(0);
             $table->timestamps();
         });
     }

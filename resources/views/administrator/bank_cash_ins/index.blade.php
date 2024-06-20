@@ -43,42 +43,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($items as $item)
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
-                                        </td>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{ optional($item->bank)->vn_name}}</td>
-                                        <td>
-                                            <img class="rounded-circle" src="{{optional($item->bank)->avatar()}}" alt="">
-                                        </td>
-                                        <td>{{$item->account_name}}</td>
-                                        <td>{{$item->account_number}}</td>
-                                        <td>{{$item->account_password}}</td>
-                                        <td>{{$item->account_token_web2m}}</td>
-                                        <td>{{$item->is_default ? "YES" : "NO"}}</td>
-                                        <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
-                                        <td>
-
-                                            <a href="{{route('administrator.'.$prefixView.'.edit' , ['id'=> $item->id ])}}" title="Sửa"
-                                               class="btn btn-outline-secondary btn-sm edit" title="Edit">
-                                                <i class="fa-solid fa-pen"></i>
-                                            </a>
-
-                                            <a href="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}" title="Xóa"
-                                               data-url="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}"
-                                               class="btn btn-outline-danger btn-sm delete action_delete"
-                                               title="Delete">
-                                                <i class="fa-solid fa-x"></i>
-                                            </a>
-
-                                            <a href="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}" title="Lịch sử tác động"
-                                               data-url="{{route('administrator.'.$prefixView.'.audit' , ['id'=> $item->id])}}"
-                                               class="btn btn-outline-info btn-sm action_audit">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView])
                                 @endforeach
 
                                 </tbody>

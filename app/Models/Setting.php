@@ -65,6 +65,8 @@ class Setting extends Model implements Auditable
             'pusher_app_secret' => $request->pusher_app_secret,
             'pusher_app_cluster' => $request->pusher_app_cluster,
             'is_login_only_one_device' => $request->is_login_only_one_device ?? 0,
+            'number_point_refer_success' => $request->number_point_refer_success ?? 0,
+            'number_point_taken_refer_success' => $request->number_point_taken_refer_success ?? 0,
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -99,6 +101,8 @@ class Setting extends Model implements Auditable
             'type_ai_id' => $request->type_ai_id ?? 1,
             'token_chat' => $request->token_chat,
             'api_key_weather' => $request->api_key_weather,
+            'number_point_refer_success' => $request->number_point_refer_success ?? 0,
+            'number_point_taken_refer_success' => $request->number_point_taken_refer_success ?? 0,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

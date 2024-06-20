@@ -9,10 +9,10 @@
     <meta content="Pham Son" name="author">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-{{--    <link rel="shortcut icon" href="{{ env('APP_URL') . \App\Models\Helper::logoImagePath() }}">--}}
+    {{--    <link rel="shortcut icon" href="{{ env('APP_URL') . \App\Models\Helper::logoImagePath() }}">--}}
     <link rel="shortcut icon" href="{{ \App\Models\Helper::logoImagePath() }}">
 
-@yield('title')
+    @yield('title')
 
 <!-- Google font-->
     <!-- Fonts -->
@@ -78,6 +78,7 @@
     {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/administrator/css/order-image.css')}}" >--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+
     <!-- core:js -->
     <script src="{{asset('/assets/administrator/NobleUI/assets/vendors/core/core.js')}}"></script>
     <!-- endinject -->
@@ -85,6 +86,7 @@
     <script src="{{asset('/assets/administrator/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('/assets/administrator/js/jquery.ui.min.js')}}"></script>
     {{--    <script src="{{asset('/vendor/jquery-ui-1.13.2/jquery-ui.js')}}"></script>--}}
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
 
     <script src="{{asset('/vendor/masknumber/jquery.masknumber.js')}}"></script>
 
@@ -136,6 +138,16 @@
         .container-search-method{
             display: none;
         }
+
+        .table-responsive > .table > thead > tr > th:first-child{
+            text-align: center;
+        }
+
+        tr td:last-child {
+            width: 1%;
+            white-space: nowrap;
+        }
+
     </style>
     @yield('css')
 </head>

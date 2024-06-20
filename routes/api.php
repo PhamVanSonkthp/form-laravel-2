@@ -206,6 +206,8 @@ Route::prefix('user')->group(function () {
             Route::get('/', [UserBankController::class, 'list']);
             Route::get('/{id}', [UserBankController::class, 'get']);
             Route::post('/', [UserBankController::class, 'create']);
+            Route::put('/{id}', [UserBankController::class, 'update']);
+            Route::delete('/{id}', [UserBankController::class, 'delete']);
         });
 
         Route::prefix('refer')->group(function () {

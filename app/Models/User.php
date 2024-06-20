@@ -219,6 +219,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $this->belongsTo(RegisterWard::class);
     }
 
+    public function bankDefault()
+    {
+        return UserBank::where(['user_id' => $this->id, 'is_default' => 1])->first();
+    }
+
     // end
 
     public function getTableName()
@@ -238,6 +243,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         $array['district'] = $this->district;
         $array['ward'] = $this->ward;
         $array['text_status_online'] = $this->textStatusOnline();
+        $array['bank_default'] = $this->bankDefault();
+
         return $array;
     }
 
@@ -248,7 +255,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             return Formatter::getThumbnailImage($image->image_path, $size);
         }
 
-        return $this->portrait_image_path;
+        return config('_my_config.default_avatar');
     }
 
     public function image()

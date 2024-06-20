@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\Notifications;
 use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
+use Carbon\Carbon;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -590,6 +591,27 @@ class Helper extends Model
             Log::error($exception->getMessage());
             return null;
         }
+    }
+
+    public static function compareTwoDate($date1, $date2)
+    {
+
+        $date1  = Carbon::parse($date1);
+        $date2  = Carbon::parse($date2);
+
+        return $date1->greaterThan($date2);
+
+    }
+
+    public static function successAPI($code, $data, $message)
+    {
+        return [
+            'success' => true,
+            'code' => $code,
+            'data' => $data,
+            'message' => $message
+        ];
+
     }
 
 }

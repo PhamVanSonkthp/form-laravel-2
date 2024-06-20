@@ -23,73 +23,31 @@
                     <div class="card-body">
                         <div>
                             <strong>
-                                Danh sách cần làm
+                                Danh sách hồ sơ
                             </strong>
                         </div>
 
                         <div class="row mt-3">
                             <div class="d-flex">
 
-                                <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 1])}}">
-                                        <div class="text-center" style="font-size: 20px;">
-                                            <strong>
-                                                {{\App\Models\Formatter::formatNumber($numberOrderWaiting)}}
-                                            </strong>
-                                        </div>
+                                @foreach(\App\Models\OrderStatus::all() as $order)
 
-                                        <div class="text-center text-dark">
-                                            Chờ xác nhận
-                                        </div>
-                                    </a>
+                                    <div class="flex-grow-1">
+                                        <a href="{{route('administrator.orders.index', ['order_status_id' => $order->id])}}">
+                                            <div class="text-center" style="font-size: 20px;">
+                                                <strong>
+                                                    {{\App\Models\Formatter::formatNumber(\App\Models\Order::where('order_status_id', $order->id)->count())}}
+                                                </strong>
+                                            </div>
 
-                                </div>
+                                            <div class="text-center text-dark">
+                                                {{$order->name}}
+                                            </div>
+                                        </a>
 
-                                <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 2])}}">
-                                        <div class="text-center" style="font-size: 20px;">
-                                            <strong>
-                                                {{\App\Models\Formatter::formatNumber($numberOrderShipping)}}
-                                            </strong>
-                                        </div>
+                                    </div>
 
-                                        <div class="text-center text-dark">
-                                            Đang giao
-                                        </div>
-                                    </a>
-
-                                </div>
-
-                                <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 4])}}">
-                                        <div class="text-center" style="font-size: 20px;">
-                                            <strong>
-                                                {{\App\Models\Formatter::formatNumber($numberOrderCancel)}}
-                                            </strong>
-                                        </div>
-
-                                        <div class="text-center text-dark">
-                                            Hủy
-                                        </div>
-                                    </a>
-
-                                </div>
-
-                                <div class="flex-grow-1">
-                                    <a href="{{route('administrator.orders.index', ['order_status_id' => 5])}}">
-                                        <div class="text-center" style="font-size: 20px;">
-                                            <strong>
-                                                {{\App\Models\Formatter::formatNumber($numberOrderRefund)}}
-                                            </strong>
-                                        </div>
-
-                                        <div class="text-center text-dark">
-                                            Hoàn tiền
-                                        </div>
-                                    </a>
-
-                                </div>
-
+                                @endforeach
 
                             </div>
                         </div>

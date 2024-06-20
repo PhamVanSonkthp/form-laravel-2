@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\EmployeeExport;
 use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Requests\UserAddRequest;
 use App\Http\Requests\UserEditRequest;
 use App\Models\Audit;
@@ -48,7 +50,7 @@ class EmployeeController extends Controller
         return view('administrator.'.$this->prefixView.'.add');
     }
 
-    public function store(Request $request)
+    public function store(EmployeeStoreRequest $request)
     {
         $item = $this->model->storeByQuery($request);
         return redirect()->route('administrator.'.$this->prefixView.'.index');
@@ -61,7 +63,7 @@ class EmployeeController extends Controller
         return view('administrator.'.$this->prefixView.'.edit', compact('item','rolesOfUser'));
     }
 
-    public function update($id, Request $request)
+    public function update(EmployeeUpdateRequest $request, $id)
     {
         $item = $this->model->updateByQuery($request, $id);
         return redirect()->route('administrator.' . $this->prefixView . '.index');
