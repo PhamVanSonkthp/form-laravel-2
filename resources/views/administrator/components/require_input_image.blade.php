@@ -1,74 +1,99 @@
 @php
-
-    $id_preview_image = isset($id) ? $id : \App\Models\Helper::randomString();
-
-    if(isset($value)){
-
-    }else if(isset($item)){
-        $value = $item->$name;
-    }else{
-        $value = old($name);
-    }
-
+    $idRandom = \App\Models\Helper::randomString();
 @endphp
-<div class="container">
-    <div class="preview-{{$id_preview_image}}">
-        <img for="file-input-{{$id_preview_image}}" id="img-{{$id_preview_image}}" src="{{ isset($item) ? $item->$name : asset('/assets/administrator/images/placeholder.png')}}" />
 
-        <label id="label-file-input-{{$id_preview_image}}" for="file-input-{{$id_preview_image}}">{{$label}} @include('administrator.components.lable_require')</label>
-        <input name="{{$name}}" accept="image/*" type="file" id="file-input-{{$id_preview_image}}" {{!isset($item) ? "required" : ""}} />
+<div class="mt-3 form-group">
+    <div>
+        <label>
+            {{isset($label) ? $label : "Logo"}} @include('administrator.components.lable_require')
+        </label>
+    </div>
+    <div class="container-image-input" id="container_{{$idRandom}}">
+        <input type="file" name="{{$name}}"
+               id="image-file_{{$idRandom}}"
+               accept="image/x-png, image/jpeg"
+               style="display : none"
+        />
+
+        <label id="image-label_{{$idRandom}}" for="image-file_{{$idRandom}}">
+
+            @if(isset($item) && !empty($item->$name))
+                <img id="image_placeholder_{{$idRandom}}" class="image-place-houlder" src="{{env('APP_URL') . ($item->$name)}}">
+            @else
+                <img id="image_placeholder_{{$idRandom}}" class="image-place-houlder" src="{{(asset('/assets/administrator/images/placeholder.png'))}}">
+                {{--                Upload image--}}
+            @endif
+
+        </label>
+
     </div>
 </div>
 
 <style>
-    #file-input-{{$id_preview_image}} {
-        display: none;
+
+    .image-place-houlder {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        position: absolute;
+        top: 40%;
     }
 
-    .preview-{{$id_preview_image}} {
-        padding: 30px;
+    #container_{{$idRandom}} {
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    #image-label_{{$idRandom}} {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0px 1px 7px rgba(105, 110, 232, 0.54);
+        border-radius: 10px;
         flex-direction: column;
-        max-width: 200px;
-        margin: auto;
-        background-color: rgb(255, 255, 255);
-        box-shadow: 0 0 20px rgba(170, 170, 170, 0.2);
-
-        background-color: #fff;
-        border-radius: 20px;
-        box-shadow: 0 0 35px rgba(0, 0, 0, 0.05);
-    }
-
-    #img-{{$id_preview_image}} {
-        width: 100%;
-        object-fit: cover;
-        margin-bottom: 20px;
-    }
-
-    #label-file-input-{{$id_preview_image}} {
-        font-weight: 600;
+        gap: 15px;
+        user-select: none;
         cursor: pointer;
-        color: #fff;
-        border-radius: 8px;
-        padding: 10px 20px;
-        background-color: rgb(101, 101, 255);
+        color: #207ed1;
+        transition: all 1s;
+    }
+
+    #image-label_{{$idRandom}}:hover {
+        color: #18ac1c;
     }
 </style>
 
 <script>
+    $(document).ready(function () {
 
-    $( document ).ready(function() {
-        const input = document.getElementById('file-input-{{$id_preview_image}}');
-        const image = document.getElementById('img-{{$id_preview_image}}');
+        const input_file = document.getElementById('image-file_{{$idRandom}}');
+        const input_label = document.getElementById('image-label_{{$idRandom}}')
 
-        input.addEventListener('change', (e) => {
-            if (e.target.files.length) {
-                const src = URL.createObjectURL(e.target.files[0]);
-                image.src = src;
-            }
-        });    });
+        const convert_to_base64 = file => new Promise((response) => {
+            const file_reader = new FileReader();
+            file_reader.readAsDataURL(file);
+            file_reader.onload = () => response(file_reader.result);
+        });
+
+        input_file.addEventListener('change', async function () {
+            const file = document.querySelector('#image-file_{{$idRandom}}').files;
+            const my_image = await convert_to_base64(file[0]);
+            // input_label.style.backgroundImage = `url(${my_image})`
+
+            $('#image_placeholder_{{$idRandom}}').attr('src',my_image);
 
 
+            {{--$('#image-label_{{$idRandom}}').html('')--}}
+        })
+
+
+    });
 </script>

@@ -16,4 +16,6 @@ return [
         "1000x1000",
     ],
     'permission' => 755,
+
+    'compress_image_quality' => 40,
 ];

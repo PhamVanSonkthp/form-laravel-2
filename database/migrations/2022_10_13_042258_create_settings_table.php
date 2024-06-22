@@ -24,6 +24,7 @@ class CreateSettingsTable extends Migration
             $table->string('email_contact')->nullable();
             $table->integer('point')->default(1);
             $table->integer('amount')->default(1);
+
             $table->string('pusher_app_id')->nullable();
             $table->string('pusher_app_key')->nullable();
             $table->string('pusher_app_secret')->nullable();
@@ -42,6 +43,7 @@ class CreateSettingsTable extends Migration
             $table->string('mail_from_address')->default('infinitytechnologyhp@gmail.com');
             $table->string('mail_from_name')->default('Infinity Technology');
 
+            $table->string('token_chat')->nullable();
             $table->integer('type_ai_id')->default(1);
 
             $table->string('api_key_weather')->nullable();

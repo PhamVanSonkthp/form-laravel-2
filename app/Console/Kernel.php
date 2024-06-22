@@ -27,6 +27,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('email:job_email')
             ->everyMinute();
+
+        $schedule->command('backup:run')->timezone('Asia/Ho_Chi_Minh')
+            ->dailyAt('00:00');
     }
 
     /**

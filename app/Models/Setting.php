@@ -103,6 +103,9 @@ class Setting extends Model implements Auditable
             'api_key_weather' => $request->api_key_weather,
             'number_point_refer_success' => $request->number_point_refer_success ?? 0,
             'number_point_taken_refer_success' => $request->number_point_taken_refer_success ?? 0,
+            'default_shipping_fee' => $request->default_shipping_fee ?? 0,
+            'terms_of_use_html' => $request->terms_of_use_html,
+            'privacy_policy_html' => $request->privacy_policy_html,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

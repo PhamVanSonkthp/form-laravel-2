@@ -1,6 +1,8 @@
 -- Begin --
 * Chạy cron mỗi phút để gửi email và thông báo
 
+php /var/www/artisan schedule:run 1>> /dev/null 2>&1
+
 run chedule: php artisan schedule:run
 -- End --
 

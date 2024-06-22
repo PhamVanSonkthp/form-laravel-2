@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Notifications\Notifications;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class JobEmail extends Command
 {
@@ -38,10 +40,16 @@ class JobEmail extends Command
      */
     public function handle()
     {
-        $jobEmails = \App\Models\JobEmail::whereDate('time_send' , '<=', now())->limit(env('MAXIMUM_SEND_EMAIL_ONE_MINUTE', 10))->get();
+        $currentHour = (int)(date('H'));
+
+        $nowTime = $currentHour . ':' . date('i') . ":00";
+
+        $nowTime = Carbon::parse($nowTime);
+
+        $jobEmails = \App\Models\JobEmail::where('time_send', $nowTime)->limit(env('MAXIMUM_SEND_EMAIL_ONE_MINUTE', 10))->get();
 
         foreach ($jobEmails as $jobEmail) {
-            if (!empty($jobEmail->user)){
+            if (!empty($jobEmail->user)) {
                 $jobEmail->user->notify(new Notifications($jobEmail->title, $jobEmail->content));
             }
             $jobEmail->delete();
