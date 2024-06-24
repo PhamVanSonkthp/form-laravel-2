@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +11,15 @@ use Intervention\Image\Facades\Image;
 
 trait StorageImageTrait
 {
+
+    public static function saveToS3($request, $fieldName){
+        $file = $request->$fieldName;
+//        $path = $file->store('public/images');
+
+
+        Storage::disk('s3')->put('public/images', $file);
+    }
+
     public static function storageTraitUpload($request, $fieldName, $folderName, $id)
     {
 
@@ -40,6 +50,9 @@ trait StorageImageTrait
 
                 // for save thumnail image
                 $ImageUpload = Image::make($file->getRealpath())->orientate();
+
+                self::saveToS3($request, $fieldName);
+
                 if (!file_exists(storage_path() . $folderName . '/original/')) {
                     mkdir(storage_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
                 }
@@ -61,7 +74,7 @@ trait StorageImageTrait
                         mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
 
                     }
-                    if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
+                    if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/')) {
                         mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/', config('_images_cut_sizes.permission'), true);
                     }
                     $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
