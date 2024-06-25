@@ -40,15 +40,7 @@
                                     </div>
                                 @endif
 
-                                <div class="form-group mt-3">
-                                    <label>Nhập nội dung</label>
-                                    <textarea style="min-height: 400px;" name="contents"
-                                              class="form-control tinymce_editor_init @error('contents') is-invalid @enderror"
-                                              rows="8">{{old('contents')}}</textarea>
-                                    @error('contents')
-                                    <div class="alert alert-danger">{{$message}}</div>
-                                    @enderror
-                                </div>
+                                @include('administrator.components.require_textarea_description', ['name' => 'content' , 'label' => 'Mô tả'])
 
                                 <button type="submit" class="btn btn-primary mt-3">Thêm mới</button>
                             </div>

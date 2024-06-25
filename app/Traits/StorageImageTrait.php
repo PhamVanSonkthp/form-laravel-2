@@ -16,6 +16,7 @@ trait StorageImageTrait
         $file = $request->$fieldName;
 //        $path = $file->store('public/images');
 
+        // save to public and prefix link cloudfront here
 
         Storage::disk('s3')->put('public/images', $file);
     }

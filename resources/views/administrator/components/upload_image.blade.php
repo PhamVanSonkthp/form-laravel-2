@@ -92,6 +92,8 @@
         $image = optional($item->image)->image_path;
         $relateImageTableId = $item->id;
         $relate_id = $item->id;
+    }else{
+        $image = null;
     }
 
 @endphp
@@ -106,7 +108,7 @@
         <img style="width: 60px;position: absolute;left: -30px;top: -30px;" src="{{asset('/assets/administrator/images/placeholder.png')}}">
     </div>
     <ul id="single-image-preview">
-        @if(isset($image))
+        @if(isset($image) && !empty($image))
             <li class="single-image-view">
                 <img style="" src="{{$image}}">
             </li>
