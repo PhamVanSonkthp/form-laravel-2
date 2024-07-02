@@ -20,6 +20,7 @@ class CreateFlashSalesTable extends Migration
             $table->dateTime('end');
             $table->boolean('is_active');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

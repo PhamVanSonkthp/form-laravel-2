@@ -15,13 +15,14 @@ class CreateUserNotificationsTable extends Migration
     {
         Schema::create('user_notifications', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->index();
             $table->text('title');
             $table->text('content');
             $table->text('image_path')->nullable();
             $table->text('activity')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

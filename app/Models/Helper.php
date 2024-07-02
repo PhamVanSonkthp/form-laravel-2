@@ -7,11 +7,13 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Carbon\Carbon;
 use DateTime;
+use Google\Auth\CredentialsLoader;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -399,6 +401,44 @@ class Helper extends Model
         return optional(SingleImage::where('relate_id', Helper::getNextIdTable($table))->where('table', $table)->first())->image_path;
     }
 
+
+
+    static function getTokenFirebase(){
+        try {
+            $file = File::get(base_path() . env('FIREBASE_FILE_JSON_PATH'));
+            $scope = 'https://www.googleapis.com/auth/firebase.messaging';
+            $credentials = CredentialsLoader::makeCredentials($scope, json_decode($file, true));
+            $credentials = $credentials->fetchAuthToken();
+
+            return $credentials;
+        }catch (Exception $exception){
+            Log::error($exception->getMessage());
+        }
+
+        return null;
+    }
+    static function refreshTokenFirebase(){
+
+        $setting = Setting::first();
+
+        if(!empty($setting)){
+
+            $token_firebase_expired_at = $setting->token_firebase_expired_at;
+
+
+            if(empty($setting->token_firebase) || empty($token_firebase_expired_at) || self::compareTwoDate(now(),$setting->token_firebase_expired_at)){
+                $credentials = self::getTokenFirebase();
+
+                if (!empty($credentials)){
+                    $setting->update([
+                        'token_firebase' => $credentials['access_token'],
+                        'token_firebase_expired_at' => Carbon::now()->addSeconds($credentials['expires_in']),
+                    ]);
+                }
+            }
+        }
+    }
+
     public static function sendNotificationToTopic($topicName, $title, $body, $save = false, $user_id = null, $image_path = null, $activity = null)
     {
         if ($save && !empty($user_id)) {
@@ -413,44 +453,56 @@ class Helper extends Model
 
         if (env('FIREBASE_SERVER_NOTIFIABLE', true)) {
 
+            self::refreshTokenFirebase();
+
+            $token = optional(Setting::first())->token_firebase;
+
             try {
                 $client = new Client();
                 $client->post(
-                    'https://fcm.googleapis.com/fcm/send',
+                    'https://fcm.googleapis.com/v1/projects/'.env('FIREBASE_PROJECT_NAME').'/messages:send',
                     [
                         'headers' => [
                             'Content-Type' => 'application/json',
-                            'Authorization' => env('FIREBASE_SERVER_KEY')],
+                            'Authorization' => "Bearer " . $token,
+                        ],
                         'json' => [
-                            'to' => '/topics/' . $topicName,
-                            'notification' => [
-                                'title' => $title,
-                                'body' => $body,
-                                "click_action" => "TOP_STORY_ACTIVITY",
-                            ],
-                            'apns' => [
-                                'headers' => [
-                                    'apns-priority' => '10'
-                                ],
-                                'payload' => [
-                                    'aps' => [
-                                        'sound' => 'notification'
-                                    ]
-                                ],
-                            ],
-                            'android' => [
-                                'priority' => 'high',
+                            'message' => [
+                                'topic' => $topicName,
                                 'notification' => [
-                                    'sound' => 'notification'
+                                    'title' => $title,
+                                    'body' => $body,
+                                ],
+                                'data' => [
+                                    'title' => $title,
+                                    'body' => $body,
+                                    'activity' => $activity,
+                                    "click_action" => "FLUTTER_NOTIFICATION_CLICK",
+                                ],
+                                'apns' => [
+                                    'headers' => [
+                                        'apns-priority' => '10'
+                                    ],
+                                    'payload' => [
+                                        'aps' => [
+                                            'sound' => 'default'
+                                        ]
+                                    ],
+                                ],
+                                'android' => [
+                                    'priority' => 'high',
+                                    'notification' => [
+                                        'sound' => 'default',
+                                    ],
                                 ],
                             ],
                         ],
-                        'timeout' => 5, // Response timeout
-                        'connect_timeout' => 5, // Connection timeout
-                    ],
+                        'timeout' => 50, // Response timeout
+                        'connect_timeout' => 50, // Connection timeout
+                    ]
                 );
             } catch (Exception $e) {
-
+                Log::error($e->getMessage());
             }
 
         }

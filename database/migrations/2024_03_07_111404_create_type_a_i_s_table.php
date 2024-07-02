@@ -18,6 +18,7 @@ class CreateTypeAISTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

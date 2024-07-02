@@ -18,6 +18,7 @@ class CreateMembershipsTable extends Migration
             $table->string('name');
             $table->bigInteger('require_number_ticket');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

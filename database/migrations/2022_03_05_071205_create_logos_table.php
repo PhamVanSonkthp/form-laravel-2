@@ -18,6 +18,7 @@ class CreateLogosTable extends Migration
             $table->string('image_path');
             $table->string('image_name');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

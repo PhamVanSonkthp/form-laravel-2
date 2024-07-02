@@ -16,9 +16,10 @@ class CreateUserProductRecentsTable extends Migration
         Schema::create('user_product_recents', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->index();
-            $table->bigInteger('product_id');
+            $table->bigInteger('product_id')->index();
             $table->integer('count')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

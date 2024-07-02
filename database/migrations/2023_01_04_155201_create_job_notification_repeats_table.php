@@ -19,6 +19,7 @@ class CreateJobNotificationRepeatsTable extends Migration
             $table->integer('day_of_week');
             $table->boolean('sent')->default(false);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

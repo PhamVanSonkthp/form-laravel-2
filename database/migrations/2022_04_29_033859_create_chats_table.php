@@ -19,6 +19,7 @@ class CreateChatsTable extends Migration
             $table->bigInteger('user_id')->index();
             $table->bigInteger('chat_group_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

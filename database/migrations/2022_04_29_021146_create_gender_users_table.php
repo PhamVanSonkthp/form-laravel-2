@@ -17,6 +17,7 @@ class CreateGenderUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

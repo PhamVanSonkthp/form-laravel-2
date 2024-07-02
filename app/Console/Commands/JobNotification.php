@@ -3,10 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Models\Helper;
-use App\Models\User;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
+use Exception;
+use Google\Auth\CredentialsLoader;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class JobNotification extends Command
 {
@@ -34,6 +36,21 @@ class JobNotification extends Command
         parent::__construct();
     }
 
+    public function getTokenFirebase(){
+        try {
+            $file = File::get(base_path() . '/storage/assets/dong-ho-bao-thuc-iot-firebase-adminsdk-2ha8v-278a09734a.json');
+            $scope = 'https://www.googleapis.com/auth/firebase.messaging';
+            $credentials = CredentialsLoader::makeCredentials($scope, json_decode($file, true));
+            $credentials->fetchAuthToken();
+
+            return $credentials['token_type'];
+        }catch (Exception $exception){
+            Log::error($exception->getMessage());
+        }
+
+        return null;
+    }
+
     /**
      * Execute the console command.
      *
@@ -41,6 +58,25 @@ class JobNotification extends Command
      */
     public function handle()
     {
+        $addMinuteTime = 2;
+        $hour = Helper::addZero(Carbon::now()->subMinutes($addMinuteTime)->hour);
+        $minute = Helper::addZero(Carbon::now()->subMinutes($addMinuteTime)->minute);
+        $second = "00";
+
+        $nowTime = $hour . ":" . $minute . ":" . $second;
+
+        $jobNotifications = JobNotification::whereDate('date', Carbon::today())->where('time', $nowTime)->get();
+
+        foreach ($jobNotifications as $jobNotification){
+            if ($jobNotification->userScheduleCron->count() > 0){
+                foreach ($jobNotification->userScheduleCron as $userScheduleCron){
+                    Helper::sendNotificationToTopic($userScheduleCron->user_id, $jobNotification->title, $jobNotification->description, true,$userScheduleCron->user_id,null,$jobNotification->link);
+                }
+            }else{
+                Helper::sendNotificationToTopic(env('FIREBASE_TOPIC_ALL_N1','app'), $jobNotification->title, $jobNotification->description, false,null,null,$jobNotification->link);
+            }
+        }
+
 
 //        $sendAll = [];
 //

@@ -21,6 +21,7 @@ class CreateShippingMethodsTable extends Migration
             $table->string('private_key')->nullable();
             $table->string('doc_link')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

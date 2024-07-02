@@ -21,6 +21,7 @@ class CreateProductCommentsTable extends Migration
             $table->text('content');
             $table->tinyInteger('star');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

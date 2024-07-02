@@ -19,6 +19,7 @@ class CreateChatImagesTable extends Migration
             $table->string('image_path');
             $table->bigInteger('chat_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

@@ -20,6 +20,7 @@ class CreateRegisterWardsTable extends Migration
             $table->string('lat')->nullable();
             $table->string('long')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

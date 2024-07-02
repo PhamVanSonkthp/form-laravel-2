@@ -18,6 +18,7 @@ class CreateTablePermissionRole extends Migration
             $table->bigInteger('role_id')->index();
             $table->bigInteger('permission_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

@@ -21,6 +21,7 @@ class CreateJobNotificationsTable extends Migration
             $table->boolean('notiable')->default(true);
             $table->boolean('repeat')->default(false);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

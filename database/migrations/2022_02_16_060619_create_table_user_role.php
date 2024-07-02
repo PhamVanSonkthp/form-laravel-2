@@ -18,6 +18,7 @@ class CreateTableUserRole extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('role_id');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

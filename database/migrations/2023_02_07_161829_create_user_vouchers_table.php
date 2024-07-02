@@ -18,6 +18,7 @@ class CreateUserVouchersTable extends Migration
             $table->bigInteger('user_id')->index();
             $table->bigInteger('voucher_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

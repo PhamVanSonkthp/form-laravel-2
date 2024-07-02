@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SingleImage;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ImagesController extends Controller

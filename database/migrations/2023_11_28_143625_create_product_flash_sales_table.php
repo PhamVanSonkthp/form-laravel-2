@@ -15,10 +15,11 @@ class CreateProductFlashSalesTable extends Migration
     {
         Schema::create('product_flash_sales', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('flash_sale_id');
-            $table->bigInteger('product_id');
+            $table->bigInteger('product_id')->index();
+            $table->bigInteger('flash_sale_id')->index();
             $table->bigInteger('price');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

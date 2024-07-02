@@ -43,6 +43,11 @@ return [
             'visibility' => 'public',
         ],
 
+        'my_files' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/myfiles',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -52,12 +57,11 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'visibility' => env('VISIBILITY', 'public'),
         ],
 
-        'backup' => [
+        'storage' => [
             'driver' => 'local',
-            'root' => storage_path('backup'),
+            'root' => storage_path('/'),
         ],
 
     ],

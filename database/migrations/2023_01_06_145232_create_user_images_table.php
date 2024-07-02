@@ -15,9 +15,10 @@ class CreateUserImagesTable extends Migration
     {
         Schema::create('user_images', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('image_id');
+            $table->bigInteger('user_id')->index();
+            $table->bigInteger('image_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

@@ -17,6 +17,7 @@ class CreateChatGroupsTable extends Migration
             $table->id();
             $table->text('title')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

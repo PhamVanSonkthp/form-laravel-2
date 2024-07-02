@@ -15,10 +15,11 @@ class CreateCategoryNewsTable extends Migration
     {
         Schema::create('category_news', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name')->index();
             $table->text('slug');
             $table->bigInteger('parent_id')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

@@ -15,9 +15,10 @@ class CreateUserSingleImagesTable extends Migration
     {
         Schema::create('user_single_images', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('single_image_id');
+            $table->bigInteger('user_id')->index();
+            $table->bigInteger('single_image_id')->index();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

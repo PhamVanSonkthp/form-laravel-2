@@ -20,6 +20,7 @@ class CreateUserPointsTable extends Migration
             $table->text('description');
             $table->tinyInteger('user_point_type_id')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

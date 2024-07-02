@@ -19,6 +19,7 @@ class CreateCalendarsTable extends Migration
             $table->dateTime('begin');
             $table->dateTime('end');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

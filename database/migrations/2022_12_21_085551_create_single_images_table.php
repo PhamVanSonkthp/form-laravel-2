@@ -21,6 +21,7 @@ class CreateSingleImagesTable extends Migration
             $table->bigInteger('relate_id')->index();
             $table->tinyInteger('status_image_id')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

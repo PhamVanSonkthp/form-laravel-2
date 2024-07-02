@@ -19,6 +19,7 @@ class CreateSlidersTable extends Migration
             $table->string('feature_image_name');
             $table->string('feature_image_path');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

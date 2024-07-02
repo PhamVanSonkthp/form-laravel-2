@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name')->index();
             $table->text('slug');
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->text('seo_description')->nullable();
             $table->tinyInteger('is_feature')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

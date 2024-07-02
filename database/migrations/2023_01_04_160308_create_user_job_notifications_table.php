@@ -18,6 +18,7 @@ class CreateUserJobNotificationsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('job_notification_id');
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

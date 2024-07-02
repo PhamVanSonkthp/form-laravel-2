@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -46,6 +46,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_seen')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['created_at']);
         });
     }
 

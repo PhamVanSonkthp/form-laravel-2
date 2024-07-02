@@ -20,8 +20,10 @@ class CreateParticipantChatsTable extends Migration
             $table->integer('status')->default(1);
             $table->bigInteger('admin_care_id')->default(0);
             $table->tinyInteger('is_read')->default(0);
+            $table->dateTime('latest_touch')->useCurrent();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['created_at']);
         });
     }
 

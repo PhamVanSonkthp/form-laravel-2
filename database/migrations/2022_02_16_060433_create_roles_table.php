@@ -19,6 +19,7 @@ class CreateRolesTable extends Migration
             $table->string('display_name');
             $table->text('content')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

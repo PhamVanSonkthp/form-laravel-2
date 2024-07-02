@@ -21,6 +21,7 @@ class CreateJobEmailsTable extends Migration
             $table->dateTime('time_send');
             $table->softDeletes();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

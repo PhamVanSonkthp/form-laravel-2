@@ -44,16 +44,18 @@ class CreateSettingsTable extends Migration
             $table->string('mail_from_name')->default('Infinity Technology');
 
             $table->string('token_chat')->nullable();
+            $table->longText('token_firebase')->nullable();
+            $table->dateTime('token_firebase_expired_at')->nullable();
             $table->integer('type_ai_id')->default(1);
 
             $table->string('api_key_weather')->nullable();
-            $table->string('token_chat')->nullable();
 
             $table->integer('number_point_refer_success')->default(1);
             $table->integer('number_point_taken_refer_success')->default(1);
 
             $table->tinyInteger('is_show_audit_row')->default(0);
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

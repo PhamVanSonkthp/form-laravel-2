@@ -22,6 +22,7 @@ class CreateOrderProductsTable extends Migration
             $table->text('name')->nullable();
             $table->string('product_image')->nullable();
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 
