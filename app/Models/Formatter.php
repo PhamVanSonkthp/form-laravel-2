@@ -207,4 +207,41 @@ class Formatter extends Model
     {
         return Str::slug($input);
     }
+
+    public static function tryParseInt($input)
+    {
+        if (empty($input)) return 0;
+
+        return (int)$input;
+    }
+
+    public static function toTimestamp($input)
+    {
+        return Carbon::parse($input)->format('Uu') / pow(10, 6 - 3);
+    }
+
+    public static function isEmail($input)
+    {
+        return !empty($input) && filter_var($input, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function hiddenPhone($number)
+    {
+        $middle_string = "";
+        $length = strlen($number);
+
+        if ($length < 3) {
+
+            return $length == 1 ? "*" : "*" . substr($number, -1);
+
+        } else {
+            $part_size = floor($length / 3);
+            $middle_part_size = $length - ($part_size * 2);
+            for ($i = 0; $i < $middle_part_size; $i++) {
+                $middle_string .= "*";
+            }
+
+            return substr($number, 0, $part_size) . $middle_string . substr($number, -$part_size);
+        }
+    }
 }

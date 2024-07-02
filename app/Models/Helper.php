@@ -538,6 +538,16 @@ class Helper extends Model
         $user->notify(new Notifications($subject, $body));
     }
 
+    public static function sendEmail($subject, $body, $email)
+    {
+        $user = (new User([
+            'email' => $email,
+            'name' => substr($email, 0, strpos($email, '@')), // here we take the name form email (string before "@")
+        ]));
+
+        $user->notify(new Notifications($subject, $body));
+    }
+
     public static function addZero($input)
     {
         $input = $input . "";
