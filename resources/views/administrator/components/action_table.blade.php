@@ -4,7 +4,7 @@
     <i class="fa-solid fa-pen"></i>
 </a>
 
-<a href="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}" title="Xóa"
+<a href="#" title="Xóa"
    data-url="{{route('administrator.'.$prefixView.'.delete' , ['id'=> $item->id])}}"
    class="btn btn-outline-danger btn-sm delete action_delete"
    data-id="{{$item->id}}">

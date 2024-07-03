@@ -10,8 +10,7 @@ Route::get('/admin/logout', [
     'uses' => '\App\Http\Controllers\Admin\AdminController@logout'
 ]);
 
-Route::prefix('administrator')->group(function () {
-
+Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']],function() {
     Route::prefix('password')->group(function () {
         Route::get('/', [
             'as' => 'administrator.password.index',
@@ -1976,6 +1975,11 @@ Route::prefix('administrator')->group(function () {
             'middleware' => 'can:history_datas-list',
         ]);
     });
-
 });
+
+//Route::prefix('administrator')->group(function () {
+//
+//
+//
+//});
 

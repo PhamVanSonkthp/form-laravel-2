@@ -52,19 +52,19 @@ trait StorageImageTrait
                 ];
 
                 // for save thumnail image
-//                $ImageUpload = Image::make($file->getRealpath())->orientate();
+                $ImageUpload = Image::make($file->getRealpath())->orientate();
 
 //                self::saveToS3($request, $fieldName);
 
                 if (!file_exists(storage_path() . $folderName . '/original/')) {
                     mkdir(storage_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
                 }
-//                $ImageUpload->save(storage_path() . $folderName . '/original/' . $fileNameHash);
+                $ImageUpload->save(storage_path() . $folderName . '/original/' . $fileNameHash);
 
 
-                $folder = $folderName . '/original';
-                $path= Storage::disk('storage')->put($folder, $file);
-                $dataUpluadTrait['file_path'] = "/". $path;
+//                $folder = $folderName . '/original';
+//                $path= Storage::disk('my_public')->put($folder, $file);
+//                $dataUpluadTrait['file_path'] = "/". $path;
 
 //                if (!file_exists(storage_path() . $folderName . '/original/optimize/')) {
 //                    mkdir(storage_path() . $folderName . '/original/optimize/', config('_images_cut_sizes.permission'), true);
@@ -86,6 +86,7 @@ trait StorageImageTrait
 //                        mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/', config('_images_cut_sizes.permission'), true);
 //                    }
                     $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
+
 //                    $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/' . $fileNameHash, config('_images_cut_sizes.compress_image_quality'));
                 }
 

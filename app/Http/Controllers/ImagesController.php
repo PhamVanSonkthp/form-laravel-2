@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SingleImage;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Http\Requests;
 
 class ImagesController extends Controller
 {
@@ -49,6 +50,15 @@ class ImagesController extends Controller
     function approved($type, $user_id, $id, $size, $slug){
         $storagePath = storage_path('/assets/'.$type.'/' .$user_id. '/' . $id . '/' . $size . '/' . $slug);
         return Image::make($storagePath)->response();
+
+//        return Storage::disk('storage')->get($storagePath);
+//
+//        return \response()->file(Storage::disk('storage')->get($storagePath));
+//
+//        return response()->file(Storage::disk('storage')->get($storagePath));
+
+
+//        return Image::make($storagePath)->response();
     }
 }
 
