@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('backup:run')->timezone('Asia/Ho_Chi_Minh')
             ->dailyAt('00:00');
+
+        $schedule->command('schedule:bank_cash_in')
+            ->everyMinute();
     }
 
     /**

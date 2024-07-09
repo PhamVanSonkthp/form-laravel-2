@@ -485,11 +485,11 @@ Route::prefix('ajax/administrator')->group(function () {
 
                     if ($item->user_id == auth()->id()){
                         $item->update([
-                            'is_read' => 1
+                            'is_read' => 1,
                         ]);
                     }else{
                         $item->update([
-                            'is_read' => 0
+                            'is_read' => 0,
                         ]);
                     }
 

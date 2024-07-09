@@ -22,7 +22,7 @@
 
                             @include('administrator.components.require_input_text' , ['name' => 'account_number' , 'label' => 'Số tài khoản người hưởng thụ'])
 
-                            @include('administrator.components.input_text' , ['name' => 'account_password' , 'label' => 'Mật khẩu (web2m)'])
+                            @include('administrator.components.input_text_password' , ['name' => 'account_password' , 'label' => 'Mật khẩu ngân hàng', 'value' => ''])
 
                             @include('administrator.components.input_text' , ['name' => 'account_token_web2m' , 'label' => 'Token (web2m)'])
 
@@ -41,7 +41,7 @@
 
                             @include('administrator.components.require_check_box' , ['name' => 'is_default' , 'label' => 'Mặc định'])
 
-{{--                            @include('administrator.components.textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])--}}
+                            {{--                            @include('administrator.components.textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])--}}
 
                             @include('administrator.components.button_save')
                         </div>

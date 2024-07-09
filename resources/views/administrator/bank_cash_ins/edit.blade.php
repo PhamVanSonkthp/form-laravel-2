@@ -24,7 +24,7 @@
 
                             @include('administrator.components.require_input_text' , ['name' => 'account_number' , 'label' => 'Số tài khoản người hưởng thụ'])
 
-                            @include('administrator.components.input_text' , ['name' => 'account_password' , 'label' => 'Mật khẩu (web2m)'])
+                            @include('administrator.components.input_text_password' , ['name' => 'account_password' , 'label' => 'Mật khẩu ngân hàng', 'value' => ''])
 
                             @include('administrator.components.input_text' , ['name' => 'account_token_web2m' , 'label' => 'Token (web2m)'])
 

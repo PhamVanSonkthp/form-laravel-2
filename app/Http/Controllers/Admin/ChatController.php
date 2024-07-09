@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Formatter;
 use App\Models\ParticipantChat;
 use App\Models\Role;
 use App\Models\User;
@@ -37,9 +38,10 @@ class ChatController extends Controller
 
     public function index(Request $request)
     {
-        $query = ParticipantChat::where('user_id' , auth()->id());
+        $items = ParticipantChat::where('user_id' , auth()->id());
+        $items = $items->groupBy('chat_group_id');
 
-        $items = $query->latest()->paginate(10)->appends(request()->query());
+        $items = $items->latest('latest_touch')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         return view('administrator.'.$this->prefixView.'.index', compact('items'));
     }

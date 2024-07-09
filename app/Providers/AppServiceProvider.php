@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\ParticipantChat;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Observers\OrderObserver;
 use App\Observers\ParticipantChatObserver;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Config;
@@ -46,5 +48,6 @@ class AppServiceProvider extends ServiceProvider
         app('rinvex.attributes.entities')->push(OrderProduct::class);
 
         ParticipantChat::observe(ParticipantChatObserver::class);
+        Order::observe(OrderObserver::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\ChatPusherEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PusherChatRequest;
 use App\Models\Category;
@@ -72,6 +73,30 @@ class ChatController extends Controller
         }
 
         $chat->refresh();
+
+        foreach (ParticipantChat::where('chat_group_id', $request->chat_group_id)->get() as $item) {
+            $item->touch();
+//            if (auth()->id() != $item->user_id) {
+            event(new ChatPusherEvent($request, $chat->id, $item, auth()->id(), auth()->user()->avatar(), $chat->images));
+
+//            }
+            if (auth()->id() != $item->user_id) {
+                Helper::sendNotificationToTopic($item->user_id, "Chat", $request->contents, false, null, null, "chat/" . $request->chat_group_id);
+            }
+
+
+            if ($item->user_id == auth()->id()) {
+                $item->update([
+                    'is_read' => 1,
+                    'latest_touch' => now(),
+                ]);
+            } else {
+                $item->update([
+                    'is_read' => 0,
+                    'latest_touch' => now(),
+                ]);
+            }
+        }
 
         return response()->json($chat);
     }

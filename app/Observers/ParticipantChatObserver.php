@@ -25,8 +25,10 @@ class ParticipantChatObserver
      */
     public function updated(ParticipantChat $participantChat)
     {
-        $participantChat->latest_touch = now();
-        $participantChat->save();
+        if($participantChat->latest_touch != $participantChat->updated_at){
+            $participantChat->latest_touch = $participantChat->updated_at;
+            $participantChat->save();
+        }
     }
 
     /**

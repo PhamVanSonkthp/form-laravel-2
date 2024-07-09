@@ -73,6 +73,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            @include('administrator.components.footer_table')
                         </div>
 
                     </div>
