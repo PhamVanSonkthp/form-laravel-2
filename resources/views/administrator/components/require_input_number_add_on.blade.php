@@ -17,9 +17,9 @@
 
         <input id="{{isset($id) ? $id : \App\Models\Helper::randomString()}}" type="text" autocomplete="off"
                name="{{$name}}" class="form-control number @error($name) is-invalid @enderror"
-               value="{{$value}}" required  placeholder="{{isset($placeholder) ? $placeholder : 'Nhập...'}}" style="{{isset($hidden) ? "display: none;" : ''}}"
-               aria-describedby="basic-addon-{{$uuid}}">
-        <span class="input-group-text" id="basic-addon{{$uuid}}">%</span>
+               value="{{\App\Models\Formatter::formatNumber($value)}}" required  placeholder="{{isset($placeholder) ? $placeholder : 'Nhập...'}}" style="{{isset($hidden) ? "display: none;" : ''}}"
+               aria-describedby="basic-addon-{{$uuid}}" {{isset($disabled) ? 'disabled' : ''}}>
+        <span class="input-group-text" id="basic-addon{{$uuid}}">{{isset($addon) ? $addon : '%'}}</span>
         @error($name)
         <div class="alert alert-danger">{{$message}}</div>
         @enderror

@@ -45,6 +45,7 @@ class CreateSettingsTable extends Migration
 
             $table->string('token_chat')->nullable();
             $table->longText('token_firebase')->nullable();
+            $table->longText('custom_css')->nullable();
             $table->dateTime('token_firebase_expired_at')->nullable();
             $table->integer('type_ai_id')->default(1);
 

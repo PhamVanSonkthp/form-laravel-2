@@ -33,6 +33,11 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('schedule:bank_cash_in')
             ->everyMinute();
+
+//        $schedule->command('queue:work --timeout=60')
+//            ->everyMinute()
+//            ->withoutOverlapping()
+//            ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
     }
 
     /**

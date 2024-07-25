@@ -12,7 +12,7 @@
         <input type="file" name="{{$name}}"
                id="image-file_{{$idRandom}}"
                accept="image/x-png, image/jpeg"
-               style="display : none"
+               style="display : none" {{isset($disabled) ? 'disabled' : ''}}
         />
 
         <label id="image-label_{{$idRandom}}" for="image-file_{{$idRandom}}">

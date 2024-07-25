@@ -19,6 +19,7 @@ class CreateParticipantChatsTable extends Migration
             $table->bigInteger('chat_group_id')->index();
             $table->integer('status')->default(1);
             $table->bigInteger('admin_care_id')->default(0);
+            $table->bigInteger('number_not_read')->default(0);
             $table->tinyInteger('is_read')->default(0);
             $table->dateTime('latest_touch')->useCurrent();
             $table->timestamps();

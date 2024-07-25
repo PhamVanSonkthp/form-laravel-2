@@ -18,6 +18,8 @@ class DashboardController extends Controller
     public function index(){
         if(auth()->check()){
 
+
+
             $numberOrderWaiting = Order::where('order_status_id', 1)->count();
             $numberOrderShipping = Order::where('order_status_id', 2)->count();
             $numberOrderCancel = Order::where('order_status_id', 4)->count();
@@ -25,6 +27,8 @@ class DashboardController extends Controller
             $revenue = Order::sum('amount');
 
             return view('administrator.dashboard.index', compact('numberOrderCancel','numberOrderRefund','numberOrderShipping','numberOrderWaiting','revenue'));
+
+
         }
         return redirect()->to('/admin');
     }

@@ -22,7 +22,7 @@ class Chat extends Model implements Auditable
 
     public function images()
     {
-        return Helper::images($this);
+        return $this->hasMany(ChatImage::class);
     }
 
 

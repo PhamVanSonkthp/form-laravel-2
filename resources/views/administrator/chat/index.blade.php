@@ -48,28 +48,54 @@
                                 <tbody class="container-participant">
 
                                 @foreach($items as $item)
-                                    <tr style="cursor: pointer;{{$item->chat_group_id == $chatGroupIdWithUser ? 'color: red;' : ''}}"
-                                        data-url="{{route('administrator.chat.participant' , ['id' => $item->chat_group_id])}}"
-                                        data-id="{{$item->chat_group_id}}"
-                                        data-participant_chat_id="{{$item->id}}"
-                                    >
-                                        @php
-                                            if($item->chat_group_id == $chatGroupIdWithUser){
-                                                $isHaveUserId = true;
-                                            }
-                                        @endphp
-                                        <td style="{{$item->chat_group_id == $chatGroupIdWithUser ? 'color: red;' : ''}}">
-                                            @foreach(\App\Models\ParticipantChat::where('chat_group_id', $item->chat_group_id)->get() as $itemParticipantChat)
-                                                @if(auth()->id() != optional($itemParticipantChat->user)->id)
-                                                    <div data-userid="{{optional($itemParticipantChat->user)->id}}"
-                                                         data-username="{{optional($itemParticipantChat->user)->name}}"
-                                                         data-notechat="{{optional($itemParticipantChat->user)->note_chat}}">
-                                                        {{ optional($itemParticipantChat->user)->name}}
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                    </tr>
+                                    @php
+                                        $isSkip = true;
+                                    @endphp
+                                    @foreach(\App\Models\ParticipantChat::where('chat_group_id', $item->chat_group_id)->get() as $itemParticipantChat)
+                                        @if(auth()->id() != optional($itemParticipantChat->user)->id)
+
+                                            @php
+                                                if(!empty(optional($itemParticipantChat->user)->name)){
+                                                    $isSkip = false;
+                                                }
+                                            @endphp
+
+                                        @endif
+                                    @endforeach
+
+                                    @if(!$isSkip)
+
+                                        <tr style="cursor: pointer;{{$item->chat_group_id == $chatGroupIdWithUser ? 'color: red;' : ''}}"
+                                            data-url="{{route('administrator.chat.participant' , ['id' => $item->chat_group_id])}}"
+                                            data-id="{{$item->chat_group_id}}"
+                                            data-participant_chat_id="{{$item->id}}"
+                                        >
+                                            @php
+                                                if($item->chat_group_id == $chatGroupIdWithUser){
+                                                    $isHaveUserId = true;
+                                                }
+                                            @endphp
+                                            <td style="{{$item->chat_group_id == $chatGroupIdWithUser ? 'color: red;' : ''}} {{$item->is_read == 1? '' : 'font-weight: bold;'}}">
+                                                @foreach(\App\Models\ParticipantChat::where('chat_group_id', $item->chat_group_id)->get() as $itemParticipantChat)
+                                                    @if(auth()->id() != optional($itemParticipantChat->user)->id)
+                                                        <div style="position: relative;" data-userid="{{optional($itemParticipantChat->user)->id}}"
+                                                             data-username="{{optional($itemParticipantChat->user)->name}}"
+                                                             data-notechat="{{optional($itemParticipantChat->user)->note_chat}}">
+                                                            {{ optional($itemParticipantChat->user)->name}}
+
+                                                            @if($item->number_not_read > 0)
+                                                                <span class="badge bg-secondary fw-bolder ms-auto" style="position: absolute; right: 0; top: 0;">
+                                                            {{$item->number_not_read}}
+                                                        </span>
+                                                            @endif
+
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        </tr>
+
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

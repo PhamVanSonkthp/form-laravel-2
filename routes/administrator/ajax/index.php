@@ -476,26 +476,22 @@ Route::prefix('ajax/administrator')->group(function () {
                 }
 
                 foreach (ParticipantChat::where('chat_group_id', $request->chat_group_id)->get() as $item) {
-                    if (auth()->id() != $item->user_id) {
-                        $image_link = User::find($item->user_id)->feature_image_path;
-                        event(new ChatPusherEvent($request, $chat->id, $item, auth()->id(), $image_link,$chat->images));
-                    }
-
-//                        Notification::sendNotificationFirebase($item->user_id,$request->chat_group_id, $request->contents);
-
                     if ($item->user_id == auth()->id()){
                         $item->update([
                             'is_read' => 1,
+                            'number_not_read' => 0,
+                            'updated_at' => now(),
                         ]);
                     }else{
+
                         $item->update([
                             'is_read' => 0,
+                            'updated_at' => now(),
                         ]);
+                        $item->increment('number_not_read');
                     }
 
                 }
-
-//                    return view('administrator.chat.components')->with(['itemChat' => $chat])->render();
 
                 return response()->json($chat);
             })->name('administrator.chat.create');

@@ -91,7 +91,7 @@
 
                     <div class="mt-3">
                         <label>Số tiền @include('administrator.components.lable_require')</label>
-                        <input id="amount" type="text" class="form-control number" autocomplete="off">
+                        <input id="amount" type="number" class="form-control" autocomplete="off">
                         <i>(* Để trừ tiền hãy nhập số âm: -100.000)</i>
                     </div>
 

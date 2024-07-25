@@ -106,6 +106,7 @@ class Setting extends Model implements Auditable
             'default_shipping_fee' => $request->default_shipping_fee ?? 0,
             'terms_of_use_html' => $request->terms_of_use_html,
             'privacy_policy_html' => $request->privacy_policy_html,
+            'custom_css' => $request->custom_css,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

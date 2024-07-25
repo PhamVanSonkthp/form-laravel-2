@@ -342,6 +342,25 @@
                 </div>
 
 
+                <div class="col-xl-6">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div>
+                                <h2>
+                                    CSS
+                                </h2>
+                            </div>
+
+                            @include('administrator.components.textarea', ['label' => 'Custom css' , 'name' => 'custom_css'])
+
+                            @include('administrator.components.button_save')
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </form>

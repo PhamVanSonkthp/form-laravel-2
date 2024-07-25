@@ -7,7 +7,6 @@ use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Rinvex\Attributes\Traits\Attributable;
 
 class Product extends Model implements Auditable
 {
@@ -15,15 +14,12 @@ class Product extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
-    use Attributable;
 
     protected $searchable = [
         'name'
     ];
 
     protected $guarded = [];
-
-    protected $with = ['eav'];
 
     // begin
 
@@ -35,6 +31,10 @@ class Product extends Model implements Auditable
         }
 
         return $item;
+    }
+
+    public function isProductVariation(){
+        return false;
     }
 
     public static function search($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -149,26 +149,9 @@ class Product extends Model implements Auditable
 
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
-        if (count($array['path_images']) == 0) {
-            $array['path_images'][] = [
-                'id' => 0,
-                'uuid' => "none",
-                'image_path' => $this->feature_image_path,
-                'image_name' => "feature_image_path",
-                'table' => "feature_image_path",
-                'relate_id' => 0,
-                'index' => 0,
-                'status_image_id' => 0,
-                'created_at' => "none",
-                'updated_at' => "none",
-            ];
-        }
+
         $array['star'] = $this->star();
         $array['category'] = $this->category;
-        $array['price'] = $this->priceSale();
-        $array['price_up_sale'] = $this->priceUpSale();
-        $array['is_flash_sale'] = rand(0, 1) == 1;
-        $array['price_by_user'] = $this->priceByUser();
 
         if ((auth('sanctum')->check() || auth()->check()) && (optional(auth('sanctum')->user())->is_admin != 0 || optional(auth()->user())->is_admin != 0)) {
             // is admin user
@@ -193,257 +176,9 @@ class Product extends Model implements Auditable
         return $array;
     }
 
-    public function productsAttributes()
-    {
-        return $this->hasMany(Product::class, 'group_product_id', 'group_product_id');
-    }
-
     public function isEmptyInventory()
     {
         return $this->inventory <= 0;
-    }
-
-    public function priceByUser()
-    {
-        if (auth('sanctum')->check()) {
-            $user_type_id = optional(auth('sanctum')->user())->user_type_id;
-            if ($user_type_id == 3) {
-                return $this->price_partner;
-            }
-            if ($user_type_id == 2) {
-                return $this->price_agent;
-            }
-        }
-
-        return $this->price_client;
-    }
-
-    public function priceSale()
-    {
-
-        $productsAttributes = $this->productsAttributes;
-
-        $priceMinAgent = PHP_INT_MAX;
-        $priceMinClient = PHP_INT_MAX;
-        $priceMaxAgent = PHP_INT_MIN;
-        $priceMaxClient = PHP_INT_MIN;
-
-        $resultAgent = 0;
-        $resultClient = 0;
-
-        foreach ($productsAttributes as $item) {
-            if ($item->price_client <= $priceMinClient) $priceMinClient = $item->price_client;
-            if ($item->price_client >= $priceMaxClient) $priceMaxClient = $item->price_client;
-
-
-            if (auth('sanctum')->check()) {
-
-                if (auth('sanctum')->user()->user_type_id == 2) {
-                    if ($item->price_agent <= $priceMinAgent) $priceMinAgent = $item->price_agent;
-                    if ($item->price_agent >= $priceMaxAgent) $priceMaxAgent = $item->price_agent;
-                } elseif (auth('sanctum')->user()->user_type_id == 3) {
-                    if ($item->price_partner <= $priceMinAgent) $priceMinAgent = $item->price_partner;
-                    if ($item->price_partner >= $priceMaxAgent) $priceMaxAgent = $item->price_partner;
-                }
-            } else {
-                if ($item->price_agent <= $priceMinAgent) $priceMinAgent = $item->price_agent;
-                if ($item->price_agent >= $priceMaxAgent) $priceMaxAgent = $item->price_agent;
-            }
-
-        }
-
-        if (!empty($priceMinAgent) || !empty($priceMaxAgent)) {
-            if ($priceMinAgent != $priceMaxAgent) {
-                $resultAgent = Formatter::convertNumberToMoney($priceMinAgent) . " ~ " . Formatter::convertNumberToMoney($priceMaxAgent);
-            } else {
-                $resultAgent = Formatter::convertNumberToMoney($priceMinAgent);
-            }
-        }
-
-        if (!empty($priceMinClient) || !empty($priceMaxClient)) {
-            if ($priceMinClient != $priceMaxClient) {
-                $resultClient = Formatter::convertNumberToMoney($priceMinClient) . " ~ " . Formatter::convertNumberToMoney($priceMaxClient);
-            } else {
-                $resultClient = Formatter::convertNumberToMoney($priceMinClient);
-            }
-        }
-
-        if (!$this->isProductVariation()){
-
-            if ( auth('sanctum')->check() && auth('sanctum')->user()->user_type_id == 3){
-                $resultAgent = Formatter::convertNumberToMoney(round($this->price_agent));
-            }else{
-                $resultAgent = Formatter::convertNumberToMoney(round($this->price_partner));
-            }
-
-            $resultClient = Formatter::convertNumberToMoney(round($this->price_client));
-        }
-
-        if (auth('sanctum')->check() && auth('sanctum')->user()->user_type_id != 1) {
-            return $resultAgent . "";
-        } else {
-            return $resultClient . "";
-        }
-    }
-
-    public function priceUpSale()
-    {
-
-        $percent = 0.25;
-
-        $productsAttributes = $this->productsAttributes;
-
-        $priceMinAgent = PHP_INT_MAX;
-        $priceMinClient = PHP_INT_MAX;
-        $priceMaxAgent = PHP_INT_MIN;
-        $priceMaxClient = PHP_INT_MIN;
-
-        $resultAgent = 0;
-        $resultClient = 0;
-
-        foreach ($productsAttributes as $item) {
-            if ($item->price_client <= $priceMinClient) $priceMinClient = $item->price_client;
-            if ($item->price_client >= $priceMaxClient) $priceMaxClient = $item->price_client;
-            if ($item->price_agent <= $priceMinAgent) $priceMinAgent = $item->price_agent;
-            if ($item->price_agent >= $priceMaxAgent) $priceMaxAgent = $item->price_agent;
-        }
-        if ($priceMinClient == PHP_INT_MIN) $priceMinClient = 0;
-        if ($priceMaxClient == PHP_INT_MAX) $priceMaxClient = 0;
-
-        if (!empty($priceMinAgent) || !empty($priceMaxAgent)) {
-            if ($priceMinAgent != $priceMaxAgent) {
-                $resultAgent = Formatter::convertNumberToMoney(round($priceMinAgent + $priceMinAgent * $percent)) . " ~ " . Formatter::convertNumberToMoney(round($priceMaxAgent + $priceMaxAgent * $percent));
-            } else {
-                $resultAgent = Formatter::convertNumberToMoney(round($priceMinAgent + $priceMinAgent * $percent));
-            }
-        }
-
-        if (!empty($priceMinClient) || !empty($priceMaxClient)) {
-            if ($priceMinClient != $priceMaxClient) {
-                $resultClient = Formatter::convertNumberToMoney(round($priceMinClient + $priceMinClient * $percent)) . " ~ " . Formatter::convertNumberToMoney(round($priceMaxClient + $priceMaxClient * $percent));
-            } else {
-                $resultClient = Formatter::convertNumberToMoney(round($priceMinClient + $priceMinClient * $percent));
-            }
-        }
-
-        if (!$this->isProductVariation()){
-            if ( auth('sanctum')->check() && auth('sanctum')->user()->user_type_id == 3){
-                $resultAgent = Formatter::convertNumberToMoney(round($this->price_agent));
-            }else{
-                $resultAgent = Formatter::convertNumberToMoney(round($this->price_partner));
-            }
-
-            $resultClient = Formatter::convertNumberToMoney(round($this->price_client + $this->price_client * $percent));
-        }
-
-        if (auth('sanctum')->check() && auth('sanctum')->user()->user_type_id != 1) {
-            return $resultAgent . "";
-        } else {
-            return $resultClient . "";
-        }
-    }
-
-    public function attributes()
-    {
-        $products = $this->where('group_product_id', $this->group_product_id)->get();
-
-        $results = [];
-
-        foreach ($products as $item) {
-            $temp = [];
-            $temp['id'] = $item->id;
-            $temp['size'] = $item->size;
-            $temp['color'] = $item->color;
-            $temp['inventory'] = $item->inventory;
-
-            if (is_null($temp['size']) && is_null($temp['color'])) continue;
-
-            $results[] = $temp;
-        }
-
-        return $results;
-    }
-
-    public function getInventoryByAttributes($input)
-    {
-        foreach ($this->attributes() as $attribute) {
-            if ($attribute['size'] == $input) {
-                return $attribute['inventory'];
-            }
-        }
-
-        return 0;
-    }
-
-    public function isProductVariation()
-    {
-        return !empty($this->attributesJson()) && is_array($this->attributesJson()) && count($this->attributesJson()) > 0;
-    }
-
-    public function attributesJson()
-    {
-        $products = $this->where('group_product_id', $this->group_product_id)->get();
-
-        $resultsSize = [];
-        $resultsColor = [];
-
-        $resultsSizeFiltered = [];
-        $resultsColorFiltered = [];
-
-        foreach ($products as $item) {
-            $tempSize = $item->size;
-            $tempColor = $item->color;
-
-            if (is_null($tempSize)) continue;
-            $resultsSize[] = $tempSize;
-
-            if (is_null($tempColor)) continue;
-            $resultsColor[] = $tempColor;
-        }
-
-        $attributes = $this->attributes();
-
-        foreach ($resultsSize as $resultsSizeItem) {
-
-            $isBelong = false;
-
-            foreach ($attributes as $attributeItem) {
-                if ($resultsSizeItem == $attributeItem['size'] && !in_array($resultsSizeItem, $resultsSizeFiltered)) {
-                    $isBelong = true;
-                    break;
-                }
-            }
-            if ($isBelong) {
-                $resultsSizeFiltered[] = $resultsSizeItem;
-            }
-        }
-
-        foreach ($resultsColor as $resultsColorItem) {
-
-            $isBelong = false;
-
-            foreach ($attributes as $attributeItem) {
-                if ($resultsColorItem == $attributeItem['color'] && !in_array($resultsColorItem, $resultsColorFiltered)) {
-                    $isBelong = true;
-                    break;
-                }
-            }
-            if ($isBelong) {
-                $resultsColorFiltered[] = $resultsColorItem;
-            }
-        }
-
-        $result = [];
-
-        if (!empty($resultsSizeFiltered) && count($resultsSizeFiltered) > 0) {
-            $result['sizes'] = $resultsSizeFiltered;
-        }
-
-        if (!empty($resultsColorFiltered) && count($resultsColorFiltered) > 0) {
-            $result['colors'] = $resultsColorFiltered;
-        }
-
-        return $result;
     }
 
     public function category()
