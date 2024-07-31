@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateCategorySeeder::class);
         $this->call(CreateTypeAISeeder::class);
         $this->call(CreateBankCashInSeeder::class);
+        $this->call(CreateCountrySeeder::class);
 
     }
 }

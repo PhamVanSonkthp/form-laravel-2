@@ -100,8 +100,6 @@ class ProductController extends Controller
         set_time_limit(36000);
 
         $path = storage_path() . '/app/' . request()->file('import_file')->store('tmp');
-
-
         $reader = ReaderEntityFactory::createReaderFromFile($path);
 
         $reader->open($path);

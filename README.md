@@ -68,12 +68,14 @@ bỏ ở func if ($this->lfm->setName($name_to_delete)->isDirectory()) {...}
 
 -- End --
 
-need doing
-bình luận facebook
-
 --- Begin ---
 
 run schedule on DA
 /usr/local/bin/php -d "disable_functions=" /home/igop/domains/igop.gover.vn/public_html/artisan schedule:run > /dev/null 2>&1	
 
 --- End ---
+
+
+
+need doing
+bình luận facebook

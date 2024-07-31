@@ -468,7 +468,7 @@ class Helper extends Model
                         ],
                         'json' => [
                             'message' => [
-                                'topic' => $topicName,
+                                'topic' => $topicName . "",
                                 'notification' => [
                                     'title' => $title,
                                     'body' => $body,

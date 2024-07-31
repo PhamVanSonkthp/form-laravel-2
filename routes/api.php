@@ -7,6 +7,7 @@ use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryNewsController;
 use App\Http\Controllers\API\CategoryProductsController;
 use App\Http\Controllers\API\ChatController;
+use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\MemberShipController;
 use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\NotificationController;
@@ -58,6 +59,12 @@ Route::prefix('public')->group(function () {
             Route::get('/{id}', [ProductController::class, 'getProductComment']);
             Route::post('/{id}', [ProductController::class, 'createProductComment']);
         });
+    });
+
+    Route::prefix('countries')->group(function () {
+
+        Route::get('/', [CountryController::class, 'list']);
+
     });
 
     Route::prefix('address')->group(function () {
