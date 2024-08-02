@@ -75,7 +75,13 @@ run schedule on DA
 
 --- End ---
 
+--- Begin ---
 
+Quy tắc viết code
+https://docs.google.com/spreadsheets/d/1ZLJQd6VN-aafelsc1GoTX8wZYHcuC4bOd40uNmYQSIQ
+	
+
+--- End ---
 
 need doing
 bình luận facebook
