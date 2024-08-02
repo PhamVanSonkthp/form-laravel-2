@@ -32,6 +32,5 @@ class SlowJob implements ShouldQueue
     public function handle()
     {
         //
-
     }
 }

@@ -74,7 +74,7 @@ class UserProductRecentPolicy
      * @param  \App\Models\  $user_product_recents
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $user_product_recents)
+    public function restore(User $user, $user_product_recents)
     {
         //
     }
@@ -86,7 +86,7 @@ class UserProductRecentPolicy
      * @param  \App\Models\  $user_product_recents
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $user_product_recents)
+    public function forceDelete(User $user, $user_product_recents)
     {
         //
     }

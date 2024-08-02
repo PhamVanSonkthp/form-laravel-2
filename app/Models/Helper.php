@@ -43,7 +43,6 @@ class Helper extends Model
         } catch (\Exception $exception) {
             return 0;
         }
-
     }
 
     public static function getTableName($object)
@@ -55,9 +54,13 @@ class Helper extends Model
     {
         $image = $object->image;
 
-        if (!empty($image)) return Formatter::getThumbnailImage($image->image_path, $size);
+        if (!empty($image)) {
+            return Formatter::getThumbnailImage($image->image_path, $size);
+        }
 
-        if (!empty($object->feature_image_path)) return $object->feature_image_path;
+        if (!empty($object->feature_image_path)) {
+            return $object->feature_image_path;
+        }
 
         return $path_default ?? config('_my_config.default_avatar');
     }
@@ -98,7 +101,7 @@ class Helper extends Model
         return Schema::getColumnListing($object->getTableName());
     }
 
-    public static function searchByQuery($object, $request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
+    public static function searchByQuery($object, $request, $queries = [], $random_record = null, $make_hiddens = null, $is_custom = false)
     {
         $columns = Schema::getColumnListing($object->getTableName());
         $query = $object->query();
@@ -109,11 +112,12 @@ class Helper extends Model
         foreach ($request->all() as $key => $item) {
             $item = trim($item);
 
-            if (in_array($key, $searchColumnBanned)) continue;
+            if (in_array($key, $searchColumnBanned)) {
+                continue;
+            }
 
             if (in_array($key, $searchLikeColumns)) {
                 if (!empty($item) || strlen($item) > 0) {
-
                     $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns, $object) {
                         foreach ($searchLikeColumns as $searchColumn) {
                             if (in_array($searchColumn, $columns)) {
@@ -131,7 +135,9 @@ class Helper extends Model
                     $query = $query->whereDate('created_at', '<=', $item);
                 }
             } else {
-                if (!in_array($key, $columns)) continue;
+                if (!in_array($key, $columns)) {
+                    continue;
+                }
                 if (!empty($item) || strlen($item) > 0) {
                     $query = $query->where($key, $item);
                 }
@@ -142,11 +148,12 @@ class Helper extends Model
             foreach ($queries as $key => $item) {
                 $item = trim($item);
 
-                if (in_array($key, $searchColumnBanned)) continue;
+                if (in_array($key, $searchColumnBanned)) {
+                    continue;
+                }
 
                 if (in_array($key, $searchLikeColumns)) {
                     if (!empty($item) || strlen($item) > 0) {
-
                         $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns) {
                             foreach ($searchLikeColumns as $searchColumn) {
                                 if (in_array($searchColumn, $columns)) {
@@ -164,7 +171,9 @@ class Helper extends Model
                         $query = $query->whereDate('created_at', '<=', $item);
                     }
                 } else {
-                    if (!in_array($key, $columns)) continue;
+                    if (!in_array($key, $columns)) {
+                        continue;
+                    }
                     if (!empty($item) || strlen($item) > 0) {
                         $query = $query->where($key, $item);
                     }
@@ -182,7 +191,6 @@ class Helper extends Model
         }
 
         if (isset($request->filter) && !empty($request->filter)) {
-
             $filter = $request->filter;
 
             $filter = str_replace("[", "", $filter);
@@ -198,36 +206,33 @@ class Helper extends Model
                     if (in_array($key, $columns) && !empty($val)) {
                         $query->orderBy($key, $val);
                     }
-
                 }
-
             }
         }
 
-        if ($randomRecord) {
+        if ($random_record) {
             $query = $query->inRandomOrder();
         }
 
-        if ($isCustom) {
+        if ($is_custom) {
             return $query;
         }
 
         $items = $query->latest()->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
-        if (!empty($makeHiddens) && is_array($makeHiddens)) {
+        if (!empty($make_hiddens) && is_array($make_hiddens)) {
             foreach ($items as $item) {
-                $item->makeHidden($makeHiddens)->toArray();
+                $item->makeHidden($make_hiddens)->toArray();
             }
         }
         return $items;
     }
 
-    public static function getValueInFilterReuquest($keyRequest)
+    public static function getValueInFilterReuquest($key_request)
     {
 
-        $request = \request();
+        $request = request();
         if (isset($request->filter) && !empty($request->filter)) {
-
             $filter = $request->filter;
 
             $filter = str_replace("[", "", $filter);
@@ -240,12 +245,10 @@ class Helper extends Model
                     $key = explode("=", $value)[0];
                     $val = explode("=", $value)[1];
 
-                    if ($key == $keyRequest) {
+                    if ($key == $key_request) {
                         return $val;
                     }
-
                 }
-
             }
         }
 
@@ -264,7 +267,6 @@ class Helper extends Model
             $item = trim($item);
             if ($key == "search_query") {
                 if (!empty($item) || strlen($item) > 0) {
-
                     $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns) {
                         foreach ($searchLikeColumns as $searchColumn) {
                             if (in_array($searchColumn, $columns)) {
@@ -291,7 +293,9 @@ class Helper extends Model
         foreach ($queries as $key => $item) {
             $item = trim($item);
 
-            if (in_array($key, $searchColumnBanned)) continue;
+            if (in_array($key, $searchColumnBanned)) {
+                continue;
+            }
 
             if ($key == "search_query") {
                 if (!empty($item) || strlen($item) > 0) {
@@ -330,29 +334,29 @@ class Helper extends Model
         return $query->latest()->get();
     }
 
-    public static function storeByQuery($object, $request, $dataCreate)
+    public static function storeByQuery($object, $request, $data_create)
     {
-        $item = $object->create($dataCreate);
+        $item = $object->create($data_create);
         return $item;
     }
 
-    public static function updateByQuery($object, $request, $id, $dataUpdate)
+    public static function updateByQuery($object, $request, $id, $data_update)
     {
-        $object->find($id)->update($dataUpdate);
+        $object->find($id)->update($data_update);
         $item = $object->find($id);
         return $item;
     }
 
-    public static function deleteByQuery($object, $request, $id, $forceDelete = false)
+    public static function deleteByQuery($object, $request, $id, $force_delete = false)
     {
-        return $object->deleteModelTrait($id, $object, $forceDelete);
+        return $object->deleteModelTrait($id, $object, $force_delete);
     }
 
-    public static function deleteManyByIds($object, $request, $forceDelete = false)
+    public static function deleteManyByIds($object, $request, $force_delete = false)
     {
         $items = [];
         foreach ($request->ids as $id) {
-            $item = $object->deleteModelTrait($id, $object, $forceDelete);
+            $item = $object->deleteModelTrait($id, $object, $force_delete);
             $items[] = $item;
         }
 
@@ -364,15 +368,19 @@ class Helper extends Model
 
         $slug = Str::slug($value);
 
-        if (!empty($id)){
+        if (!empty($id)) {
             $itemUpdate = $object->find($id);
 
-            if (!empty($itemUpdate)){
-                if ($itemUpdate->$key == $slug) return $slug;
+            if (!empty($itemUpdate)) {
+                if ($itemUpdate->$key == $slug) {
+                    return $slug;
+                }
             }
         }
 
-        if (empty($slug)) $slug = $object->latest()->first() ? optional($object->latest()->first())->id + 1 : 1;
+        if (empty($slug)) {
+            $slug = $object->latest()->first() ? optional($object->latest()->first())->id + 1 : 1;
+        }
 
         $item = $object->where($key, $slug)->first();
 
@@ -403,7 +411,8 @@ class Helper extends Model
 
 
 
-    static function getTokenFirebase(){
+    static function getTokenFirebase()
+    {
         try {
             $file = File::get(base_path() . env('FIREBASE_FILE_JSON_PATH'));
             $scope = 'https://www.googleapis.com/auth/firebase.messaging';
@@ -411,25 +420,25 @@ class Helper extends Model
             $credentials = $credentials->fetchAuthToken();
 
             return $credentials;
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
         }
 
         return null;
     }
-    static function refreshTokenFirebase(){
+    static function refreshTokenFirebase()
+    {
 
         $setting = Setting::first();
 
-        if(!empty($setting)){
-
+        if (!empty($setting)) {
             $token_firebase_expired_at = $setting->token_firebase_expired_at;
 
 
-            if(empty($setting->token_firebase) || empty($token_firebase_expired_at) || self::compareTwoDate(now(),$setting->token_firebase_expired_at)){
+            if (empty($setting->token_firebase) || empty($token_firebase_expired_at) || self::compareTwoDate(now(), $setting->token_firebase_expired_at)) {
                 $credentials = self::getTokenFirebase();
 
-                if (!empty($credentials)){
+                if (!empty($credentials)) {
                     $setting->update([
                         'token_firebase' => $credentials['access_token'],
                         'token_firebase_expired_at' => Carbon::now()->addSeconds($credentials['expires_in']),
@@ -439,7 +448,7 @@ class Helper extends Model
         }
     }
 
-    public static function sendNotificationToTopic($topicName, $title, $body, $save = false, $user_id = null, $image_path = null, $activity = null)
+    public static function sendNotificationToTopic($topic_name, $title, $body, $save = false, $user_id = null, $image_path = null, $activity = null)
     {
         if ($save && !empty($user_id)) {
             UserNotification::create([
@@ -452,7 +461,6 @@ class Helper extends Model
         }
 
         if (env('FIREBASE_SERVER_NOTIFIABLE', true)) {
-
             self::refreshTokenFirebase();
 
             $token = optional(Setting::first())->token_firebase;
@@ -468,7 +476,7 @@ class Helper extends Model
                         ],
                         'json' => [
                             'message' => [
-                                'topic' => $topicName . "",
+                                'topic' => $topic_name . "",
                                 'notification' => [
                                     'title' => $title,
                                     'body' => $body,
@@ -504,9 +512,7 @@ class Helper extends Model
             } catch (Exception $e) {
                 Log::error($e->getMessage());
             }
-
         }
-
     }
 
     public static function errorAPI($code, $data, $message)
@@ -518,7 +524,6 @@ class Helper extends Model
             'data' => $data,
             'message' => $message
         ];
-
     }
 
     public static function randomString()
@@ -552,7 +557,9 @@ class Helper extends Model
     {
         $input = $input . "";
 
-        if (strlen($input) <= 1) return "0" . $input;
+        if (strlen($input) <= 1) {
+            return "0" . $input;
+        }
 
         return $input;
     }
@@ -631,13 +638,13 @@ class Helper extends Model
         return $disktotalsize;
     }
 
-    public static function callGetHTTP($url, $params = []){
+    public static function callGetHTTP($url, $params = [])
+    {
         $params = [
             'query' => $params
         ];
 
         try {
-
             $headers = [
                 'Content-Type' => 'application/json',
             ];
@@ -662,7 +669,6 @@ class Helper extends Model
         $date2  = Carbon::parse($date2);
 
         return $date1->greaterThan($date2);
-
     }
 
     public static function successAPI($code, $data, $message)
@@ -673,7 +679,5 @@ class Helper extends Model
             'data' => $data,
             'message' => $message
         ];
-
     }
-
 }

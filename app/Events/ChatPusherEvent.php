@@ -26,20 +26,20 @@ class ChatPusherEvent implements ShouldBroadcast
     public $sender_id;
     public $pusher_id;
 
-    public function __construct(Request $request, $id,$participantChat, $sender_id, $image_link, $images)
+    public function __construct(Request $request, $id, $participant_chat, $sender_id, $image_link, $images)
     {
         $this->content = $request->contents;
         $this->user_id = $sender_id;
-        $this->pusher_id = $participantChat->user_id;
+        $this->pusher_id = $participant_chat->user_id;
         //$this->sender_id = $sender_id;
-        $this->chat_group_id = (int) $request->chat_group_id;
+        $this->chat_group_id = (int)$request->chat_group_id;
         $this->created_at = now();
         $this->image_link = $image_link;
         $this->images = $images;
 
-        $participantChats = ParticipantChat::where('chat_group_id', $participantChat->chat_group_id)->get();
+        $participant_chats = ParticipantChat::where('chat_group_id', $participant_chat->chat_group_id)->get();
 
-        foreach ($participantChats as $item){
+        foreach ($participant_chats as $item) {
             $item->touch();
         }
 
@@ -60,8 +60,8 @@ class ChatPusherEvent implements ShouldBroadcast
             'id' => $id,
             'content' => $request->contents,
             'user_id' => $sender_id,
-            'pusher_id' => $participantChat->user_id,
-            'chat_group_id' => (int) $request->chat_group_id,
+            'pusher_id' => $participant_chat->user_id,
+            'chat_group_id' => (int)$request->chat_group_id,
             'created_at' => now(),
             'image_link' => $image_link,
             'images' => $images,
@@ -78,5 +78,4 @@ class ChatPusherEvent implements ShouldBroadcast
     {
         //return ('id-chat-pusher-' . $this->pusher_id);
     }
-
 }

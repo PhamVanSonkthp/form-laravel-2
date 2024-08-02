@@ -74,7 +74,7 @@ class ShippingMethodPolicy
      * @param  \App\Models\  $shipping_methods
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $shipping_methods)
+    public function restore(User $user, $shipping_methods)
     {
         //
     }
@@ -86,7 +86,7 @@ class ShippingMethodPolicy
      * @param  \App\Models\  $shipping_methods
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $shipping_methods)
+    public function forceDelete(User $user, $shipping_methods)
     {
         //
     }

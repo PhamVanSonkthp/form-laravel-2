@@ -48,9 +48,8 @@ class ChatController extends Controller
             'chat_group_id' => (int)$request->chat_group_id,
         ]);
 
-        if (is_array($request->images)){
+        if (is_array($request->images)) {
             foreach ($request->images as $image) {
-
                 $item = Image::create([
                     'uuid' => Helper::getUUID(),
                     'table' => $chatModel->getTableName(),
@@ -60,7 +59,7 @@ class ChatController extends Controller
                 ]);
 
 
-                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $image,  'product_comments', $item->id);
+                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $image, 'product_comments', $item->id);
 
                 $dataUpdate = [
                     'image_path' => $dataUploadFeatureImage['file_path'],
@@ -68,7 +67,6 @@ class ChatController extends Controller
                 ];
 
                 $item->update($dataUpdate);
-
             }
         }
 
@@ -100,5 +98,4 @@ class ChatController extends Controller
 
         return response()->json($chat);
     }
-
 }

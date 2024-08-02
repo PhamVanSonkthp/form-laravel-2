@@ -75,9 +75,9 @@ class RegisterController extends Controller
             'gender'=>$data['gender'] ? 1 : 0,
         ];
 
-        if(!empty($data['refer'])){
+        if (!empty($data['refer'])) {
             $dataCreate['refer'] = filter_var($data['refer'], FILTER_SANITIZE_NUMBER_INT) ?? 0;
-            if (empty($dataCreate['refer'])){
+            if (empty($dataCreate['refer'])) {
                 $dataCreate['refer'] = 0;
             }
         }

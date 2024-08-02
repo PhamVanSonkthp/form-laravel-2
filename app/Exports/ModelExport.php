@@ -24,7 +24,7 @@ class ModelExport implements FromCollection, ShouldAutoSize
         $this->model = $model;
         $this->queries = $queries;
 
-        if (empty($heading)){
+        if (empty($heading)) {
             $heading = Helper::getAllColumsOfTable($this->model);
         }
 
@@ -55,5 +55,4 @@ class ModelExport implements FromCollection, ShouldAutoSize
 //    {
 //        return $this->heading;
 //    }
-
 }

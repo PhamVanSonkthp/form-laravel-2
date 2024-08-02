@@ -8,7 +8,8 @@ use App\Models\Image;
 use App\Models\SingleImage;
 use Illuminate\Support\Facades\View;
 
-trait BaseControllerTrait{
+trait BaseControllerTrait
+{
 
     private $model;
     private $prefixView;
@@ -28,7 +29,8 @@ trait BaseControllerTrait{
 
     private $prefixViewApi;
 
-    public function initBaseModel($model){
+    public function initBaseModel($model)
+    {
         $this->model = $model;
         $this->forceDelete = false;
         $this->isSingleImage = false;
@@ -36,7 +38,7 @@ trait BaseControllerTrait{
         $this->table = $this->model->getTableName();
 
         $this->prefixView = $this->table;
-        $this->prefixViewApi = str_replace("_","-",$this->prefixView);
+        $this->prefixViewApi = str_replace("_", "-", $this->prefixView);
         $this->prefixExport = $this->prefixView . "_" . Formatter::getDateTime(now());
         $this->title = $this->prefixView;
 
@@ -51,7 +53,8 @@ trait BaseControllerTrait{
         $this->imageMultipleSortUrl = route('ajax,administrator.upload_multiple_images.sort');
     }
 
-    public function shareBaseModel($model){
+    public function shareBaseModel($model)
+    {
 
         View::share('title', $this->title);
         View::share('table', $this->table);
@@ -67,5 +70,4 @@ trait BaseControllerTrait{
         View::share('isSingleImage', $this->isSingleImage);
         View::share('isMultipleImages', $this->isMultipleImages);
     }
-
 }

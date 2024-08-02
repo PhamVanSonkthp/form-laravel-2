@@ -46,5 +46,4 @@ class EmailController extends Controller
             'message' => "Đã gửi email",
         ]);
     }
-
 }

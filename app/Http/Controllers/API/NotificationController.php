@@ -43,7 +43,7 @@ class NotificationController extends Controller
         if (!env('CODE_DEBUG')) {
             $queries['user_id'] = auth()->id();
         }
-        $results = RestfulAPI::response($this->model, $request, $queries, null, null,true)->whereNull('read_at')->count();
+        $results = RestfulAPI::response($this->model, $request, $queries, null, null, true)->whereNull('read_at')->count();
         return response()->json([
             'message' => 'sucess',
             'code' => '200',
@@ -57,7 +57,9 @@ class NotificationController extends Controller
         $item = UserNotification::findOrFail($id);
 
         if (!env('CODE_DEBUG')) {
-            if ($item->user_id != auth()->id()) return abort(404);
+            if ($item->user_id != auth()->id()) {
+                return abort(404);
+            }
         }
 
         $item->update([

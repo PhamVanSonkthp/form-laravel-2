@@ -74,7 +74,7 @@ class MediaPolicy
      * @param  \App\Models\  $orders
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $orders)
+    public function restore(User $user, $orders)
     {
         //
     }
@@ -86,7 +86,7 @@ class MediaPolicy
      * @param  \App\Models\  $orders
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $orders)
+    public function forceDelete(User $user, $orders)
     {
         //
     }

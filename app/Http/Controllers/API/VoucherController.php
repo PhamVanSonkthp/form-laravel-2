@@ -48,12 +48,12 @@ class VoucherController extends Controller
 
         $voucher = Voucher::find($request->voucher_id);
 
-        if (empty($voucher)){
+        if (empty($voucher)) {
             $voucher = Voucher::where('code', $request->voucher_id)->first();
         }
 
-        if (empty($voucher)){
-            return response()->json(Helper::errorAPI(99,[],"voucher_id invalid") , 400);
+        if (empty($voucher)) {
+            return response()->json(Helper::errorAPI(99, [], "voucher_id invalid"), 400);
         }
 
         $item = $this->model->firstOrCreate([
@@ -76,23 +76,35 @@ class VoucherController extends Controller
 
         $voucher = Voucher::find($request->voucher_id);
 
-        if (empty($voucher)){
+        if (empty($voucher)) {
             $voucher = Voucher::where('code', $request->voucher_id)->first();
         }
 
-        if (empty($voucher)) return response()->json(Helper::errorAPI(99,[],"voucher_id invalid") , 400);
+        if (empty($voucher)) {
+            return response()->json(Helper::errorAPI(99, [], "voucher_id invalid"), 400);
+        }
 
-        if ($voucher->isLimited()) return response()->json(Helper::errorAPI(99,[],"voucher is limited") , 400);
+        if ($voucher->isLimited()) {
+            return response()->json(Helper::errorAPI(99, [], "voucher is limited"), 400);
+        }
 
-        if ($voucher->isLimitedByUser()) return response()->json(Helper::errorAPI(99,[],"voucher is limited by user") , 400);
+        if ($voucher->isLimitedByUser()) {
+            return response()->json(Helper::errorAPI(99, [], "voucher is limited by user"), 400);
+        }
 
-        if ($voucher->isExpired()) return response()->json(Helper::errorAPI(99,[],"voucher is is expired") , 400);
+        if ($voucher->isExpired()) {
+            return response()->json(Helper::errorAPI(99, [], "voucher is is expired"), 400);
+        }
 
-        if ($voucher->isUnavailable()) return response()->json(Helper::errorAPI(99,[],"voucher is is unavailable") , 400);
+        if ($voucher->isUnavailable()) {
+            return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
+        }
 
         $amount = UserCart::calculateAmountByIds($request->cart_ids);
 
-        if ($voucher->isAcceptAmount($amount)) return response()->json(Helper::errorAPI(99,[],"voucher is is required min amount ". $voucher->min_amount) , 400);
+        if ($voucher->isAcceptAmount($amount)) {
+            return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount ". $voucher->min_amount), 400);
+        }
 
         $discount = $voucher->amountDiscount($amount);
 
@@ -111,45 +123,59 @@ class VoucherController extends Controller
 
         $voucher = Voucher::find($request->voucher_id);
 
-        if (empty($voucher)){
+        if (empty($voucher)) {
             $voucher = Voucher::where('code', $request->voucher_id)->first();
         }
 
-        if (empty($voucher)) return response()->json(Helper::errorAPI(99,[
+        if (empty($voucher)) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá không hợp lệ"
-        ],"voucher_id invalid") , 400);
+            ], "voucher_id invalid"), 400);
+        }
 
-        if ($voucher->isLimited()) return response()->json(Helper::errorAPI(99,[
+        if ($voucher->isLimited()) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá đã giới hạn"
-        ],"voucher is limited") , 400);
+            ], "voucher is limited"), 400);
+        }
 
-        if ($voucher->isLimitedByUser()) return response()->json(Helper::errorAPI(99,[
+        if ($voucher->isLimitedByUser()) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá bạn dùng đã đạt giới hạn"
-        ],"voucher is limited by user") , 400);
+            ], "voucher is limited by user"), 400);
+        }
 
-        if ($voucher->isExpired()) return response()->json(Helper::errorAPI(99,[
+        if ($voucher->isExpired()) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá đã hết hạn"
-        ],"voucher is is expired") , 400);
+            ], "voucher is is expired"), 400);
+        }
 
-        if ($voucher->isUnavailable()) return response()->json(Helper::errorAPI(99,[
+        if ($voucher->isUnavailable()) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá không hợp lệ"
-        ],"voucher is is unavailable") , 400);
+            ], "voucher is is unavailable"), 400);
+        }
 
         $amount = 0;
 
-        foreach ($request->product_ids as $id){
+        foreach ($request->product_ids as $id) {
             $product = Product::find($id);
 
-            if (empty($product)) return response()->json(Helper::errorAPI(99,[
+            if (empty($product)) {
+                return response()->json(Helper::errorAPI(99, [
                 "message" => "Sản phẩm không hợp lệ"
-            ],"product is not correct") , 400);
+                ], "product is not correct"), 400);
+            }
 
             $amount += $product->priceByUser() ?? 0;
         }
 
-        if ($voucher->isAcceptAmount($amount)) return response()->json(Helper::errorAPI(99,[
+        if ($voucher->isAcceptAmount($amount)) {
+            return response()->json(Helper::errorAPI(99, [
             "message" => "Mã giảm giá yêu cầu giá đơn nhỏ nhất là : " . $voucher->min_amount
-        ],"voucher is is required min amount ". $voucher->min_amount) , 400);
+            ], "voucher is is required min amount ". $voucher->min_amount), 400);
+        }
 
         $discount = $voucher->amountDiscount($amount);
 
@@ -158,5 +184,4 @@ class VoucherController extends Controller
             'discount' => floor($discount),
         ]);
     }
-
 }

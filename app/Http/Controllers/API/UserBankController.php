@@ -23,7 +23,9 @@ class UserBankController extends Controller
     {
         $result = $this->model->findOrFail($id);
 
-        if ($result->user_id != auth()->id()) return abort(404);
+        if ($result->user_id != auth()->id()) {
+            return abort(404);
+        }
 
         return response()->json($result);
     }
@@ -43,8 +45,8 @@ class UserBankController extends Controller
             'account_number' => 'required',
         ]);
 
-        if ($request->is_default == 1){
-            $this->model->where('user_id' , auth()->id())->update([
+        if ($request->is_default == 1) {
+            $this->model->where('user_id', auth()->id())->update([
                 'is_default' => 0
             ]);
         }
@@ -76,9 +78,11 @@ class UserBankController extends Controller
 
         $result = $this->model->findOrFail($id);
 
-        if ($result->user_id != auth()->id()) return abort(404);
+        if ($result->user_id != auth()->id()) {
+            return abort(404);
+        }
 
-        if ($request->is_default == 1){
+        if ($request->is_default == 1) {
             $this->model->where('user_id', auth()->id())->update([
                 'is_default' => 0
             ]);
@@ -91,7 +95,7 @@ class UserBankController extends Controller
             'is_default' => $request->is_default ?? 0,
         ]);
 
-        if (empty(auth()->user()->bankDefault())){
+        if (empty(auth()->user()->bankDefault())) {
             optional($this->model->where('user_id', auth()->id())->first())->update([
                 'is_default' => 1
             ]);
@@ -107,11 +111,13 @@ class UserBankController extends Controller
 
         $result = $this->model->findOrFail($id);
 
-        if ($result->user_id != auth()->id()) return abort(404);
+        if ($result->user_id != auth()->id()) {
+            return abort(404);
+        }
 
         $result = $result->delete();
 
-        if (empty(auth()->user()->bankDefault())){
+        if (empty(auth()->user()->bankDefault())) {
             optional($this->model->where('user_id', auth()->id())->first())->update([
                 'is_default' => 1
             ]);

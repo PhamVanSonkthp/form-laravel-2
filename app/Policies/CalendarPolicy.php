@@ -74,7 +74,7 @@ class CalendarPolicy
      * @param  \App\Models\  $calendars
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $calendars)
+    public function restore(User $user, $calendars)
     {
         //
     }
@@ -86,7 +86,7 @@ class CalendarPolicy
      * @param  \App\Models\  $calendars
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $calendars)
+    public function forceDelete(User $user, $calendars)
     {
         //
     }

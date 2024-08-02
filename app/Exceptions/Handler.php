@@ -42,9 +42,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if($e->getMessage() == "This action is unauthorized.")
-        {
-            if (auth()->check()) auth()->logout();
+        if ($e->getMessage() == "This action is unauthorized.") {
+            if (auth()->check()) {
+                auth()->logout();
+            }
             return redirect('./../../../../../../admin');
         }
 

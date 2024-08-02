@@ -7,7 +7,7 @@
 <body>
 
 <div>
-    {!! optional(\App\Models\Setting::first())->terms_of_use_html !!}
+    {!! optional(\App\Models\Setting::first())->privacy_policy_html !!}
 </div>
 
 

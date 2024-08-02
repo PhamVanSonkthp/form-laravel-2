@@ -29,7 +29,7 @@ class NewsController extends Controller
 
         $results = RestfulAPI::response($this->modelNew, $request);
 
-        foreach ($results as $item){
+        foreach ($results as $item) {
             $item->category;
         }
 

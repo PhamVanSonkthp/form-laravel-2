@@ -13,13 +13,15 @@ class Notification extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function sender(){
-        return $this->hasOne(User::class , 'id' , 'notifiable_id' );
+    public function sender()
+    {
+        return $this->hasOne(User::class, 'id', 'notifiable_id');
     }
 
-    public function sendNotificationFirebase($user_id, $chat_group_id, $contents){
+    public function sendNotificationFirebase($user_id, $chat_group_id, $contents)
+    {
 
-        if (env('FIREBASE_SERVER_NOTIFIABLE')){
+        if (env('FIREBASE_SERVER_NOTIFIABLE')) {
             $getter = User::find($user_id);
             if (!empty($getter)) {
                 $participantChat = ParticipantChat::where('chat_group_id', $chat_group_id)->where('user_id', $user_id)->first();
@@ -46,8 +48,9 @@ class Notification extends Model implements Auditable
         return Helper::image($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [])
@@ -60,7 +63,7 @@ class Notification extends Model implements Auditable
         $dataInsert = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -73,7 +76,7 @@ class Notification extends Model implements Auditable
         $dataUpdate = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -89,7 +92,8 @@ class Notification extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

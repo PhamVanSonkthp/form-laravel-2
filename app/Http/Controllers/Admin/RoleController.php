@@ -39,11 +39,12 @@ class RoleController extends Controller
         View::share('roles', $this->models);
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $items = $this->model->searchByQuery($request);
-        $premissionsParent = $this->premission->where('parent_id' , 0)->orderBy('display_name')->get();
+        $premissionsParent = $this->premission->where('parent_id', 0)->orderBy('display_name')->get();
 
-        return view('administrator.'.$this->prefixView.'.index', compact('items','premissionsParent'));
+        return view('administrator.'.$this->prefixView.'.index', compact('items', 'premissionsParent'));
     }
 
     public function get(Request $request, $id)
@@ -51,12 +52,14 @@ class RoleController extends Controller
         return $this->model->findById($id);
     }
 
-    public function create(){
-        $premissionsParent = $this->premission->where('parent_id' , 0)->orderBy('display_name')->get();
-        return view('administrator.'.$this->prefixView.'.add' , compact('premissionsParent'));
+    public function create()
+    {
+        $premissionsParent = $this->premission->where('parent_id', 0)->orderBy('display_name')->get();
+        return view('administrator.'.$this->prefixView.'.add', compact('premissionsParent'));
     }
 
-    public function store(RoleAddRequest $request){
+    public function store(RoleAddRequest $request)
+    {
         $role = $this->model->create([
             'name' => $request->name,
             'display_name' => $request->display_name,
@@ -65,14 +68,16 @@ class RoleController extends Controller
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
-    public function edit($id){
-        $premissionsParent = $this->premission->where('parent_id' , 0)->orderBy('display_name')->get();
+    public function edit($id)
+    {
+        $premissionsParent = $this->premission->where('parent_id', 0)->orderBy('display_name')->get();
         $role = $this->model->find($id);
         $permissionsChecked = $role->permissions;
-        return view('administrator.'.$this->prefixView.'.edit' , compact('premissionsParent'  , 'role' , 'permissionsChecked'));
+        return view('administrator.'.$this->prefixView.'.edit', compact('premissionsParent', 'role', 'permissionsChecked'));
     }
 
-    public function update($id , RoleEditRequest $request){
+    public function update($id, RoleEditRequest $request)
+    {
         $this->model->find($id)->update([
             'name' => $request->name,
             'display_name' => $request->display_name,
@@ -84,7 +89,8 @@ class RoleController extends Controller
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->model->deleteModelTrait($id, $this->model);
     }
 

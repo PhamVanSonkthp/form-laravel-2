@@ -19,11 +19,13 @@ class JobNotification extends Model implements Auditable
 
     // begin
 
-    public function userScheduleCron(){
+    public function userScheduleCron()
+    {
         return $this->hasMany(UserJobNotification::class);
     }
 
-    public function scheduleCronRepeats(){
+    public function scheduleCronRepeats()
+    {
         return $this->hasMany(JobNotificationRepeat::class);
     }
 
@@ -36,7 +38,7 @@ class JobNotification extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -49,8 +51,9 @@ class JobNotification extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [])
@@ -96,9 +99,9 @@ class JobNotification extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

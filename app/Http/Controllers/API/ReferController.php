@@ -39,14 +39,18 @@ class ReferController extends Controller
             'referral_id' => 'required',
         ]);
 
-        if (!empty(auth()->user()->referral_id)) return response()->json(Helper::errorAPI(400,[],"Bạn đã nhập mã giới thiệu"), 400);
+        if (!empty(auth()->user()->referral_id)) {
+            return response()->json(Helper::errorAPI(400, [], "Bạn đã nhập mã giới thiệu"), 400);
+        }
 
         $userRefer = User::where('id', $request->referral_id)->orWhere('phone', $request->referral_id)->first();
 
-        if (empty($userRefer)) return response()->json(Helper::errorAPI("400",[],"Mã giới thiệu không đúng"), 400);
+        if (empty($userRefer)) {
+            return response()->json(Helper::errorAPI("400", [], "Mã giới thiệu không đúng"), 400);
+        }
 
-        if($userRefer->id == auth()->id()){
-            return response()->json(Helper::errorAPI("400",[],"Không nhập mã của chính mình"), 400);
+        if ($userRefer->id == auth()->id()) {
+            return response()->json(Helper::errorAPI("400", [], "Không nhập mã của chính mình"), 400);
         }
 
         $setting =  Setting::first();
@@ -54,11 +58,11 @@ class ReferController extends Controller
         $number_point_refer_success = $setting->number_point_refer_success ?? 0;
         $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
 
-        if (!empty($number_point_refer_success)){
-            $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id(), auth()->user()->name . " - " . auth()->user()->phone,auth()->user()->avatar(),2);
+        if (!empty($number_point_refer_success)) {
+            $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id(), auth()->user()->name . " - " . auth()->user()->phone, auth()->user()->avatar(), 2);
         }
 
-        if (!empty($number_point_taken_refer_success)){
+        if (!empty($number_point_taken_refer_success)) {
             auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
         }
 
@@ -66,7 +70,7 @@ class ReferController extends Controller
             'referral_id' => $userRefer->id
         ]);
 
-        return response()->json(Helper::successAPI(200,[],"Đã nhập mã giới thiệu"));
+        return response()->json(Helper::successAPI(200, [], "Đã nhập mã giới thiệu"));
     }
 
     public function list(Request $request)
@@ -75,6 +79,4 @@ class ReferController extends Controller
 
         return response()->json($refers);
     }
-
-
 }

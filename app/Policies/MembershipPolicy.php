@@ -74,7 +74,7 @@ class MembershipPolicy
      * @param  \App\Models\  $memberships
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $memberships)
+    public function restore(User $user, $memberships)
     {
         //
     }
@@ -86,7 +86,7 @@ class MembershipPolicy
      * @param  \App\Models\  $memberships
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $memberships)
+    public function forceDelete(User $user, $memberships)
     {
         //
     }

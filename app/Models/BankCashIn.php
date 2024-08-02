@@ -20,7 +20,8 @@ class BankCashIn extends Model implements Auditable
 
     // begin
 
-    public function bank(){
+    public function bank()
+    {
         return $this->belongsTo(Bank::class);
     }
 
@@ -41,7 +42,7 @@ class BankCashIn extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -54,8 +55,9 @@ class BankCashIn extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -74,7 +76,7 @@ class BankCashIn extends Model implements Auditable
             'is_default' => $request->is_default ?? 0,
         ];
 
-        if (!empty($request->is_default)){
+        if (!empty($request->is_default)) {
             $this->where('is_default', 1)->update(['is_default' => 0]);
         }
 
@@ -94,7 +96,7 @@ class BankCashIn extends Model implements Auditable
             'is_default' => $request->is_default ?? 0,
         ];
 
-        if (!empty($request->is_default)){
+        if (!empty($request->is_default)) {
             $this->where('is_default', 1)->update(['is_default' => 0]);
         }
 
@@ -112,9 +114,9 @@ class BankCashIn extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

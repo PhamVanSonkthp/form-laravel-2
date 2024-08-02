@@ -74,7 +74,7 @@ class PaymentMethodPolicy
      * @param  \App\Models\  $payment_methods
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $payment_methods)
+    public function restore(User $user, $payment_methods)
     {
         //
     }
@@ -86,7 +86,7 @@ class PaymentMethodPolicy
      * @param  \App\Models\  $payment_methods
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $payment_methods)
+    public function forceDelete(User $user, $payment_methods)
     {
         //
     }

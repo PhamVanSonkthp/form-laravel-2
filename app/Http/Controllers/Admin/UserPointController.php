@@ -29,7 +29,7 @@ class UserPointController extends Controller
         $users = User::where('is_admin', 0)->latest()->get();
 
         $items = $this->model->searchByQuery($request);
-        return view('administrator.' . $this->prefixView . '.index', compact('items','users'));
+        return view('administrator.' . $this->prefixView . '.index', compact('items', 'users'));
     }
 
     public function get(Request $request, $id)

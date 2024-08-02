@@ -15,11 +15,11 @@ class UserStatus extends Model implements Auditable
 
     public static function htmlStatus($input)
     {
-        if ($input == "Chờ duyệt"){
+        if ($input == "Chờ duyệt") {
             return "<span style=\"display: inline-flex;align-items: center;background-color: #fffcf9;padding: 5px;border-radius: 15px;color: #ffc500;\"><a class='ms-1 me-1'>{$input}</a><i class=\"fa-solid fa-rotate\"></i></span>";
-        }else if ($input == "Hoạt động"){
+        } else if ($input == "Hoạt động") {
             return "<span style=\"display: inline-flex;align-items: center;background-color: #d0ffef;padding: 5px;border-radius: 15px;color: #03a900;\"><a class='ms-1 me-1'>{$input}</a><i class=\"fa-solid fa-rotate\"></i></span>";
-        }else{
+        } else {
             return "<span style=\"display: inline-flex;align-items: center;background-color: #ffdbdb;padding: 5px;border-radius: 15px;color: #ff0000;\"><a class='ms-1 me-1'>{$input}</a><i class=\"fa-solid fa-rotate\"></i></span>";
         }
     }
@@ -44,8 +44,9 @@ class UserStatus extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [])
@@ -58,7 +59,7 @@ class UserStatus extends Model implements Auditable
         $dataInsert = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -71,7 +72,7 @@ class UserStatus extends Model implements Auditable
         $dataUpdate = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -82,7 +83,8 @@ class UserStatus extends Model implements Auditable
         return Helper::deleteByQuery($this, $request, $id, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

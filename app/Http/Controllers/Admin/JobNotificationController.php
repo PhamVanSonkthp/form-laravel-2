@@ -37,7 +37,7 @@ class JobNotificationController extends Controller
 
         $users = [];
 
-        foreach ($item->userScheduleCron as $itemUserScheduleCron){
+        foreach ($item->userScheduleCron as $itemUserScheduleCron) {
             $users[] = $itemUserScheduleCron->user;
         }
 
@@ -69,9 +69,9 @@ class JobNotificationController extends Controller
             'notiable' => $request->notiable,
         ]);
 
-        if (is_array($request->days_of_week)){
-            foreach ($request->days_of_week as $day_of_week){
-                if ($day_of_week >= 0 && $day_of_week <= 6){
+        if (is_array($request->days_of_week)) {
+            foreach ($request->days_of_week as $day_of_week) {
+                if ($day_of_week >= 0 && $day_of_week <= 6) {
                     JobNotificationRepeat::create([
                         'job_notification_id' => $item->id,
                         'day_of_week' => $day_of_week,
@@ -80,8 +80,8 @@ class JobNotificationController extends Controller
             }
         }
 
-        if (is_array($request->user_id)){
-            foreach ($request->user_id as $user_id){
+        if (is_array($request->user_id)) {
+            foreach ($request->user_id as $user_id) {
                 UserJobNotification::create([
                     'user_id' => $user_id,
                     'job_notification_id' => $item->id,
@@ -94,7 +94,7 @@ class JobNotificationController extends Controller
 
         $users = [];
 
-        foreach ($item->userScheduleCron as $itemUserScheduleCron){
+        foreach ($item->userScheduleCron as $itemUserScheduleCron) {
             $users[] = $itemUserScheduleCron->user;
         }
 
@@ -113,19 +113,19 @@ class JobNotificationController extends Controller
     {
         $item = JobNotification::findOrFail($id);
 
-        if ($request->has('time')){
+        if ($request->has('time')) {
             $dataUpdate['time'] = $request->time;
         }
-        if ($request->has('title')){
+        if ($request->has('title')) {
             $dataUpdate['title'] = $request->title;
         }
-        if ($request->has('notiable')){
+        if ($request->has('notiable')) {
             $dataUpdate['notiable'] = $request->notiable;
         }
-        if ($request->has('repeat')){
+        if ($request->has('repeat')) {
             $dataUpdate['repeat'] = $request->repeat;
         }
-        if ($request->has('description')){
+        if ($request->has('description')) {
             $dataUpdate['description'] = $request->description;
         }
 
@@ -146,8 +146,8 @@ class JobNotificationController extends Controller
             }
         }
 
-        if (is_array($request->user_id)){
-            foreach ($request->user_id as $user_id){
+        if (is_array($request->user_id)) {
+            foreach ($request->user_id as $user_id) {
                 UserJobNotification::create([
                     'user_id' => $user_id,
                     'job_notification_id' => $item->id,
@@ -160,7 +160,7 @@ class JobNotificationController extends Controller
 
         $users = [];
 
-        foreach ($item->userScheduleCron as $itemUserScheduleCron){
+        foreach ($item->userScheduleCron as $itemUserScheduleCron) {
             $users[] = $itemUserScheduleCron->user;
         }
 
@@ -198,5 +198,4 @@ class JobNotificationController extends Controller
 
         return response()->json($content);
     }
-
 }

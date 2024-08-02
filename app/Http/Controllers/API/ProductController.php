@@ -51,7 +51,9 @@ class ProductController extends Controller
     {
         $item = $this->model->findById($id);
 
-        if (empty($item)) return abort(404);
+        if (empty($item)) {
+            return abort(404);
+        }
 
         $item['attributes'] = $item->attributes();
         $item['attributes_json'] = $item->attributesJson();
@@ -112,9 +114,8 @@ class ProductController extends Controller
             'product_id' => $id,
         ]);
 
-        if (is_array($request->images)){
+        if (is_array($request->images)) {
             foreach ($request->images as $image) {
-
                 $item = Image::create([
                     'uuid' => Helper::getUUID(),
                     'table' => $productCommentModel->getTableName(),
@@ -124,7 +125,7 @@ class ProductController extends Controller
                 ]);
 
 
-                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $image,  'product_comments', $item->id);
+                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $image, 'product_comments', $item->id);
 
                 $dataUpdate = [
                     'image_path' => $dataUploadFeatureImage['file_path'],
@@ -132,7 +133,6 @@ class ProductController extends Controller
                 ];
 
                 $item->update($dataUpdate);
-
             }
         }
 

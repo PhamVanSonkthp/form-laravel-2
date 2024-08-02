@@ -66,20 +66,19 @@ class AuthController extends Controller
 
         $userRefer = User::find($user->referral_id);
 
-        if (!empty($userRefer)){
+        if (!empty($userRefer)) {
             $setting =  Setting::first();
 
             $number_point_refer_success = $setting->number_point_refer_success ?? 0;
             $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
 
-            if (!empty($number_point_refer_success)){
+            if (!empty($number_point_refer_success)) {
                 $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id());
             }
 
-            if (!empty($number_point_taken_refer_success)){
+            if (!empty($number_point_taken_refer_success)) {
                 auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
             }
-
         }
 
 
@@ -141,7 +140,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Tài khoản của bạn đã bị khóa'], 405);
         }
 
-        if (optional(Setting::first())->is_login_only_one_device){
+        if (optional(Setting::first())->is_login_only_one_device) {
             $user->logoutAllDevices();
         }
 
@@ -153,7 +152,6 @@ class AuthController extends Controller
         ];
 
         return response()->json($response);
-
     }
 
     public function logout(Request $request)
@@ -183,7 +181,6 @@ class AuthController extends Controller
                 'code' => 400,
             ], 400);
         }
-
     }
 
     public function resetPassword(Request $request)
@@ -237,11 +234,11 @@ class AuthController extends Controller
 
         $user->update($dataUpdate);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $item = SingleImage::firstOrCreate([
                 'relate_id' => auth()->id(),
                 'table' => auth()->user()->getTableName(),
-            ],[
+            ], [
                 'relate_id' => auth()->id(),
                 'table' => auth()->user()->getTableName(),
                 'image_path' => 'waiting_update',
@@ -255,11 +252,9 @@ class AuthController extends Controller
                 'image_name' => $dataUploadFeatureImage['file_name'],
             ]);
             $item->refresh();
-
         }
 
         if (!empty($request->referral_id) && $user->referral_id == 0) {
-
             $userRefer = User::where('id', $request->referral_id)->orWhere('phone', $request->referral_id)->first();
 
             if (!empty($userRefer)) {
@@ -273,16 +268,14 @@ class AuthController extends Controller
                 $number_point_refer_success = $setting->number_point_refer_success ?? 0;
                 $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
 
-                if (!empty($number_point_refer_success)){
+                if (!empty($number_point_refer_success)) {
                     $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id());
                 }
 
-                if (!empty($number_point_taken_refer_success)){
+                if (!empty($number_point_taken_refer_success)) {
                     auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
                 }
-
             }
-
         }
 
         $user->refresh();

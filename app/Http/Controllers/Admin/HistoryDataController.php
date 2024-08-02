@@ -20,7 +20,8 @@ class HistoryDataController extends Controller
         $this->shareBaseModel($model);
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $items = $this->model->searchByQuery($request);
         return view('administrator.'.$this->prefixView.'.index', compact('items'));
     }

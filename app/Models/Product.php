@@ -23,17 +23,19 @@ class Product extends Model implements Auditable
 
     // begin
 
-    public function parent(){
+    public function parent()
+    {
         $item = $this->hasOne(Product::class, 'group_product_id', 'group_product_id')->where('product_visibility_id', 2);
 
-        if (empty($item)){
+        if (empty($item)) {
             return $this;
         }
 
         return $item;
     }
 
-    public function isProductVariation(){
+    public function isProductVariation()
+    {
         return false;
     }
 
@@ -69,7 +71,6 @@ class Product extends Model implements Auditable
         }
 
         if (!empty($request->search_query)) {
-
             $results = $results->where(function ($query) use ($request) {
                 $words = explode(" ", $request->search_query);
 
@@ -86,7 +87,6 @@ class Product extends Model implements Auditable
                         $results = $results->orWhere('name', 'LIKE', "%{$word}%");
                     }
                 });
-
             });
 
 
@@ -95,7 +95,7 @@ class Product extends Model implements Auditable
             foreach ($words as $index => $word) {
                 $sort1 .= "name LIKE '%{$word}%'";
 
-                if ($index != count($words) - 1){
+                if ($index != count($words) - 1) {
                     $sort1 .= " AND ";
                 }
             }
@@ -252,9 +252,7 @@ class Product extends Model implements Auditable
             $_attributes = json_decode($request->_attributes);
 
             if (count($_headers) == 1) {
-
                 for ($i = 0; $i < count($_attributes[0]); $i++) {
-
                     $dataInsert = [
                         'name' => $request->name,
                         'short_description' => $request->short_description,
@@ -281,11 +279,9 @@ class Product extends Model implements Auditable
                     $item->fill($attr)->save();
                 }
             } else {
-
                 $pointer = 0;
 
                 for ($i = 0; $i < count($_attributes[0]); $i++) {
-
                     for ($j = 0; $j < count($_attributes[1]); $j++) {
                         $dataInsert = [
                             'name' => $request->name,
@@ -315,11 +311,8 @@ class Product extends Model implements Auditable
 
                         $pointer++;
                     }
-
                 }
-
             }
-
         } else {
             $dataInsert = [
                 'name' => $request->name,
@@ -341,8 +334,6 @@ class Product extends Model implements Auditable
 
             return $this->findById($item->id);
         }
-
-
     }
 
     public function updateByQuery($request, $id)
@@ -351,7 +342,7 @@ class Product extends Model implements Auditable
             'name' => $request->name,
             'short_description' => $request->short_description,
             'description' => $request->description,
-            'slug' => Helper::addSlug($this, 'slug', $request->name,$id),
+            'slug' => Helper::addSlug($this, 'slug', $request->name, $id),
             'price_import' => Formatter::formatMoneyToDatabase($request->price_import),
             'price_client' => Formatter::formatMoneyToDatabase($request->price_client),
             'price_agent' => Formatter::formatMoneyToDatabase($request->price_agent),

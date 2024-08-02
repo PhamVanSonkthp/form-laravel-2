@@ -17,7 +17,9 @@ class AdminController extends Controller
     {
 
         if (auth()->check()) {
-            if (optional(auth()->user())->is_admin == 0) return view('administrator.login.index');
+            if (optional(auth()->user())->is_admin == 0) {
+                return view('administrator.login.index');
+            }
             return redirect()->route('administrator.dashboard.index');
         }
 
@@ -32,14 +34,18 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ], $remember)) {
-            if (optional(auth()->user())->is_admin == 0) return view('administrator.login.index');
+            if (optional(auth()->user())->is_admin == 0) {
+                return view('administrator.login.index');
+            }
             return redirect()->route('administrator.dashboard.index');
-        }else{
+        } else {
             if (auth()->attempt([
                 'phone' => $request->email,
                 'password' => $request->password,
             ], $remember)) {
-                if (optional(auth()->user())->is_admin == 0) return view('administrator.login.index');
+                if (optional(auth()->user())->is_admin == 0) {
+                    return view('administrator.login.index');
+                }
                 return redirect()->route('administrator.dashboard.index');
             }
         }
@@ -73,7 +79,7 @@ class AdminController extends Controller
             return back();
         }
 
-        if ($request->new_password != $request->new_password_confirm){
+        if ($request->new_password != $request->new_password_confirm) {
             Session::flash("error", "Mật khẩu mới phải trùng nhau");
             return back();
         }

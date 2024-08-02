@@ -66,11 +66,8 @@ class ChatAIController extends Controller
                     'message' => $response['candidates'][0]['content']['parts'][0]['text']
                 ]);
             } catch (\Exception $exception) {
-
-
                 return $exception->getMessage();
             }
         }
     }
-
 }

@@ -16,58 +16,63 @@ class ParticipantChat extends Model implements Auditable
 
     // begin
 
-    public function adminCare(){
-        return $this->hasOne(User::class,'id','admin_care_id');
+    public function adminCare()
+    {
+        return $this->hasOne(User::class, 'id', 'admin_care_id');
     }
 
-    public function chatGroup(){
+    public function chatGroup()
+    {
         return $this->belongsTo(ChatGroup::class);
     }
 
-    public function user(){
-        return $this->hasOne(User::class, 'id','user_id');
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function users(){
+    public function users()
+    {
         $users = [];
-        $participantChats = ParticipantChat::where('chat_group_id' , $this->chat_group_id)->where('user_id' , '!=',auth()->id())->get();
-        foreach ($participantChats as $item){
-            if ($item && $item->user){
+        $participantChats = ParticipantChat::where('chat_group_id', $this->chat_group_id)->where('user_id', '!=', auth()->id())->get();
+        foreach ($participantChats as $item) {
+            if ($item && $item->user) {
                 $item->user;
                 optional($item->user)->role;
                 $users[] = $item->user;
             }
-
         }
 
         return $users;
     }
 
-    public static function chatGroupIdWithUser($user_id){
+    public static function chatGroupIdWithUser($user_id)
+    {
 
-        if (empty($user_id)){
+        if (empty($user_id)) {
             return 0;
         }
         $participantChats = ParticipantChat::where('user_id', $user_id)->get();
 
-        foreach ($participantChats as $item){
+        foreach ($participantChats as $item) {
             $participantChatAuther = ParticipantChat::where('user_id', auth()->id())->get();
-            foreach ($participantChatAuther as $chatAuther){
-                if (!empty($chatAuther) && $chatAuther->chat_group_id == $item->chat_group_id){
+            foreach ($participantChatAuther as $chatAuther) {
+                if (!empty($chatAuther) && $chatAuther->chat_group_id == $item->chat_group_id) {
                     return $chatAuther->chat_group_id;
                 }
             }
-
         }
 
         return 0;
     }
 
-    public function status(){
-        return $this->hasOne(ParticipantChatStatus::class, 'id','status');
+    public function status()
+    {
+        return $this->hasOne(ParticipantChatStatus::class, 'id', 'status');
     }
 
-    public function latestMessage(){
+    public function latestMessage()
+    {
         $item = Chat::where('chat_group_id', $this->chat_group_id)->latest()->first();
         return $item;
     }
@@ -106,8 +111,9 @@ class ParticipantChat extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -120,7 +126,7 @@ class ParticipantChat extends Model implements Auditable
         $dataInsert = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -133,7 +139,7 @@ class ParticipantChat extends Model implements Auditable
         $dataUpdate = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -149,7 +155,8 @@ class ParticipantChat extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

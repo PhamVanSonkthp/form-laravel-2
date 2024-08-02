@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Closure;
 
 class Chat
@@ -15,11 +16,13 @@ class Chat
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->is_admin == 1) return $next($request);
+        if (auth()->user()->is_admin == 1) {
+            return $next($request);
+        }
 
         $role = optional(auth()->user())->rolePackage;
-        if (empty($role)){
-            return response()->json(['error' => 'Bạn không có quyền sử dụng chức năng này'],405);
+        if (empty($role)) {
+            return response()->json(['error' => 'Bạn không có quyền sử dụng chức năng này'], 405);
         }
 
         $permissions = $role->permissions;
@@ -27,6 +30,6 @@ class Chat
             return $next($request);
         }
 
-        return response()->json(['error' => 'Bạn không có quyền sử dụng chức năng này'],405);
+        return response()->json(['error' => 'Bạn không có quyền sử dụng chức năng này'], 405);
     }
 }

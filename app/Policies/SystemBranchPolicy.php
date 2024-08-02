@@ -74,7 +74,7 @@ class SystemBranchPolicy
      * @param  \App\Models\  $system_branchs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $system_branchs)
+    public function restore(User $user, $system_branchs)
     {
         //
     }
@@ -86,7 +86,7 @@ class SystemBranchPolicy
      * @param  \App\Models\  $system_branchs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $system_branchs)
+    public function forceDelete(User $user, $system_branchs)
     {
         //
     }

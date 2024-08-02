@@ -74,7 +74,7 @@ class UserPointPolicy
      * @param  \App\Models\  $user_points
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $user_points)
+    public function restore(User $user, $user_points)
     {
         //
     }
@@ -86,7 +86,7 @@ class UserPointPolicy
      * @param  \App\Models\  $user_points
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $user_points)
+    public function forceDelete(User $user, $user_points)
     {
         //
     }

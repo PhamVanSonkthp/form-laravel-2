@@ -26,6 +26,7 @@ use App\Http\Controllers\API\UserBankController;
 use App\Http\Controllers\API\VoucherController;
 use App\Http\Controllers\API\WalletController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,19 @@ Route::prefix('cron')->group(function () {
     ]);
 });
 
+Route::prefix('cache')->group(function () {
+    Route::get('/', function () {
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('queue:clear');
+        Artisan::call('queue:clear');
+
+        return response()->json([
+            'message'=> "all cleared!"
+        ]);
+    });
+});
+
 Route::prefix('public')->group(function () {
 
     Route::prefix('products')->group(function () {
@@ -64,7 +78,6 @@ Route::prefix('public')->group(function () {
     Route::prefix('countries')->group(function () {
 
         Route::get('/', [CountryController::class, 'list']);
-
     });
 
     Route::prefix('address')->group(function () {
@@ -80,7 +93,6 @@ Route::prefix('public')->group(function () {
         Route::prefix('ward')->group(function () {
             Route::get('/', [RegisterWardController::class, 'list']);
         });
-
     });
 
     Route::prefix('cart')->group(function () {
@@ -128,7 +140,7 @@ Route::prefix('public')->group(function () {
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     });
 
-    Route::get('/version', function (){
+    Route::get('/version', function () {
         return response()->json([
             "ios" => [
                 [
@@ -149,7 +161,6 @@ Route::prefix('public')->group(function () {
             ],
         ]);
     });
-
 });
 
 Route::prefix('user')->group(function () {
@@ -230,7 +241,6 @@ Route::prefix('user')->group(function () {
                 Route::get('/check', [PointController::class, 'check']);
                 Route::post('/', [PointController::class, 'create']);
             });
-
         });
 
         Route::prefix('membership')->group(function () {
@@ -244,7 +254,6 @@ Route::prefix('user')->group(function () {
         Route::prefix('payment')->group(function () {
             Route::get('/infor', [PaymentController::class, 'getInforPayment']);
         });
-
     });
 
 
@@ -405,5 +414,4 @@ Route::prefix('user')->group(function () {
 //            });
 //        });
 //    });
-
 });

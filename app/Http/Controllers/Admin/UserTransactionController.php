@@ -43,16 +43,16 @@ class UserTransactionController extends Controller
 
         if (isset($request->type_money) && $request->type_money == 2) {
             $query = $query->where('amount', '>=', 0);
-            $query = $query->where('description', 'not like','%'."điểm thành"."%");
+            $query = $query->where('description', 'not like', '%'."điểm thành"."%");
         }
 
         if (isset($request->type_money) && $request->type_money == 3) {
             $query = $query->where('amount', '<', 0);
-            $query = $query->where('description', 'not like','%'."điểm thành"."%");
+            $query = $query->where('description', 'not like', '%'."điểm thành"."%");
         }
 
         if (isset($request->type_money) && $request->type_money == 4) {
-            $query = $query->where('description', 'like','%'."điểm thành"."%");
+            $query = $query->where('description', 'like', '%'."điểm thành"."%");
         }
 
         $items = $query->latest()->paginate($request->limit ?? 10)->appends(request()->query());
@@ -67,9 +67,8 @@ class UserTransactionController extends Controller
             if ($item->amount < 0) {
                 $deduction = $deduction + $item->amount;
             }
-
         }
-        return view('administrator.' . $this->prefixView . '.index', compact('items', 'users','total','deposit','deduction'));
+        return view('administrator.' . $this->prefixView . '.index', compact('items', 'users', 'total', 'deposit', 'deduction'));
     }
 
     public function get(Request $request, $id)

@@ -116,7 +116,7 @@ class ProductController extends Controller
 
         $tmpProduct = Product::latest()->first();
 
-        if (!empty($tmpProduct)){
+        if (!empty($tmpProduct)) {
             $group_product_id = $tmpProduct->group_product_id;
             $group_product_id++;
         }
@@ -126,7 +126,7 @@ class ProductController extends Controller
                 if ($index > 1) {
                     $cells = $row->getCells();
 
-                    if (count($cells) == 0 || $cells[0]->getValue() == ""){
+                    if (count($cells) == 0 || $cells[0]->getValue() == "") {
                         return response()->json($productAdded);
                     }
 
@@ -135,7 +135,9 @@ class ProductController extends Controller
                         'name' => Formatter::trimer($cells[24]->getValue()),
                     ];
 
-                    if ($cells[18]->getValue() == "") continue;
+                    if ($cells[18]->getValue() == "") {
+                        continue;
+                    }
 
                     $item = [];
                     $item['slug'] = Formatter::trimer($cells[0]->getValue());
@@ -195,8 +197,8 @@ class ProductController extends Controller
                     if ($item['slug'] != $slug) {
                         $slug = Formatter::trimer($cells[0]->getValue());
 
-                        foreach ($products as $productItem){
-                            foreach ($images as $itemImage){
+                        foreach ($products as $productItem) {
+                            foreach ($images as $itemImage) {
                                 Image::create([
                                     'uuid' => Helper::randomString(),
                                     'table' => 'products',

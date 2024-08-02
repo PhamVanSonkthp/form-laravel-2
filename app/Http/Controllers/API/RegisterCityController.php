@@ -40,5 +40,4 @@ class RegisterCityController extends Controller
 
         return response()->json($results);
     }
-
 }

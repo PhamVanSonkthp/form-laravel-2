@@ -38,7 +38,7 @@ class ChatController extends Controller
 
     public function index(Request $request)
     {
-        $items = ParticipantChat::where('user_id' , auth()->id());
+        $items = ParticipantChat::where('user_id', auth()->id());
         $items = $items->groupBy('chat_group_id');
 
         $items = $items->latest('latest_touch')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
@@ -50,5 +50,4 @@ class ChatController extends Controller
     {
         return $this->deleteModelTrait($id, $this->user);
     }
-
 }

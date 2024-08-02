@@ -45,9 +45,11 @@ class CartController extends Controller
 
         $results = [];
 
-        foreach ($request->product_ids as $product_id){
+        foreach ($request->product_ids as $product_id) {
             $product = Product::find($product_id);
-            if (empty($product)) continue;
+            if (empty($product)) {
+                continue;
+            }
             $results[] = $product;
         }
 
@@ -61,7 +63,7 @@ class CartController extends Controller
             'quantity' => 'numeric|min:1',
         ]);
 
-        if (empty($request->quantity)){
+        if (empty($request->quantity)) {
             $request->quantity = 1;
         }
 
@@ -72,9 +74,9 @@ class CartController extends Controller
 
         DB::beginTransaction();
 
-        if (!empty($item)){
+        if (!empty($item)) {
             $item->increment('quantity', $request->quantity);
-        }else{
+        } else {
             $item = $this->model->create([
                 'user_id' => auth()->id(),
                 'product_id' => $request->product_id,
@@ -86,12 +88,12 @@ class CartController extends Controller
 
         $product = Product::find($request->product_id);
 
-        if ($item->quantity > $product->inventory){
+        if ($item->quantity > $product->inventory) {
             DB::rollback();
             return response()->json(Helper::errorAPI(99, [
                 'max_inventory' => $product->inventory
-            ],"Số lượng sản phẩm không hợp lệ"), 400);
-        }else{
+            ], "Số lượng sản phẩm không hợp lệ"), 400);
+        } else {
             DB::commit();
         }
 
@@ -106,8 +108,8 @@ class CartController extends Controller
 
         $item = $this->model->findOrFail($id);
 
-        if ($item->user_id != auth()->id()){
-            return response()->json(Helper::errorAPI(99, [],"Không tìm thấy giỏ hàng"), 400);
+        if ($item->user_id != auth()->id()) {
+            return response()->json(Helper::errorAPI(99, [], "Không tìm thấy giỏ hàng"), 400);
         }
 
         DB::beginTransaction();
@@ -120,12 +122,12 @@ class CartController extends Controller
 
         $product = Product::find($item->product_id);
 
-        if ($item->quantity > $product->inventory){
+        if ($item->quantity > $product->inventory) {
             DB::rollback();
             return response()->json(Helper::errorAPI(99, [
                 'max_inventory' => $product->inventory
-            ],"Số lượng sản phẩm không hợp lệ"), 400);
-        }else{
+            ], "Số lượng sản phẩm không hợp lệ"), 400);
+        } else {
             DB::commit();
         }
 
@@ -137,13 +139,12 @@ class CartController extends Controller
 
         $item = $this->model->findOrFail($id);
 
-        if ($item->user_id != auth()->id()){
-            return response()->json(Helper::errorAPI(99, [],"Không tìm thấy giỏ hàng"), 400);
+        if ($item->user_id != auth()->id()) {
+            return response()->json(Helper::errorAPI(99, [], "Không tìm thấy giỏ hàng"), 400);
         }
 
         $item = $this->model->deleteByQuery($request, $id);
 
         return $item;
     }
-
 }

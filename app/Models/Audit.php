@@ -13,15 +13,18 @@ class Audit extends Model
 
     // begin
 
-    public function user(){
-        return $this->hasOne(User::class , 'id' , 'user_id');
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function oldValues(){
+    public function oldValues()
+    {
         return json_decode($this->old_values, true);
     }
 
-    public function newValues(){
+    public function newValues()
+    {
         return json_decode($this->new_values, true);
     }
 
@@ -47,8 +50,9 @@ class Audit extends Model
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -61,7 +65,7 @@ class Audit extends Model
         $dataInsert = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -74,7 +78,7 @@ class Audit extends Model
         $dataUpdate = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -85,7 +89,8 @@ class Audit extends Model
         return Helper::deleteByQuery($this, $request, $id, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

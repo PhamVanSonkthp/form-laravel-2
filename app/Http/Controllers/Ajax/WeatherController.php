@@ -29,11 +29,12 @@ class WeatherController extends Controller
         $this->shareBaseModel($model);
     }
 
-    public function get(Request $request){
+    public function get(Request $request)
+    {
 
-        $weather = Weather::where('created_at', '>' , Carbon::now()->subMinutes(15)->toDateTimeString())->first();
+        $weather = Weather::where('created_at', '>', Carbon::now()->subMinutes(15)->toDateTimeString())->first();
 
-        if (!empty($weather)){
+        if (!empty($weather)) {
             return response()->json(json_decode($weather->content, true));
         }
 
@@ -50,5 +51,4 @@ class WeatherController extends Controller
 
         return response()->json($item);
     }
-
 }

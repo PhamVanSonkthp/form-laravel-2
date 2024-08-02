@@ -110,5 +110,4 @@ class ParticipantChatController extends Controller
 
         return response()->json($chatGoup);
     }
-
 }

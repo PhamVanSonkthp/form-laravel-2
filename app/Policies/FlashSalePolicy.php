@@ -74,7 +74,7 @@ class FlashSalePolicy
      * @param  \App\Models\  $flash_sales
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $flash_sales)
+    public function restore(User $user, $flash_sales)
     {
         //
     }
@@ -86,7 +86,7 @@ class FlashSalePolicy
      * @param  \App\Models\  $flash_sales
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $flash_sales)
+    public function forceDelete(User $user, $flash_sales)
     {
         //
     }

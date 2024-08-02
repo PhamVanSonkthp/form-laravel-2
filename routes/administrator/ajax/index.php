@@ -39,7 +39,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 'as' => 'ajax.administrator.weather.get',
                 'uses' => 'App\Http\Controllers\Ajax\WeatherController@get',
             ]);
-
         });
 
         Route::prefix('user')->group(function () {
@@ -56,7 +55,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item['html'] = $htmlRow;
 
                 return response()->json($item);
-
             })->name('ajax.administrator.user.get');
 
             Route::post('/', function (Request $request) {
@@ -90,7 +88,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item['html_row_add'] = $htmlRowAdd;
 
                 return response()->json($item);
-
             })->name('ajax.administrator.user.store');
 
             Route::put('/', function (Request $request) {
@@ -137,9 +134,7 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item['html_row'] = $htmlRow;
 
                 return response()->json($item);
-
             })->name('ajax.administrator.user.update');
-
         });
 
         Route::prefix('orders')->group(function () {
@@ -176,10 +171,11 @@ Route::prefix('ajax/administrator')->group(function () {
                 $amount = Formatter::formatMoneyToDatabase($request->shipping_fee) ?? 0;
 
                 foreach ($request->product_ids as $index => $product_id) {
-
                     $product = Product::find($product_id);
 
-                    if (empty($product)) continue;
+                    if (empty($product)) {
+                        continue;
+                    }
 
                     $amount += $product->priceByUser() * $request->quantities[$index];
 
@@ -202,25 +198,39 @@ Route::prefix('ajax/administrator')->group(function () {
                         $voucher = Voucher::where('code', $request->voucher_id)->first();
                     }
 
-                    if (empty($voucher)) return response()->json(Helper::errorAPI(99, [], "voucher_id invalid"), 400);
+                    if (empty($voucher)) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher_id invalid"), 400);
+                    }
 
-                    if ($voucher->isLimited()) return response()->json(Helper::errorAPI(99, [], "voucher is limited"), 400);
+                    if ($voucher->isLimited()) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher is limited"), 400);
+                    }
 
-                    if ($voucher->isLimitedByUser()) return response()->json(Helper::errorAPI(99, [], "voucher is limited by user"), 400);
+                    if ($voucher->isLimitedByUser()) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher is limited by user"), 400);
+                    }
 
-                    if ($voucher->isExpired()) return response()->json(Helper::errorAPI(99, [], "voucher is is expired"), 400);
+                    if ($voucher->isExpired()) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher is is expired"), 400);
+                    }
 
-                    if ($voucher->isUnavailable()) return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
+                    if ($voucher->isUnavailable()) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
+                    }
 
 //                    $amount = UserCart::calculateAmountByIds($request->product_ids, false);
 
-                    if ($voucher->isAcceptAmount($amount)) return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
+                    if ($voucher->isAcceptAmount($amount)) {
+                        return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
+                    }
 
                     $discount = $voucher->amountDiscount($amount);
 
                     $amount = $amount - $discount;
 
-                    if ($amount < 0) $amount = 0;
+                    if ($amount < 0) {
+                        $amount = 0;
+                    }
 
                     VoucherUsed::create([
                         'user_id' => $request->user_id ?? 0,
@@ -233,7 +243,6 @@ Route::prefix('ajax/administrator')->group(function () {
                         'voucher_id' => $voucher->id,
                         'amount_voucher' => $discount,
                     ]);
-
                 }
 
                 $item->update([
@@ -243,7 +252,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 DB::commit();
 
                 return response()->json($item);
-
             })->name('ajax.administrator.orders.store');
 
             Route::put('/', function (Request $request) {
@@ -284,10 +292,11 @@ Route::prefix('ajax/administrator')->group(function () {
                 $amount = $request->shipping_fee ?? 0;
 
                 foreach ($request->product_ids as $index => $product_id) {
-
                     $product = Product::find($product_id);
 
-                    if (empty($product)) continue;
+                    if (empty($product)) {
+                        continue;
+                    }
 
                     $amount += $product->priceByUser() * $request->quantities[$index];
 
@@ -310,10 +319,9 @@ Route::prefix('ajax/administrator')->group(function () {
                 DB::commit();
 
                 return response()->json($item);
-
             })->name('ajax.administrator.orders.update');
 
-            Route::put('/update-to-shipping', function (Request $request){
+            Route::put('/update-to-shipping', function (Request $request) {
 
                 $request->validate([
                     'id' => 'required|min:1',
@@ -329,9 +337,7 @@ Route::prefix('ajax/administrator')->group(function () {
 
                 $item['html'] = View::make('administrator.orders.row', ['item' => $item , 'prefixView' => 'orders'])->render();
                 return response()->json($item);
-
             })->name('ajax.administrator.orders.update_to_shipping');
-
         });
 
         Route::prefix('voucher')->group(function () {
@@ -356,9 +362,7 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item['html_row'] = View::make('administrator.user_points.row', compact('item'))->render();
 
                 return response()->json($item);
-
             })->name('ajax.administrator.user_points.store');
-
         });
 
         Route::prefix('user-transaction')->group(function () {
@@ -379,9 +383,7 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item['html_row'] = View::make('administrator.user_transactions.row', compact('item'))->render();
 
                 return response()->json($item);
-
             })->name('ajax.administrator.user_transaction.store');
-
         });
 
         Route::prefix('/products')->group(function () {
@@ -397,7 +399,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 'uses' => 'App\Http\Controllers\Ajax\ProductController@update',
                 'middleware' => 'can:products-edit',
             ]);
-
         });
 
         Route::prefix('/product-comments')->group(function () {
@@ -413,7 +414,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 'uses' => 'App\Http\Controllers\Ajax\ProductCommentController@update',
                 'middleware' => 'can:products-edit',
             ]);
-
         });
 
         Route::prefix('/email')->group(function () {
@@ -423,7 +423,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 'uses' => 'App\Http\Controllers\Ajax\EmailController@sendTestEmail',
                 'middleware' => 'can:products-edit',
             ]);
-
         });
 
         Route::prefix('chat-ai')->group(function () {
@@ -452,7 +451,6 @@ Route::prefix('ajax/administrator')->group(function () {
                     }
                     return $results;
                 })->name('administrator.chat.participant');
-
             });
 
             Route::post('/create', function (Request $request) {
@@ -465,7 +463,7 @@ Route::prefix('ajax/administrator')->group(function () {
 
                 for ($x = 0; $x < $request->total_files; $x++) {
                     if ($request->hasFile('feature_image' . $x)) {
-                        $dataChatImageDetail = StorageImageTrait::storageTraitUpload( $request, 'feature_image'.$x,  'chat', $chat->id);
+                        $dataChatImageDetail = StorageImageTrait::storageTraitUpload($request, 'feature_image'.$x, 'chat', $chat->id);
 
                         ChatImage::create([
                             'image_name' => $dataChatImageDetail['file_name'],
@@ -476,26 +474,23 @@ Route::prefix('ajax/administrator')->group(function () {
                 }
 
                 foreach (ParticipantChat::where('chat_group_id', $request->chat_group_id)->get() as $item) {
-                    if ($item->user_id == auth()->id()){
+                    if ($item->user_id == auth()->id()) {
                         $item->update([
                             'is_read' => 1,
                             'number_not_read' => 0,
                             'updated_at' => now(),
                         ]);
-                    }else{
-
+                    } else {
                         $item->update([
                             'is_read' => 0,
                             'updated_at' => now(),
                         ]);
                         $item->increment('number_not_read');
                     }
-
                 }
 
                 return response()->json($chat);
             })->name('administrator.chat.create');
-
         });
 
         Route::prefix('upload-image')->group(function () {
@@ -504,7 +499,7 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item = SingleImage::firstOrCreate([
                     'relate_id' => $request->id,
                     'table' => $request->table,
-                ],[
+                ], [
                     'relate_id' => $request->id,
                     'table' => $request->table,
                     'image_path' => 'waiting_update',
@@ -520,7 +515,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item->refresh();
 
                 return response()->json($item);
-
             })->name('ajax,administrator.upload_image.store');
         });
 
@@ -536,7 +530,7 @@ Route::prefix('ajax/administrator')->group(function () {
                     'relate_id' => $request->relate_id ?? 0,
                 ]);
 
-                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image','multiple', $item->id);
+                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'multiple', $item->id);
 
                 $dataUpdate = [
                     'image_path' => $dataUploadFeatureImage['file_path'],
@@ -547,15 +541,14 @@ Route::prefix('ajax/administrator')->group(function () {
                 $item->refresh();
 
                 return response()->json($item);
-
             })->name('ajax,administrator.upload_multiple_images.store');
 
             Route::delete('/delete', function (Request $request) {
                 $image = Image::find($request->id);
-                if (empty($image)){
+                if (empty($image)) {
                     $image = Image::where('uuid', $request->id)->first();
                 }
-                if (!empty($image)){
+                if (!empty($image)) {
                     $image->delete();
                 }
                 return response()->json($image);
@@ -563,13 +556,13 @@ Route::prefix('ajax/administrator')->group(function () {
 
             Route::put('/sort', function (Request $request) {
 
-                foreach ($request->ids as $index => $id){
+                foreach ($request->ids as $index => $id) {
                     $image = Image::find($id);
-                    if (empty($image)){
+                    if (empty($image)) {
                         $image = Image::where('uuid', $id)->first();
                     }
 
-                    if (!empty($image)){
+                    if (!empty($image)) {
                         $image->update([
                             'index' => $index
                         ]);
@@ -578,9 +571,6 @@ Route::prefix('ajax/administrator')->group(function () {
 
                 return response()->json($request->ids);
             })->name('ajax,administrator.upload_multiple_images.sort');
-
         });
     });
-
 });
-

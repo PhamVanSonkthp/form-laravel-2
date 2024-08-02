@@ -74,7 +74,7 @@ class UserCartPolicy
      * @param  \App\Models\  $user_carts
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $user_carts)
+    public function restore(User $user, $user_carts)
     {
         //
     }
@@ -86,7 +86,7 @@ class UserCartPolicy
      * @param  \App\Models\  $user_carts
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $user_carts)
+    public function forceDelete(User $user, $user_carts)
     {
         //
     }

@@ -74,7 +74,7 @@ class UserTransactionPolicy
      * @param  \App\Models\  $user_transactions
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $user_transactions)
+    public function restore(User $user, $user_transactions)
     {
         //
     }
@@ -86,7 +86,7 @@ class UserTransactionPolicy
      * @param  \App\Models\  $user_transactions
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $user_transactions)
+    public function forceDelete(User $user, $user_transactions)
     {
         //
     }

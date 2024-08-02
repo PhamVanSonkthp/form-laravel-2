@@ -74,7 +74,7 @@ class BankCashInPolicy
      * @param  \App\Models\  $bank_cash_ins
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $bank_cash_ins)
+    public function restore(User $user, $bank_cash_ins)
     {
         //
     }
@@ -86,7 +86,7 @@ class BankCashInPolicy
      * @param  \App\Models\  $bank_cash_ins
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $bank_cash_ins)
+    public function forceDelete(User $user, $bank_cash_ins)
     {
         //
     }

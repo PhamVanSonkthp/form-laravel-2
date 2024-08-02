@@ -21,11 +21,13 @@ class Role extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function permissions(){
-        return $this->belongsToMany(Permission::class, 'permission_role' , 'role_id' , 'permission_id');
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'permission_role', 'role_id', 'permission_id');
     }
 
-    public function getRole($parent_id = null){
+    public function getRole($parent_id = null)
+    {
         $data = Role::all();
         $recusive = new Recusive($data);
         $htmlOption = $recusive->categoryRecusive($parent_id);
@@ -55,7 +57,7 @@ class Role extends Model implements Auditable
             'password' => Hash::make($request->password),
         ];
 
-        if ($this->isAdmin()){
+        if ($this->isAdmin()) {
             $dataInsert['role_id'] = $request->role_id ?? 0;
             $dataInsert['is_admin'] = $request->is_admin ?? 0;
         }
@@ -102,5 +104,4 @@ class Role extends Model implements Auditable
         $item->role;
         return $item;
     }
-
 }

@@ -74,7 +74,7 @@ class JobNotificationPolicy
      * @param  \App\Models\  $job_notifications
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $job_notifications)
+    public function restore(User $user, $job_notifications)
     {
         //
     }
@@ -86,7 +86,7 @@ class JobNotificationPolicy
      * @param  \App\Models\  $job_notifications
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $job_notifications)
+    public function forceDelete(User $user, $job_notifications)
     {
         //
     }

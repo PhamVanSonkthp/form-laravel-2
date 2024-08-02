@@ -60,7 +60,7 @@ class EmployeeController extends Controller
     {
         $item = $this->model->findById($id);
         $rolesOfUser = $item->roles;
-        return view('administrator.'.$this->prefixView.'.edit', compact('item','rolesOfUser'));
+        return view('administrator.'.$this->prefixView.'.edit', compact('item', 'rolesOfUser'));
     }
 
     public function update(EmployeeUpdateRequest $request, $id)

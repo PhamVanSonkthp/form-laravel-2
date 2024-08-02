@@ -24,7 +24,8 @@ class CategoryNew extends Model implements Auditable
 
     // end
 
-    public static function getCategory($parent_id = null){
+    public static function getCategory($parent_id = null)
+    {
         $data = CategoryNew::all();
         $recusive = new Recusive($data);
         $htmlOption = $recusive->categoryRecusive($parent_id);
@@ -34,9 +35,9 @@ class CategoryNew extends Model implements Auditable
 
     public function rootParent($itemCurrent = null)
     {
-        if(!empty($itemCurrent)){
+        if (!empty($itemCurrent)) {
             $item = Category::find($itemCurrent->parent_id);
-        }else{
+        } else {
             $item = $this;
         }
 
@@ -61,7 +62,7 @@ class CategoryNew extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -74,8 +75,9 @@ class CategoryNew extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [])
@@ -88,7 +90,7 @@ class CategoryNew extends Model implements Auditable
         $dataInsert = [
             'name' => $request->name,
             'parent_id' => Formatter::formatNumberToDatabase($request->parent_id),
-            'slug' => Helper::addSlug($this,'slug', $request->name),
+            'slug' => Helper::addSlug($this, 'slug', $request->name),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -101,7 +103,7 @@ class CategoryNew extends Model implements Auditable
         $dataUpdate = [
             'name' => $request->name,
             'parent_id' => Formatter::formatNumberToDatabase($request->parent_id),
-            'slug' => Helper::addSlug($this,'slug', $request->name),
+            'slug' => Helper::addSlug($this, 'slug', $request->name),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -117,9 +119,9 @@ class CategoryNew extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

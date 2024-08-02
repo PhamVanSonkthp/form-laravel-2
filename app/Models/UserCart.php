@@ -30,7 +30,7 @@ class UserCart extends Model implements Auditable
 
         $amount = 0;
 
-        if ($isCartId){
+        if ($isCartId) {
             foreach ($ids as $id) {
                 $userCart = UserCart::find($id);
 
@@ -38,7 +38,7 @@ class UserCart extends Model implements Auditable
                     $amount += optional($userCart->product)->priceByUser() ?? 0;
                 }
             }
-        }else{
+        } else {
             foreach ($ids as $id) {
                 $product = Product::find($id);
 
@@ -126,5 +126,4 @@ class UserCart extends Model implements Auditable
         $item = $this->find($id);
         return $item;
     }
-
 }

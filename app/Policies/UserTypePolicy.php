@@ -74,7 +74,7 @@ class UserTypePolicy
      * @param  \App\Models\  $user_type
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $user_type)
+    public function restore(User $user, $user_type)
     {
         //
     }
@@ -86,7 +86,7 @@ class UserTypePolicy
      * @param  \App\Models\  $user_type
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $user_type)
+    public function forceDelete(User $user, $user_type)
     {
         //
     }

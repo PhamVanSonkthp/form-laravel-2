@@ -21,7 +21,8 @@ class RegisterWard extends Model implements Auditable
     // begin
 
 
-    public function registerWards(){
+    public function registerWards()
+    {
         return $this->hasMany(RegisterWard::class);
     }
 
@@ -42,7 +43,7 @@ class RegisterWard extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -55,8 +56,9 @@ class RegisterWard extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -69,7 +71,7 @@ class RegisterWard extends Model implements Auditable
         $dataInsert = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -82,7 +84,7 @@ class RegisterWard extends Model implements Auditable
         $dataUpdate = [
             'title' => $request->title,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            'slug' => Helper::addSlug($this, 'slug', $request->title),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -98,9 +100,9 @@ class RegisterWard extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

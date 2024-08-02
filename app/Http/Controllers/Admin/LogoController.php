@@ -29,12 +29,14 @@ class LogoController extends Controller
         $this->shareBaseModel($model);
     }
 
-    public function create(){
+    public function create()
+    {
         $logo = $this->model->first();
-        return view('administrator.'.$this->prefixView.'.add' , compact('logo'));
+        return view('administrator.'.$this->prefixView.'.add', compact('logo'));
     }
 
-    public function store(LogoAddRequest $request){
+    public function store(LogoAddRequest $request)
+    {
 
         $dataCreate = [];
 
@@ -47,9 +49,9 @@ class LogoController extends Controller
 
         $logo = $this->model->first();
 
-        if(empty($logo)){
+        if (empty($logo)) {
             $this->model->create($dataCreate);
-        }else{
+        } else {
             $logo->update($dataCreate);
         }
 
@@ -70,5 +72,4 @@ class LogoController extends Controller
 
         return response()->json($content);
     }
-
 }

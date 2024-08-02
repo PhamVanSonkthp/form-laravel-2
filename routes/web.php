@@ -21,8 +21,6 @@ Route::get('/assets/{type}/{user_id}/{id}/{size}/{slug}', [
 ]);
 
 Route::prefix('/demo')->group(function () {
-    Route::get('/', function (Request $request){
-
+    Route::get('/', function (Request $request) {
     });
-
 });

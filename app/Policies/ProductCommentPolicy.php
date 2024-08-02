@@ -74,7 +74,7 @@ class ProductCommentPolicy
      * @param  \App\Models\  $product_comments
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $product_comments)
+    public function restore(User $user, $product_comments)
     {
         //
     }
@@ -86,7 +86,7 @@ class ProductCommentPolicy
      * @param  \App\Models\  $product_comments
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $product_comments)
+    public function forceDelete(User $user, $product_comments)
     {
         //
     }

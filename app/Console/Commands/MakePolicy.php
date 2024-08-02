@@ -96,13 +96,14 @@ class MakePolicy extends GeneratorCommand
     {
         $stub = parent::replaceClass($stub, $name);
 
-        $stub = str_replace(".replace_plaint.", $this->toUnderline($this->repositoryClass) . "s",$stub);
-        $stub = str_replace(".class.",$this->repositoryClass,$stub);
+        $stub = str_replace(".replace_plaint.", $this->toUnderline($this->repositoryClass) . "s", $stub);
+        $stub = str_replace(".class.", $this->repositoryClass, $stub);
 
         return str_replace("Repository", $this->argument('name'), $stub);
     }
 
-    public function toUnderline($input){
+    public function toUnderline($input)
+    {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $input));
     }
 }

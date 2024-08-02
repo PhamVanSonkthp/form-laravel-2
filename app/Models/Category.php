@@ -17,7 +17,8 @@ class Category extends Model implements Auditable
     use DeleteModelTrait;
     use StorageImageTrait;
 
-    public static function getCategory($parent_id = null){
+    public static function getCategory($parent_id = null)
+    {
         $data = Category::all();
         $recusive = new Recusive($data);
         $htmlOption = $recusive->categoryRecusive($parent_id);
@@ -27,9 +28,9 @@ class Category extends Model implements Auditable
 
     public function rootParent($itemCurrent = null)
     {
-        if(!empty($itemCurrent)){
+        if (!empty($itemCurrent)) {
             $item = Category::find($itemCurrent->parent_id);
-        }else{
+        } else {
             $item = $this;
         }
 
@@ -67,8 +68,9 @@ class Category extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [])
@@ -81,7 +83,7 @@ class Category extends Model implements Auditable
         $dataInsert = [
             'name' => $request->name,
             'description' => $request->description,
-            'slug' => Helper::addSlug($this,'slug', $request->name),
+            'slug' => Helper::addSlug($this, 'slug', $request->name),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -94,7 +96,7 @@ class Category extends Model implements Auditable
         $dataUpdate = [
             'name' => $request->name,
             'description' => $request->description,
-            'slug' => Helper::addSlug($this,'slug', $request->name),
+            'slug' => Helper::addSlug($this, 'slug', $request->name),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -110,9 +112,9 @@ class Category extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

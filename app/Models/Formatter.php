@@ -59,7 +59,6 @@ class Formatter extends Model
             } else {
                 return date(config('_my_config.type_date'), strtotime($input));
             }
-
         } catch (\Exception $exception) {
             return null;
         }
@@ -152,31 +151,41 @@ class Formatter extends Model
 
     public static function convertNumberToMoney($input)
     {
-        if (empty($input)) return 0;
-        return number_format($input,0,".",".");
+        if (empty($input)) {
+            return 0;
+        }
+        return number_format($input, 0, ".", ".");
     }
 
     public static function formatMoney($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
         return number_format($input);
     }
 
     public static function formatNumber($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
         return number_format($input);
     }
 
     public static function formatNumberToDatabase($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
         return (int)filter_var($input, FILTER_SANITIZE_NUMBER_INT);
     }
 
     public static function formatMoneyToDatabase($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
         return (int)filter_var($input, FILTER_SANITIZE_NUMBER_INT);
     }
 
@@ -199,7 +208,9 @@ class Formatter extends Model
 
     public static function getOnlyNumber($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
         return (int)filter_var($input, FILTER_SANITIZE_NUMBER_INT);
     }
 
@@ -210,7 +221,9 @@ class Formatter extends Model
 
     public static function tryParseInt($input)
     {
-        if (empty($input)) return 0;
+        if (empty($input)) {
+            return 0;
+        }
 
         return (int)$input;
     }
@@ -231,9 +244,7 @@ class Formatter extends Model
         $length = strlen($number);
 
         if ($length < 3) {
-
             return $length == 1 ? "*" : "*" . substr($number, -1);
-
         } else {
             $part_size = floor($length / 3);
             $middle_part_size = $length - ($part_size * 2);

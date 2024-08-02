@@ -106,7 +106,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         $this->addPoint(-$point, "Đổi " . $point . " điểm thành " . $exchanged . " vnđ");
 
         $this->addAmount($exchanged, "Đổi " . $point . " điểm thành " . $exchanged . " vnđ");
-
     }
 
     public function addPoint($point, $description)
@@ -285,7 +284,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     public function checkPermissionAccess($permissionCheck)
     {
-        if (optional(auth()->user())->is_admin == 2) return true;
+        if (optional(auth()->user())->is_admin == 2) {
+            return true;
+        }
 
         $roles = optional(auth()->user())->roles;
         foreach ($roles as $role) {
@@ -337,8 +338,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             $user->roles()->attach($request->role_ids);
         }
 
-        if (isset($request->front_id_image_path)){
-
+        if (isset($request->front_id_image_path)) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -347,7 +347,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],
@@ -361,8 +361,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             ]);
         }
 
-        if (isset($request->back_id_image_path)){
-
+        if (isset($request->back_id_image_path)) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -371,7 +370,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],
@@ -386,7 +385,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         }
 
 
-        if (isset($request->back_id_image_path)){
+        if (isset($request->back_id_image_path)) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -395,7 +394,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],
@@ -445,8 +444,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             $user->roles()->sync($request->role_ids);
         }
 
-        if ($request->hasFile('front_id_image_path')){
-
+        if ($request->hasFile('front_id_image_path')) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -455,7 +453,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('front_id_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],
@@ -469,8 +467,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             ]);
         }
 
-        if ($request->hasFile('back_id_image_path')){
-
+        if ($request->hasFile('back_id_image_path')) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -479,7 +476,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('back_id_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],
@@ -494,7 +491,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         }
 
 
-        if ($request->hasFile('portrait_image_path')){
+        if ($request->hasFile('portrait_image_path')) {
             $item = Image::create([
                 'uuid' => Helper::randomString(),
                 'table' => $user->getTableName(),
@@ -503,7 +500,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
                 'relate_id' => $user->id,
             ]);
 
-            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'),'multiple', $item->id);
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $request->file('portrait_image_path'), 'multiple', $item->id);
 
             $dataUpdate = [
                 'image_path' => $dataUploadFeatureImage['file_path'],

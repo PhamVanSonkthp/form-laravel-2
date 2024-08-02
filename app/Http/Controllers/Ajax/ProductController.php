@@ -29,7 +29,8 @@ class ProductController extends Controller
         View::share('categories', $categories);
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $results = $this->model->search($request);
 
         $html = View::make('administrator.orders.result_search', compact('results'))->render();
@@ -47,11 +48,11 @@ class ProductController extends Controller
     {
         $query = $this->model->searchByQuery($request, ['product_visibility_id' => 2], null, null, true);
 
-        if (isset($request->min_inventory) && strlen($request->min_inventory)){
-            $query = $query->where('inventory' ,'>=', $request->min_inventory);
+        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
+            $query = $query->where('inventory', '>=', $request->min_inventory);
         }
 
-        if (isset($request->min_inventory) && strlen($request->min_inventory)){
+        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
             $query = $query->where('inventory', '<=', $request->max_inventory);
         }
 
@@ -86,22 +87,22 @@ class ProductController extends Controller
     {
         $item = $this->model->find($request->id);
 
-        if (!empty($item)){
+        if (!empty($item)) {
             $dataUpdate = [];
 
-            if (isset($request->inventory) && $request->inventory != ""){
+            if (isset($request->inventory) && $request->inventory != "") {
                 $dataUpdate['inventory'] = Formatter::formatNumberToDatabase($request->inventory);
             }
-            if (isset($request->price_client) && $request->price_client != ""){
+            if (isset($request->price_client) && $request->price_client != "") {
                 $dataUpdate['price_client'] = Formatter::formatNumberToDatabase($request->price_client);
             }
-            if (isset($request->price_agent) && $request->price_agent != ""){
+            if (isset($request->price_agent) && $request->price_agent != "") {
                 $dataUpdate['price_agent'] = Formatter::formatNumberToDatabase($request->price_agent);
             }
-            if (isset($request->price_partner) && $request->price_partner != ""){
+            if (isset($request->price_partner) && $request->price_partner != "") {
                 $dataUpdate['price_partner'] = Formatter::formatNumberToDatabase($request->price_partner);
             }
-            if (isset($request->is_feature) && $request->is_feature != ""){
+            if (isset($request->is_feature) && $request->is_feature != "") {
                 $dataUpdate['is_feature'] = Formatter::formatNumberToDatabase($request->is_feature);
             }
 
@@ -153,7 +154,7 @@ class ProductController extends Controller
 
         $tmpProduct = Product::latest()->first();
 
-        if (!empty($tmpProduct)){
+        if (!empty($tmpProduct)) {
             $group_product_id = $tmpProduct->group_product_id;
             $group_product_id++;
         }
@@ -163,7 +164,7 @@ class ProductController extends Controller
                 if ($index > 1) {
                     $cells = $row->getCells();
 
-                    if (count($cells) == 0 || $cells[0]->getValue() == ""){
+                    if (count($cells) == 0 || $cells[0]->getValue() == "") {
                         return response()->json($productAdded);
                     }
 
@@ -172,7 +173,9 @@ class ProductController extends Controller
                         'name' => Formatter::trimer($cells[24]->getValue()),
                     ];
 
-                    if ($cells[18]->getValue() == "") continue;
+                    if ($cells[18]->getValue() == "") {
+                        continue;
+                    }
 
                     $item = [];
                     $item['slug'] = Formatter::trimer($cells[0]->getValue());
@@ -232,8 +235,8 @@ class ProductController extends Controller
                     if ($item['slug'] != $slug) {
                         $slug = Formatter::trimer($cells[0]->getValue());
 
-                        foreach ($products as $productItem){
-                            foreach ($images as $itemImage){
+                        foreach ($products as $productItem) {
+                            foreach ($images as $itemImage) {
                                 Image::create([
                                     'uuid' => Helper::randomString(),
                                     'table' => 'products',

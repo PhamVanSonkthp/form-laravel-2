@@ -74,7 +74,7 @@ class CategoryNewPolicy
      * @param  \App\Models\  $category_new
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $category_new)
+    public function restore(User $user, $category_new)
     {
         //
     }
@@ -86,7 +86,7 @@ class CategoryNewPolicy
      * @param  \App\Models\  $category_new
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $category_new)
+    public function forceDelete(User $user, $category_new)
     {
         //
     }

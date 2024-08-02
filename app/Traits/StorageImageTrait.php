@@ -14,7 +14,8 @@ use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 trait StorageImageTrait
 {
 
-    public static function saveToS3($request, $fieldName){
+    public static function saveToS3($request, $fieldName)
+    {
         $file = $request->$fieldName;
 //        $path = $file->store('public/images');
 
@@ -27,7 +28,6 @@ trait StorageImageTrait
     {
 
         if ($request->hasFile($fieldName) || is_file($fieldName)) {
-
             try {
                 $idSenter = 0;
 
@@ -38,9 +38,9 @@ trait StorageImageTrait
                 $folderName = $folderName . "/";
 
                 $folderName = "/assets/" . $folderName . $idSenter . "/" . $id;
-                if (is_file($fieldName)){
+                if (is_file($fieldName)) {
                     $file = $fieldName;
-                }else{
+                } else {
                     $file = $request->$fieldName;
                 }
 
@@ -72,7 +72,6 @@ trait StorageImageTrait
 //                $ImageUpload->save(storage_path() . $folderName . '/original/optimize/' . $fileNameHash, config('_images_cut_sizes.compress_image_quality'));
 
                 foreach (config('_images_cut_sizes.sizes') as $size) {
-
                     $width = (int)explode("x", $size)[0];
                     $height = (int)explode("x", $size)[1];
 
@@ -80,7 +79,6 @@ trait StorageImageTrait
                     $ImageUpload->fit($width, $height);
                     if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
                         mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
-
                     }
 //                    if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/')) {
 //                        mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/', config('_images_cut_sizes.permission'), true);
@@ -113,9 +111,9 @@ trait StorageImageTrait
 
 
                 $folderName = "/assets/" . $folderName;
-                if (is_file($fieldName)){
+                if (is_file($fieldName)) {
                     $file = $fieldName;
-                }else{
+                } else {
                     $file = $request->$fieldName;
                 }
 
@@ -126,7 +124,7 @@ trait StorageImageTrait
                     'file_path' => $folderName . $fileNameHash,
                 ];
 
-                $path = $file->store($folderName,  ['disk' => 'my_files']);
+                $path = $file->store($folderName, ['disk' => 'my_files']);
                 $dataUpluadTrait['file_path'] = "/myfiles/" . $path;
 
                 return $dataUpluadTrait;
@@ -138,5 +136,4 @@ trait StorageImageTrait
 
         return null;
     }
-
 }

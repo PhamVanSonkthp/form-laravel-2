@@ -10,7 +10,7 @@ Route::get('/admin/logout', [
     'uses' => '\App\Http\Controllers\Admin\AdminController@logout'
 ]);
 
-Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']],function() {
+Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']], function () {
     Route::prefix('password')->group(function () {
         Route::get('/', [
             'as' => 'administrator.password.index',
@@ -20,7 +20,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.password.update',
             'uses' => 'App\Http\Controllers\Admin\AdminController@updatePassword',
         ]);
-
     });
 
     Route::prefix('dashboard')->group(function () {
@@ -28,7 +27,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.dashboard.index',
             'uses' => 'App\Http\Controllers\Admin\DashboardController@index',
         ]);
-
     });
 
     Route::prefix('history-datas')->group(function () {
@@ -37,7 +35,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\HistoryDataController@index',
             'middleware' => 'can:history_datas-list',
         ]);
-
     });
 
     Route::prefix('logos')->group(function () {
@@ -52,7 +49,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\LogoController@store',
             'middleware' => 'can:logos-add',
         ]);
-
     });
 
     Route::prefix('users')->group(function () {
@@ -116,7 +112,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\UserController@get',
             'middleware' => 'can:users-list',
         ]);
-
     });
 
     Route::prefix('chats')->group(function () {
@@ -179,7 +174,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\ChatController@get',
             'middleware' => 'can:chats-list',
         ]);
-
     });
 
     Route::prefix('employees')->group(function () {
@@ -242,7 +236,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\EmployeeController@get',
             'middleware' => 'can:employees-list',
         ]);
-
     });
 
     Route::prefix('roles')->group(function () {
@@ -305,7 +298,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\RoleController@get',
             'middleware' => 'can:roles-list',
         ]);
-
     });
 
     Route::prefix('permissions')->group(function () {
@@ -320,7 +312,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\PermissionController@store',
             'middleware' => 'can:permissions-add',
         ]);
-
     });
 
     Route::prefix('sliders')->group(function () {
@@ -383,7 +374,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\SliderController@get',
             'middleware' => 'can:sliders-list',
         ]);
-
     });
 
     Route::prefix('news')->group(function () {
@@ -446,7 +436,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\NewsController@get',
             'middleware' => 'can:news-list',
         ]);
-
     });
 
     Route::prefix('job-emails')->group(function () {
@@ -491,7 +480,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\JobEmailController@get',
             'middleware' => 'can:job_emails-list',
         ]);
-
     });
 
     Route::prefix('job-notifications')->group(function () {
@@ -554,7 +542,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\JobNotificationController@get',
             'middleware' => 'can:job_notifications-list',
         ]);
-
     });
 
     Route::prefix('categories')->group(function () {
@@ -617,7 +604,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\CategoryController@get',
             'middleware' => 'can:categories-list',
         ]);
-
     });
 
     Route::prefix('products')->group(function () {
@@ -686,7 +672,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\ProductController@get',
             'middleware' => 'can:products-list',
         ]);
-
     });
 
     Route::prefix('settings')->group(function () {
@@ -749,7 +734,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\SettingController@get',
             'middleware' => 'can:settings-list',
         ]);
-
     });
 
     Route::prefix('category-news')->group(function () {
@@ -812,7 +796,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\CategoryNewController@get',
             'middleware' => 'can:category_news-list',
         ]);
-
     });
 
     Route::prefix('system-branches')->group(function () {
@@ -1011,7 +994,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\OrderController@get',
             'middleware' => 'can:orders-list',
         ]);
-
     });
 
     Route::prefix('vouchers')->group(function () {
@@ -1089,7 +1071,6 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\MediaController@index',
             'middleware' => 'can:medias-list',
         ]);
-
     });
 
     Route::prefix('payment-methods')->group(function () {
@@ -1982,4 +1963,3 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
 //
 //
 //});
-

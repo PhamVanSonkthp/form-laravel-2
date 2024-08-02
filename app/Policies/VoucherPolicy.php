@@ -74,7 +74,7 @@ class VoucherPolicy
      * @param  \App\Models\  $vouchers
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $vouchers)
+    public function restore(User $user, $vouchers)
     {
         //
     }
@@ -86,7 +86,7 @@ class VoucherPolicy
      * @param  \App\Models\  $vouchers
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $vouchers)
+    public function forceDelete(User $user, $vouchers)
     {
         //
     }

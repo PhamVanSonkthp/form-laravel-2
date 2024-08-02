@@ -32,7 +32,4 @@ class MemberShipController extends Controller
         $results = RestfulAPI::response($this->model, $request);
         return response()->json($results);
     }
-
-
-
 }

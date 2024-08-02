@@ -74,7 +74,7 @@ class BankPolicy
      * @param  \App\Models\  $banks
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $banks)
+    public function restore(User $user, $banks)
     {
         //
     }
@@ -86,7 +86,7 @@ class BankPolicy
      * @param  \App\Models\  $banks
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $banks)
+    public function forceDelete(User $user, $banks)
     {
         //
     }

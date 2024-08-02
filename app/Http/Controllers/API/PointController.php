@@ -83,9 +83,9 @@ class PointController extends Controller
 
         $results = RestfulAPI::response($model, $request, $queries, null, null, true);
 
-        if ($request->type == 1){
+        if ($request->type == 1) {
             $results = $results->where('point', '>=', 0);
-        }else if ($request->type == 2){
+        } else if ($request->type == 2) {
             $results = $results->where('point', '<', 0);
         }
 
@@ -93,6 +93,4 @@ class PointController extends Controller
 
         return response()->json($results);
     }
-
-
 }

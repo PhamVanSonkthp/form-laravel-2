@@ -20,21 +20,26 @@ class Voucher extends Model implements Auditable
 
     // begin
 
-    public function textTypeVoucher(){
+    public function textTypeVoucher()
+    {
         return !empty($this->discount_amount) ? 'Giảm giá trực tiếp' : 'Giảm theo phần trăm';
     }
 
-    public function typeVoucher(){
+    public function typeVoucher()
+    {
         return !empty($this->discount_amount) ? 1 : 2;
     }
 
-    public function amountDiscount($amount){
-        if ($this->typeVoucher() == 1){
+    public function amountDiscount($amount)
+    {
+        if ($this->typeVoucher() == 1) {
             return $this->discount_amount;
-        }else{
+        } else {
             $discount = ($this->discount_percent / 100) * $amount;
 
-            if ($discount > $this->max_discount_percent_amount) return $this->max_discount_percent_amount;
+            if ($discount > $this->max_discount_percent_amount) {
+                return $this->max_discount_percent_amount;
+            }
 
             return $discount;
         }
@@ -42,8 +47,12 @@ class Voucher extends Model implements Auditable
 
     public function isLimited(): bool
     {
-        if ($this->used < $this->max_use_by_time) return false;
-        if ($this->used < $this->max_use_by_user) return false;
+        if ($this->used < $this->max_use_by_time) {
+            return false;
+        }
+        if ($this->used < $this->max_use_by_user) {
+            return false;
+        }
 
         return true;
     }
@@ -87,7 +96,7 @@ class Voucher extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -100,8 +109,9 @@ class Voucher extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -121,11 +131,11 @@ class Voucher extends Model implements Auditable
             'max_use_by_user' => Formatter::formatNumberToDatabase($request->max_use_by_user),
         ];
 
-        if (isset($request->discount_amount) && !empty($request->discount_amount)){
+        if (isset($request->discount_amount) && !empty($request->discount_amount)) {
             $dataInsert['discount_amount'] = Formatter::formatNumberToDatabase($request->discount_amount);
             $dataInsert['discount_percent'] = 0;
             $dataInsert['max_discount_percent_amount'] = 0;
-        }else{
+        } else {
             $dataInsert['discount_amount'] = 0;
             $dataInsert['discount_percent'] = Formatter::formatNumberToDatabase($request->discount_percent);
             $dataInsert['max_discount_percent_amount'] = Formatter::formatNumberToDatabase($request->max_discount_percent_amount);
@@ -148,11 +158,11 @@ class Voucher extends Model implements Auditable
             'max_use_by_user' => Formatter::formatNumberToDatabase($request->max_use_by_user),
         ];
 
-        if (isset($request->discount_amount) && !empty($request->discount_amount)){
+        if (isset($request->discount_amount) && !empty($request->discount_amount)) {
             $dataUpdate['discount_amount'] = Formatter::formatNumberToDatabase($request->discount_amount);
             $dataUpdate['discount_percent'] = 0;
             $dataUpdate['max_discount_percent_amount'] = 0;
-        }else{
+        } else {
             $dataUpdate['discount_amount'] = 0;
             $dataUpdate['discount_percent'] = Formatter::formatNumberToDatabase($request->discount_percent);
             $dataUpdate['max_discount_percent_amount'] = Formatter::formatNumberToDatabase($request->max_discount_percent_amount);
@@ -172,9 +182,9 @@ class Voucher extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }
-
 }

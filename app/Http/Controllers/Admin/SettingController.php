@@ -45,7 +45,7 @@ class SettingController extends Controller
         return redirect()->route('administrator.'.$this->prefixView.'.edit', ["id" => $item->id]);
     }
 
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         $item = $this->model->findOrFail($id);
 

@@ -9,37 +9,38 @@ use App\Http\Requests;
 
 class ImagesController extends Controller
 {
-    public function show($type, $user_id, $id, $size, $slug){
+    public function show($type, $user_id, $id, $size, $slug)
+    {
 
-        if ($type == 'single'){
+        if ($type == 'single') {
             $item = SingleImage::find($id);
-        }else{
+        } else {
             $item = \App\Models\Image::find($id);
         }
 
-        if (empty($item)){
+        if (empty($item)) {
             try {
                 $storagePath = storage_path('/assets/'.$type.'/' .$user_id. '/' . $id . '/' . $size . '/' . $slug);
                 return Image::make($storagePath)->response();
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return abort(404);
             }
         }
 
-        if ($item->isPublic()){
+        if ($item->isPublic()) {
             return $this->approved($type, $user_id, $id, $size, $slug);
         }
 
-        if (!auth()->check()){
+        if (!auth()->check()) {
             return abort(404);
         }
 
-        if (auth()->id() == $user_id || auth()->user()->isEmployee()){
+        if (auth()->id() == $user_id || auth()->user()->isEmployee()) {
             return $this->approved($type, $user_id, $id, $size, $slug);
         }
 
-        foreach ($item->usersSingleImage as $user){
-            if (auth()->id() == $user->user_id){
+        foreach ($item->usersSingleImage as $user) {
+            if (auth()->id() == $user->user_id) {
                 return $this->approved($type, $user_id, $id, $size, $slug);
             }
         }
@@ -47,7 +48,8 @@ class ImagesController extends Controller
         return abort(404);
     }
 
-    function approved($type, $user_id, $id, $size, $slug){
+    function approved($type, $user_id, $id, $size, $slug)
+    {
         $storagePath = storage_path('/assets/'.$type.'/' .$user_id. '/' . $id . '/' . $size . '/' . $slug);
         return Image::make($storagePath)->response();
 
@@ -61,4 +63,3 @@ class ImagesController extends Controller
 //        return Image::make($storagePath)->response();
     }
 }
-

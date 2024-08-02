@@ -9,9 +9,9 @@ use function view;
 
 class UserController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         return view('user.home.index');
     }
-
 }

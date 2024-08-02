@@ -5,9 +5,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 Route::prefix('/user')->group(function () {
-
 });
 
 Route::prefix('/')->group(function () {
@@ -15,7 +13,6 @@ Route::prefix('/')->group(function () {
         'as'=>'user.index',
         'uses'=>'App\Http\Controllers\User\UserController@index',
     ]);
-
 });
 
 Route::get('redirect/{driver}', 'App\Http\Controllers\Auth\LoginController@redirectToProvider')
@@ -23,11 +20,11 @@ Route::get('redirect/{driver}', 'App\Http\Controllers\Auth\LoginController@redir
     ->where('driver', implode('|', config('auth.socialite.drivers')));
 
 
-Route::get('/privacy-policy', function (Request $request){
+Route::get('/privacy-policy', function (Request $request) {
     return view('user.home.privacy_policy');
 });
 
-Route::get('/terms-of-use', function (Request $request){
+Route::get('/terms-of-use', function (Request $request) {
     return view('user.home.terms_of_use');
 });
 

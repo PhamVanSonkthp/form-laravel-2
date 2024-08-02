@@ -16,8 +16,6 @@ class MailServiceProvider extends ServiceProvider
     public function register()
     {
         //
-
-
     }
 
     /**
@@ -32,8 +30,7 @@ class MailServiceProvider extends ServiceProvider
         try {
             $mail = Setting::first();
 
-            if (!empty($mail)){
-
+            if (!empty($mail)) {
                 Config::set('mail.mailers.smtp.host', $mail->mail_host);
                 Config::set('mail.mailers.smtp.port', $mail->mail_port);
                 Config::set('mail.mailers.smtp.encryption', $mail->mail_encryption);
@@ -42,12 +39,8 @@ class MailServiceProvider extends ServiceProvider
 
                 Config::set('mail.from.name', $mail->mail_from_name);
                 Config::set('mail.from.address', $mail->mail_from_address);
-
             }
-        }catch (\Exception $exception){
-
+        } catch (\Exception $exception) {
         }
-
-
     }
 }

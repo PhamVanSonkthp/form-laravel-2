@@ -6,39 +6,40 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-trait DeleteModelTrait{
-    public function deleteModelTrait($id, $model, $forceDelete = false){
+trait DeleteModelTrait
+{
+    public function deleteModelTrait($id, $model, $forceDelete = false)
+    {
 
         try {
-            if ($forceDelete){
+            if ($forceDelete) {
                 $model->withTrashed()->find($id)->forceDelete();
-            }else{
+            } else {
                 $model->withTrashed()->find($id)->delete();
             }
 
             return response()->json([
                 'code'=>200,
                 'message'=>'success',
-            ],200);
-        }catch (\Exception $exception){
-
+            ], 200);
+        } catch (\Exception $exception) {
             try {
-                if ($forceDelete){
+                if ($forceDelete) {
                     $model->find($id)->forceDelete();
-                }else{
+                } else {
                     $model->find($id)->delete();
                 }
 
                 return response()->json([
                     'code'=>200,
                     'message'=>'success',
-                ],200);
-            }catch (\Exception $exception){
+                ], 200);
+            } catch (\Exception $exception) {
                 Log::error('Message: ' . $exception->getMessage() . 'Line' . $exception->getLine());
                 return response()->json([
                     'code'=>500,
                     'message'=>'fail',
-                ],500);
+                ], 500);
             }
         }
     }

@@ -36,7 +36,8 @@ class JobNotification extends Command
         parent::__construct();
     }
 
-    public function getTokenFirebase(){
+    public function getTokenFirebase()
+    {
         try {
             $file = File::get(base_path() . '/storage/assets/dong-ho-bao-thuc-iot-firebase-adminsdk-2ha8v-278a09734a.json');
             $scope = 'https://www.googleapis.com/auth/firebase.messaging';
@@ -44,7 +45,7 @@ class JobNotification extends Command
             $credentials->fetchAuthToken();
 
             return $credentials['token_type'];
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
         }
 
@@ -67,13 +68,13 @@ class JobNotification extends Command
 
         $jobNotifications = JobNotification::whereDate('date', Carbon::today())->where('time', $nowTime)->get();
 
-        foreach ($jobNotifications as $jobNotification){
-            if ($jobNotification->userScheduleCron->count() > 0){
-                foreach ($jobNotification->userScheduleCron as $userScheduleCron){
-                    Helper::sendNotificationToTopic($userScheduleCron->user_id, $jobNotification->title, $jobNotification->description, true,$userScheduleCron->user_id,null,$jobNotification->link);
+        foreach ($jobNotifications as $jobNotification) {
+            if ($jobNotification->userScheduleCron->count() > 0) {
+                foreach ($jobNotification->userScheduleCron as $userScheduleCron) {
+                    Helper::sendNotificationToTopic($userScheduleCron->user_id, $jobNotification->title, $jobNotification->description, true, $userScheduleCron->user_id, null, $jobNotification->link);
                 }
-            }else{
-                Helper::sendNotificationToTopic(env('FIREBASE_TOPIC_ALL_N1','app'), $jobNotification->title, $jobNotification->description, false,null,null,$jobNotification->link);
+            } else {
+                Helper::sendNotificationToTopic(env('FIREBASE_TOPIC_ALL_N1', 'app'), $jobNotification->title, $jobNotification->description, false, null, null, $jobNotification->link);
             }
         }
 
@@ -141,6 +142,5 @@ class JobNotification extends Command
 //        foreach ($sendAll as $item) {
 //            Helper::sendNotificationToTopic(env('FIREBASE_TOPIC_ALL_N1','app'), $item['title'], $item['description']);
 //        }
-
     }
 }

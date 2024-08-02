@@ -92,5 +92,4 @@ class JobEmailController extends Controller
 
         return response()->json($content);
     }
-
 }
