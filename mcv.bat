@@ -1,19 +1,18 @@
 echo Ten bang cua ban la gi?
 Set /p table=
+
+echo Ten prefix cua bang?
+Set /p prefix=
+
 OKAY! dang tao du lieu %table% ...
 
-php artisan make:model %table% -m
-php artisan make:seed Create%table%Seeder
-php artisan make:controller Admin/%table%Controller --model=%table%
 
-php artisan make:viewadd %table%
-php artisan make:viewedit %table%
-php artisan make:viewindex %table%
-php artisan make:viewheader %table%
-php artisan make:viewsearch %table%
-php artisan make:viewrow %table%
-
-php artisan make:_policy %table%
+call permissions.bat %prefix%
+call services.bat %table% %prefix%
+call routes.bat %table% %prefix%
+call slidebars.bat %prefix%
+call scan.bat
+call model_controller_view_migration.bat %table%
 
 echo DONE!
 echo ---PhamSon---

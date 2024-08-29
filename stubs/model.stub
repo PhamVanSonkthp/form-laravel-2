@@ -20,7 +20,13 @@ class {{ class }} extends Model implements Auditable
 
     // begin
 
-
+    //    public function one(){
+    //        return $this->hasOne(User::class, 'id', 'local_id');
+    //    }
+    //
+    //    public function multiples(){
+    //        return $this->hasMany(User::class, 'id', 'local_id');
+    //    }
 
     // end
 

@@ -20,6 +20,8 @@ class {{ class }} extends Controller
     public function __construct({{ model }} $model)
     {
         $this->initBaseModel($model);
+        $this->isSingleImage = false;
+        $this->isMultipleImages = true;
         $this->shareBaseModel($model);
     }
 
@@ -34,7 +36,7 @@ class {{ class }} extends Controller
         return $this->model->findOrFail($id);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         return view('administrator.' . $this->prefixView . '.add');
     }
@@ -45,7 +47,7 @@ class {{ class }} extends Controller
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $item = $this->model->find($id);
         return view('administrator.' . $this->prefixView . '.edit', compact('item'));

@@ -80,8 +80,6 @@ class Helper extends Model
 
     public static function images($object)
     {
-        $item = $object->hasMany(SingleImage::class, 'relate_id', 'id')->where('table', $object->getTable());
-        $isSingle = SingleImage::where('relate_id', $object->id)->where('table', $object->getTable())->first();
 
         $images = $object->hasMany(Image::class, 'relate_id', 'id')->where('table', $object->getTable())->orderBy('index');
 
@@ -89,9 +87,11 @@ class Helper extends Model
             return $images;
         }
 
-//        if (!empty($isSingle)) {
-//            return $item;
-//        }
+        $item = $object->hasMany(SingleImage::class, 'relate_id', 'id')->where('table', $object->getTable());
+
+        if (!empty($isSingle)) {
+            return $item;
+        }
 
         return $item;
     }
@@ -126,20 +126,20 @@ class Helper extends Model
                         }
                     });
                 }
-            } else if ($key == "start" || $key == "from") {
+            } else if ($key == "start" || $key == "from" || $key == "begin") {
                 if (!empty($item) || strlen($item) > 0) {
-                    $query = $query->whereDate('created_at', '>=', $item);
+                    $query = $query->whereDate($object->getTableName() . '.created_at', '>=', $item);
                 }
             } else if ($key == "end" || $key == "to") {
                 if (!empty($item) || strlen($item) > 0) {
-                    $query = $query->whereDate('created_at', '<=', $item);
+                    $query = $query->whereDate($object->getTableName() . '.created_at', '<=', $item);
                 }
             } else {
                 if (!in_array($key, $columns)) {
                     continue;
                 }
                 if (!empty($item) || strlen($item) > 0) {
-                    $query = $query->where($key, $item);
+                    $query = $query->where($object->getTableName() . ".".$key, $item);
                 }
             }
         }

@@ -154,6 +154,8 @@ return [
         'products-edit' => 'products_edit',
         'products-delete' => 'products_delete',
 
+        /*step_1*/
+
     ],
     'table_module'=>[
         'dashboard',
@@ -186,6 +188,7 @@ return [
         'flash_sales',
         'calendars',
         'products',
+        /*step_2*/
     ],
 
     'table_module_name'=>[
@@ -219,6 +222,7 @@ return [
         'Quản lý FlashSale',
         'Quản lý lịch làm việc',
         'Quản lý sản phẩm',
+        /*step_3*/
     ],
 
     'module_children'=>[

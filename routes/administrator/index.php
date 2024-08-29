@@ -1956,10 +1956,7 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'middleware' => 'can:history_datas-list',
         ]);
     });
-});
 
-//Route::prefix('administrator')->group(function () {
-//
-//
-//
-//});
+    /*step_1*/
+
+});

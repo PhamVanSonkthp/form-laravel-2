@@ -152,6 +152,14 @@
                 </li>
             @endcan
 
+            <li class="nav-item nav-category">Temple</li>
+
+            @if(env('APP_DEBUG'))
+
+                /*step_1*/
+
+            @endif
+
             <li class="nav-item nav-category">Tài chính</li>
 
             @can('user_transactions-list')

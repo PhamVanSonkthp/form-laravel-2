@@ -26,6 +26,7 @@ php artisan make:_policy Test
 * Thêm check permission vào file "app/Services/PermissionGateAndPolicyAccess"
 * Thêm route và middleware "routes/administrator/index"
 * Thêm menu vào view "resources/views/administrator/components/slidebars.blade"
+
 * Thêm các trường bảng migration
 * Sau dó chạy
 
@@ -70,8 +71,13 @@ bỏ ở func if ($this->lfm->setName($name_to_delete)->isDirectory()) {...}
 
 --- Begin ---
 
+Chay schedule trên server
+
 run schedule on DA
-/usr/local/bin/php -d "disable_functions=" /home/igop/domains/igop.gover.vn/public_html/artisan schedule:run > /dev/null 2>&1	
+/usr/local/bin/php -d "disable_functions=" /home/igop/domains/igop.gover.vn/public_html/artisan schedule:run > /dev/null 2>&1
+
+run schedule on Cpanel
+/usr/local/bin/php /home/gxzrilko/vip.maubuifinance.com/artisan schedule:run >> /dev/null 2>&1	
 
 --- End ---
 

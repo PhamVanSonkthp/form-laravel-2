@@ -40,7 +40,10 @@ class PermissionGateAndPolicyAccess
         $this->defineGateProductComments();
         $this->defineGateFlashSales();
         $this->defineGateCalendars();
+        /*step_1*/
     }
+
+    /*step_2*/
 
     public function defineGateCalendars()
     {
