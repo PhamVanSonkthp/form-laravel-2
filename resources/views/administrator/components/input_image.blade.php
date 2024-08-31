@@ -11,7 +11,7 @@
     <div class="container-image-input" id="container_{{$idRandom}}">
         <input type="file" name="{{$name}}"
                id="image-file_{{$idRandom}}"
-               accept="image/x-png, image/jpeg" required
+               accept="image/x-png, image/jpeg"
                style="display : none" {{isset($disabled) ? 'disabled' : ''}}
         />
 
