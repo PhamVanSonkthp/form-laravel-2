@@ -9,6 +9,7 @@ use App\Models\Product;
 use Google\Auth\CredentialsLoader;
 use Google_Client;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use function auth;
 use function view;
