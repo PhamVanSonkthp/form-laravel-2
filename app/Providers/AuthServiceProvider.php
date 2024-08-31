@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Product;
 use App\Services\PermissionGateAndPolicyAccess;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

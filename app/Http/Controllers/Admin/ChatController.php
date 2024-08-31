@@ -14,7 +14,6 @@ use function view;
 
 class ChatController extends Controller
 {
-
     use DeleteModelTrait;
 
     private $user;

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\RestfulAPI;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class BankController extends Controller

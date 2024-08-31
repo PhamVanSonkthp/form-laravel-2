@@ -161,7 +161,7 @@ class ProductController extends Controller
                             'name' => $category
                         ], [
                             'name' => $category,
-                            'slug' => Helper::addSlug(new Category, 'slug', $category),
+                            'slug' => Helper::addSlug(new Category(), 'slug', $category),
                         ]);
                         $item['category_id'] = $itemCategory->id;
                     } else {

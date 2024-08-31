@@ -18,14 +18,18 @@ class {{ class }} extends Model implements Auditable
 
     protected $guarded = [];
 
+    protected $hidden = [];
+
+    protected $casts = [];
+
     // begin
 
     //    public function one(){
-    //        return $this->hasOne(User::class, 'id', 'local_id');
+    //        return $this->hasOne(Model::class, 'id', 'local_id');
     //    }
     //
     //    public function multiples(){
-    //        return $this->hasMany(User::class, 'id', 'local_id');
+    //        return $this->hasMany(Model::class, 'id', 'local_id');
     //    }
 
     // end
@@ -70,9 +74,9 @@ class {{ class }} extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'title' => $request->title,
+            'name' => $request->name,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title),
+            //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -83,9 +87,9 @@ class {{ class }} extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'title' => $request->title,
+            'name' => $request->name,
             'content' => $request->contents,
-            'slug' => Helper::addSlug($this,'slug', $request->title, $id),
+            //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

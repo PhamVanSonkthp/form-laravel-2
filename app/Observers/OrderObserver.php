@@ -2,13 +2,7 @@
 
 namespace App\Observers;
 
-use App\Events\OrderEvent;
-use App\Models\Formatter;
-use App\Models\Helper;
-use App\Models\JobEmail;
 use App\Models\Order;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\View;
 
 class OrderObserver
 {

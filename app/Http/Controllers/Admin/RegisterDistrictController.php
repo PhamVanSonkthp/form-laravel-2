@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
 use App\Models\Audit;
-use App\Models\FlashSale;
-use App\Models\RegisterCity;
 use App\Models\RegisterDistrict;
 use App\Traits\BaseControllerTrait;
 use Illuminate\Http\Request;

@@ -3,14 +3,7 @@
 namespace App\Http\Controllers\Cronner;
 
 use App\Http\Controllers\Controller;
-use App\Models\Formatter;
-use App\Models\Helper;
-use App\Models\User;
-use App\Notifications\Notifications;
-use Carbon\Carbon;
-use Google\Auth\CredentialsLoader;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Log;
 
 class CronnerController extends Controller
 {

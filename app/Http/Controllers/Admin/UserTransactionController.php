@@ -21,7 +21,7 @@ class UserTransactionController extends Controller
     public function __construct(UserTransaction $model)
     {
         $this->initBaseModel($model);
-        $this->title ="Giao dịch khách";
+        $this->title = "Giao dịch khách";
         $this->shareBaseModel($model);
     }
 

@@ -3,11 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Helper;
-use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ModelExport implements FromCollection, ShouldAutoSize
 {

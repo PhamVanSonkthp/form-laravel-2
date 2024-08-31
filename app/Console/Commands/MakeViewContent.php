@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use App\Models\Formatter;
 use Illuminate\Console\GeneratorCommand;
 
-class MakeViewEdit extends GeneratorCommand
+class MakeViewContent extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:viewedit {name}';
+    protected $signature = 'make:viewcontent {name}';
 
     /**
      * The console command description.
@@ -44,7 +44,7 @@ class MakeViewEdit extends GeneratorCommand
     {
         $this->setRepositoryClass();
 
-        $path = base_path() . '/resources/views/administrator/'. Formatter::toUnderline($this->repositoryClass) . "s/edit.blade.php";
+        $path = base_path() . '/resources/views/administrator/'. Formatter::toUnderline($this->repositoryClass) . "s/content.blade.php";
 
         if ($this->alreadyExists($this->getNameInput())) {
             $this->error($this->type.' already exists!');
@@ -75,7 +75,7 @@ class MakeViewEdit extends GeneratorCommand
     public function getStub()
     {
 //        return app_path() . '/Models/Repository.stub';
-        return base_path(). '/stubs/make_view_edit.stub';
+        return base_path(). '/stubs/make_view_content.stub';
     }
 
     public function getDefaultNamespace($rootNamespace)

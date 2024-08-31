@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ModelExport;
+use App\Http\Controllers\Controller;
 use App\Models\Audit;
 use App\Models\News;
-use App\Http\Controllers\Controller;
 use App\Traits\BaseControllerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;

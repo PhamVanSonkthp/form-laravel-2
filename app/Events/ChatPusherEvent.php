@@ -5,12 +5,10 @@ namespace App\Events;
 use App\Models\ParticipantChat;
 use App\Models\Setting;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
 
 class ChatPusherEvent implements ShouldBroadcast

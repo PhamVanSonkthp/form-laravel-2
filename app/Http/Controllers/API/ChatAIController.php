@@ -4,13 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChatAI;
-use App\Models\Helper;
 use App\Models\MetatripError;
-use App\Models\RestfulAPI;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class ChatAIController extends Controller
 {

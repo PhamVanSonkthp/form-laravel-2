@@ -7,7 +7,6 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Order extends Model implements Auditable

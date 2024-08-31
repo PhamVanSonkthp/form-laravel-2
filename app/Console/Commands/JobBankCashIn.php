@@ -2,16 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Bank;
 use App\Models\BankCashIn;
 use App\Models\Formatter;
 use App\Models\Helper;
 use App\Models\Order;
-use App\Models\User;
 use App\Models\UserCashIn;
-use App\Notifications\Notifications;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 

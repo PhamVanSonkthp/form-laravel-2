@@ -12,9 +12,7 @@ use App\Models\SingleImage;
 use App\Models\User;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use NextApps\VerificationCode\VerificationCode;
 
 class AuthController extends Controller
 {

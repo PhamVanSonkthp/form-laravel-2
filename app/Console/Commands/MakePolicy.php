@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Console\GeneratorCommand;
-use InvalidArgumentException;
-use Symfony\Component\Console\Input\InputArgument;
 
 class MakePolicy extends GeneratorCommand
 {

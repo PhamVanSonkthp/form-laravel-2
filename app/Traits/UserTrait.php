@@ -10,8 +10,6 @@ use App\Models\Trading;
 use App\Models\TradingOfUser;
 use App\Models\User;
 use App\Models\UserGift;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 trait UserTrait
 {

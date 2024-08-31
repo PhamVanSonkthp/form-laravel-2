@@ -4,17 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Formatter;
-use App\Models\Helper;
-use App\Models\ParticipantChat;
-use App\Models\Product;
 use App\Models\RegisterCity;
 use App\Models\RestfulAPI;
-use App\Models\User;
-use App\Models\UserCart;
-use App\Models\UserProductRecent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class RegisterCityController extends Controller
 {

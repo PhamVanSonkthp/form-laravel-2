@@ -3,27 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\CategoryNew;
-use App\Models\Chat;
-use App\Models\ChatGroup;
 use App\Models\Formatter;
-use App\Models\Helper;
 use App\Models\Hotel;
 use App\Models\HotelRoom;
-use App\Models\ParticipantChat;
-use App\Models\Product;
 use App\Models\RestfulAPI;
-use App\Models\Setting;
-use App\Models\User;
 use App\Models\UserHotel;
 use App\Models\UserHotelRoom;
-use App\Models\UserProductRecent;
 use App\Models\UserTransaction;
 use App\Models\UserTransection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class WalletController extends Controller
 {

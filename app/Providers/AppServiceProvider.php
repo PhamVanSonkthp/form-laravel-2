@@ -6,8 +6,8 @@ use App\Models\Order;
 use App\Models\ParticipantChat;
 use App\Observers\OrderObserver;
 use App\Observers\ParticipantChatObserver;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

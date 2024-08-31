@@ -6,12 +6,10 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use OwenIt\Auditing\Contracts\Auditable;
 
 class Formatter extends Model
 {

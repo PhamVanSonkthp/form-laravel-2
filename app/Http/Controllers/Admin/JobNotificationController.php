@@ -58,7 +58,7 @@ class JobNotificationController extends Controller
             'notiable' => 'bool',
         ]);
 
-//        $item = $this->model->storeByQuery($request);
+        //        $item = $this->model->storeByQuery($request);
 
 
         $item = JobNotification::create([

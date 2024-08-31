@@ -2,22 +2,13 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Formatter;
 use App\Models\Helper;
-use App\Models\Image;
 use App\Models\Product;
 use App\Models\Weather;
 use App\Traits\BaseControllerTrait;
-use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use Maatwebsite\Excel\Facades\Excel;
-use function redirect;
-use function view;
 
 class WeatherController extends Controller
 {

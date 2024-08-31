@@ -2,14 +2,10 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Spatie\ImageOptimizer\OptimizerChain;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 trait StorageImageTrait
 {

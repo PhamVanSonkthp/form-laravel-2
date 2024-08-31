@@ -3,8 +3,6 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 trait DeleteModelTrait
 {
