@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Logo;
 use App\Models\SingleImage;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,11 @@ class CreateLogoSeeder extends Seeder
      */
     public function run()
     {
+        Logo::create([
+            'image_path' => '/assets/single/1/1/original/wRxEjPjjl2jJA5zybhuc.png',
+            'image_name' => 'Logo',
+        ]);
+
         SingleImage::create([
             'relate_id' => 1,
             'table' => 'logos',

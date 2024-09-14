@@ -21,11 +21,10 @@ php artisan make:viewindex Test
 php artisan make:viewheader Test
 php artisan make:viewsearch Test
 php artisan make:_policy Test
-
-* Thêm quyền vào file "config/permissions"
-* Thêm check permission vào file "app/Services/PermissionGateAndPolicyAccess"
-* Thêm route và middleware "routes/administrator/index"
-* Thêm menu vào view "resources/views/administrator/components/slidebars.blade"
+Thêm quyền vào file "config/permissions"
+Thêm check permission vào file "app/Services/PermissionGateAndPolicyAccess"
+Thêm route và middleware "routes/administrator/index"
+Thêm menu vào view "resources/views/administrator/components/slidebars.blade"
 
 * Thêm các trường bảng migration
 * Sau dó chạy
@@ -86,8 +85,16 @@ run schedule on Cpanel
 Quy tắc viết code
 https://docs.google.com/spreadsheets/d/1ZLJQd6VN-aafelsc1GoTX8wZYHcuC4bOd40uNmYQSIQ
 	
+--- End ---
+
+--- Begin ---
+
+Sửa lỗi ảnh trong html api 
+
+$item['content'] = str_replace("src=\"/storage", "src=\"" . env('APP_URL') . "/storage", $item['content']);
+$item['content'] = str_replace("<img", "<img style=\"border-radius: 12px;border: 1px solid #dee2e6 !important;\"", $item['content']);
 
 --- End ---
 
 need doing
-bình luận facebook
+

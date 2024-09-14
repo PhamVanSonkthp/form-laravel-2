@@ -139,6 +139,8 @@
 <script type="text/javascript" src="{{asset('assets/helper/main_helper.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('/assets/administrator/js/master.js')}}"></script>
+<script src="{{asset('/vendor/sortablejs/Sortable.min.js')}}"></script>
+<script src="{{asset('/assets/administrator/js/sortablejs-light.js')}}"></script>
 
 @yield('js')
 

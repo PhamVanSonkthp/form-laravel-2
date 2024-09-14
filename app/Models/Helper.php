@@ -594,7 +594,7 @@ class Helper extends Model
         $interval = $datetime1->diff($datetime2);
         $days = $interval->format('%a');
 
-        return $days;
+        return (int) $days;
     }
 
     public static function getUUID()

@@ -31,8 +31,8 @@ class LogoController extends Controller
 
     public function create()
     {
-        $logo = $this->model->first();
-        return view('administrator.'.$this->prefixView.'.add', compact('logo'));
+        $item = $this->model->first();
+        return view('administrator.'.$this->prefixView.'.add', compact('item'));
     }
 
     public function store(LogoAddRequest $request)

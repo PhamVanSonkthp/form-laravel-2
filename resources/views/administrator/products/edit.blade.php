@@ -15,25 +15,52 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    @include('administrator.components.require_input_text' , ['name' => 'name' , 'label' => 'Tên'])
 
-                    @if($isSingleImage)
-                        <div class="mt-3 mb-3">
-                            @include('administrator.components.upload_image', ['post_api' => $imagePostUrl, 'table' => $table, 'image' => $imagePathSingple , 'relate_id' => $relateImageTableId])
+                    <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title mb-3">Simple list</h6>
+                                <ul class="list-group" id="simple-list">
+
+
+                                    <li class="list-group-item" draggable="false" style="">item 4</li><li class="list-group-item" draggable="false" style="">item 1</li><li class="list-group-item" style="" draggable="false">item 2</li><li class="list-group-item" style="">item 3</li>
+
+
+                                    <li class="list-group-item" draggable="false" style="">item 5</li><li class="list-group-item" style="">item 6</li>
+                                </ul>
+                            </div>
                         </div>
-                    @endif
+                    </div>
 
-                    @if($isMultipleImages)
-                        <div class="mt-3 mb-3">
-                            @include('administrator.components.upload_multiple_images', ['post_api' => $imageMultiplePostUrl, 'delete_api' => $imageMultipleDeleteUrl , 'sort_api' => $imageMultipleSortUrl, 'table' => $table , 'images' => $imagesPath,'relate_id' => $relateImageTableId])
+
+                    <div class="row">
+                        <div class="col-6">
+                            @include('administrator.components.require_input_text' , ['name' => 'name' , 'label' => 'Tên'])
+
+
+                            @include('administrator.components.select_category' , ['lable' => 'Danh mục', 'name' => 'category_id' ,'html_category' => \App\Models\Category::getCategory(isset($item) ? optional($item)->category_id : ''), 'can_create' => true])
+
+                            @include('administrator.components.require_textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])
+
                         </div>
-                    @endif
+                        <div class="col-6">
+                            @if($isSingleImage)
+                                <div class="mt-3 mb-3">
+                                    @include('administrator.components.upload_image', ['post_api' => $imagePostUrl, 'table' => $table, 'image' => $imagePathSingple , 'relate_id' => $relateImageTableId])
+                                </div>
+                            @endif
 
-                    @include('administrator.components.require_input_text' , ['name' => 'short_description' , 'label' => 'Mô tả ngắn'])
+                            @if($isMultipleImages)
+                                <div class="mt-3 mb-3">
+                                    @include('administrator.components.upload_multiple_images', ['post_api' => $imageMultiplePostUrl, 'delete_api' => $imageMultipleDeleteUrl , 'sort_api' => $imageMultipleSortUrl, 'table' => $table , 'images' => $imagesPath,'relate_id' => $relateImageTableId])
+                                </div>
+                            @endif
 
-                    @include('administrator.components.require_textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])
+                        </div>
+                    </div>
 
-                    @include('administrator.components.select_category' , ['name' => 'category_id' ,'html_category' => \App\Models\Category::getCategory(isset($item) ? optional($item)->category_id : ''), 'can_create' => true])
+
+
 
                     <div id="container_infor__attributes" class="p-3" style="{{$item->isProductVariation() ? 'display: none' : ''}}">
                         <label>
@@ -50,11 +77,6 @@
                     <input id="_headers" name="_headers" type="text" value="" class="hidden d-none">
 
                     <input id="_attributes" name="_attributes" type="text" value="" class="hidden d-none">
-
-                    {{--                    <div id="table_bassic_price" class="card p-3 m-3" style="display: none;">--}}
-
-                    {{--                    </div>--}}
-
 
                     <div id="table_bassic_price" class="card p-3 m-3" style="{{$item->isProductVariation() ? '' : 'display: none'}}">
 
@@ -120,17 +142,34 @@
 
 
                     <div id="price" style="{{$item->isProductVariation() ? 'display: none' : ''}}">
-                        @include('administrator.components.require_input_number' , ['name' => 'price_import' , 'label' => 'Giá nhập'])
 
-                        @include('administrator.components.require_input_number' , ['name' => 'price_client' , 'label' => 'Giá bán lẻ'])
+                        <div class="row">
+                            <div class="col-3">
+                                @include('administrator.components.require_input_number' , ['name' => 'price_import' , 'label' => 'Giá nhập'])
 
-                        @include('administrator.components.require_input_number' , ['name' => 'price_agent' , 'label' => 'Giá bán buôn (đại lý)'])
+                            </div>
+                            <div class="col-3">
+                                @include('administrator.components.require_input_number' , ['name' => 'price_client' , 'label' => 'Giá bán lẻ'])
 
-                        @include('administrator.components.require_input_number' , ['name' => 'price_partner' , 'label' => 'Giá CTV (Cộng tác viên)'])
+                            </div>
+                            <div class="col-3">
+                                @include('administrator.components.require_input_number' , ['name' => 'price_agent' , 'label' => 'Giá bán buôn (đại lý)'])
 
-                        @include('administrator.components.require_input_number' , ['name' => 'inventory' , 'label' => 'Tồn kho'])
+                            </div>
+                            <div class="col-3">
+                                @include('administrator.components.require_input_number' , ['name' => 'price_partner' , 'label' => 'Giá CTV (Cộng tác viên)'])
 
-                        @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU'])
+                            </div>
+                            <div class="col-3">
+                                @include('administrator.components.require_input_number' , ['name' => 'inventory' , 'label' => 'Tồn kho'])
+
+                            </div>
+                            <div class="col-3">
+
+                                @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU'])
+
+                            </div>
+                        </div>
 
                     </div>
 

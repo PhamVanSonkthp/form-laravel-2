@@ -92,6 +92,7 @@
         $image = optional($item->image)->image_path;
         $relateImageTableId = $item->id;
         $relate_id = $item->id;
+
     }else{
         $image = null;
     }

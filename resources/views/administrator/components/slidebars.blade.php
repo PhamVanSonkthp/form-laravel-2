@@ -152,10 +152,10 @@
                 </li>
             @endcan
 
-            <li class="nav-item nav-category">Temple</li>
-
             @if(env('APP_DEBUG'))
 
+                <li class="nav-item nav-category">Temple</li>
+            
                 /*step_1*/
 
             @endif

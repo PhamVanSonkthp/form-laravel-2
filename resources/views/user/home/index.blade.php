@@ -28,13 +28,12 @@
 @endsection
 
 @section('content')
-    <div>
-        1234
-    </div>
 
-    @if(auth()->check())
-        {{"435435435"}}
-    @endif
+    <div class="text-center mt-5">
+        <h1>
+            Welcome to index
+        </h1>
+    </div>
 
 @endsection
 

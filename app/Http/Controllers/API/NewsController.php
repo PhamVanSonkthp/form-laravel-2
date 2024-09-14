@@ -22,7 +22,9 @@ class NewsController extends Controller
         $results = RestfulAPI::response($this->modelNew, $request);
 
         foreach ($results as $item) {
-            $item->category;
+            $item['content'] = str_replace("src=\"/storage", "src=\"" . env('APP_URL') . "/storage", $item['content']);
+
+            $item['content'] = str_replace("<img", "<img style=\"border-radius: 12px;border: 1px solid #dee2e6 !important;\"", $item['content']);
         }
 
         return response()->json($results);
@@ -31,6 +33,11 @@ class NewsController extends Controller
     public function get(Request $request, $id)
     {
         $item = $this->modelNew->findOrFail($id);
+
+        $item['content'] = str_replace("src=\"/storage", "src=\"" . env('APP_URL') . "/storage", $item['content']);
+
+        $item['content'] = str_replace("<img", "<img style=\"border-radius: 12px;border: 1px solid #dee2e6 !important;\"", $item['content']);
+
         return response()->json($item);
     }
 }
