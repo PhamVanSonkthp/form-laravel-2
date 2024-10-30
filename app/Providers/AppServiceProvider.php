@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Image;
 use App\Models\Order;
 use App\Models\ParticipantChat;
+use App\Models\SingleImage;
+use App\Observers\ImageObserver;
 use App\Observers\OrderObserver;
 use App\Observers\ParticipantChatObserver;
+use App\Observers\SingleImageObserver;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
@@ -31,10 +35,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        if(!env('APP_DEBUG'))
+        if(!env('APP_DEBUG', true)){
             URL::forceScheme('https');
+        }
+
 
         ParticipantChat::observe(ParticipantChatObserver::class);
         Order::observe(OrderObserver::class);
+        Image::observe(ImageObserver::class);
+        SingleImage::observe(SingleImageObserver::class);
     }
 }

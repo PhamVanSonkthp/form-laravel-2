@@ -152,10 +152,10 @@
                 </li>
             @endcan
 
-            @if(env('APP_DEBUG'))
+            @if(env('APP_ENV') == "local")
 
                 <li class="nav-item nav-category">Temple</li>
-            
+
                 /*step_1*/
 
             @endif

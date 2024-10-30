@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use PHPUnit\Exception;
-use Stevebauman\Location\Facades\Location;
 
 class Helper extends Model
 {
@@ -405,7 +404,7 @@ class Helper extends Model
             $table = $logo->getTableName();
         }
 
-        return optional(SingleImage::where('relate_id', Helper::getNextIdTable($table))->where('table', $table)->first())->image_path;
+        return optional(SingleImage::where('relate_id', !empty($logo) ? $logo->id : Helper::getNextIdTable($table))->where('table', $table)->first())->image_path;
     }
 
 

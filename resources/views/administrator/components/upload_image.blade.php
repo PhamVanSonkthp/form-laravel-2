@@ -8,7 +8,7 @@
         /*text-align: center;*/
         /*cursor: pointer;*/
         transition: .3s;
-        min-height: 314px;
+        /*min-height: 314px;*/
         position: relative;
 
         display: flex;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\ChatPusherEvent;
+use App\Http\Controllers\API\Admin\UserController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\API\CartController;
@@ -25,8 +26,12 @@ use App\Http\Controllers\API\SystemBranchController;
 use App\Http\Controllers\API\UserBankController;
 use App\Http\Controllers\API\VoucherController;
 use App\Http\Controllers\API\WalletController;
+use App\Models\Helper;
+use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +60,58 @@ Route::prefix('cache')->group(function () {
             'message'=> "all cleared!"
         ]);
     });
+});
+
+Route::prefix('admin')->group(function () {
+
+    Route::prefix('auth')->group(function () {
+
+        Route::post('sign-in', function (Request $request) {
+
+            $request->validate([
+                'user_name' => 'required|string',
+                'password' => 'required|string',
+            ]);
+
+            $user = User::where(function ($query) use ($request) {
+                $query->where('email', $request->user_name)
+                    ->orWhere('phone', $request->user_name);
+            })->where('is_admin', '!=', 0)->first();
+
+            if (empty($user)) {
+                return response()->json(Helper::errorAPI(400, [], "Tài khoản chưa được tạo"), 400);
+            }
+
+            if (!Hash::check($request->password, $user->password)) {
+                return response([
+                    'message' => "Mật khẩu không đúng",
+                    'code' => 400,
+                ], 400);
+            }
+
+
+            if (optional(Setting::first())->is_login_only_one_device) {
+                $user->logoutAllDevices();
+            }
+
+            $token = $user->createToken(env('PLAIN_TOKEN', 'infinity_pham_son'))->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token,
+            ];
+
+            return response()->json($response);
+
+        });
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'list']);
+        Route::get('/{id}', [UserController::class, 'get']);
+        Route::put('/', [UserController::class, 'update']);
+    });
+
 });
 
 Route::prefix('public')->group(function () {
@@ -250,162 +307,4 @@ Route::prefix('user')->group(function () {
         });
     });
 
-
-//    Route::prefix('chat')->group(function () {
-//        Route::group(['middleware' => ['auth:sanctum', 'banned']], function () {
-//            Route::post('/', function (PusherChatRequest $request) {
-//
-//                $request->validate([
-//                    'contents' => 'required',
-//                    'chat_group_id' => 'required',
-//                    'images' => 'nullable',
-//                    'images.*' => 'nullable|mimes:jpg,jpeg,png',
-//                ]);
-//
-//                $chatModel = new Chat();
-//
-//                $chat = $chatModel->create([
-//                    'content' => $request->contents,
-//                    'user_id' => auth()->id(),
-//                    'chat_group_id' => (int)$request->chat_group_id,
-//                ]);
-//
-//                if (is_array($request->images)){
-//                    foreach ($request->images as $image) {
-//
-//                        $item = Image::create([
-//                            'uuid' => Helper::getUUID(),
-//                            'table' => $chatModel->getTableName(),
-//                            'image_path' => "waiting",
-//                            'image_name' => "waiting",
-//                            'relate_id' => $chat->id,
-//                        ]);
-//
-//
-//                        $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $image,  'product_comments', $item->id);
-//
-//                        $dataUpdate = [
-//                            'image_path' => $dataUploadFeatureImage['file_path'],
-//                            'image_name' => $dataUploadFeatureImage['file_name'],
-//                        ];
-//
-//                        $item->update($dataUpdate);
-//
-//                    }
-//                }
-//
-////                foreach (ParticipantChat::where('chat_group_id', $request->chat_group_id)->get() as $item) {
-////                    $item->touch();
-////                    if (auth()->id() != $item->user_id) {
-////                        event(new ChatPusherEvent($request, $item, auth()->id(), auth()->user()->feature_image_path, $chat->images));
-////                    }
-////                    Notification::sendNotificationFirebase($item->user_id, $request->contents, null, 'Chat', auth()->id(), $request->chat_group_id);
-////
-////                    if ($item->user_id == auth()->id()) {
-////                        $item->update([
-////                            'is_read' => 1
-////                        ]);
-////                    } else {
-////                        $item->update([
-////                            'is_read' => 0
-////                        ]);
-////                    }
-////                }
-//
-//                $chat->refresh();
-//
-//                return response()->json($chat);
-//            });
-//
-//            Route::prefix('participant')->group(function () {
-//
-//                Route::get('/', function (Request $request) {
-//
-//                    $participantModel = new ParticipantChat();
-//                    $queries = ['user_id' => auth()->id()];
-//                    $results = RestfulAPI::response($participantModel, $request, $queries);
-//                    return response()->json($results);
-//                });
-//
-//                Route::get('/{id}', function (Request $request, $chatGroupId) {
-//                    if (empty(ParticipantChat::where('user_id', auth()->id())->where('chat_group_id', $chatGroupId)->first())) {
-//                        return response()->json([
-//                            "code" => 404,
-//                            "message" => "Không tìm thấy nhóm chat"
-//                        ], 404);
-//                    }
-//
-//                    $item = ParticipantChat::where('chat_group_id', $chatGroupId)->where("user_id", auth()->id())->first();
-//
-//                    $item->chatGroup;
-//
-//                    $item->users = $item->users();
-//
-//
-//                    $queries = ["chat_group_id" => $item->chatGroup->id];
-//                    $requestMessage = $request;
-//                    $requestMessage->limit = 2;
-//                    $resultsMessage = RestfulAPI::response(new Chat(), $requestMessage, $queries);
-//
-//                    foreach ($resultsMessage as $message) {
-//                        $message->images;
-//                    }
-//                    $item->messages = $resultsMessage;
-//
-//                    return $item;
-//                });
-//
-//                Route::post('/create', function (ParticipantAddRequest $request) {
-//
-//                    $chatGoupsOfGetter = ParticipantChat::where('user_id', $request->getter_id)->get();
-//                    $chatGoupsOfSender = ParticipantChat::where('user_id', auth()->id())->get();
-//
-//                    foreach ($chatGoupsOfGetter as $itemGetter) {
-//                        foreach ($chatGoupsOfSender as $itemSender) {
-//                            if ($itemSender->chat_group_id == $itemGetter->chat_group_id) {
-//                                $chatGoup = ChatGroup::find($itemSender->chat_group_id);
-//                                ParticipantChat::firstOrCreate(
-//                                    [
-//                                        'user_id' => auth()->id(),
-//                                        'chat_group_id' => $chatGoup->id,
-//                                    ]
-//                                );
-//
-//                                ParticipantChat::firstOrCreate(
-//                                    [
-//                                        'user_id' => $request->getter_id,
-//                                        'chat_group_id' => $chatGoup->id,
-//                                    ]
-//                                );
-//
-//                                return response()->json($chatGoup);
-//                            }
-//                        }
-//                    }
-//
-//                    $chatGoup = ChatGroup::create([
-//                        'title' => $request->title
-//                    ]);
-//
-//                    ParticipantChat::create(
-//                        [
-//                            'user_id' => auth()->id(),
-//                            'chat_group_id' => $chatGoup->id,
-//                        ]
-//                    );
-//
-//                    ParticipantChat::create(
-//                        [
-//                            'user_id' => $request->getter_id,
-//                            'chat_group_id' => $chatGoup->id,
-//                        ]
-//                    );
-//
-//                    return response()->json($chatGoup);
-//                });
-//
-//
-//            });
-//        });
-//    });
 });
