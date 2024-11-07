@@ -42,7 +42,7 @@ class Product extends Model implements Auditable
     public static function search($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
     {
 
-        $results = Product::where('product_visibility_id', 2);
+        $results = Product::query();
 
         if (isset($request->category_id) && !empty($request->category_id)) {
             $results = $results->where('category_id', $request->category_id);

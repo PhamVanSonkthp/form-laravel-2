@@ -9,6 +9,10 @@ use App\Models\Formatter;
 use App\Models\Helper;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
+use App\Models\ProductAttributeOptionSKU;
+use App\Models\ProductSKU;
 use App\Traits\BaseControllerTrait;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Http\Request;
@@ -73,8 +77,97 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $this->model->storeByQuery($request);
-        return redirect()->route('administrator.' . $this->prefixView . '.index');
+        $product = $this->model->create([
+            'name' => $request->name,
+            'slug' => $request->name,
+            'description' => $request->description,
+        ]);
+
+
+        if (!$request->is_variant){
+            ProductSKU::create([
+                'product_id' => $product->id,
+                'sku' => $request->sku,
+                'price' => Formatter::formatNumberToDatabase($request->price),
+                'price_import' => Formatter::formatNumberToDatabase($request->price_import),
+                'price_agent' => Formatter::formatNumberToDatabase($request->price_agent),
+                'price_partner' => Formatter::formatNumberToDatabase($request->price_partner),
+                'inventory' => Formatter::formatNumberToDatabase($request->inventory),
+            ]);
+        }else{
+
+            $header1 = $request->header_vari_1;
+            $header2 = $request->header_vari_2;
+            $values1 = $request->values_1;
+            $values2 = $request->values_2;
+
+            if (is_array($values1)){
+                $values1 = array_filter($values1);
+            }else{
+                $values1 = [];
+            }
+
+
+            if (is_array($values2)){
+                $values2 = array_filter($values2);
+            }else{
+                $values2 = [];
+            }
+
+            $productAttribute1 = ProductAttribute::create([
+                'name' => $header1
+            ]);
+
+            foreach ($values1 as $index => $value){
+                $productAttributeOption = ProductAttributeOption::create([
+                    'attribute_id' => $productAttribute1->id,
+                    'value' => $value,
+                ]);
+
+                $productSKU = ProductSKU::create([
+                    'product_id' => $product->id,
+                    'sku' => $request->skus[$index],
+                    'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                    'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                ]);
+
+                ProductAttributeOptionSKU::create([
+                    'sku_id' => $productSKU->id,
+                    'product_attribute_option_id' => $productAttributeOption->id,
+                ]);
+            }
+
+
+
+            if ($header2 && count($values2) > 0){
+                $productAttribute2 = ProductAttribute::create([
+                    'name' => $header2
+                ]);
+
+                foreach ($values2 as $index => $value){
+                    $productAttributeOption = ProductAttributeOption::create([
+                        'attribute_id' => $productAttribute2->id,
+                        'value' => $value,
+                    ]);
+
+                    $productSKU = ProductSKU::create([
+                        'product_id' => $product->id,
+                        'sku' => $request->skus[$index],
+                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                    ]);
+
+                    ProductAttributeOptionSKU::create([
+                        'sku_id' => $productSKU->id,
+                        'product_attribute_option_id' => $productAttributeOption->id,
+                    ]);
+                }
+
+            }
+
+        }
+
+        return response()->json($product);
     }
 
     public function edit($id)
@@ -277,5 +370,33 @@ class ProductController extends Controller
         }
 
         return response()->json($productAdded);
+    }
+
+    function renderTableVari(Request $request){
+
+        $header1 = $request->header_vari_1;
+        $header2 = $request->header_vari_2;
+        $values1 = $request->values_1;
+        $values2 = $request->values_2;
+
+        if (is_array($values1)){
+            $values1 = array_filter($values1);
+        }else{
+            $values1 = [];
+        }
+
+
+        if (is_array($values2)){
+            $values2 = array_filter($values2);
+        }else{
+            $values2 = [];
+        }
+
+        $html = View::make('administrator.products.table_vari', compact('header1','header2','values1','values2'))->render();
+
+        return response()->json([
+            'html' =>$html
+        ]);
+
     }
 }

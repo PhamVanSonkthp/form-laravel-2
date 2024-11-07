@@ -880,18 +880,35 @@ function viewBirthOfDay() {
     window.location.search = searchParams.toString()
 }
 
-function isEmptyInput(id, is_alert = false, message_alert = "", is_focus = false){
-    if (!$('#' + id).val().trim()) {
-        if(is_alert){
-            alert(message_alert)
-        }
+function isEmptyInput(id, is_alert = false, message_alert = "", is_focus = false, type = 'input'){
 
-        if(is_focus){
-            $('#' + id).focus()
-        }
+    if (document.getElementById(id)) {
+        if (!$('#' + id).val().trim()) {
+            if(is_alert){
+                alert(message_alert)
+            }
 
-        return true
+            if(is_focus){
+                $('#' + id).focus()
+            }
+
+            return true
+        }
+    }else{
+        if (!$(`${type}[name="${id}"]`).val().trim()) {
+            if(is_alert){
+                alert(message_alert)
+            }
+
+            if(is_focus){
+                $(`input[name="${id}"]`).focus()
+            }
+
+            return true
+        }
     }
+
+
     return false
 }
 

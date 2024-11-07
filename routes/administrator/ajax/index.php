@@ -388,6 +388,12 @@ Route::prefix('ajax/administrator')->group(function () {
 
         Route::prefix('/products')->group(function () {
 
+            Route::get('/render-table-vari', [
+                'as' => 'ajax.administrator.products.render_table_vari',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@renderTableVari',
+                'middleware' => 'can:products-list',
+            ]);
+
             Route::get('/', [
                 'as' => 'ajax.administrator.products.search',
                 'uses' => 'App\Http\Controllers\Ajax\ProductController@search',
@@ -397,6 +403,12 @@ Route::prefix('ajax/administrator')->group(function () {
             Route::put('/update', [
                 'as' => 'ajax.administrator.products.update',
                 'uses' => 'App\Http\Controllers\Ajax\ProductController@update',
+                'middleware' => 'can:products-edit',
+            ]);
+
+            Route::post('/', [
+                'as' => 'ajax.administrator.products.store',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@store',
                 'middleware' => 'can:products-edit',
             ]);
         });

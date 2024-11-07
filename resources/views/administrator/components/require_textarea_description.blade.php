@@ -5,7 +5,7 @@
         $value = old($name);
     }
 
-    $randomId = \App\Models\Helper::randomString();
+    $randomId = isset($id) ? $id : (\App\Models\Helper::randomString());
 @endphp
 
 <div class="form-group mt-3">

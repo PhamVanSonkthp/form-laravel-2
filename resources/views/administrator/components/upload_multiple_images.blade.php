@@ -17,12 +17,13 @@
         border-radius: 20px;
         box-shadow: 0 0 35px rgba(0, 0, 0, 0.05);
         /*width:400px;*/
-        padding: 20px;
+        /*padding: 20px;*/
         /*text-align: center;*/
         /*cursor: pointer;*/
         transition: .3s;
         min-height: 314px;
         position: relative;
+        padding: 5px !important;
     }
 
     .drop-region-active{
@@ -38,6 +39,8 @@
         display: flex;
         gap: 10px;
         overflow-x: auto;
+        height: 283px;
+        margin-bottom: 1px;
     }
 
     #image-preview-{{$upload_mutiple_id}} .image-view {
