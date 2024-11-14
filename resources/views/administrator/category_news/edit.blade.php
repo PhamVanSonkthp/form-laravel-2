@@ -15,7 +15,7 @@
                   enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="col-md-12">
+                <div class="col-md-6">
 
                     <div class="card">
                         <div class="card-body">

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -657,6 +658,30 @@ class Helper extends Model
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return null;
+        }
+    }
+
+    public static function callPostHTTP($url, $params = [], $request = null)
+    {
+        $raw = [];
+
+        $raw['Data'] = $params;
+
+        try {
+            $headers = [
+                'Content-Type' => 'application/json',
+            ];
+
+            $response = Http::withHeaders($headers)->timeout(300)
+                ->send('POST', $url, [
+                    'body' => json_encode($raw)
+                ])->json();
+
+            return $response;
+        } catch (\Exception $exception) {
+            if ($exception->getCode() == 429) return self::callPostHTTP($url, $params, $request);
+
+            return $exception->getMessage();
         }
     }
 

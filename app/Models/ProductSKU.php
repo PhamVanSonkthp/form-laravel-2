@@ -24,9 +24,9 @@ class ProductSKU extends Model implements Auditable
 
     // begin
 
-    //    public function one(){
-    //        return $this->hasOne(Model::class, 'id', 'local_id');
-    //    }
+        public function productAttributeOptionSKU(){
+            return $this->hasOne(ProductAttributeOptionSKU::class, 'sku_id', 'id');
+        }
     //
     //    public function multiples(){
     //        return $this->hasMany(Model::class, 'id', 'local_id');

@@ -333,6 +333,7 @@
                     "GET",
                     "{{route('ajax.administrator.products.render_table_vari')}}",
                     {
+                        product_id: {{$item->id}},
                         header_vari_1: header_vari_1,
                         header_vari_2: header_vari_2,
                         values_1: values_1,
@@ -475,6 +476,9 @@
             }
 
             onDrawTableVari()
+
+            onUpdateVari1()
+            onUpdateVari2()
         }
 
         var simpleList = document.querySelector("#container_item_vari_1");
@@ -485,7 +489,7 @@
 
         $('#btn_add_vari').on("click", function () {
             $('#btn_add_vari').hide()
-            $('#container_vari').append(`<div id="container_vari_2">
+            $('#container_vari').append(`<div id="container_vari_2"class="mt-3">
                                         <div>
                                             <div class="d-flex" style="align-items: center;gap: 5px;">
                                                 <h6>Biến thể 2</h6>

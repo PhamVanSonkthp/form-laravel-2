@@ -24,9 +24,15 @@ class ProductAttributeOptionSKU extends Model implements Auditable
 
     // begin
 
-    //    public function one(){
-    //        return $this->hasOne(Model::class, 'id', 'local_id');
-    //    }
+    public function productAttributeOption()
+    {
+        return $this->hasOne(ProductAttributeOption::class, 'id', 'product_attribute_option_id');
+    }
+
+    public function productSKU()
+    {
+        return $this->hasOne(ProductSKU::class, 'id', 'sku_id');
+    }
     //
     //    public function multiples(){
     //        return $this->hasMany(Model::class, 'id', 'local_id');
@@ -49,7 +55,7 @@ class ProductAttributeOptionSKU extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -62,8 +68,9 @@ class ProductAttributeOptionSKU extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -105,7 +112,8 @@ class ProductAttributeOptionSKU extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

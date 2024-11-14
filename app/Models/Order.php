@@ -111,9 +111,9 @@ class Order extends Model implements Auditable
         return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
-    public function searchByQuery($request, $queries = [])
+    public function searchByQuery($request, $queries = [], $random_record = null, $make_hiddens = null, $is_custom = false)
     {
-        return Helper::searchByQuery($this, $request, $queries);
+        return Helper::searchByQuery($this, $request, $queries, $random_record, $make_hiddens, $is_custom);
     }
 
     public function storeByQuery($request)

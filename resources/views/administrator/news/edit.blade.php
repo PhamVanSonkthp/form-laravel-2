@@ -36,7 +36,7 @@
                         </div>
                     @endif
 
-                    @include('administrator.components.require_textarea_description', ['name' => 'content' , 'label' => 'Mô tả'])
+                    @include('administrator.components.require_textarea_description', ['name' => 'contents' , 'label' => 'Mô tả'])
 
                     <button type="submit" class="btn btn-primary mt-3">Lưu lại</button>
 

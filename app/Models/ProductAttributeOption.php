@@ -24,9 +24,27 @@ class ProductAttributeOption extends Model implements Auditable
 
     // begin
 
-    //    public function one(){
-    //        return $this->hasOne(Model::class, 'id', 'local_id');
-    //    }
+    public function productAttribute()
+    {
+        return $this->hasOne(ProductAttribute::class, 'id', 'attribute_id');
+    }
+
+    public function productAttributeOptionSKU()
+    {
+        return $this->hasOne(ProductAttributeOptionSKU::class, 'product_attribute_option_id', 'id');
+    }
+
+    public function productSKU()
+    {
+        $productAttributeOptionSKU = $this->productAttributeOptionSKU;
+
+        if (!empty($productAttributeOptionSKU)){
+            return $productAttributeOptionSKU->productSKU;
+        }
+
+        return null;
+
+    }
     //
     //    public function multiples(){
     //        return $this->hasMany(Model::class, 'id', 'local_id');
@@ -49,7 +67,7 @@ class ProductAttributeOption extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -62,8 +80,9 @@ class ProductAttributeOption extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -105,7 +124,8 @@ class ProductAttributeOption extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

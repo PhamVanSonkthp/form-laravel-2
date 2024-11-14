@@ -6,6 +6,7 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Product extends Model implements Auditable
@@ -22,6 +23,66 @@ class Product extends Model implements Auditable
     protected $guarded = [];
 
     // begin
+
+    public function skus(){
+        return $this->hasMany(ProductSKU::class);
+    }
+
+    public function attributeOptions($is_group = false, $attribute_id = null){
+
+        $attributeOptions = [];
+
+        $skus = $this->skus;
+
+        foreach ($skus as $sku){
+            $productAttributeOptionSKU = $sku->productAttributeOptionSKU;
+
+            if (!empty($productAttributeOptionSKU)){
+                $productAttributeOption = $productAttributeOptionSKU->productAttributeOption;
+
+                if (!empty($productAttributeOption)){
+                    $attributeOptions[] = $productAttributeOption;
+                }
+            }
+        }
+
+        if ($is_group){
+            $uniqueItems = [];
+            foreach ($attributeOptions as $attributeOption) {
+                $uniqueItems[$attributeOption->attribute_id] = $attributeOption;
+            }
+            $attributeOptions = $uniqueItems;
+        }
+
+
+        if (!empty($attribute_id)){
+
+            $filteredItems = array_filter($attributeOptions, function($item) use ($attribute_id) {
+                return $item->attribute_id == $attribute_id; // Filter by id for objects
+            });
+
+            return $filteredItems;
+        }
+
+        return $attributeOptions;
+    }
+
+    public function attributes($is_group = false){
+
+        $attributes = [];
+
+        $attributeOptions = $this->attributeOptions($is_group);
+
+        foreach ($attributeOptions as $attributeOption){
+            $attribute = $attributeOption->productAttribute;
+            if (!empty($attribute)){
+                $attributes[] = $attribute;
+            }
+        }
+
+
+        return $attributes;
+    }
 
     public function parent()
     {

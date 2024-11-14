@@ -36,7 +36,7 @@
                             @include('administrator.components.require_textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])
 
                             <div class="form-check form-switch mb-3 mt-3">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" value="on">
+                                <input {{$item->is_variant ? 'checked' : ''}} class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" value="on">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Sản phẩm có biến thể?</label>
                             </div>
 
@@ -79,16 +79,84 @@
                                                         <div class="d-flex" style="align-items: center;gap: 5px;">
                                                             <h6>Biến thể 1</h6>
                                                         </div>
-                                                        <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required/>
+                                                        <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required value="{{count($item->attributes(true)) > 0 ? $item->attributes(true)[0]->name : ''}}"/>
                                                     </div>
                                                     <ul class="list-group ms-3 mt-1" id="container_item_vari_1">
 
+                                                        @foreach($item->attributeOptions(false, $item->attributes(true)[0]->id) as $attributeOption)
+                                                            <li class="list-group-item" style="">
+
+                                                                <div class="item-vari">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                         stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-move icon-sm handle me-2">
+                                                                        <polyline points="5 9 2 12 5 15"></polyline>
+                                                                        <polyline points="9 5 12 2 15 5"></polyline>
+                                                                        <polyline points="15 19 12 22 9 19"></polyline>
+                                                                        <polyline points="19 9 22 12 19 15"></polyline>
+                                                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                                                                    </svg>
+                                                                    <input value="{{$attributeOption->id}}" class="d-none atrribute-id-vari-1">
+
+                                                                    <input oninput="onUpdateVari1()" type="text"
+                                                                           class="form-control value-vari-1" placeholder="Nhập"
+                                                                           required value="{{$attributeOption->value}}"/>
+                                                                    <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
+                                                                </div>
+                                                            </li>
+
+                                                        @endforeach
+
+                                                            <li class="list-group-item" style="">
+
+                                                                <div class="item-vari">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                         stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-move icon-sm handle me-2">
+                                                                        <polyline points="5 9 2 12 5 15"></polyline>
+                                                                        <polyline points="9 5 12 2 15 5"></polyline>
+                                                                        <polyline points="15 19 12 22 9 19"></polyline>
+                                                                        <polyline points="19 9 22 12 19 15"></polyline>
+                                                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                                                                    </svg>
+
+                                                                    <input value="0" class="d-none atrribute-id-vari-1">
+
+                                                                    <input oninput="onUpdateVari1()" type="text"
+                                                                           class="form-control value-vari-1" placeholder="Nhập"
+                                                                           required value=""/>
+                                                                    <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
+                                                                </div>
+                                                            </li>
+
+                                                    </ul>
+                                                </div>
+
+                                                @if(count($item->attributes(true)) > 1)
+                                                <div id="container_vari_2" class="mt-3">
+                                                    <div>
+                                                        <div class="d-flex" style="align-items: center;gap: 5px;">
+                                                            <h6>Biến thể 2</h6>
+                                                            <i class="fa-solid fa-trash" onclick="onDeleteContainerVari2()"></i>
+                                                        </div>
+                                                        <input oninput="onDrawTableVari()" id="input_vari_2" type="text" class="form-control" placeholder="Nhập" required value="{{$item->attributes(true)[1]->name}}"/>
+                                                    </div>
+
+
+
+                                                    <ul class="list-group ms-3 mt-1" id="container_item_vari_2">
+                                                        @foreach($item->attributeOptions(false, $item->attributes(true)[1]->id) as $attributeOption)
                                                         <li class="list-group-item" style="">
 
                                                             <div class="item-vari">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                     stroke-width="2"
+                                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                                      stroke-linecap="round" stroke-linejoin="round"
                                                                      class="feather feather-move icon-sm handle me-2">
                                                                     <polyline points="5 9 2 12 5 15"></polyline>
@@ -98,19 +166,42 @@
                                                                     <line x1="2" y1="12" x2="22" y2="12"></line>
                                                                     <line x1="12" y1="2" x2="12" y2="22"></line>
                                                                 </svg>
-
-                                                                <input oninput="onUpdateVari1()" type="text"
-                                                                       class="form-control value-vari-1" placeholder="Nhập"
-                                                                       required/>
+                                                                <input value="{{$attributeOption->id}}" class="d-none atrribute-id-vari-2">
+                                                                <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required value="{{$attributeOption->value}}"/>
                                                                 <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                             </div>
                                                         </li>
 
+                                                        @endforeach
+
+                                                            <li class="list-group-item" style="">
+
+                                                                <div class="item-vari">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-move icon-sm handle me-2">
+                                                                        <polyline points="5 9 2 12 5 15"></polyline>
+                                                                        <polyline points="9 5 12 2 15 5"></polyline>
+                                                                        <polyline points="15 19 12 22 9 19"></polyline>
+                                                                        <polyline points="19 9 22 12 19 15"></polyline>
+                                                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                                                                    </svg>
+                                                                    <input value="0" class="d-none atrribute-id-vari-2">
+                                                                    <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required value=""/>
+                                                                    <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
+                                                                </div>
+                                                            </li>
+
                                                     </ul>
+
                                                 </div>
 
+                                                @endif
+
                                                 <div class="mt-3 text-end" id="container_btn_add_vari">
-                                                    <button id="btn_add_vari" type="button" class="btn btn-success">+</button>
+                                                    <button id="btn_add_vari" type="button" class="btn btn-success" style="{{$item->is_variant ? 'display: none' : ''}}">+</button>
                                                 </div>
                                             </div>
 
@@ -229,10 +320,25 @@
                     inventories.push($(this).val());
                 });
 
+                elements = document.querySelectorAll(".atrribute-id-vari-1");
+                const atrributes_id_vari_1 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_1.push(element.value); // For elements like input or textarea
+                });
+
+                elements = document.querySelectorAll(".atrribute-id-vari-2");
+                const atrributes_id_vari_2 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_2.push(element.value); // For elements like input or textarea
+                });
+
                 callAjax(
-                    "POST",
-                    "{{route('ajax.administrator.products.store')}}",
+                    "PUT",
+                    "{{route('ajax.administrator.products.update_v2')}}",
                     {
+                        product_id : {{$item->id}},
                         name : name,
                         category : category,
                         description : description,
@@ -244,6 +350,8 @@
                         values_2: values_2,
                         prices: prices,
                         inventories: inventories,
+                        atrributes_id_vari_1: atrributes_id_vari_1,
+                        atrributes_id_vari_2: atrributes_id_vari_2,
                     },
                     (response) => {
                         window.location.href = "{{route('administrator.products.index')}}"
@@ -264,9 +372,10 @@
                 const price_partner = $('input[name="price_partner"]').val()
 
                 callAjax(
-                    "POST",
-                    "{{route('ajax.administrator.products.store')}}",
+                    "PUT",
+                    "{{route('ajax.administrator.products.update_v2')}}",
                     {
+                        product_id : {{$item->id}},
                         name : name,
                         category : category,
                         description : description,
@@ -289,12 +398,16 @@
 
         }
 
+        let timeoutId;
+
         $('#flexSwitchCheckDefault').change(function() {
 
             if ($(this).is(':checked')) {
                 $('#container_no_vari').hide()
                 $('#container_vari_parent').show()
                 $('#container_table_vari').show()
+
+                onDrawTableVari()
             } else {
                 $('#container_no_vari').show()
                 $('#container_vari_parent').hide()
@@ -302,7 +415,8 @@
             }
         });
 
-        let timeoutId;
+        $('#flexSwitchCheckDefault').trigger('change');
+
 
 
         function onDrawTableVari() {
@@ -325,6 +439,20 @@
                     values_2.push(element.value); // For elements like input or textarea
                 });
 
+                elements = document.querySelectorAll(".atrribute-id-vari-1");
+                const atrributes_id_vari_1 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_1.push(element.value); // For elements like input or textarea
+                });
+
+                elements = document.querySelectorAll(".atrribute-id-vari-2");
+                const atrributes_id_vari_2 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_2.push(element.value); // For elements like input or textarea
+                });
+
                 callAjax(
                     "GET",
                     "{{route('ajax.administrator.products.render_table_vari')}}",
@@ -333,6 +461,8 @@
                         header_vari_2: header_vari_2,
                         values_1: values_1,
                         values_2: values_2,
+                        atrributes_id_vari_1: atrributes_id_vari_1,
+                        atrributes_id_vari_2: atrributes_id_vari_2,
                     },
                     (response) => {
                         $('#container_table_vari').html(response.html)
@@ -377,7 +507,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-1">
                                                     <input oninput="onUpdateVari1()" type="text" class="form-control value-vari-1" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -410,7 +540,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -441,6 +571,7 @@
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
 
+                                                    <input value="" class="d-none atrribute-id-vari-1">
                                                     <input oninput="onUpdateVari1()" type="text" class="form-control value-vari-1" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -463,7 +594,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -471,6 +602,9 @@
             }
 
             onDrawTableVari()
+
+            onUpdateVari1()
+            onUpdateVari2()
         }
 
         var simpleList = document.querySelector("#container_item_vari_1");
@@ -481,7 +615,7 @@
 
         $('#btn_add_vari').on("click", function () {
             $('#btn_add_vari').hide()
-            $('#container_vari').append(`<div id="container_vari_2">
+            $('#container_vari').append(`<div id="container_vari_2" class="mt-3">
                                         <div>
                                             <div class="d-flex" style="align-items: center;gap: 5px;">
                                                 <h6>Biến thể 2</h6>
@@ -505,7 +639,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>

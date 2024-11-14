@@ -406,6 +406,12 @@ Route::prefix('ajax/administrator')->group(function () {
                 'middleware' => 'can:products-edit',
             ]);
 
+            Route::put('/update-v2', [
+                'as' => 'ajax.administrator.products.update_v2',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@updateV2',
+                'middleware' => 'can:products-edit',
+            ]);
+
             Route::post('/', [
                 'as' => 'ajax.administrator.products.store',
                 'uses' => 'App\Http\Controllers\Ajax\ProductController@store',

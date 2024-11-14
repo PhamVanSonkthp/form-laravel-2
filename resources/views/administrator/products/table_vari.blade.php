@@ -14,7 +14,7 @@
 
         <tbody>
 
-        @foreach($values1 as $value)
+        @foreach($values1 as $index1 => $value)
 
             @if($value != '')
 
@@ -30,13 +30,13 @@
                     </td>
                 @endif
                 <td>
-                    @include('administrator.components.require_input_number' , ['name' => 'prices','value' => ''])
+                    @include('administrator.components.require_input_number' , ['name' => 'prices','value' => optional($productSKUs1[$index1])->price ])
                 </td>
                 <td>
-                    @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => ''])
+                    @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => optional($productSKUs1[$index1])->inventory])
                 </td>
                 <td>
-                    @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus'])
+                    @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => optional($productSKUs1[$index1])->sku])
                 </td>
             </tr>
 
@@ -51,13 +51,14 @@
                             {{$value2}}
                         </td>
                         <td>
-                            <input type="text" class="form-control" placeholder="Nhập" required/>
+                            @include('administrator.components.require_input_number' , ['name' => 'prices','value' => optional($productSKUs2[$index])->price])
+
                         </td>
                         <td>
-                            <input type="text" class="form-control" placeholder="Nhập" required/>
+                            @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => optional($productSKUs2[$index])->inventory ])
                         </td>
                         <td>
-                            <input style="min-width: 100px;" type="text" class="form-control" placeholder="Nhập" required/>
+                            @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => optional($productSKUs2[$index])->sku ])
                         </td>
                     </tr>
 

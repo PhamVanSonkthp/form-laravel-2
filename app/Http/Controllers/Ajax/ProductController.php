@@ -16,6 +16,7 @@ use App\Models\ProductSKU;
 use App\Traits\BaseControllerTrait;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use function redirect;
@@ -81,6 +82,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'slug' => $request->name,
             'description' => $request->description,
+            'is_variant' => $request->is_variant,
         ]);
 
 
@@ -126,7 +128,7 @@ class ProductController extends Controller
 
                 $productSKU = ProductSKU::create([
                     'product_id' => $product->id,
-                    'sku' => $request->skus[$index],
+//                    'sku' => $request->skus[$index],
                     'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
                     'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                 ]);
@@ -152,7 +154,7 @@ class ProductController extends Controller
 
                     $productSKU = ProductSKU::create([
                         'product_id' => $product->id,
-                        'sku' => $request->skus[$index],
+//                        'sku' => $request->skus[$index],
                         'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
                         'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                     ]);
@@ -207,6 +209,77 @@ class ProductController extends Controller
             'b'=> $request->inventory,
             'c'=> $request->id,
         ]);
+    }
+
+    public function updateV2(Request $request)
+    {
+        $item = $this->model->findOrFail($request->product_id);
+
+
+        if ($request->is_variant == 1){
+            $header1 = $request->header_vari_1;
+            $header2 = $request->header_vari_2;
+            $values1 = $request->values_1;
+            $values2 = $request->values_2;
+            $atrributes_id_vari_1 = $request->atrributes_id_vari_1;
+            $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
+
+            $productSKUs1 = [];
+
+            if (is_array($values1)){
+                $values1 = array_filter($values1);
+
+                foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1){
+                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+
+                    $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                }
+            }else{
+                $values1 = [];
+            }
+
+            foreach ($productSKUs1 as $index => $productSKU1){
+                if (!empty($productSKU1) && $index <= count($values1)){
+
+                    $productSKU1->update([
+                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                    ]);
+                }
+            }
+
+
+            if (is_array($values2)){
+                $values2 = array_filter($values2);
+
+                foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2){
+                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+
+                    $productSKUs2[] = optional($productAttributeOption)->productSKU();
+                }
+
+
+                foreach ($productSKUs2 as $index => $productSKU2){
+                    if (!empty($productSKU2) && $index <= count($values2)){
+
+
+
+                        $productSKU2->update([
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
+                        ]);
+                    }
+                }
+
+            }else{
+                $values2 = [];
+            }
+        }
+
+
+
+
+
     }
 
     public function delete(Request $request, $id)
@@ -374,13 +447,29 @@ class ProductController extends Controller
 
     function renderTableVari(Request $request){
 
+        $product = null;
+
+        if (!empty($request->product_id)){
+            $product = Product::findOrFail($request->product_id);
+        }
+
         $header1 = $request->header_vari_1;
         $header2 = $request->header_vari_2;
         $values1 = $request->values_1;
         $values2 = $request->values_2;
+        $atrributes_id_vari_1 = $request->atrributes_id_vari_1;
+        $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
+
+        $productSKUs1 = [];
 
         if (is_array($values1)){
             $values1 = array_filter($values1);
+
+            foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1){
+                $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+
+                $productSKUs1[] = optional($productAttributeOption)->productSKU();
+            }
         }else{
             $values1 = [];
         }
@@ -388,11 +477,21 @@ class ProductController extends Controller
 
         if (is_array($values2)){
             $values2 = array_filter($values2);
+
+            foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2){
+                $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+
+                $productSKUs2[] = optional($productAttributeOption)->productSKU();
+            }
         }else{
             $values2 = [];
         }
 
-        $html = View::make('administrator.products.table_vari', compact('header1','header2','values1','values2'))->render();
+        $html = View::make('administrator.products.table_vari',
+            compact('header1','header2','values1','values2',
+                'product','atrributes_id_vari_1','atrributes_id_vari_2',
+            'productSKUs1','productSKUs2'
+            ))->render();
 
         return response()->json([
             'html' =>$html

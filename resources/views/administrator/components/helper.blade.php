@@ -11,6 +11,11 @@
     @endif
 
     $(document).ready(function () {
+        reRender()
+
+    });
+
+    function reRender() {
         $('.open-jquery-date-range').flatpickr({
             mode: "range",
             dateFormat: "Y-m-d",
@@ -43,7 +48,6 @@
                 onSearchQuery()
             }
         });
-
-    });
+    }
 
 </script>

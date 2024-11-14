@@ -37,10 +37,10 @@ class EventServiceProvider extends ServiceProvider
         //
         parent::boot();
 
-        Event::listen(['eloquent.saved: *', 'eloquent.created: *', 'eloquent.updated: *', 'eloquent.deleted: *'], function ($context) {
-            // dump($context); ---> $context hold information about concerned model and fired event : e.g "eloquent.created: App\User"
-            // YOUR CODE GOES HERE
-            ResponseCache::clear();
-        });
+//        Event::listen(['eloquent.saved: *', 'eloquent.created: *', 'eloquent.updated: *', 'eloquent.deleted: *'], function ($context) {
+//            // dump($context); ---> $context hold information about concerned model and fired event : e.g "eloquent.created: App\User"
+//            // YOUR CODE GOES HERE
+//            ResponseCache::clear();
+//        });
     }
 }

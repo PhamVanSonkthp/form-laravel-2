@@ -17,7 +17,6 @@
     @can('dashboard-list')
         <div>
 
-
             <div>
                 <div class="card">
                     <div class="card-body">
