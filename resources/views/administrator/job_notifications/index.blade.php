@@ -38,7 +38,7 @@
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="" id="body_container_item">
                                 @foreach($items as $item)
                                     <tr>
                                         <td class="text-center">
@@ -100,9 +100,7 @@
 
                                 <tfoot>
                                 <tr>
-                                    <th>
-
-                                    </th>
+                                    <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
                                     <th>#</th>
                                     <th>Khách hàng</th>
                                     <th>Tiêu đề</th>

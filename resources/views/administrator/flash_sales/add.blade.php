@@ -51,9 +51,9 @@
                         <div class="card-header">
                             <div class="form-group mt-3">
                                 <label>Sản phẩm <span class="text-danger">*</span></label>
-                                <input id="input_search_product" type="text" autocomplete="off" name="name"
+                                <input id="input_search_product" type="text" autocomplete="off" name="names"
                                        class="form-control " value="" oninput="onSearchProduct()"
-                                       required="" data-bs-original-title="" title="" placeholder="Tên, code, id, sku, ...">
+                                       data-bs-original-title="" title="" placeholder="Tên, code, id, sku, ...">
                             </div>
 
                             <div id="container_result_search">

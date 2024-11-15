@@ -95,6 +95,16 @@ class ProductController extends Controller
         return response()->json($content);
     }
 
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
+    }
+
     public function import(Request $request)
     {
         set_time_limit(36000);

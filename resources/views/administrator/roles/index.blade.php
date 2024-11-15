@@ -57,14 +57,21 @@
                                     <th><input id="check_box_delete_all" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItem()"></th>
                                     <th>#</th>
                                     <th>Tên</th>
+                                    <th>Mô tả</th>
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-
+                                <tbody class="" id="body_container_item">
                                 @foreach($items as $index => $item)
-                                    <tr>
-                                        <td>{{$item->id}}</td>
+                                    <tr class="" id="tr_container_index_{{$index}}" data-id="{{$item->id}}">
+                                        <td class="text-center">
+                                            <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
+                                        </td>
+                                        <td>
+                                            @include('administrator.components.sort_icon_for_table', ['prefixView' => $prefixView])
+
+                                            {{$item->id}}
+                                        </td>
                                         <td>{{$item->name}}</td>
                                         <td>{{$item->display_name}}</td>
                                         <td>
@@ -90,11 +97,10 @@
 
                                 <tfoot>
                                 <tr>
-                                    <th>
-
-                                    </th>
+                                    <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
                                     <th>#</th>
                                     <th>Tên</th>
+                                    <th>Mô tả</th>
                                     <th>Hành động</th>
                                 </tr>
                                 </tfoot>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleAddRequest;
 use App\Http\Requests\RoleEditRequest;
 use App\Models\Audit;
+use App\Models\Helper;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Traits\BaseControllerTrait;
@@ -117,5 +118,15 @@ class RoleController extends Controller
         ];
 
         return response()->json($content);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

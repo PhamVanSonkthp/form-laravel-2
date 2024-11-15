@@ -6,6 +6,7 @@ use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
 use App\Models\Audit;
 use App\Models\Bank;
+use App\Models\Helper;
 use App\Traits\BaseControllerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -87,5 +88,15 @@ class BankController extends Controller
         ];
 
         return response()->json($content);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

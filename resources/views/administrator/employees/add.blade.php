@@ -23,49 +23,22 @@
                             <div class="row">
 
                                 <div class="col-md-3">
-                                    <div class="form-group mt-3">
-                                        <label>Tên nhân viên<span class="text-danger">*</span></label>
-                                        <input type="text" name="name"
-                                               class="form-control @error('name') is-invalid @enderror"
-                                               value="{{old('name')}}" required>
-                                        @error('name')
-                                        <div class="alert alert-danger">{{$message}}</div>
-                                        @enderror
-                                    </div>
+
+                                    @include('administrator.components.require_input_text' , ['name' => 'name' , 'label' => 'Tên'])
+
                                 </div>
 
                                 <div class="col-md-3">
-                                    <div class="form-group mt-3">
-                                        <label>Số điện thoại<span class="text-danger">*</span></label>
-                                        <input type="text" name="phone"
-                                               class="form-control @error('phone') is-invalid @enderror"
-                                               value="{{old('phone')}}" required>
-                                        @error('phone')
-                                        <div class="alert alert-danger">{{$message}}</div>
-                                        @enderror
-                                    </div>
+                                    @include('administrator.components.require_input_text' , ['name' => 'phone' , 'label' => 'Số điện thoại'])
+
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group mt-3">
-                                        <label>Email (dùng làm tên đăng nhập)<span class="text-danger">*</span></label>
-                                        <input type="text" name="email"
-                                               class="form-control @error('email') is-invalid @enderror"
-                                               value="{{old('email')}}" required>
-                                        @error('email')
-                                        <div class="alert alert-danger">{{$message}}</div>
-                                        @enderror
-                                    </div>
+                                    @include('administrator.components.require_input_text' , ['name' => 'email' , 'label' => 'Email (dùng làm tên đăng nhập)'])
+
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group mt-3">
-                                        <label>Mật khẩu<span class="text-danger">*</span></label>
-                                        <input type="password" name="password"
-                                               class="form-control @error('password') is-invalid @enderror"
-                                               value="{{old('password')}}" required>
-                                        @error('password')
-                                        <div class="alert alert-danger">{{$message}}</div>
-                                        @enderror
-                                    </div>
+                                    @include('administrator.components.input_text_password' , ['name' => 'password' , 'label' => 'Mật khẩu'])
+
                                 </div>
 
                                 <div class="col-md-3">

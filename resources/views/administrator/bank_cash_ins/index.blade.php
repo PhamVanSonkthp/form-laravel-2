@@ -41,38 +41,18 @@
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($items as $item)
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
-                                        </td>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{ optional($item->bank)->vn_name}}</td>
-                                        <td>
-                                            <img class="rounded-circle" src="{{optional($item->bank)->avatar()}}" alt="">
-                                        </td>
-                                        <td>{{$item->account_name}}</td>
-                                        <td>{{$item->account_number}}</td>
-                                        <td>{{$item->account_password ? "******" : ''}}</td>
-                                        <td>{{$item->account_token_web2m}}</td>
-                                        <td>{{$item->is_default ? "YES" : "NO"}}</td>
-                                        <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
-                                        <td>
+                                <tbody class="" id="body_container_item">
+                                @foreach($items as $index => $item)
 
-                                            @include('administrator.components.action_table', ['prefixView' => $prefixView, '$item' => $item])
+                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView, 'index' => $index])
 
-                                        </td>
-                                    </tr>
                                 @endforeach
 
                                 </tbody>
 
                                 <tfoot>
                                 <tr>
-                                    <th>
-
-                                    </th>
+                                    <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
                                     <th>#</th>
                                     <th>Ngân hàng</th>
                                     <th>Hình ảnh</th>

@@ -16,29 +16,13 @@
                 @method('PUT')
                 @csrf
                 <div class="col-md-12">
-                    <div class="form-group mt-3">
+                    <div class="card">
+                        <div class="card-body">
 
-                        @include('administrator.components.require_input_text' , ['name' => 'title' , 'label' => 'Tiêu đề'])
+                            @include('administrator.'.$prefixView.'.content' , ['item' => isset($item) ? $item : null])
 
+                        </div>
                     </div>
-
-                    @include('administrator.components.select_category' , ['name' => 'category_id' ,'html_category' => \App\Models\CategoryNew::getCategory(isset($item) ? optional($item)->category_id : ''), 'can_create' => true])
-
-                    @if($isSingleImage)
-                        <div class="mt-3 mb-3">
-                            @include('administrator.components.upload_image', ['post_api' => route('ajax,administrator.upload_image.store'), 'table' => 'news' , 'image' => optional($item->image)->image_path, 'relate_id' => $item->id])
-                        </div>
-                    @endif
-
-                    @if($isMultipleImages)
-                        <div class="mt-3 mb-3">
-                            @include('administrator.components.upload_multiple_images', ['post_api' => route('ajax,administrator.upload_multiple_images.store'), 'delete_api' => route('ajax,administrator.upload_multiple_images.delete') , 'sort_api' => route('ajax,administrator.upload_multiple_images.sort'), 'table' => 'news' , 'images' => $item->images, 'relate_id' => $item->id])
-                        </div>
-                    @endif
-
-                    @include('administrator.components.require_textarea_description', ['name' => 'contents' , 'label' => 'Mô tả'])
-
-                    <button type="submit" class="btn btn-primary mt-3">Lưu lại</button>
 
                 </div>
             </form>

@@ -36,7 +36,7 @@
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="" id="body_container_item">
                                 @foreach($items as $item)
                                     <tr>
                                         <td class="text-center">

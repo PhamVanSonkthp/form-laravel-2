@@ -62,10 +62,7 @@
                                     </div>
                                 </div>
 
-
-
                             </div>
-
 
                             <div id="container_vari_parent" style="display: none">
                                 <div class="grid-margin stretch-card">

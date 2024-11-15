@@ -36,20 +36,18 @@
                                     <th>Ngày sinh</th>
                                     <th>Giới tính</th>
                                     <th>Ngày sử dụng</th>
-                                    <th style="min-width: 200px;">Hành động</th>
+                                    <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="" id="body_container_item">
 
-                                @foreach($items as $item)
-                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView])
+                                @foreach($items as $index => $item)
+                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView, 'index' => $index])
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>
-
-                                    </th>
+                                    <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
                                     <th>#</th>
                                     <th>Avatar</th>
                                     <th>Vai trò</th>
@@ -59,7 +57,7 @@
                                     <th>Ngày sinh</th>
                                     <th>Giới tính</th>
                                     <th>Ngày sử dụng</th>
-                                    <th style="min-width: 200px;">Hành động</th>
+                                    <th>Hành động</th>
                                 </tr>
                                 </tfoot>
                             </table>

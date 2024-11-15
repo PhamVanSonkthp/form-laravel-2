@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
 use App\Models\Audit;
+use App\Models\Helper;
 use App\Models\JobNotification;
 use App\Models\JobNotificationRepeat;
 use App\Models\UserJobNotification;
@@ -197,5 +198,15 @@ class JobNotificationController extends Controller
         ];
 
         return response()->json($content);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

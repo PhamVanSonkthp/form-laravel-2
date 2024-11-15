@@ -19,7 +19,7 @@
 
     <div class="col-md-3">
         <div>
-            @include('administrator.components.search_select2_allow_clear' , ['name' => 'product_id' , 'label' => 'Sản phẩm', 'select2Items' => \App\Models\Product::where('product_visibility_id',2)->latest()->get()])
+            @include('administrator.components.search_select2_allow_clear' , ['name' => 'product_id' , 'label' => 'Sản phẩm', 'select2Items' => \App\Models\Product::latest()->get()])
         </div>
     </div>
 

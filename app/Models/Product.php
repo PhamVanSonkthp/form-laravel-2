@@ -181,7 +181,7 @@ class Product extends Model implements Auditable
         if (isset($request->is_best) && $request->is_best == 1) {
             $results = $results->orderBy('sold', 'DESC');
         } else {
-            $results = $results->latest();
+            $results = $results->latest('updated_at');
         }
 
         if (isset($request->min_inventory) && strlen($request->min_inventory)) {
@@ -192,7 +192,7 @@ class Product extends Model implements Auditable
             $results = $results->where('inventory', '<=', $request->max_inventory);
         }
 
-        $results = $results->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
+        $results = $results->latest('updated_at')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         return $results;
     }

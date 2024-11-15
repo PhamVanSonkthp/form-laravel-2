@@ -64,9 +64,10 @@ class FlashSale extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+            'begin' => $request->begin,
+            'end' => $request->end,
+            'is_active' => $request->is_active ? 1 : 0,
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -77,9 +78,10 @@ class FlashSale extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+            'begin' => $request->begin,
+            'end' => $request->end,
+            'is_active' => $request->is_active ? 1 : 0,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

@@ -112,6 +112,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\UserController@get',
             'middleware' => 'can:users-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.users.sort',
+            'uses' => 'App\Http\Controllers\Admin\UserController@sort',
+            'middleware' => 'can:users-edit',
+        ]);
     });
 
     Route::prefix('chats')->group(function () {
@@ -173,6 +179,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.chats.get',
             'uses' => 'App\Http\Controllers\Admin\ChatController@get',
             'middleware' => 'can:chats-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.chats.sort',
+            'uses' => 'App\Http\Controllers\Admin\ChatController@sort',
+            'middleware' => 'can:chats-edit',
         ]);
     });
 
@@ -236,6 +248,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\EmployeeController@get',
             'middleware' => 'can:employees-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.employees.sort',
+            'uses' => 'App\Http\Controllers\Admin\EmployeeController@sort',
+            'middleware' => 'can:employees-edit',
+        ]);
     });
 
     Route::prefix('roles')->group(function () {
@@ -297,6 +315,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.roles.get',
             'uses' => 'App\Http\Controllers\Admin\RoleController@get',
             'middleware' => 'can:roles-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.roles.sort',
+            'uses' => 'App\Http\Controllers\Admin\RoleController@sort',
+            'middleware' => 'can:roles-edit',
         ]);
     });
 
@@ -374,6 +398,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\SliderController@get',
             'middleware' => 'can:sliders-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.sliders.sort',
+            'uses' => 'App\Http\Controllers\Admin\SliderController@sort',
+            'middleware' => 'can:sliders-edit',
+        ]);
     });
 
     Route::prefix('news')->group(function () {
@@ -436,6 +466,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\NewsController@get',
             'middleware' => 'can:news-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.news.sort',
+            'uses' => 'App\Http\Controllers\Admin\NewsController@sort',
+            'middleware' => 'can:news-edit',
+        ]);
     });
 
     Route::prefix('job-emails')->group(function () {
@@ -479,6 +515,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.job_emails.get',
             'uses' => 'App\Http\Controllers\Admin\JobEmailController@get',
             'middleware' => 'can:job_emails-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.job_emails.sort',
+            'uses' => 'App\Http\Controllers\Admin\JobEmailController@sort',
+            'middleware' => 'can:job_emails-edit',
         ]);
     });
 
@@ -542,6 +584,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\JobNotificationController@get',
             'middleware' => 'can:job_notifications-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.job_notifications.sort',
+            'uses' => 'App\Http\Controllers\Admin\JobNotificationController@sort',
+            'middleware' => 'can:job_notifications-edit',
+        ]);
     });
 
     Route::prefix('categories')->group(function () {
@@ -603,6 +651,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.categories.get',
             'uses' => 'App\Http\Controllers\Admin\CategoryController@get',
             'middleware' => 'can:categories-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.categories.sort',
+            'uses' => 'App\Http\Controllers\Admin\CategoryController@sort',
+            'middleware' => 'can:categories-edit',
         ]);
     });
 
@@ -672,6 +726,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\ProductController@get',
             'middleware' => 'can:products-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.products.sort',
+            'uses' => 'App\Http\Controllers\Admin\ProductController@sort',
+            'middleware' => 'can:products-edit',
+        ]);
     });
 
     Route::prefix('settings')->group(function () {
@@ -733,6 +793,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.settings.get',
             'uses' => 'App\Http\Controllers\Admin\SettingController@get',
             'middleware' => 'can:settings-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.settings.sort',
+            'uses' => 'App\Http\Controllers\Admin\SettingController@sort',
+            'middleware' => 'can:settings-edit',
         ]);
     });
 
@@ -796,6 +862,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\CategoryNewController@get',
             'middleware' => 'can:category_news-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.category_news.sort',
+            'uses' => 'App\Http\Controllers\Admin\CategoryNewController@sort',
+            'middleware' => 'can:category_news-edit',
+        ]);
     });
 
     Route::prefix('system-branches')->group(function () {
@@ -858,67 +930,11 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\SystemBranchController@get',
             'middleware' => 'can:system_branches-list',
         ]);
-    });
 
-    Route::prefix('quotations')->group(function () {
-        Route::get('/', [
-            'as' => 'administrator.quotations.index',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@index',
-            'middleware' => 'can:quotations-list',
-        ]);
-
-        Route::get('/create', [
-            'as' => 'administrator.quotations.create',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@create',
-            'middleware' => 'can:quotations-add',
-        ]);
-
-        Route::post('/store', [
-            'as' => 'administrator.quotations.store',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@store',
-            'middleware' => 'can:quotations-add',
-        ]);
-
-        Route::get('/edit/{id}', [
-            'as' => 'administrator.quotations.edit',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@edit',
-            'middleware' => 'can:quotations-edit',
-        ]);
-
-        Route::put('/update/{id}', [
-            'as' => 'administrator.quotations.update',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@update',
-            'middleware' => 'can:quotations-edit',
-        ]);
-
-        Route::delete('/delete/{id}', [
-            'as' => 'administrator.quotations.delete',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@delete',
-            'middleware' => 'can:quotations-delete',
-        ]);
-
-        Route::delete('/delete-many', [
-            'as' => 'administrator.quotations.delete_many',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@deleteManyByIds',
-            'middleware' => 'can:quotations-delete',
-        ]);
-
-        Route::get('/export', [
-            'as' => 'administrator.quotations.export',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@export',
-            'middleware' => 'can:quotations-list',
-        ]);
-
-        Route::get('/audit/{id}', [
-            'as'=>'administrator.quotations.audit',
-            'uses'=>'App\Http\Controllers\Admin\QuotationController@audit',
-            'middleware'=>'can:quotations-list',
-        ]);
-
-        Route::get('/{id}', [
-            'as' => 'administrator.quotations.get',
-            'uses' => 'App\Http\Controllers\Admin\QuotationController@get',
-            'middleware' => 'can:quotations-list',
+        Route::put('/sort', [
+            'as' => 'administrator.system_branches.sort',
+            'uses' => 'App\Http\Controllers\Admin\SystemBranchController@sort',
+            'middleware' => 'can:system_branches-edit',
         ]);
     });
 
@@ -994,6 +1010,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\OrderController@get',
             'middleware' => 'can:orders-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.orders.sort',
+            'uses' => 'App\Http\Controllers\Admin\OrderController@sort',
+            'middleware' => 'can:orders-edit',
+        ]);
     });
 
     Route::prefix('vouchers')->group(function () {
@@ -1061,6 +1083,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.vouchers.get',
             'uses' => 'App\Http\Controllers\Admin\VoucherController@get',
             'middleware' => 'can:vouchers-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.vouchers.sort',
+            'uses' => 'App\Http\Controllers\Admin\VoucherController@sort',
+            'middleware' => 'can:vouchers-edit',
         ]);
     });
 
@@ -1139,6 +1167,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\PaymentMethodController@get',
             'middleware' => 'can:payment_methods-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.payment_methods.sort',
+            'uses' => 'App\Http\Controllers\Admin\PaymentMethodController@sort',
+            'middleware' => 'can:payment_methods-edit',
+        ]);
     });
 
     Route::prefix('user-transactions')->group(function () {
@@ -1206,6 +1240,86 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.user_transactions.get',
             'uses' => 'App\Http\Controllers\Admin\UserTransactionController@get',
             'middleware' => 'can:user_transactions-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.user_transactions.sort',
+            'uses' => 'App\Http\Controllers\Admin\UserTransactionController@sort',
+            'middleware' => 'can:user_transactions-edit',
+        ]);
+    });
+
+    Route::prefix('user-types')->group(function () {
+        Route::get('/', [
+            'as' => 'administrator.user_types.index',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@index',
+            'middleware' => 'can:user_types-list',
+        ]);
+
+        Route::get('/create', [
+            'as' => 'administrator.user_types.create',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@create',
+            'middleware' => 'can:user_types-add',
+        ]);
+
+        Route::post('/store', [
+            'as' => 'administrator.user_types.store',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@store',
+            'middleware' => 'can:user_types-add',
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'administrator.user_types.edit',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@edit',
+            'middleware' => 'can:user_types-edit',
+        ]);
+
+        Route::put('/update/{id}', [
+            'as' => 'administrator.user_types.update',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@update',
+            'middleware' => 'can:user_types-edit',
+        ]);
+
+        Route::delete('/delete/{id}', [
+            'as' => 'administrator.user_types.delete',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@delete',
+            'middleware' => 'can:user_types-delete',
+        ]);
+
+        Route::delete('/delete-many', [
+            'as' => 'administrator.user_types.delete_many',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@deleteManyByIds',
+            'middleware' => 'can:user_types-delete',
+        ]);
+
+        Route::get('/export', [
+            'as' => 'administrator.user_types.export',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@export',
+            'middleware' => 'can:user_types-list',
+        ]);
+
+        Route::get('/audit/{id}', [
+            'as'=>'administrator.user_types.audit',
+            'uses'=>'App\Http\Controllers\Admin\UserTypeController@audit',
+            'middleware'=>'can:user_types-list',
+        ]);
+
+        Route::get('/import', [
+            'as' => 'administrator.user_types.import',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@import',
+            'middleware' => 'can:user_types-list',
+        ]);
+
+        Route::get('/{id}', [
+            'as' => 'administrator.user_types.get',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@get',
+            'middleware' => 'can:user_types-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.user_types.sort',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@sort',
+            'middleware' => 'can:user_types-edit',
         ]);
     });
 
@@ -1275,6 +1389,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\UserPointController@get',
             'middleware' => 'can:user_points-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.user_points.sort',
+            'uses' => 'App\Http\Controllers\Admin\UserPointController@sort',
+            'middleware' => 'can:user_points-edit',
+        ]);
     });
 
     Route::prefix('banks')->group(function () {
@@ -1342,6 +1462,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.banks.get',
             'uses' => 'App\Http\Controllers\Admin\BankController@get',
             'middleware' => 'can:banks-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.banks.sort',
+            'uses' => 'App\Http\Controllers\Admin\BankController@sort',
+            'middleware' => 'can:banks-edit',
         ]);
     });
 
@@ -1411,6 +1537,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\BankCashInController@get',
             'middleware' => 'can:bank_cash_ins-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.bank_cash_ins.sort',
+            'uses' => 'App\Http\Controllers\Admin\BankCashInController@sort',
+            'middleware' => 'can:bank_cash_ins-edit',
+        ]);
     });
 
     Route::prefix('memberships')->group(function () {
@@ -1478,6 +1610,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.memberships.get',
             'uses' => 'App\Http\Controllers\Admin\MembershipController@get',
             'middleware' => 'can:memberships-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.memberships.sort',
+            'uses' => 'App\Http\Controllers\Admin\MembershipController@sort',
+            'middleware' => 'can:memberships-edit',
         ]);
     });
 
@@ -1547,6 +1685,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\ShippingMethodController@get',
             'middleware' => 'can:shipping_methods-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.shipping_methods.sort',
+            'uses' => 'App\Http\Controllers\Admin\ShippingMethodController@sort',
+            'middleware' => 'can:shipping_methods-edit',
+        ]);
     });
 
     Route::prefix('product-comments')->group(function () {
@@ -1614,6 +1758,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.product_comments.get',
             'uses' => 'App\Http\Controllers\Admin\ProductCommentController@get',
             'middleware' => 'can:product_comments-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.product_comments.sort',
+            'uses' => 'App\Http\Controllers\Admin\ProductCommentController@sort',
+            'middleware' => 'can:product_comments-edit',
         ]);
     });
 
@@ -1683,6 +1833,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\FlashSaleController@get',
             'middleware' => 'can:flash_sales-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.flash_sales.sort',
+            'uses' => 'App\Http\Controllers\Admin\FlashSaleController@sort',
+            'middleware' => 'can:flash_sales-edit',
+        ]);
     });
 
     Route::prefix('register-cities')->group(function () {
@@ -1750,6 +1906,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.register_cities.get',
             'uses' => 'App\Http\Controllers\Admin\RegisterCityController@get',
             'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.register_cities.sort',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@sort',
+            'middleware' => 'can:history_datas-edit',
         ]);
     });
 
@@ -1819,6 +1981,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@get',
             'middleware' => 'can:history_datas-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.register_districts.sort',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@sort',
+            'middleware' => 'can:history_datas-edit',
+        ]);
     });
 
     Route::prefix('register-wards')->group(function () {
@@ -1887,6 +2055,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'uses' => 'App\Http\Controllers\Admin\RegisterWardController@get',
             'middleware' => 'can:history_datas-list',
         ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.register_wards.sort',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@sort',
+            'middleware' => 'can:history_datas-edit',
+        ]);
     });
 
     Route::prefix('calendars')->group(function () {
@@ -1954,6 +2128,12 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
             'as' => 'administrator.calendars.get',
             'uses' => 'App\Http\Controllers\Admin\CalendarController@get',
             'middleware' => 'can:history_datas-list',
+        ]);
+
+        Route::put('/sort', [
+            'as' => 'administrator.calendars.sort',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@sort',
+            'middleware' => 'can:history_datas-edit',
         ]);
     });
 

@@ -6,6 +6,7 @@ use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
 use App\Models\Audit;
+use App\Models\Helper;
 use App\Traits\BaseControllerTrait;
 use App\Exports\ModelExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -87,5 +88,15 @@ class {{ class }} extends Controller
         ];
 
         return response()->json($content);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

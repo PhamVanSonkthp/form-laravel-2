@@ -20,23 +20,36 @@
 
                     <div class="card-body">
                         <div class="table-responsive product-table">
-                            <table class="table table-hover ">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
+                                    <th><input id="check_box_delete_all" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItem()"></th>
                                     <th>#</th>
-                                    <th>Tiêu đề</th>
+                                    <th>Tên</th>
                                     <th>Hình ảnh</th>
                                     <th>Thời gian tạo</th>
                                     <th>Người tạo</th>
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($items as $item)
-                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView])
+                                <tbody class="" id="body_container_item">
+                                @foreach($items as $index => $item)
+                                    @include('administrator.'.$prefixView.'.row', ['item' => $item, 'prefixView' => $prefixView, 'index' => $index])
                                 @endforeach
 
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
+                                    <th>#</th>
+                                    <th>Tên</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Thời gian tạo</th>
+                                    <th>Người tạo</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div>

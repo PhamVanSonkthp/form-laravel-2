@@ -14,6 +14,16 @@
         let is_checked = $('#check_box_delete_all').is(":checked")
         $('.checkbox-delete-item').prop('checked', is_checked)
         showButtonDeleteCheckbox(is_checked)
+
+        $('#check_box_delete_all_footer').prop('checked', is_checked)
+    }
+
+    function onSelectCheckboxDeleteItemFooter(){
+        let is_checked = $('#check_box_delete_all_footer').is(":checked")
+        $('.checkbox-delete-item').prop('checked', is_checked)
+        showButtonDeleteCheckbox(is_checked)
+
+        $('#check_box_delete_all').prop('checked', is_checked)
     }
 
     function showButtonDeleteCheckbox(is_checked){
@@ -61,14 +71,22 @@
 
     $(document).ready(function() {
         $('.checkbox-delete-item').change(function(){
-            let is_checked = false;
+            let number_not_check = 0;
+            let number_check = 0;
 
             $(".checkbox-delete-item:checked").each(function(){
-                is_checked = true;
+                number_check++
             });
 
+            $(".checkbox-delete-item").each(function(){
+                number_not_check++
+            });
+
+            const is_checked = number_check == number_not_check
+
             $('#check_box_delete_all').prop('checked', is_checked)
-            showButtonDeleteCheckbox(is_checked)
+            $('#check_box_delete_all_footer').prop('checked', is_checked)
+            showButtonDeleteCheckbox(number_check > 0)
 
         });
     });

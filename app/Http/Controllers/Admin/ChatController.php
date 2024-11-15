@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Formatter;
+use App\Models\Helper;
 use App\Models\ParticipantChat;
 use App\Models\Role;
 use App\Models\User;
@@ -48,5 +49,15 @@ class ChatController extends Controller
     public function delete($id)
     {
         return $this->deleteModelTrait($id, $this->user);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

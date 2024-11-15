@@ -154,6 +154,11 @@ return [
         'products-edit' => 'products_edit',
         'products-delete' => 'products_delete',
 
+        'user_types-list' => 'user_types_list',
+        'user_types-add' => 'user_types_add',
+        'user_types-edit' => 'user_types_edit',
+        'user_types-delete' => 'user_types_delete',
+
         /*step_1*/
 
     ],
@@ -188,6 +193,7 @@ return [
         'flash_sales',
         'calendars',
         'products',
+        'user_types',
         /*step_2*/
     ],
 
@@ -222,6 +228,7 @@ return [
         'Quản lý FlashSale',
         'Quản lý lịch làm việc',
         'Quản lý sản phẩm',
+        'Quản lý Loại khách hàng',
         /*step_3*/
     ],
 

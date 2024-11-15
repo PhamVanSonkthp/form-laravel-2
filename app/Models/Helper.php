@@ -217,7 +217,7 @@ class Helper extends Model
             return $query;
         }
 
-        $items = $query->latest()->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
+        $items = $query->latest('updated_at')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         if (!empty($make_hiddens) && is_array($make_hiddens)) {
             foreach ($items as $item) {
@@ -702,5 +702,23 @@ class Helper extends Model
             'data' => $data,
             'message' => $message
         ];
+    }
+
+    public static function sortTwoModel($model, $old_id, $new_id)
+    {
+        $oldItem = $model->findOrFail($old_id);
+
+        $oldDateUpdate =  $oldItem->updated_at;
+
+        $newItem = $model->findOrFail($new_id);
+
+        $newDateUpdate =  $newItem->updated_at;
+
+        $newItem->updated_at = $oldDateUpdate;
+        $oldItem->updated_at = $newDateUpdate;
+
+        $oldItem->save();
+        $newItem->save();
+
     }
 }

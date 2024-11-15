@@ -268,4 +268,14 @@ class OrderController extends Controller
 
         return response()->json($item);
     }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
+    }
 }

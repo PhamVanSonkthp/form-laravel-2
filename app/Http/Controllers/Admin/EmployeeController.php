@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Audit;
+use App\Models\Helper;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\BaseControllerTrait;
@@ -93,5 +94,15 @@ class EmployeeController extends Controller
         ];
 
         return response()->json($content);
+    }
+
+    public function sort(Request $request)
+    {
+
+        Helper::sortTwoModel($this->model, $request->old_id, $request->new_id);
+
+        return response()->json([
+            'message' => 'sorted'
+        ]);
     }
 }

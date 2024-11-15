@@ -40,10 +40,19 @@ class PermissionGateAndPolicyAccess
         $this->defineGateProductComments();
         $this->defineGateFlashSales();
         $this->defineGateCalendars();
+        $this->defineGateUserTypes();
         /*step_1*/
     }
 
     /*step_2*/
+
+    public function defineGateUserTypes()
+    {
+        Gate::define('user_types-list', 'App\Policies\UserTypePolicy@view');
+        Gate::define('user_types-add', 'App\Policies\UserTypePolicy@create');
+        Gate::define('user_types-edit', 'App\Policies\UserTypePolicy@update');
+        Gate::define('user_types-delete', 'App\Policies\UserTypePolicy@delete');
+    }
 
     public function defineGateCalendars()
     {
