@@ -16,6 +16,7 @@ use App\Models\ProductSKU;
 use App\Traits\BaseControllerTrait;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
@@ -218,34 +219,80 @@ class ProductController extends Controller
 
         if ($request->is_variant == 1){
             $header1 = $request->header_vari_1;
+            $product_atrribute_id_1 = $request->product_atrribute_id_1;
+
+            if (empty($product_atrribute_id_1)){
+                $productAttribute =  ProductAttribute::create([
+                    'name' => $header1
+                ]);
+
+                $product_atrribute_id_1 = $productAttribute->id;
+            }
+
             $header2 = $request->header_vari_2;
+
+
             $values1 = $request->values_1;
             $values2 = $request->values_2;
             $atrributes_id_vari_1 = $request->atrributes_id_vari_1;
             $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
 
             $productSKUs1 = [];
+            $productAttributeOptions = [];
+
 
             if (is_array($values1)){
                 $values1 = array_filter($values1);
 
-                foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1){
-                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+                foreach ($atrributes_id_vari_1 as $index => $atrribute_id_vari_1){
 
-                    $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                    if ($index < count($values1)){
+                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+
+                        if (empty($productAttributeOption)){
+                            $productAttributeOption = ProductAttributeOption::create([
+                                'attribute_id' => $product_atrribute_id_1,
+                                'value' => $values1[$index],
+                            ]);
+                        }
+                        $productAttributeOptions[] = $productAttributeOption;
+                        $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                    }
                 }
             }else{
                 $values1 = [];
             }
 
-            foreach ($productSKUs1 as $index => $productSKU1){
-                if (!empty($productSKU1) && $index <= count($values1)){
+            ProductAttributeOption::whereNotIn('id', Arr::pluck($productAttributeOptions, 'id'))->delete();
 
-                    $productSKU1->update([
-                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
-                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
-                    ]);
+            foreach ($productSKUs1 as $index => $productSKU1){
+
+                if ($index < count($values1)){
+                    if (!empty($productSKU1)){
+
+                        $productSKU1->update([
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                        ]);
+                    }else{
+
+                        $productSKU = ProductSKU::create([
+                            'product_id' => $item->id,
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                        ]);
+
+                        ProductAttributeOptionSKU::create([
+                            'sku_id' => $productSKU->id,
+                            'product_attribute_option_id' => $productAttributeOptions[$index]->id,
+                        ]);
+                    }
+                }else{
+                    if (!empty($productSKU1)){
+                        $productSKU1->delete();
+                    }
                 }
+
             }
 
 
@@ -461,14 +508,18 @@ class ProductController extends Controller
         $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
 
         $productSKUs1 = [];
+        $productSKUs2 = [];
+
 
         if (is_array($values1)){
             $values1 = array_filter($values1);
 
-            foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1){
-                $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+            if (is_array($atrributes_id_vari_1)){
+                foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1){
+                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
 
-                $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                    $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                }
             }
         }else{
             $values1 = [];
@@ -478,14 +529,19 @@ class ProductController extends Controller
         if (is_array($values2)){
             $values2 = array_filter($values2);
 
-            foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2){
-                $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+            if (is_array($atrributes_id_vari_2)){
+                foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2){
+                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
 
-                $productSKUs2[] = optional($productAttributeOption)->productSKU();
+                    $productSKUs2[] = optional($productAttributeOption)->productSKU();
+                }
             }
+
+
         }else{
             $values2 = [];
         }
+
 
         $html = View::make('administrator.products.table_vari',
             compact('header1','header2','values1','values2',

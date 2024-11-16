@@ -27,10 +27,10 @@ class PaymentController extends Controller
 
         //$item->bank_name
         $itemFilt = [
-            'beneficiary' => $item->name,
-            'bank_name' => $item->bank_name,
-            'bank_number' => $item->bank_number,
-            'bank_image' => $item->bank_image ?? "https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-TCB-H.png",
+            'beneficiary' => $item->account_name,
+            'bank_name' => optional($item->bank)->vn_name,
+            'bank_number' => $item->account_number,
+            'bank_image' => optional($item->bank)->avatar() ?? "https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-TCB-H.png",
             'content' => "NAPTIEN " . auth()->id() . " " . $request->amount,
             "image_qr" => "https://img.vietqr.io/image/970416-".$item->bank_number."-zNYSjXk.jpg?accountName=".$item->name."&addInfo=NAPTIEN%20" . auth()->id() . "%20".$request->amount."&amount=" . $request->amount
         ];

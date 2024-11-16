@@ -62,23 +62,27 @@ class AuthController extends Controller
 
         $token = $user->createToken($this->plainToken)->plainTextToken;
 
-        $userRefer = User::find($user->referral_id);
+        if (empty($user->referral_id)){
+            $userRefer = User::find($request->referral_id);
 
-        if (!empty($userRefer)) {
-            $setting =  Setting::first();
+            if (!empty($userRefer)) {
+                $setting =  Setting::first();
 
-            $number_point_refer_success = $setting->number_point_refer_success ?? 0;
-            $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
+                $number_point_refer_success = $setting->number_point_refer_success ?? 0;
+                $number_point_taken_refer_success = $setting->number_point_taken_refer_success ?? 0;
 
-            if (!empty($number_point_refer_success)) {
-                $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . auth()->user()->name . " #" . auth()->id());
-            }
+                if (!empty($number_point_refer_success)) {
+                    $userRefer->addPoint($number_point_refer_success, "Giới thiệu thành công: " . $user->name . " #" . $user->id);
+                }
 
-            if (!empty($number_point_taken_refer_success)) {
-                auth()->user()->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
+                if (!empty($number_point_taken_refer_success)) {
+                    $user->addPoint($number_point_refer_success, "Nhập mã giới thiệu thành công: " . $userRefer->name . " #" . $userRefer->id);
+                }
+
+                $user->referral_id = $userRefer->id;
+                $user->save();
             }
         }
-
 
         $response = [
             'user' => $user,

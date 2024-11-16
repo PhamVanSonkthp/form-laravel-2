@@ -29,8 +29,10 @@ class CreateUsersTable extends Migration
 
             $table->string('provider_name')->nullable();
             $table->string('provider_id')->nullable();
+            $table->string('front_id_image_path')->nullable();
+            $table->string('back_id_image_path')->nullable();
+            $table->string('portrait_image_path')->nullable();
             $table->string('password')->nullable()->change();
-//            $table->string('avatar')->nullable();
 
             $table->integer('user_type_id')->default(1);
             $table->bigInteger('referral_id')->default(0);

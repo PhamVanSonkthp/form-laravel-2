@@ -2,6 +2,7 @@
 
 use App\Events\ChatPusherEvent;
 use App\Http\Controllers\API\Admin\UserController;
+use App\Http\Controllers\API\AffiliateController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\API\CartController;
@@ -53,7 +54,6 @@ Route::prefix('cache')->group(function () {
     Route::get('/', function () {
         Artisan::call('config:clear');
         Artisan::call('cache:clear');
-        Artisan::call('queue:clear');
         Artisan::call('queue:clear');
 
         return response()->json([
@@ -300,6 +300,10 @@ Route::prefix('user')->group(function () {
 
         Route::prefix('wallet')->group(function () {
             Route::get('/', [WalletController::class, 'list']);
+        });
+
+        Route::prefix('affiliate')->group(function () {
+            Route::get('/', [AffiliateController::class, 'list']);
         });
 
         Route::prefix('payment')->group(function () {

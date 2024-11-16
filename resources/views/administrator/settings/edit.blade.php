@@ -43,7 +43,7 @@
                                 </div>
                             </div>
 
-                            <div class="row align-items-end">
+                            <div class="row align-items-end d-none">
                                 <div class="col-6">
                                     @include('administrator.components.require_input_text', ['label' => 'Tên tài khoản nạp tiền' , 'name' => 'bank_name'])
                                 </div>

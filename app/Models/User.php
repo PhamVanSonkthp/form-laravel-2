@@ -254,7 +254,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
             return Formatter::getThumbnailImage($image->image_path, $size);
         }
 
-        return config('_my_config.default_avatar');
+        return config('_my_config.default_avatar') ?? $this->front_id_image_path;
     }
 
     public function image()

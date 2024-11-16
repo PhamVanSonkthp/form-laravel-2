@@ -95,6 +95,8 @@
                                                                     <line x1="12" y1="2" x2="12" y2="22"></line>
                                                                 </svg>
 
+                                                                <input value="0" class="d-none atrribute-id-vari-1">
+
                                                                 <input oninput="onUpdateVari1()" type="text"
                                                                        class="form-control value-vari-1" placeholder="Nhập"
                                                                        required/>
@@ -326,15 +328,30 @@
                     values_2.push(element.value); // For elements like input or textarea
                 });
 
+                elements = document.querySelectorAll(".atrribute-id-vari-1");
+                const atrributes_id_vari_1 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_1.push(element.value); // For elements like input or textarea
+                });
+
+                elements = document.querySelectorAll(".atrribute-id-vari-2");
+                const atrributes_id_vari_2 = [];
+
+                elements.forEach(element => {
+                    atrributes_id_vari_2.push(element.value); // For elements like input or textarea
+                });
+
                 callAjax(
                     "GET",
                     "{{route('ajax.administrator.products.render_table_vari')}}",
                     {
-                        product_id: {{$item->id}},
                         header_vari_1: header_vari_1,
                         header_vari_2: header_vari_2,
                         values_1: values_1,
                         values_2: values_2,
+                        atrributes_id_vari_1: atrributes_id_vari_1,
+                        atrributes_id_vari_2: atrributes_id_vari_2,
                     },
                     (response) => {
                         $('#container_table_vari').html(response.html)
@@ -379,7 +396,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-1">
                                                     <input oninput="onUpdateVari1()" type="text" class="form-control value-vari-1" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -412,7 +429,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -442,7 +459,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-1">
                                                     <input oninput="onUpdateVari1()" type="text" class="form-control value-vari-1" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -465,7 +482,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
@@ -510,7 +527,7 @@
                                                         <line x1="2" y1="12" x2="22" y2="12"></line>
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
-
+                                                    <input value="0" class="d-none atrribute-id-vari-2">
                                                     <input oninput="onUpdateVari2()" type="text" class="form-control value-vari-2" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>

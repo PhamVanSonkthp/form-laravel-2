@@ -10,6 +10,9 @@
         <h4>
             {{ optional($item->user)->id}}
         </h4>
+        <div>
+            {{ optional($item->user)->name}}
+        </div>
     </td>
 
 

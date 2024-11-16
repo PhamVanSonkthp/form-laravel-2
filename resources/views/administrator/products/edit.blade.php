@@ -79,6 +79,7 @@
                                                         <div class="d-flex" style="align-items: center;gap: 5px;">
                                                             <h6>Biến thể 1</h6>
                                                         </div>
+                                                        <input value="{{$item->attributes(true)[0]->id}}" class="d-none product-atrribute-id-1">
                                                         <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required value="{{count($item->attributes(true)) > 0 ? $item->attributes(true)[0]->name : ''}}"/>
                                                     </div>
                                                     <ul class="list-group ms-3 mt-1" id="container_item_vari_1">
@@ -345,6 +346,7 @@
                         is_variant : 1,
 
                         header_vari_1: header_vari_1,
+                        product_atrribute_id_1: $('.product-atrribute-id-1').val(),
                         header_vari_2: header_vari_2,
                         values_1: values_1,
                         values_2: values_2,
@@ -457,6 +459,7 @@
                     "GET",
                     "{{route('ajax.administrator.products.render_table_vari')}}",
                     {
+                        product_id: {{$item->id}},
                         header_vari_1: header_vari_1,
                         header_vari_2: header_vari_2,
                         values_1: values_1,
@@ -571,7 +574,7 @@
                                                         <line x1="12" y1="2" x2="12" y2="22"></line>
                                                     </svg>
 
-                                                    <input value="" class="d-none atrribute-id-vari-1">
+                                                    <input value="0" class="d-none atrribute-id-vari-1">
                                                     <input oninput="onUpdateVari1()" type="text" class="form-control value-vari-1" placeholder="Nhập" required/>
                                                     <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
                                                 </div>
