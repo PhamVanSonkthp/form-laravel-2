@@ -48,6 +48,11 @@ class ImageObserver
                 $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . $size . "/" . $paths[6];
                 File::delete(storage_path($path));
             }
+
+            foreach (config('_images_cut_sizes.scales') as $scale) {
+                $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/scale_" . $scale . "/" . $paths[6];
+                File::delete(storage_path($path));
+            }
         }catch (\Exception $exception){
             Log::error($exception);
         }
