@@ -6,9 +6,10 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Membership extends Model implements Auditable
+class UserMission extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
@@ -17,9 +18,19 @@ class Membership extends Model implements Auditable
 
     protected $guarded = [];
 
+    protected $hidden = [];
+
+    protected $casts = [];
+
     // begin
 
-
+    //    public function one(){
+    //        return $this->hasOne(Model::class, 'id', 'local_id');
+    //    }
+    //
+    //    public function multiples(){
+    //        return $this->hasMany(Model::class, 'id', 'local_id');
+    //    }
 
     // end
 
@@ -38,7 +49,7 @@ class Membership extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-        return Helper::getDefaultIcon($this, $size);
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -51,9 +62,8 @@ class Membership extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -65,8 +75,8 @@ class Membership extends Model implements Auditable
     {
         $dataInsert = [
             'name' => $request->name,
-            'require_number_ticket' => Formatter::formatNumberToDatabase($request->require_number_ticket),
-            'point_receive' => Formatter::formatNumberToDatabase($request->point_receive),
+            'content' => $request->contents,
+            //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -78,8 +88,8 @@ class Membership extends Model implements Auditable
     {
         $dataUpdate = [
             'name' => $request->name,
-            'require_number_ticket' => Formatter::formatNumberToDatabase($request->require_number_ticket),
-            'point_receive' => Formatter::formatNumberToDatabase($request->point_receive),
+            'content' => $request->contents,
+            //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -95,9 +105,9 @@ class Membership extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id)
-    {
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }
+
 }

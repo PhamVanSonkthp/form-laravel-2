@@ -36,10 +36,9 @@
                                 <thead>
                                 <tr>
                                     <th>Mã GD</th>
-                                    <th>Mã khách</th>
+                                    <th>Tài khoản</th>
                                     <th>Số điểm</th>
                                     <th>Nội dung</th>
-                                    <th>Tài khoản</th>
                                     <th>Thời gian tạo</th>
                                 </tr>
                                 </thead>
@@ -53,10 +52,9 @@
                                 <tfoot>
                                 <tr>
                                     <th>Mã GD</th>
-                                    <th>Mã khách</th>
+                                    <th>Tài khoản</th>
                                     <th>Số điểm</th>
                                     <th>Nội dung</th>
-                                    <th>Tài khoản</th>
                                     <th>Thời gian tạo</th>
                                 </tr>
                                 </tfoot>

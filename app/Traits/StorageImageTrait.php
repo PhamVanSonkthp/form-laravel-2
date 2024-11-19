@@ -50,6 +50,9 @@ trait StorageImageTrait
                 // for save thumnail image
                 $ImageUpload = Image::make($file->getRealpath())->orientate();
 
+                $imageWith = $ImageUpload->width();
+                $imageHeight = $ImageUpload->height();
+
 //                self::saveToS3($request, $fieldName);
 
                 if (!file_exists(storage_path() . $folderName . '/original/')) {
@@ -58,6 +61,7 @@ trait StorageImageTrait
                 $ImageUpload->save(storage_path() . $folderName . '/original/' . $fileNameHash);
 
 
+//                save to public
 //                $folder = $folderName . '/original';
 //                $path= Storage::disk('my_public')->put($folder, $file);
 //                $dataUpluadTrait['file_path'] = "/". $path;
@@ -82,6 +86,18 @@ trait StorageImageTrait
                     $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
 
 //                    $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/' . $fileNameHash, config('_images_cut_sizes.compress_image_quality'));
+                }
+
+                foreach (config('_images_cut_sizes.scales') as $scale) {
+                    $width = round($imageWith * $scale / 100);
+                    $height = round($imageHeight * $scale / 100);
+
+                    $ImageUpload = Image::make($file->getRealpath())->orientate();
+                    $ImageUpload->fit($width, $height);
+                    if (!file_exists(storage_path() . $folderName . '/scale_' . $scale . '/')) {
+                        mkdir(storage_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
+                    }
+                    $ImageUpload->save(storage_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
                 }
 
                 return $dataUpluadTrait;

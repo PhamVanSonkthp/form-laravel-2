@@ -2,16 +2,21 @@
 
 
     <td>
-        <h4>
+        <h4 class="text-center">
             {{$item->id}}
         </h4>
     </td>
-    <td>
-        <h4>
-            {{ optional($item->user)->id}}
-        </h4>
-    </td>
 
+    <td>
+        <div>
+            <div>
+                #{{ optional($item->user)->id}} - {{ optional($item->user)->name}}
+            </div>
+            <div>
+                {{ optional($item->user)->phone}}
+            </div>
+        </div>
+    </td>
 
     <td>
         <h4 style="color: {{$item->amount >= 0 ? "#008943;" : "#f54848;"}}">
@@ -22,12 +27,6 @@
     <td>
         <div>
             {{ $item->description}}
-        </div>
-    </td>
-
-    <td>
-        <div>
-            #{{ optional($item->user)->id}} - {{ optional($item->user)->name}} - {{ optional($item->user)->phone}}
         </div>
     </td>
 

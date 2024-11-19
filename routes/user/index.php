@@ -15,6 +15,11 @@ Route::prefix('/')->group(function () {
     ]);
 });
 
+Route::get('download-app', function (Request $request){
+
+    return view('user.home.download_app');
+})->name('user.download_app');
+
 Route::get('redirect/{driver}', 'App\Http\Controllers\Auth\LoginController@redirectToProvider')
     ->name('login.provider')
     ->where('driver', implode('|', config('auth.socialite.drivers')));

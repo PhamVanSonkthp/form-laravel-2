@@ -29,10 +29,9 @@
                                 <thead>
                                 <tr>
                                     <th>Mã GD</th>
-                                    <th>Mã khách</th>
+                                    <th>Tài khoản</th>
                                     <th>Số tiền</th>
                                     <th>Nội dung</th>
-                                    <th>Tài khoản</th>
                                     <th>Số dư tại thời điểm GD</th>
                                     <th>Thời gian tạo</th>
                                 </tr>
@@ -46,10 +45,9 @@
                                 <tfoot>
                                 <tr>
                                     <th>Mã GD</th>
-                                    <th>Mã khách</th>
+                                    <th>Tài khoản</th>
                                     <th>Số tiền</th>
                                     <th>Nội dung</th>
-                                    <th>Tài khoản</th>
                                     <th>Số dư tại thời điểm GD</th>
                                     <th>Thời gian tạo</th>
                                 </tr>

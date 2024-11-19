@@ -11,6 +11,7 @@ use App\Http\Controllers\API\CategoryProductsController;
 use App\Http\Controllers\API\ChatController;
 use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\MemberShipController;
+use App\Http\Controllers\API\MissionController;
 use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
@@ -294,6 +295,11 @@ Route::prefix('user')->group(function () {
             });
         });
 
+        Route::prefix('mission')->group(function () {
+            Route::get('/', [MissionController::class, 'list']);
+            Route::post('/', [MissionController::class, 'create']);
+        });
+
         Route::prefix('membership')->group(function () {
             Route::get('/', [MemberShipController::class, 'list']);
         });
@@ -304,6 +310,7 @@ Route::prefix('user')->group(function () {
 
         Route::prefix('affiliate')->group(function () {
             Route::get('/', [AffiliateController::class, 'list']);
+            Route::get('/get-link', [AffiliateController::class, 'getLink']);
         });
 
         Route::prefix('payment')->group(function () {

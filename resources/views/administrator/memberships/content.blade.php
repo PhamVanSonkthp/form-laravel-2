@@ -2,6 +2,8 @@
 
 @include('administrator.components.require_input_number' , ['name' => 'require_number_ticket' , 'label' => 'Số điểm cần'])
 
+@include('administrator.components.require_input_number' , ['name' => 'point_receive' , 'label' => 'Điểm nhận được'])
+
 @if($isSingleImage)
     <div class="mt-3 mb-3">
         @include('administrator.components.upload_image', ['post_api' => $imagePostUrl, 'table' => $table, 'image' => $imagePathSingple , 'relate_id' => $relateImageTableId])

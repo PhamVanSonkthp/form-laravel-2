@@ -75,7 +75,7 @@ class Voucher extends Model implements Auditable
 
     public function isAcceptAmount($amount): bool
     {
-        return $this->min_amount >= $amount;
+        return $this->min_amount <= $amount;
     }
 
     // end

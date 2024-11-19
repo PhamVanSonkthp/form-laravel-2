@@ -15,6 +15,11 @@ return [
         "900x900",
         "1000x1000",
     ],
+
+    'scales' => [
+        10,20,30,40,50,60,70,80,90
+    ],
+
     'permission' => 755,
 
     'compress_image_quality' => 40,

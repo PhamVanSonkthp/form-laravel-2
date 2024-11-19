@@ -47,7 +47,7 @@ class PointController extends Controller
 
         return response()->json([
             "message" => "Bạn sẽ nhận được "  . $exchanged ."đ" . " với số điểm " . $point,
-            "point" => $point,
+            "point" => (int) $point,
             "amount" => $exchanged,
         ]);
     }
