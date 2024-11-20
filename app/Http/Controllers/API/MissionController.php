@@ -24,15 +24,20 @@ class MissionController extends Controller
             [
                 'title' => "Chương trình Nâng Hạng Thành Viên",
                 'data' => [
-                    $this->misssion(1,
-                        "Chương trình Nâng Hạng Thành Viên (" . auth()->user()->point . ")", [
+                    $this->misssion(
+                        1,
+                        "Chương trình Nâng Hạng Thành Viên (" . auth()->user()->point . ")",
+                        [
                             "steps" => [
                                 0, 100, 500, 1000, 2000, 5000
                             ],
                             "points" => [
                                 0, 100, 500, 1000, 2000, 5000
                             ],
-                        ], auth()->user()->point, null)
+                        ],
+                        auth()->user()->point,
+                        null
+                    )
 
                 ]
             ]
@@ -44,15 +49,21 @@ class MissionController extends Controller
 
         switch ($request->id) {
             case 1:
-                $point = $this->misssion(1,
-                    "Chương trình Nâng Hạng Thành Viên (" . auth()->user()->point . ")", [
+                $point = $this->misssion(
+                    1,
+                    "Chương trình Nâng Hạng Thành Viên (" . auth()->user()->point . ")",
+                    [
                         "steps" => [
                             0, 100, 500, 1000, 2000, 5000
                         ],
                         "points" => [
                             0, 100, 500, 1000, 2000, 5000
                         ],
-                    ], auth()->user()->point, null, true);
+                    ],
+                    auth()->user()->point,
+                    null,
+                    true
+                );
                 if ($point > 0) {
                     auth()->user()->addPoint($point, "Chương trình Nâng Hạng Thành Viên :" . $this->getStepByPoint([
                             0, 100, 500, 1000, 2000, 5000
@@ -69,7 +80,6 @@ class MissionController extends Controller
 
         notEnough:
         return response()->json(Helper::errorAPI(99, [], "Bạn chưa đủ điều kiện"), 400);
-
     }
 
     private function misssion($missionID, $title, $stepID, $currentStep, $expired, $isTakenMission = null, $from = null, $to = null)
@@ -91,7 +101,6 @@ class MissionController extends Controller
                 break;
             } else {
                 if ($point > 0) {
-
                     $userMission = UserMission::where(['user_id' => auth()->id(), 'mission_id' => $missionID, 'step' => $step]);
 
                     if (!empty($from)) {
@@ -113,7 +122,6 @@ class MissionController extends Controller
                 if ($indexed >= $index) {
                     $point = $stepID['points'][$index];
                     if ($point > 0) {
-
                         if ($currentStep >= $step) {
                             $userMission = UserMission::where(['user_id' => auth()->id(), 'mission_id' => $missionID, 'step' => $step]);
 
@@ -134,7 +142,6 @@ class MissionController extends Controller
                                 $takenPoint += $point;
                             }
                         }
-
                     }
                 } else {
                     break;
@@ -159,7 +166,9 @@ class MissionController extends Controller
     public function getStepByPoint($steps, $point)
     {
         foreach ($steps as $step) {
-            if ($point <= $step) return $step;
+            if ($point <= $step) {
+                return $step;
+            }
         }
 
         return $steps[count($steps) - 1];

@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         $token = $user->createToken($this->plainToken)->plainTextToken;
 
-        if (empty($user->referral_id)){
+        if (empty($user->referral_id)) {
             $userRefer = User::find($request->referral_id);
 
             if (!empty($userRefer)) {

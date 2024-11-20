@@ -103,7 +103,6 @@ Route::prefix('admin')->group(function () {
             ];
 
             return response()->json($response);
-
         });
     });
 
@@ -112,7 +111,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id}', [UserController::class, 'get']);
         Route::put('/', [UserController::class, 'update']);
     });
-
 });
 
 Route::prefix('public')->group(function () {
@@ -317,5 +315,4 @@ Route::prefix('user')->group(function () {
             Route::get('/infor', [PaymentController::class, 'getInforPayment']);
         });
     });
-
 });

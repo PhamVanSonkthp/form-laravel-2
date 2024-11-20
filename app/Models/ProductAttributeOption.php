@@ -38,12 +38,11 @@ class ProductAttributeOption extends Model implements Auditable
     {
         $productAttributeOptionSKU = $this->productAttributeOptionSKU;
 
-        if (!empty($productAttributeOptionSKU)){
+        if (!empty($productAttributeOptionSKU)) {
             return $productAttributeOptionSKU->productSKU;
         }
 
         return null;
-
     }
     //
     //    public function multiples(){
@@ -129,5 +128,4 @@ class ProductAttributeOption extends Model implements Auditable
         $item = $this->find($id);
         return $item;
     }
-
 }

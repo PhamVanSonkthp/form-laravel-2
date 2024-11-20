@@ -679,7 +679,9 @@ class Helper extends Model
 
             return $response;
         } catch (\Exception $exception) {
-            if ($exception->getCode() == 429) return self::callPostHTTP($url, $params, $request);
+            if ($exception->getCode() == 429) {
+                return self::callPostHTTP($url, $params, $request);
+            }
 
             return $exception->getMessage();
         }
@@ -719,6 +721,5 @@ class Helper extends Model
 
         $oldItem->save();
         $newItem->save();
-
     }
 }

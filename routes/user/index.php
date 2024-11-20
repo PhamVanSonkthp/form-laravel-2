@@ -15,7 +15,7 @@ Route::prefix('/')->group(function () {
     ]);
 });
 
-Route::get('download-app', function (Request $request){
+Route::get('download-app', function (Request $request) {
 
     return view('user.home.download_app');
 })->name('user.download_app');

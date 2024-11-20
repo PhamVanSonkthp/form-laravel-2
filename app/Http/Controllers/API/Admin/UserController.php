@@ -80,12 +80,10 @@ class UserController extends Controller
 
         $columns = Schema::getColumnListing($this->model->getTableName());
 
-        foreach ($columns as $column){
-
-            if (isset($request->data[$column])){
+        foreach ($columns as $column) {
+            if (isset($request->data[$column])) {
                 $result->$column = $request->data[$column];
             }
-
         }
 
         $result->save();

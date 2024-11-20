@@ -64,7 +64,9 @@ class Formatter extends Model
 
     public static function getDateTime($input, $format = null)
     {
-        if (empty($input)) return '';
+        if (empty($input)) {
+            return '';
+        }
         if (!empty($format)) {
             return date($format, strtotime($input));
         } else {

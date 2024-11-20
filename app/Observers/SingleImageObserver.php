@@ -28,10 +28,10 @@ class SingleImageObserver
     public function updated(SingleImage $singleImage)
     {
 
-        if($singleImage->isDirty('image_path')){
+        if ($singleImage->isDirty('image_path')) {
             $oldImagePath = $singleImage->getOriginal('image_path');
 
-            if ($oldImagePath != "waiting_update"){
+            if ($oldImagePath != "waiting_update") {
                 try {
                     $paths = explode("/", $oldImagePath);
                     $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . "original" . "/" . $paths[6];
@@ -41,14 +41,11 @@ class SingleImageObserver
                         $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . $size . "/" . $paths[6];
                         File::delete(storage_path($path));
                     }
-                }catch (\Exception $exception){
+                } catch (\Exception $exception) {
                     Log::error($exception);
                 }
             }
-
         }
-
-
     }
 
     /**
@@ -60,7 +57,6 @@ class SingleImageObserver
     public function deleted(SingleImage $singleImage)
     {
         //
-
     }
 
     /**
