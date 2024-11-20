@@ -106,6 +106,7 @@ class Setting extends Model implements Auditable
             'terms_of_use_html' => $request->terms_of_use_html,
             'privacy_policy_html' => $request->privacy_policy_html,
             'custom_css' => $request->custom_css,
+            'facebook_link' => $request->facebook_link,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

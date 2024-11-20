@@ -41,10 +41,16 @@ class PermissionGateAndPolicyAccess
         $this->defineGateFlashSales();
         $this->defineGateCalendars();
         $this->defineGateUserTypes();
-        /*step_1*/
+        $this->defineGateFAQs();/*step_1*/
     }
 
-    /*step_2*/
+    public function defineGateFAQs()
+    {
+        Gate::define('f_a_q_s-list', 'App\Policies\FAQPolicy@view');
+        Gate::define('f_a_q_s-add', 'App\Policies\FAQPolicy@create');
+        Gate::define('f_a_q_s-edit', 'App\Policies\FAQPolicy@update');
+        Gate::define('f_a_q_s-delete', 'App\Policies\FAQPolicy@delete');
+    }/*step_2*/
 
     public function defineGateUserTypes()
     {

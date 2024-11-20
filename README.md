@@ -72,8 +72,9 @@ bỏ ở func if ($this->lfm->setName($name_to_delete)->isDirectory()) {...}
 
 Chay schedule trên server
 
-run schedule on DA
+run schedule on DA		
 /usr/local/bin/php -d "disable_functions=" /home/igop/domains/igop.gover.vn/public_html/artisan schedule:run > /dev/null 2>&1
+php /home/sayalo/domains/sayalo.gover.vn/public_html/artisan schedule:run > /dev/null 2>&1	
 
 run schedule on Cpanel
 /usr/local/bin/php /home/gxzrilko/vip.maubuifinance.com/artisan schedule:run >> /dev/null 2>&1	

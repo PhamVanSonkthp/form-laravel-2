@@ -10,7 +10,7 @@ Route::get('/admin/logout', [
     'uses' => '\App\Http\Controllers\Admin\AdminController@logout'
 ]);
 
-Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']], function () {
+Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']], function () {
     Route::prefix('password')->group(function () {
         Route::get('/', [
             'as' => 'administrator.password.index',
@@ -102,9 +102,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.users.audit',
-            'uses'=>'App\Http\Controllers\Admin\UserController@audit',
-            'middleware'=>'can:users-list',
+            'as' => 'administrator.users.audit',
+            'uses' => 'App\Http\Controllers\Admin\UserController@audit',
+            'middleware' => 'can:users-list',
         ]);
 
         Route::get('/{id}', [
@@ -170,9 +170,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.chats.audit',
-            'uses'=>'App\Http\Controllers\Admin\ChatController@audit',
-            'middleware'=>'can:chats-list',
+            'as' => 'administrator.chats.audit',
+            'uses' => 'App\Http\Controllers\Admin\ChatController@audit',
+            'middleware' => 'can:chats-list',
         ]);
 
         Route::get('/{id}', [
@@ -238,9 +238,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.employees.audit',
-            'uses'=>'App\Http\Controllers\Admin\EmployeeController@audit',
-            'middleware'=>'can:employees-list',
+            'as' => 'administrator.employees.audit',
+            'uses' => 'App\Http\Controllers\Admin\EmployeeController@audit',
+            'middleware' => 'can:employees-list',
         ]);
 
         Route::get('/{id}', [
@@ -306,9 +306,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.roles.audit',
-            'uses'=>'App\Http\Controllers\Admin\RoleController@audit',
-            'middleware'=>'can:roles-list',
+            'as' => 'administrator.roles.audit',
+            'uses' => 'App\Http\Controllers\Admin\RoleController@audit',
+            'middleware' => 'can:roles-list',
         ]);
 
         Route::get('/{id}', [
@@ -388,9 +388,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.sliders.audit',
-            'uses'=>'App\Http\Controllers\Admin\SliderController@audit',
-            'middleware'=>'can:sliders-list',
+            'as' => 'administrator.sliders.audit',
+            'uses' => 'App\Http\Controllers\Admin\SliderController@audit',
+            'middleware' => 'can:sliders-list',
         ]);
 
         Route::get('/{id}', [
@@ -456,9 +456,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.news.audit',
-            'uses'=>'App\Http\Controllers\Admin\NewsController@audit',
-            'middleware'=>'can:news-list',
+            'as' => 'administrator.news.audit',
+            'uses' => 'App\Http\Controllers\Admin\NewsController@audit',
+            'middleware' => 'can:news-list',
         ]);
 
         Route::get('/{id}', [
@@ -506,9 +506,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.job_emails.audit',
-            'uses'=>'App\Http\Controllers\Admin\JobEmailController@audit',
-            'middleware'=>'can:job_emails-list',
+            'as' => 'administrator.job_emails.audit',
+            'uses' => 'App\Http\Controllers\Admin\JobEmailController@audit',
+            'middleware' => 'can:job_emails-list',
         ]);
 
         Route::get('/{id}', [
@@ -574,9 +574,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.job_notifications.audit',
-            'uses'=>'App\Http\Controllers\Admin\JobNotificationController@audit',
-            'middleware'=>'can:job_notifications-list',
+            'as' => 'administrator.job_notifications.audit',
+            'uses' => 'App\Http\Controllers\Admin\JobNotificationController@audit',
+            'middleware' => 'can:job_notifications-list',
         ]);
 
         Route::get('/{id}', [
@@ -642,9 +642,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.categories.audit',
-            'uses'=>'App\Http\Controllers\Admin\CategoryController@audit',
-            'middleware'=>'can:categories-list',
+            'as' => 'administrator.categories.audit',
+            'uses' => 'App\Http\Controllers\Admin\CategoryController@audit',
+            'middleware' => 'can:categories-list',
         ]);
 
         Route::get('/{id}', [
@@ -704,21 +704,21 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/export', [
-            'as'=>'administrator.products.export',
-            'uses'=>'App\Http\Controllers\Admin\ProductController@export',
-            'middleware'=>'can:products-list',
+            'as' => 'administrator.products.export',
+            'uses' => 'App\Http\Controllers\Admin\ProductController@export',
+            'middleware' => 'can:products-list',
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.products.audit',
-            'uses'=>'App\Http\Controllers\Admin\ProductController@audit',
-            'middleware'=>'can:products-list',
+            'as' => 'administrator.products.audit',
+            'uses' => 'App\Http\Controllers\Admin\ProductController@audit',
+            'middleware' => 'can:products-list',
         ]);
 
         Route::post('/import', [
-            'as'=>'administrator.products.import',
-            'uses'=>'App\Http\Controllers\Admin\ProductController@import',
-            'middleware'=>'can:products-add',
+            'as' => 'administrator.products.import',
+            'uses' => 'App\Http\Controllers\Admin\ProductController@import',
+            'middleware' => 'can:products-add',
         ]);
 
         Route::get('/{id}', [
@@ -784,9 +784,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.settings.audit',
-            'uses'=>'App\Http\Controllers\Admin\SettingController@audit',
-            'middleware'=>'can:settings-list',
+            'as' => 'administrator.settings.audit',
+            'uses' => 'App\Http\Controllers\Admin\SettingController@audit',
+            'middleware' => 'can:settings-list',
         ]);
 
         Route::get('/{id}', [
@@ -852,9 +852,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.category_news.audit',
-            'uses'=>'App\Http\Controllers\Admin\CategoryNewController@audit',
-            'middleware'=>'can:category_news-list',
+            'as' => 'administrator.category_news.audit',
+            'uses' => 'App\Http\Controllers\Admin\CategoryNewController@audit',
+            'middleware' => 'can:category_news-list',
         ]);
 
         Route::get('/{id}', [
@@ -920,9 +920,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.system_branches.audit',
-            'uses'=>'App\Http\Controllers\Admin\SystemBranchController@audit',
-            'middleware'=>'can:system_branches-list',
+            'as' => 'administrator.system_branches.audit',
+            'uses' => 'App\Http\Controllers\Admin\SystemBranchController@audit',
+            'middleware' => 'can:system_branches-list',
         ]);
 
         Route::get('/{id}', [
@@ -988,9 +988,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.orders.audit',
-            'uses'=>'App\Http\Controllers\Admin\OrderController@audit',
-            'middleware'=>'can:orders-list',
+            'as' => 'administrator.orders.audit',
+            'uses' => 'App\Http\Controllers\Admin\OrderController@audit',
+            'middleware' => 'can:orders-list',
         ]);
 
         Route::get('/import', [
@@ -1068,9 +1068,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.vouchers.audit',
-            'uses'=>'App\Http\Controllers\Admin\VoucherController@audit',
-            'middleware'=>'can:vouchers-list',
+            'as' => 'administrator.vouchers.audit',
+            'uses' => 'App\Http\Controllers\Admin\VoucherController@audit',
+            'middleware' => 'can:vouchers-list',
         ]);
 
         Route::get('/import', [
@@ -1151,9 +1151,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.payment_methods.audit',
-            'uses'=>'App\Http\Controllers\Admin\PaymentMethodController@audit',
-            'middleware'=>'can:payment_methods-list',
+            'as' => 'administrator.payment_methods.audit',
+            'uses' => 'App\Http\Controllers\Admin\PaymentMethodController@audit',
+            'middleware' => 'can:payment_methods-list',
         ]);
 
         Route::get('/import', [
@@ -1225,9 +1225,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.user_transactions.audit',
-            'uses'=>'App\Http\Controllers\Admin\UserTransactionController@audit',
-            'middleware'=>'can:user_transactions-list',
+            'as' => 'administrator.user_transactions.audit',
+            'uses' => 'App\Http\Controllers\Admin\UserTransactionController@audit',
+            'middleware' => 'can:user_transactions-list',
         ]);
 
         Route::get('/import', [
@@ -1299,9 +1299,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.user_types.audit',
-            'uses'=>'App\Http\Controllers\Admin\UserTypeController@audit',
-            'middleware'=>'can:user_types-list',
+            'as' => 'administrator.user_types.audit',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@audit',
+            'middleware' => 'can:user_types-list',
         ]);
 
         Route::get('/import', [
@@ -1373,9 +1373,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.user_points.audit',
-            'uses'=>'App\Http\Controllers\Admin\UserPointController@audit',
-            'middleware'=>'can:user_points-list',
+            'as' => 'administrator.user_points.audit',
+            'uses' => 'App\Http\Controllers\Admin\UserPointController@audit',
+            'middleware' => 'can:user_points-list',
         ]);
 
         Route::get('/import', [
@@ -1447,9 +1447,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.banks.audit',
-            'uses'=>'App\Http\Controllers\Admin\BankController@audit',
-            'middleware'=>'can:banks-list',
+            'as' => 'administrator.banks.audit',
+            'uses' => 'App\Http\Controllers\Admin\BankController@audit',
+            'middleware' => 'can:banks-list',
         ]);
 
         Route::get('/import', [
@@ -1521,9 +1521,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.bank_cash_ins.audit',
-            'uses'=>'App\Http\Controllers\Admin\BankCashInController@audit',
-            'middleware'=>'can:bank_cash_ins-list',
+            'as' => 'administrator.bank_cash_ins.audit',
+            'uses' => 'App\Http\Controllers\Admin\BankCashInController@audit',
+            'middleware' => 'can:bank_cash_ins-list',
         ]);
 
         Route::get('/import', [
@@ -1595,9 +1595,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.memberships.audit',
-            'uses'=>'App\Http\Controllers\Admin\MembershipController@audit',
-            'middleware'=>'can:memberships-list',
+            'as' => 'administrator.memberships.audit',
+            'uses' => 'App\Http\Controllers\Admin\MembershipController@audit',
+            'middleware' => 'can:memberships-list',
         ]);
 
         Route::get('/import', [
@@ -1669,9 +1669,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.shipping_methods.audit',
-            'uses'=>'App\Http\Controllers\Admin\ShippingMethodController@audit',
-            'middleware'=>'can:shipping_methods-list',
+            'as' => 'administrator.shipping_methods.audit',
+            'uses' => 'App\Http\Controllers\Admin\ShippingMethodController@audit',
+            'middleware' => 'can:shipping_methods-list',
         ]);
 
         Route::get('/import', [
@@ -1743,9 +1743,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.product_comments.audit',
-            'uses'=>'App\Http\Controllers\Admin\ProductCommentController@audit',
-            'middleware'=>'can:product_comments-list',
+            'as' => 'administrator.product_comments.audit',
+            'uses' => 'App\Http\Controllers\Admin\ProductCommentController@audit',
+            'middleware' => 'can:product_comments-list',
         ]);
 
         Route::get('/import', [
@@ -1817,9 +1817,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.flash_sales.audit',
-            'uses'=>'App\Http\Controllers\Admin\FlashSaleController@audit',
-            'middleware'=>'can:flash_sales-list',
+            'as' => 'administrator.flash_sales.audit',
+            'uses' => 'App\Http\Controllers\Admin\FlashSaleController@audit',
+            'middleware' => 'can:flash_sales-list',
         ]);
 
         Route::get('/import', [
@@ -1891,9 +1891,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.register_cities.audit',
-            'uses'=>'App\Http\Controllers\Admin\RegisterCityController@audit',
-            'middleware'=>'can:history_datas-list',
+            'as' => 'administrator.register_cities.audit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@audit',
+            'middleware' => 'can:history_datas-list',
         ]);
 
         Route::get('/import', [
@@ -1965,9 +1965,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.register_districts.audit',
-            'uses'=>'App\Http\Controllers\Admin\RegisterDistrictController@audit',
-            'middleware'=>'can:history_datas-list',
+            'as' => 'administrator.register_districts.audit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@audit',
+            'middleware' => 'can:history_datas-list',
         ]);
 
         Route::get('/import', [
@@ -2039,9 +2039,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.register_wards.audit',
-            'uses'=>'App\Http\Controllers\Admin\RegisterWardController@audit',
-            'middleware'=>'can:history_datas-list',
+            'as' => 'administrator.register_wards.audit',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@audit',
+            'middleware' => 'can:history_datas-list',
         ]);
 
         Route::get('/import', [
@@ -2113,9 +2113,9 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
 
         Route::get('/audit/{id}', [
-            'as'=>'administrator.calendars.audit',
-            'uses'=>'App\Http\Controllers\Admin\CalendarController@audit',
-            'middleware'=>'can:history_datas-list',
+            'as' => 'administrator.calendars.audit',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@audit',
+            'middleware' => 'can:history_datas-list',
         ]);
 
         Route::get('/import', [
@@ -2137,6 +2137,18 @@ Route::group(['prefix' => 'administrator','middleware' => ['cacheResponse:600']]
         ]);
     });
 
-    /*step_1*/
-
+    Route::prefix('f_a_q_s')->group(function () {
+        Route::get('/', ['as' => 'administrator.f_a_q_s.index', 'uses' => 'App\Http\Controllers\Admin\FAQController@index', 'middleware' => 'can:f_a_q_s-list',]);
+        Route::get('/create', ['as' => 'administrator.f_a_q_s.create', 'uses' => 'App\Http\Controllers\Admin\FAQController@create', 'middleware' => 'can:f_a_q_s-add',]);
+        Route::post('/store', ['as' => 'administrator.f_a_q_s.store', 'uses' => 'App\Http\Controllers\Admin\FAQController@store', 'middleware' => 'can:f_a_q_s-add',]);
+        Route::get('/edit/{id}', ['as' => 'administrator.f_a_q_s.edit', 'uses' => 'App\Http\Controllers\Admin\FAQController@edit', 'middleware' => 'can:f_a_q_s-edit',]);
+        Route::put('/update/{id}', ['as' => 'administrator.f_a_q_s.update', 'uses' => 'App\Http\Controllers\Admin\FAQController@update', 'middleware' => 'can:f_a_q_s-edit',]);
+        Route::delete('/delete/{id}', ['as' => 'administrator.f_a_q_s.delete', 'uses' => 'App\Http\Controllers\Admin\FAQController@delete', 'middleware' => 'can:f_a_q_s-delete',]);
+        Route::delete('/delete-many', ['as' => 'administrator.f_a_q_s.delete_many', 'uses' => 'App\Http\Controllers\Admin\FAQController@deleteManyByIds', 'middleware' => 'can:f_a_q_s-delete',]);
+        Route::get('/export', ['as' => 'administrator.f_a_q_s.export', 'uses' => 'App\Http\Controllers\Admin\FAQController@export', 'middleware' => 'can:f_a_q_s-list',]);
+        Route::get('/audit/{id}', ['as' => 'administrator.f_a_q_s.audit', 'uses' => 'App\Http\Controllers\Admin\FAQController@audit', 'middleware' => 'can:f_a_q_s-list',]);
+        Route::get('/import', ['as' => 'administrator.f_a_q_s.import', 'uses' => 'App\Http\Controllers\Admin\FAQController@import', 'middleware' => 'can:f_a_q_s-list',]);
+        Route::get('/{id}', ['as' => 'administrator.f_a_q_s.get', 'uses' => 'App\Http\Controllers\Admin\FAQController@get', 'middleware' => 'can:f_a_q_s-list',]);
+        Route::put('/', ['as' => 'administrator.f_a_q_s.sort', 'uses' => 'App\Http\Controllers\Admin\FAQController@sort', 'middleware' => 'can:f_a_q_s-edit',]);
+    });/*step_1*/
 });

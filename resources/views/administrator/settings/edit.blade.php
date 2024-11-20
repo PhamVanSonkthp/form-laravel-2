@@ -72,6 +72,10 @@
                                 </div>
 
                                 <div class="col-6">
+                                    @include('administrator.components.input_text', ['label' => 'Fanpage FB link' , 'name' => 'facebook_link'])
+                                </div>
+
+                                <div class="col-6">
                                     @include('administrator.components.require_input_number', ['label' => 'Số điểm khi giới thiệu thành công / người đăng ký mới' , 'name' => 'number_point_refer_success'])
                                 </div>
 

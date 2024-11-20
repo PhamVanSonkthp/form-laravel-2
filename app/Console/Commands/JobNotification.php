@@ -36,22 +36,6 @@ class JobNotification extends Command
         parent::__construct();
     }
 
-    public function getTokenFirebase()
-    {
-        try {
-            $file = File::get(base_path() . '/storage/assets/dong-ho-bao-thuc-iot-firebase-adminsdk-2ha8v-278a09734a.json');
-            $scope = 'https://www.googleapis.com/auth/firebase.messaging';
-            $credentials = CredentialsLoader::makeCredentials($scope, json_decode($file, true));
-            $credentials->fetchAuthToken();
-
-            return $credentials['token_type'];
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage());
-        }
-
-        return null;
-    }
-
     /**
      * Execute the console command.
      *
@@ -66,7 +50,7 @@ class JobNotification extends Command
 
         $nowTime = $hour . ":" . $minute . ":" . $second;
 
-        $jobNotifications = JobNotification::whereDate('date', Carbon::today())->where('time', $nowTime)->get();
+        $jobNotifications = \App\Models\JobNotification::whereDate('time', Carbon::today())->where('time', $nowTime)->get();
 
         foreach ($jobNotifications as $jobNotification) {
             if ($jobNotification->userScheduleCron->count() > 0) {
