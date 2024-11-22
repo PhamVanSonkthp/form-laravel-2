@@ -13,6 +13,7 @@ call routes.bat %table% %prefix%
 call slidebars.bat %prefix%
 call scan.bat
 call model_controller_view_migration.bat %table%
+call seed.bat
 
 echo DONE!
 echo ---PhamSon---
