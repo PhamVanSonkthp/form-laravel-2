@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Log;
 
 trait DeleteModelTrait
 {
-    public function deleteModelTrait($id, $model, $forceDelete = false)
+    public function deleteModelTrait($id, $model, $forceDelete = false, $request = null)
     {
-
         try {
-            if ($forceDelete) {
+            if ($request->is_restore){
+                $item = $model->withTrashed()->find($id);
+
+                if (!empty($item)){
+                    $item->restore();
+                }
+            }else if ($forceDelete) {
                 $item = $model->withTrashed()->find($id);
                 if (!empty($item)){
                     $item->forceDelete();

@@ -364,7 +364,7 @@ class Helper extends Model
     {
         $items = [];
         foreach ($request->ids as $id) {
-            $item = $object->deleteModelTrait($id, $object, $force_delete);
+            $item = $object->deleteModelTrait($id, $object, $force_delete, $request);
             $items[] = $item;
         }
 
