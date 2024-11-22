@@ -57,6 +57,7 @@ class CreateSettingsTable extends Migration
 
             $table->tinyInteger('is_show_audit_row')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

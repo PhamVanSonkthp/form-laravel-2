@@ -19,6 +19,7 @@ class CreateUserCashInsTable extends Migration
             $table->bigInteger('amount');
             $table->string('ref_no');
             $table->tinyInteger('taken')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

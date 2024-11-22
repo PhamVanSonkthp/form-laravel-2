@@ -17,6 +17,7 @@ class CreateUserStatusesTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

@@ -522,6 +522,7 @@ Route::prefix('ajax/administrator')->group(function () {
                     'table' => $request->table,
                     'image_path' => 'waiting_update',
                     'image_name' => 'waiting_update',
+                    'is_public' => $request->is_public ?? 1,
                 ]);
 
                 $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'single', $item->id);
@@ -546,6 +547,7 @@ Route::prefix('ajax/administrator')->group(function () {
                     'image_path' => "waiting",
                     'image_name' => "waiting",
                     'relate_id' => $request->relate_id ?? 0,
+                    'is_public' => $request->is_public ?? 1,
                 ]);
 
                 $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'multiple', $item->id);

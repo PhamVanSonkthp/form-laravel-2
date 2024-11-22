@@ -65,6 +65,11 @@ class RegisterDistrictController extends Controller
         return $this->model->deleteByQuery($request, $id, $this->forceDelete);
     }
 
+    public function restore(Request $request, $id)
+    {
+        $this->model->withTrashed()->findOrFail($id)->restore();
+    }
+
     public function deleteManyByIds(Request $request)
     {
         return $this->model->deleteManyByIds($request, $this->forceDelete);

@@ -22,6 +22,7 @@ class CreateImagesTable extends Migration
             $table->bigInteger('relate_id')->index();
             $table->integer('index')->default(0);
             $table->tinyInteger('status_image_id')->default(0);
+            $table->boolean('is_public')->default(1);
             $table->timestamps();
             $table->index(['created_at']);
         });

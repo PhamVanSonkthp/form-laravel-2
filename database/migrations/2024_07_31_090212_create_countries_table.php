@@ -50,6 +50,7 @@ class CreateCountriesTable extends Migration
             $table->string('urban_population')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

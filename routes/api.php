@@ -10,6 +10,7 @@ use App\Http\Controllers\API\CategoryNewsController;
 use App\Http\Controllers\API\CategoryProductsController;
 use App\Http\Controllers\API\ChatController;
 use App\Http\Controllers\API\CountryController;
+use App\Http\Controllers\API\FAQController;
 use App\Http\Controllers\API\MemberShipController;
 use App\Http\Controllers\API\MissionController;
 use App\Http\Controllers\API\NewsController;
@@ -188,6 +189,10 @@ Route::prefix('public')->group(function () {
         Route::post('/sign-in', [AuthController::class, 'signIn']);
         Route::post('/check-exist', [AuthController::class, 'checkExist']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    });
+
+    Route::prefix('faqs')->group(function () {
+        Route::get('/', [FAQController::class, 'list']);
     });
 
     Route::get('/version', function () {

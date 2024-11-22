@@ -166,6 +166,41 @@ function actionDelete(event, url = null, table = null, target_remove = null) {
     })
 }
 
+function actionRestore(event, url = null, table = null, target_remove = null) {
+    event.preventDefault()
+    let urlRequest = $(this).data('url')
+    let that = $(this)
+
+    if (!urlRequest) {
+        urlRequest = url
+    }
+
+    $.ajax({
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: urlRequest,
+        beforeSend: function () {
+            showLoading()
+        },
+        success: function (response) {
+            hideLoading()
+            that.parent().parent().remove()
+        },
+        error: function (err) {
+            console.log(err)
+            hideLoading()
+            Swal.fire(
+                {
+                    icon: 'error',
+                    title: err.responseText,
+                }
+            );
+        },
+    })
+}
+
 function actionAudit(event, url = null, table = null, target_remove = null) {
     event.preventDefault()
     let urlRequest = $(this).data('url')
@@ -869,6 +904,7 @@ function showToastError(content = null, duration = null){
 
 $(document).ready(function () {
     $(document).on('click', '.action_delete', actionDelete);
+    $(document).on('click', '.action_restore', actionRestore);
     $(document).on('click', '.action_audit', actionAudit);
     $("input").attr("autocomplete", "off");
 });

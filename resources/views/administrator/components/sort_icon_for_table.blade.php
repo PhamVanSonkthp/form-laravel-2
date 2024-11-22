@@ -2,6 +2,7 @@
 
 <script>
 
+    @if(request('trash') != "true")
     $( document ).ready(function() {
 
         var simpleList = document.querySelector("#body_container_item");
@@ -47,5 +48,6 @@
         });
     });
 
+    @endif
 
 </script>

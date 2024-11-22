@@ -50,14 +50,5 @@ class ImagesController extends Controller
     {
         $storagePath = storage_path('/assets/'.$type.'/' .$user_id. '/' . $id . '/' . $size . '/' . $slug);
         return Image::make($storagePath)->response();
-
-//        return Storage::disk('storage')->get($storagePath);
-//
-//        return \response()->file(Storage::disk('storage')->get($storagePath));
-//
-//        return response()->file(Storage::disk('storage')->get($storagePath));
-
-
-//        return Image::make($storagePath)->response();
     }
 }

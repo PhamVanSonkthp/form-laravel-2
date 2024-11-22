@@ -18,6 +18,7 @@ class CreateVoucherUsedsTable extends Migration
             $table->bigInteger('user_id')->index();
             $table->bigInteger('voucher_id')->index();
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

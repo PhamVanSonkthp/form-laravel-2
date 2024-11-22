@@ -6,6 +6,7 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -15,6 +16,7 @@ class Product extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     protected $searchable = [
         'name'

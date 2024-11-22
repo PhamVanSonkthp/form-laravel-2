@@ -57,6 +57,11 @@ class UserJobNotificationController extends Controller
         return $this->model->deleteByQuery($request, $id, $this->forceDelete);
     }
 
+    public function restore(Request $request, $id)
+    {
+        $this->model->withTrashed()->findOrFail($id)->restore();
+    }
+
     public function export(Request $request)
     {
         return Excel::download(new ModelExport($this->model, $request), $this->prefixView . '.xlsx');

@@ -146,10 +146,10 @@
                                                             <h6>Biến thể 2</h6>
                                                             <i class="fa-solid fa-trash" onclick="onDeleteContainerVari2()"></i>
                                                         </div>
+
+                                                        <input value="{{$item->attributes(true)[1]->id}}" class="d-none product-atrribute-id-2">
                                                         <input oninput="onDrawTableVari()" id="input_vari_2" type="text" class="form-control" placeholder="Nhập" required value="{{$item->attributes(true)[1]->name}}"/>
                                                     </div>
-
-
 
                                                     <ul class="list-group ms-3 mt-1" id="container_item_vari_2">
                                                         @foreach($item->attributeOptions(false, $item->attributes(true)[1]->id) as $attributeOption)
@@ -347,6 +347,7 @@
 
                         header_vari_1: header_vari_1,
                         product_atrribute_id_1: $('.product-atrribute-id-1').val(),
+                        product_atrribute_id_2: $('.product-atrribute-id-2').val(),
                         header_vari_2: header_vari_2,
                         values_1: values_1,
                         values_2: values_2,

@@ -19,6 +19,7 @@ class CreateSystemBranchesTable extends Migration
             $table->text('description');
             $table->text('phone');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

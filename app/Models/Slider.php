@@ -6,6 +6,7 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -15,6 +16,7 @@ class Slider extends Model implements Auditable
     use HasFactory;
     use StorageImageTrait;
     use DeleteModelTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 

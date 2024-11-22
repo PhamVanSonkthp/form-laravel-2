@@ -7,6 +7,7 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Order extends Model implements Auditable
@@ -15,6 +16,7 @@ class Order extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 

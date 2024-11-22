@@ -4,6 +4,7 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\DeleteModelTrait;
@@ -15,6 +16,7 @@ class {{ class }} extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 

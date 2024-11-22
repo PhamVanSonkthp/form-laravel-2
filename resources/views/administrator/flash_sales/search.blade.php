@@ -1,15 +1,26 @@
 <div>
     @include('administrator.components.search')
 
-    <a href="{{route('administrator.'.$prefixView.'.create')}}" class="btn btn-outline-success float-end"><i
-            class="fa-solid fa-plus"></i></a>
+    @include('administrator.components.search_right')
 
-    <a href="{{route('administrator.'.$prefixView.'.export')}}" class="btn btn-outline-primary float-end me-2" data-bs-original-title="" title="Export excel"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
 </div>
 
+<div class="clearfix"></div>
+{{--        write your filter here ...--}}
+{{--example--}}
+{{--    <div class="row">--}}
+
+{{--        <div class="col-md-3">--}}
+{{--            <div>--}}
+{{--                @include('administrator.components.search_select2_allow_clear' , ['name' => 'order_status_id' , 'label' => 'Trạng thái đơn hàng', 'select2Items' => \App\Models\OrderStatus::all()])--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--    </div>--}}
 
 <script>
 
+    // Change filter if you want
     // function onSearchQuery() {
     //     addUrlParameterObjects([
     //         {name: "search_query", value: $('#input_search_query').val()},

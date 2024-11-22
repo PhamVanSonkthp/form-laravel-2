@@ -20,6 +20,7 @@ class CreateUserTransactionsTable extends Migration
             $table->bigInteger('amount_now')->default(0);
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

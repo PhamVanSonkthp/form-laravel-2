@@ -19,6 +19,7 @@ class CreateCategoryNewsTable extends Migration
             $table->text('slug');
             $table->bigInteger('parent_id')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

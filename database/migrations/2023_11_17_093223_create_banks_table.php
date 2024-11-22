@@ -27,6 +27,7 @@ class CreateBanksTable extends Migration
             $table->string('path_api_web2m')->nullable();
             $table->boolean('is_active')->default(false);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

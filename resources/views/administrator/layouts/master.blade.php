@@ -59,6 +59,15 @@
     @yield('css')
 
     <style>
+
+        @if(request('trash') == true)
+
+        .container-fluid > div > div > div {
+            background-color: #dbdbdb;
+        }
+
+        @endif
+
         {!! optional(\App\Models\Setting::first())->custom_css !!}
     </style>
 

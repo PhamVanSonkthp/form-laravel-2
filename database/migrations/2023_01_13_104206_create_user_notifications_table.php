@@ -22,6 +22,7 @@ class CreateUserNotificationsTable extends Migration
             $table->text('activity')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

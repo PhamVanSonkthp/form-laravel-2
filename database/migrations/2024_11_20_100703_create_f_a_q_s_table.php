@@ -20,6 +20,7 @@ class CreateFAQSTable extends Migration
 
             $table->bigInteger('priority')->default(0)->index();
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

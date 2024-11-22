@@ -19,6 +19,7 @@ class CreateWeatherTable extends Migration
             $table->string('lng')->nullable();
             $table->longText('content');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

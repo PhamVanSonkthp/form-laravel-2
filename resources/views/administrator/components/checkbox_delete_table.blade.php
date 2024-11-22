@@ -29,9 +29,9 @@
     function showButtonDeleteCheckbox(is_checked){
 
         if (is_checked){
-            $('#btn_delete_checkbox_item').show()
+            $('#btn_delete_checkbox_item').show(500)
         }else{
-            $('#btn_delete_checkbox_item').hide()
+            $('#btn_delete_checkbox_item').hide(500)
         }
     }
 

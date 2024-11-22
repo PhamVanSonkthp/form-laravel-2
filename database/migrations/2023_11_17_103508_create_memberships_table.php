@@ -19,6 +19,7 @@ class CreateMembershipsTable extends Migration
             $table->bigInteger('require_number_ticket');
             $table->bigInteger('point_receive');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

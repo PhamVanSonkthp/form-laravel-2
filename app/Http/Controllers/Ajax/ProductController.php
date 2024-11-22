@@ -79,6 +79,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
         $product = $this->model->create([
             'name' => $request->name,
             'slug' => $request->name,
@@ -155,8 +156,8 @@ class ProductController extends Controller
                     $productSKU = ProductSKU::create([
                         'product_id' => $product->id,
 //                        'sku' => $request->skus[$index],
-                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
-                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                        'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
+                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index  + count($values1)]),
                     ]);
 
                     ProductAttributeOptionSKU::create([
@@ -213,7 +214,6 @@ class ProductController extends Controller
     {
         $item = $this->model->findOrFail($request->product_id);
 
-
         if ($request->is_variant == 1) {
             $header1 = $request->header_vari_1;
             $product_atrribute_id_1 = $request->product_atrribute_id_1;
@@ -227,7 +227,15 @@ class ProductController extends Controller
             }
 
             $header2 = $request->header_vari_2;
+            $product_atrribute_id_2 = $request->product_atrribute_id_2;
 
+            if (empty($product_atrribute_id_2)) {
+                $productAttribute =  ProductAttribute::create([
+                    'name' => $header2
+                ]);
+
+                $product_atrribute_id_2 = $productAttribute->id;
+            }
 
             $values1 = $request->values_1;
             $values2 = $request->values_2;
@@ -235,6 +243,7 @@ class ProductController extends Controller
             $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
 
             $productSKUs1 = [];
+            $productSKUs2 = [];
             $productAttributeOptions = [];
 
 
@@ -259,8 +268,6 @@ class ProductController extends Controller
                 $values1 = [];
             }
 
-            ProductAttributeOption::whereNotIn('id', Arr::pluck($productAttributeOptions, 'id'))->delete();
-
             foreach ($productSKUs1 as $index => $productSKU1) {
                 if ($index < count($values1)) {
                     if (!empty($productSKU1)) {
@@ -280,36 +287,66 @@ class ProductController extends Controller
                             'product_attribute_option_id' => $productAttributeOptions[$index]->id,
                         ]);
                     }
-                } else {
-                    if (!empty($productSKU1)) {
-                        $productSKU1->delete();
-                    }
                 }
+//                else {
+//                    if (!empty($productSKU1)) {
+//                        $productSKU1->delete();
+//                    }
+//                }
             }
 
 
             if (is_array($values2)) {
                 $values2 = array_filter($values2);
 
-                foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2) {
-                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+                foreach ($atrributes_id_vari_2 as $index => $atrribute_id_vari_2) {
+                    if ($index < count($values2)) {
+                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
 
-                    $productSKUs2[] = optional($productAttributeOption)->productSKU();
-                }
-
-
-                foreach ($productSKUs2 as $index => $productSKU2) {
-                    if (!empty($productSKU2) && $index <= count($values2)) {
-                        $productSKU2->update([
-                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
-                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
-                        ]);
+                        if (empty($productAttributeOption)) {
+                            $productAttributeOption = ProductAttributeOption::create([
+                                'attribute_id' => $product_atrribute_id_2,
+                                'value' => $values2[$index],
+                            ]);
+                        }
+                        $productAttributeOptions[] = $productAttributeOption;
+                        $productSKUs2[] = optional($productAttributeOption)->productSKU();
                     }
                 }
             } else {
                 $values2 = [];
             }
+
+            foreach ($productSKUs2 as $index => $productSKU2) {
+                if ($index < count($values2)) {
+                    if (!empty($productSKU2)) {
+                        $productSKU2->update([
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
+                        ]);
+                    } else {
+                        $productSKU = ProductSKU::create([
+                            'product_id' => $item->id,
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
+                        ]);
+
+                        ProductAttributeOptionSKU::create([
+                            'sku_id' => $productSKU->id,
+                            'product_attribute_option_id' => $productAttributeOptions[$index + count($values1)]->id,
+                        ]);
+                    }
+                }
+            }
+
+            dd($request->all());
+
+            ProductAttributeOption::whereNotIn('id', Arr::pluck($productAttributeOptions, 'id'))->delete();
         }
+
+        return response()->json([
+            'message' => 'ok'
+        ]);
     }
 
     public function delete(Request $request, $id)
@@ -524,6 +561,8 @@ class ProductController extends Controller
             $values2 = [];
         }
 
+        $indexSKU2 = 0;
+
 
         $html = View::make(
             'administrator.products.table_vari',
@@ -536,7 +575,8 @@ class ProductController extends Controller
                 'atrributes_id_vari_1',
                 'atrributes_id_vari_2',
                 'productSKUs1',
-                'productSKUs2'
+                'productSKUs2',
+                'indexSKU2'
             )
         )->render();
 

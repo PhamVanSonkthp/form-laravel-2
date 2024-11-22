@@ -19,6 +19,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->string('public_token');
             $table->string('private_token');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

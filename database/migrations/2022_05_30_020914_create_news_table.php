@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
             $table->bigInteger('category_id')->default(0);
             $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

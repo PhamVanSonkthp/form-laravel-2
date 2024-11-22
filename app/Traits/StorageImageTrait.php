@@ -20,7 +20,7 @@ trait StorageImageTrait
         Storage::disk('s3')->put('public/images', $file);
     }
 
-    public static function storageTraitUpload($request, $fieldName, $folderName, $id)
+    public static function storageTraitUpload($request, $fieldName, $folderName, $id, $is_public = true)
     {
 
         if ($request->hasFile($fieldName) || is_file($fieldName)) {
@@ -42,6 +42,9 @@ trait StorageImageTrait
 
                 $fileNameOrigin = $file->getClientOriginalName();
                 $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
+                if ($is_public) {
+                    $folderName = "/images" . $folderName;
+                }
                 $dataUpluadTrait = [
                     'file_name' => $fileNameOrigin,
                     'file_path' => $folderName . '/original/' . $fileNameHash,
@@ -55,21 +58,18 @@ trait StorageImageTrait
 
 //                self::saveToS3($request, $fieldName);
 
-                if (!file_exists(storage_path() . $folderName . '/original/')) {
-                    mkdir(storage_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
+                if ($is_public){
+
+                    if (!file_exists(public_path() . $folderName . '/original/')) {
+                        mkdir(public_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
+                    }
+                    $ImageUpload->save(public_path() . $folderName . '/original/' . $fileNameHash);
+                }else{
+                    if (!file_exists(storage_path() . $folderName . '/original/')) {
+                        mkdir(storage_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
+                    }
+                    $ImageUpload->save(storage_path() . $folderName . '/original/' . $fileNameHash);
                 }
-                $ImageUpload->save(storage_path() . $folderName . '/original/' . $fileNameHash);
-
-
-//                save to public
-//                $folder = $folderName . '/original';
-//                $path= Storage::disk('my_public')->put($folder, $file);
-//                $dataUpluadTrait['file_path'] = "/". $path;
-
-//                if (!file_exists(storage_path() . $folderName . '/original/optimize/')) {
-//                    mkdir(storage_path() . $folderName . '/original/optimize/', config('_images_cut_sizes.permission'), true);
-//                }
-//                $ImageUpload->save(storage_path() . $folderName . '/original/optimize/' . $fileNameHash, config('_images_cut_sizes.compress_image_quality'));
 
                 foreach (config('_images_cut_sizes.sizes') as $size) {
                     $width = (int)explode("x", $size)[0];
@@ -77,15 +77,19 @@ trait StorageImageTrait
 
                     $ImageUpload = Image::make($file->getRealpath())->orientate();
                     $ImageUpload->fit($width, $height);
-                    if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
-                        mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
-                    }
-//                    if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/')) {
-//                        mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/', config('_images_cut_sizes.permission'), true);
-//                    }
-                    $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
 
-//                    $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/optimize/' . $fileNameHash, config('_images_cut_sizes.compress_image_quality'));
+                    if ($is_public){
+                        if (!file_exists(public_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
+                            mkdir(public_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
+                        }
+                        $ImageUpload->save(public_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
+                    }else{
+                        if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
+                            mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
+                        }
+                        $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
+                    }
+
                 }
 
                 foreach (config('_images_cut_sizes.scales') as $scale) {
@@ -94,10 +98,18 @@ trait StorageImageTrait
 
                     $ImageUpload = Image::make($file->getRealpath())->orientate();
                     $ImageUpload->fit($width, $height);
-                    if (!file_exists(storage_path() . $folderName . '/scale_' . $scale . '/')) {
-                        mkdir(storage_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
+                    if ($is_public){
+                        if (!file_exists(public_path() . $folderName . '/scale_' . $scale . '/')) {
+                            mkdir(public_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
+                        }
+                        $ImageUpload->save(public_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
+                    }else{
+                        if (!file_exists(storage_path() . $folderName . '/scale_' . $scale . '/')) {
+                            mkdir(storage_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
+                        }
+                        $ImageUpload->save(storage_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
                     }
-                    $ImageUpload->save(storage_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
+
                 }
 
                 return $dataUpluadTrait;

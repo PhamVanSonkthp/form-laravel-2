@@ -213,11 +213,20 @@ class Helper extends Model
             $query = $query->inRandomOrder();
         }
 
+        if ($request->trash) {
+            if (in_array('deleted_at', $columns)) {
+                $query = $query->onlyTrashed();
+            }else{
+                $query = $query->where('id', -1);
+            }
+
+        }
+
         if ($is_custom) {
             return $query;
         }
 
-        $items = $query->latest('updated_at')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
+        $items = $query->orderBy('updated_at', 'DESC')->orderBy('id','DESC')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         if (!empty($make_hiddens) && is_array($make_hiddens)) {
             foreach ($items as $item) {
@@ -709,11 +718,15 @@ class Helper extends Model
     public static function sortTwoModel($model, $old_id, $new_id)
     {
         $oldItem = $model->findOrFail($old_id);
-
-        $oldDateUpdate =  $oldItem->updated_at;
-
         $newItem = $model->findOrFail($new_id);
 
+        if ($newItem->updated_at == $oldItem->updated_at){
+            if ($newItem->id > $oldItem->id){
+                $newItem->updated_at = Carbon::parse($newItem->updated_at)->addSecond();
+            }
+        }
+
+        $oldDateUpdate =  $oldItem->updated_at;
         $newDateUpdate =  $newItem->updated_at;
 
         $newItem->updated_at = $oldDateUpdate;

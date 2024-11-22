@@ -89,6 +89,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:users-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.users.restore',
+            'uses' => 'App\Http\Controllers\Admin\UserController@restore',
+            'middleware' => 'can:users-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.users.delete_many',
             'uses' => 'App\Http\Controllers\Admin\UserController@deleteManyByIds',
@@ -223,6 +229,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.employees.delete',
             'uses' => 'App\Http\Controllers\Admin\EmployeeController@delete',
             'middleware' => 'can:employees-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.employees.restore',
+            'uses' => 'App\Http\Controllers\Admin\EmployeeController@restore',
+            'middleware' => 'can:employees-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -375,6 +387,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:sliders-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.sliders.restore',
+            'uses' => 'App\Http\Controllers\Admin\SliderController@restore',
+            'middleware' => 'can:sliders-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.sliders.delete_many',
             'uses' => 'App\Http\Controllers\Admin\SliderController@deleteManyByIds',
@@ -441,6 +459,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.news.delete',
             'uses' => 'App\Http\Controllers\Admin\NewsController@delete',
             'middleware' => 'can:news-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.news.restore',
+            'uses' => 'App\Http\Controllers\Admin\NewsController@restore',
+            'middleware' => 'can:news-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -627,6 +651,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.categories.delete',
             'uses' => 'App\Http\Controllers\Admin\CategoryController@delete',
             'middleware' => 'can:categories-delete',
+        ]);
+
+        Route::post('/categories/{id}', [
+            'as' => 'administrator.categories.restore',
+            'uses' => 'App\Http\Controllers\Admin\CategoryController@restore',
+            'middleware' => 'can:categories-edit',
         ]);
 
         Route::delete('/delete-many', [

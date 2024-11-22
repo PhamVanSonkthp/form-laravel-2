@@ -7,6 +7,7 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Category extends Model implements Auditable
@@ -16,6 +17,7 @@ class Category extends Model implements Auditable
     protected $guarded = [];
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     public static function getCategory($parent_id = null)
     {

@@ -25,6 +25,7 @@
 
     </div>
 
+
     <div class="float-start ms-2">
         <div>
             Tìm kiếm
@@ -35,8 +36,10 @@
                    value="{{request('search_query')}}">
             <button class="btn btn-outline-primary ms-2" type="button" onclick="onSearchQuery()"><i
                     class="fa-solid fa-magnifying-glass" title="Tìm kiếm"></i></button>
+            @if(request()->query->count() && (request("trash") != true) || request()->query->count() > 1)
             <button class="btn btn-outline-danger ms-2" type="button" onclick="onClearQuery()"><i
                     class="fa-solid fa-x" title="Xóa"></i></button>
+            @endif
         </div>
 
     </div>
@@ -56,7 +59,11 @@
     }
 
     function onClearQuery() {
-        window.location = window.location.href.split("?")[0];
+        @if( request('trash') == true)
+            window.location = window.location.href.split("?")[0] + "?trash=true";
+        @else
+            window.location = window.location.href.split("?")[0];
+        @endif
     }
 
     $('select[name="limit"]').on('change', function () {

@@ -20,6 +20,7 @@ class CreateSingleImagesTable extends Migration
             $table->string('table')->nullable();
             $table->bigInteger('relate_id')->index();
             $table->tinyInteger('status_image_id')->default(0);
+            $table->boolean('is_public')->default(1);
             $table->timestamps();
             $table->index(['created_at']);
         });

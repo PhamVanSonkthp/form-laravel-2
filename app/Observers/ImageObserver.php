@@ -41,7 +41,11 @@ class ImageObserver
         try {
             $paths = explode("/", $image->image_path);
             $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . "original" . "/" . $paths[6];
-            File::delete(storage_path($path));
+            if ($image->is_public){
+                File::delete(public_path($path));
+            }else{
+                File::delete(storage_path($path));
+            }
 
             foreach (config('_images_cut_sizes.sizes') as $size) {
                 $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . $size . "/" . $paths[6];
@@ -50,7 +54,11 @@ class ImageObserver
 
             foreach (config('_images_cut_sizes.scales') as $scale) {
                 $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/scale_" . $scale . "/" . $paths[6];
-                File::delete(storage_path($path));
+                if ($image->is_public){
+                    File::delete(public_path($path));
+                }else{
+                    File::delete(storage_path($path));
+                }
             }
         } catch (\Exception $exception) {
             Log::error($exception);

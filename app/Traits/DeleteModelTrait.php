@@ -11,9 +11,20 @@ trait DeleteModelTrait
 
         try {
             if ($forceDelete) {
-                $model->withTrashed()->find($id)->forceDelete();
+                $item = $model->withTrashed()->find($id);
+                if (!empty($item)){
+                    $item->forceDelete();
+                }
             } else {
-                $model->withTrashed()->find($id)->delete();
+                $item = $model->find($id);
+                if (!empty($item)){
+                    $item->delete();
+                }else{
+                    $item = $model->withTrashed()->find($id);
+                    if (!empty($item)){
+                        $item->forceDelete();
+                    }
+                }
             }
 
             return response()->json([
@@ -22,12 +33,6 @@ trait DeleteModelTrait
             ], 200);
         } catch (\Exception $exception) {
             try {
-                if ($forceDelete) {
-                    $model->find($id)->forceDelete();
-                } else {
-                    $model->find($id)->delete();
-                }
-
                 return response()->json([
                     'code'=>200,
                     'message'=>'success',

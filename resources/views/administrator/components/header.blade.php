@@ -331,57 +331,5 @@
 
 
 <script>
-    {{--function getWeather() {--}}
-
-    {{--    callAjax(--}}
-    {{--        "GET",--}}
-    {{--        "{{route('ajax.administrator.weather.get')}}",--}}
-    {{--        {},--}}
-    {{--        (response) => {--}}
-    {{--            console.log(response)--}}
-    {{--            // $('#label_weather').html(response.current.condition.text)--}}
-
-    {{--        },--}}
-    {{--        (error) => {--}}
-
-    {{--        },--}}
-    {{--        false,--}}
-    {{--    )--}}
-
-    {{--}--}}
-
-    {{--document.addEventListener("DOMContentLoaded", () => {--}}
-    {{--    getWeather()--}}
-    {{--});--}}
-
-    {{--var allowGeoRecall = true;--}}
-    {{--var countLocationAttempts = 0;--}}
-
-    {{--function getLocation() {--}}
-    {{--    console.log('getLocation was called')--}}
-    {{--    if(navigator.geolocation) {--}}
-    {{--        navigator.geolocation.getCurrentPosition(showPosition,--}}
-    {{--            positionError);--}}
-    {{--    } else {--}}
-    {{--        hideLoadingDiv()--}}
-    {{--        console.log('Geolocation is not supported by this device')--}}
-    {{--    }--}}
-    {{--}--}}
-
-    {{--function positionError() {--}}
-    {{--    console.log('Geolocation is not enabled. Please enable to use this feature')--}}
-
-    {{--    if(allowGeoRecall && countLocationAttempts < 5) {--}}
-    {{--        countLocationAttempts += 1;--}}
-    {{--        getLocation();--}}
-    {{--    }--}}
-    {{--}--}}
-
-    {{--function showPosition(){--}}
-    {{--    console.log('posititon accepted')--}}
-    {{--    allowGeoRecall = false;--}}
-    {{--}--}}
-
-    {{--getLocation();--}}
 
 </script>

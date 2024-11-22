@@ -28,6 +28,7 @@ class CreateVouchersTable extends Migration
             $table->bigInteger('used')->default(0)->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }

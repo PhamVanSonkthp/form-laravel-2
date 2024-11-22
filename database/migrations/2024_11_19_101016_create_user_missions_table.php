@@ -18,6 +18,7 @@ class CreateUserMissionsTable extends Migration
             $table->bigInteger('mission_id');
             $table->bigInteger('user_id');
             $table->bigInteger('step');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
