@@ -45,19 +45,19 @@
                                     <div class="col-4">
                                         <div>
 
-                                            @include('administrator.components.require_input_number' , ['name' => 'price' , 'label' => 'Giá'])
+                                            @include('administrator.components.require_input_number' , ['name' => 'price' , 'label' => 'Giá', 'value' => optional($item->skus->first())->price])
 
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            @include('administrator.components.require_input_number' , ['name' => 'inventory' , 'label' => 'Tồn kho'])
+                                            @include('administrator.components.require_input_number' , ['name' => 'inventory' , 'label' => 'Tồn kho', 'value' => optional($item->skus->first())->inventory])
 
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU'])
+                                            @include('administrator.components.input_text' , ['name' => 'sku' , 'label' => 'SKU', 'value' => optional($item->skus->first())->sku])
 
                                         </div>
                                     </div>
@@ -74,17 +74,58 @@
                                         <div class="card-body">
 
                                             <div id="container_vari">
+
+                                                @if(count($item->attributes()) == 0)
+                                                    <div id="container_vari_1">
+                                                        <div>
+                                                            <div class="d-flex" style="align-items: center;gap: 5px;">
+                                                                <h6>Biến thể 1</h6>
+                                                            </div>
+                                                            <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required/>
+                                                        </div>
+                                                        <ul class="list-group ms-3 mt-1" id="container_item_vari_1">
+
+                                                            <li class="list-group-item" style="">
+
+                                                                <div class="item-vari">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                         stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-move icon-sm handle me-2">
+                                                                        <polyline points="5 9 2 12 5 15"></polyline>
+                                                                        <polyline points="9 5 12 2 15 5"></polyline>
+                                                                        <polyline points="15 19 12 22 9 19"></polyline>
+                                                                        <polyline points="19 9 22 12 19 15"></polyline>
+                                                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                                                                    </svg>
+
+                                                                    <input value="0" class="d-none atrribute-id-vari-1">
+
+                                                                    <input oninput="onUpdateVari1()" type="text"
+                                                                           class="form-control value-vari-1" placeholder="Nhập"
+                                                                           required/>
+                                                                    <i class="fa-solid fa-trash" onclick="onDeleteItem(this)"></i>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                @endif
+
+                                                @if(count($item->attributes()) > 0)
                                                 <div id="container_vari_1">
                                                     <div>
                                                         <div class="d-flex" style="align-items: center;gap: 5px;">
                                                             <h6>Biến thể 1</h6>
                                                         </div>
-                                                        <input value="{{$item->attributes(true)[0]->id}}" class="d-none product-atrribute-id-1">
-                                                        <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required value="{{count($item->attributes(true)) > 0 ? $item->attributes(true)[0]->name : ''}}"/>
+                                                        <input value="{{$item->attributes()[0]->id}}" class="d-none product-atrribute-id-1">
+                                                        <input oninput="onDrawTableVari()" id="input_vari_1" type="text" class="form-control" placeholder="Nhập" required value="{{$item->attributes()[0]->name}}"/>
                                                     </div>
                                                     <ul class="list-group ms-3 mt-1" id="container_item_vari_1">
 
-                                                        @foreach($item->attributeOptions(false, $item->attributes(true)[0]->id) as $attributeOption)
+                                                        @foreach($item->attributeOptions($item->attributes()[0]->id) as $attributeOption)
                                                             <li class="list-group-item" style="">
 
                                                                 <div class="item-vari">
@@ -139,7 +180,9 @@
                                                     </ul>
                                                 </div>
 
-                                                @if(count($item->attributes(true)) > 1)
+                                                @endif
+
+                                                @if(count($item->attributes()) > 1)
                                                 <div id="container_vari_2" class="mt-3">
                                                     <div>
                                                         <div class="d-flex" style="align-items: center;gap: 5px;">
@@ -147,12 +190,12 @@
                                                             <i class="fa-solid fa-trash" onclick="onDeleteContainerVari2()"></i>
                                                         </div>
 
-                                                        <input value="{{$item->attributes(true)[1]->id}}" class="d-none product-atrribute-id-2">
-                                                        <input oninput="onDrawTableVari()" id="input_vari_2" type="text" class="form-control" placeholder="Nhập" required value="{{$item->attributes(true)[1]->name}}"/>
+                                                        <input value="{{$item->attributes()[1]->id}}" class="d-none product-atrribute-id-2">
+                                                        <input oninput="onDrawTableVari()" id="input_vari_2" type="text" class="form-control" placeholder="Nhập" required value="{{$item->attributes()[1]->name}}"/>
                                                     </div>
 
                                                     <ul class="list-group ms-3 mt-1" id="container_item_vari_2">
-                                                        @foreach($item->attributeOptions(false, $item->attributes(true)[1]->id) as $attributeOption)
+                                                        @foreach($item->attributeOptions($item->attributes()[1]->id) as $attributeOption)
                                                         <li class="list-group-item" style="">
 
                                                             <div class="item-vari">
@@ -315,10 +358,22 @@
                     prices.push($(this).val());
                 });
 
+                const sku_ids = [];
+
+                $('input[name="sku_ids"]').each(function() {
+                    sku_ids.push($(this).val());
+                });
+
                 const inventories = [];
 
                 $('input[name="inventories"]').each(function() {
                     inventories.push($(this).val());
+                });
+
+                const skus = [];
+
+                $('input[name="skus"]').each(function() {
+                    skus.push($(this).val());
                 });
 
                 elements = document.querySelectorAll(".atrribute-id-vari-1");
@@ -352,6 +407,8 @@
                         values_1: values_1,
                         values_2: values_2,
                         prices: prices,
+                        sku_ids: sku_ids,
+                        skus: skus,
                         inventories: inventories,
                         atrributes_id_vari_1: atrributes_id_vari_1,
                         atrributes_id_vari_2: atrributes_id_vari_2,
@@ -373,6 +430,7 @@
                 const price_import = $('input[name="price_import"]').val()
                 const price_agent = $('input[name="price_agent"]').val()
                 const price_partner = $('input[name="price_partner"]').val()
+                const sku = $('input[name="sku"]').val()
 
                 callAjax(
                     "PUT",

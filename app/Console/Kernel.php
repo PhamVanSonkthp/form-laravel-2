@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
 
     protected $commands = [
-        Commands\JobNotification::class,
+
     ];
 
     protected function schedule(Schedule $schedule)
@@ -28,16 +28,19 @@ class Kernel extends ConsoleKernel
         $schedule->command('email:job_email')
             ->everyMinute();
 
-        $schedule->command('backup:run')->timezone('Asia/Ho_Chi_Minh')
-            ->dailyAt('00:00');
-
         $schedule->command('schedule:bank_cash_in')
             ->everyMinute();
 
-//        $schedule->command('queue:work --timeout=60')
-//            ->everyMinute()
-//            ->withoutOverlapping()
-//            ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
+        $schedule->command('cache:clear-expired')
+            ->dailyAt('00:00');
+
+        $schedule->command('backup:run')->timezone('Asia/Ho_Chi_Minh')
+            ->dailyAt('00:00');
+
+        $schedule->command('queue:work --timeout=60')
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
     }
 
     /**

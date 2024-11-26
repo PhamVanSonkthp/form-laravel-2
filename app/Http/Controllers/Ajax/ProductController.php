@@ -121,43 +121,61 @@ class ProductController extends Controller
                 'name' => $header1
             ]);
 
-            foreach ($values1 as $index => $value) {
-                $productAttributeOption = ProductAttributeOption::create([
-                    'attribute_id' => $productAttribute1->id,
-                    'value' => $value,
-                ]);
-
-                $productSKU = ProductSKU::create([
-                    'product_id' => $product->id,
-//                    'sku' => $request->skus[$index],
-                    'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
-                    'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
-                ]);
-
-                ProductAttributeOptionSKU::create([
-                    'sku_id' => $productSKU->id,
-                    'product_attribute_option_id' => $productAttributeOption->id,
-                ]);
-            }
-
-
-
             if ($header2 && count($values2) > 0) {
                 $productAttribute2 = ProductAttribute::create([
                     'name' => $header2
                 ]);
 
-                foreach ($values2 as $index => $value) {
+                $index = 0;
+
+                foreach ($values1 as $index1 => $value1) {
+
+
+                    foreach ($values2 as $index2 => $value2) {
+                        $productAttributeOption1 = ProductAttributeOption::create([
+                            'attribute_id' => $productAttribute1->id,
+                            'value' => $value1,
+                        ]);
+
+                        $productAttributeOption2 = ProductAttributeOption::create([
+                            'attribute_id' => $productAttribute2->id,
+                            'value' => $value2,
+                        ]);
+
+                        $productSKU = ProductSKU::create([
+                            'product_id' => $product->id,
+//                        'sku' => $request->skus[$index],
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                        ]);
+
+                        ProductAttributeOptionSKU::create([
+                            'sku_id' => $productSKU->id,
+                            'product_attribute_option_id' => $productAttributeOption1->id,
+                        ]);
+
+                        ProductAttributeOptionSKU::create([
+                            'sku_id' => $productSKU->id,
+                            'product_attribute_option_id' => $productAttributeOption2->id,
+                        ]);
+
+                        $index++;
+                    }
+
+                }
+            } else {
+
+                foreach ($values1 as $index => $value) {
                     $productAttributeOption = ProductAttributeOption::create([
-                        'attribute_id' => $productAttribute2->id,
+                        'attribute_id' => $productAttribute1->id,
                         'value' => $value,
                     ]);
 
                     $productSKU = ProductSKU::create([
                         'product_id' => $product->id,
-//                        'sku' => $request->skus[$index],
-                        'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
-                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index  + count($values1)]),
+//                    'sku' => $request->skus[$index],
+                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                     ]);
 
                     ProductAttributeOptionSKU::create([
@@ -204,144 +222,115 @@ class ProductController extends Controller
         }
 
         return response()->json([
-            'a'=> $item,
-            'b'=> $request->inventory,
-            'c'=> $request->id,
+            'a' => $item,
+            'b' => $request->inventory,
+            'c' => $request->id,
         ]);
     }
 
     public function updateV2(Request $request)
     {
-        $item = $this->model->findOrFail($request->product_id);
+        $product = $this->model->findOrFail($request->product_id);
+
+        $product->skus()->delete();
+
+        $product->is_variant = $request->is_variant;
+        $product->save();
 
         if ($request->is_variant == 1) {
+
             $header1 = $request->header_vari_1;
-            $product_atrribute_id_1 = $request->product_atrribute_id_1;
-
-            if (empty($product_atrribute_id_1)) {
-                $productAttribute =  ProductAttribute::create([
-                    'name' => $header1
-                ]);
-
-                $product_atrribute_id_1 = $productAttribute->id;
-            }
-
             $header2 = $request->header_vari_2;
-            $product_atrribute_id_2 = $request->product_atrribute_id_2;
-
-            if (empty($product_atrribute_id_2)) {
-                $productAttribute =  ProductAttribute::create([
-                    'name' => $header2
-                ]);
-
-                $product_atrribute_id_2 = $productAttribute->id;
-            }
-
             $values1 = $request->values_1;
             $values2 = $request->values_2;
-            $atrributes_id_vari_1 = $request->atrributes_id_vari_1;
-            $atrributes_id_vari_2 = $request->atrributes_id_vari_2;
-
-            $productSKUs1 = [];
-            $productSKUs2 = [];
-            $productAttributeOptions = [];
-
 
             if (is_array($values1)) {
                 $values1 = array_filter($values1);
-
-                foreach ($atrributes_id_vari_1 as $index => $atrribute_id_vari_1) {
-                    if ($index < count($values1)) {
-                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
-
-                        if (empty($productAttributeOption)) {
-                            $productAttributeOption = ProductAttributeOption::create([
-                                'attribute_id' => $product_atrribute_id_1,
-                                'value' => $values1[$index],
-                            ]);
-                        }
-                        $productAttributeOptions[] = $productAttributeOption;
-                        $productSKUs1[] = optional($productAttributeOption)->productSKU();
-                    }
-                }
             } else {
                 $values1 = [];
-            }
-
-            foreach ($productSKUs1 as $index => $productSKU1) {
-                if ($index < count($values1)) {
-                    if (!empty($productSKU1)) {
-                        $productSKU1->update([
-                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
-                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
-                        ]);
-                    } else {
-                        $productSKU = ProductSKU::create([
-                            'product_id' => $item->id,
-                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
-                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
-                        ]);
-
-                        ProductAttributeOptionSKU::create([
-                            'sku_id' => $productSKU->id,
-                            'product_attribute_option_id' => $productAttributeOptions[$index]->id,
-                        ]);
-                    }
-                }
-//                else {
-//                    if (!empty($productSKU1)) {
-//                        $productSKU1->delete();
-//                    }
-//                }
             }
 
 
             if (is_array($values2)) {
                 $values2 = array_filter($values2);
-
-                foreach ($atrributes_id_vari_2 as $index => $atrribute_id_vari_2) {
-                    if ($index < count($values2)) {
-                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
-
-                        if (empty($productAttributeOption)) {
-                            $productAttributeOption = ProductAttributeOption::create([
-                                'attribute_id' => $product_atrribute_id_2,
-                                'value' => $values2[$index],
-                            ]);
-                        }
-                        $productAttributeOptions[] = $productAttributeOption;
-                        $productSKUs2[] = optional($productAttributeOption)->productSKU();
-                    }
-                }
             } else {
                 $values2 = [];
             }
 
-            foreach ($productSKUs2 as $index => $productSKU2) {
-                if ($index < count($values2)) {
-                    if (!empty($productSKU2)) {
-                        $productSKU2->update([
-                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
-                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
+            $productAttribute1 = ProductAttribute::create([
+                'name' => $header1
+            ]);
+
+            if ($header2 && count($values2) > 0) {
+                $productAttribute2 = ProductAttribute::create([
+                    'name' => $header2
+                ]);
+
+                $index = 0;
+
+                foreach ($values1 as $index1 => $value1) {
+
+
+                    foreach ($values2 as $index2 => $value2) {
+                        $productAttributeOption1 = ProductAttributeOption::create([
+                            'attribute_id' => $productAttribute1->id,
+                            'value' => $value1,
                         ]);
-                    } else {
+
+                        $productAttributeOption2 = ProductAttributeOption::create([
+                            'attribute_id' => $productAttribute2->id,
+                            'value' => $value2,
+                        ]);
+
                         $productSKU = ProductSKU::create([
-                            'product_id' => $item->id,
-                            'price' => Formatter::formatNumberToDatabase($request->prices[$index + count($values1)]),
-                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index + count($values1)]),
+                            'product_id' => $product->id,
+                            'sku' => $request->skus[$index],
+                            'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                            'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                         ]);
 
                         ProductAttributeOptionSKU::create([
                             'sku_id' => $productSKU->id,
-                            'product_attribute_option_id' => $productAttributeOptions[$index + count($values1)]->id,
+                            'product_attribute_option_id' => $productAttributeOption1->id,
                         ]);
+
+                        ProductAttributeOptionSKU::create([
+                            'sku_id' => $productSKU->id,
+                            'product_attribute_option_id' => $productAttributeOption2->id,
+                        ]);
+
+                        $index++;
                     }
+
+                }
+            } else {
+
+                foreach ($values1 as $index => $value) {
+                    $productAttributeOption = ProductAttributeOption::create([
+                        'attribute_id' => $productAttribute1->id,
+                        'value' => $value,
+                    ]);
+
+                    $productSKU = ProductSKU::create([
+                        'product_id' => $product->id,
+                        'sku' => $request->skus[$index],
+                        'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
+                        'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
+                    ]);
+
+                    ProductAttributeOptionSKU::create([
+                        'sku_id' => $productSKU->id,
+                        'product_attribute_option_id' => $productAttributeOption->id,
+                    ]);
                 }
             }
-
-            dd($request->all());
-
-            ProductAttributeOption::whereNotIn('id', Arr::pluck($productAttributeOptions, 'id'))->delete();
+        }else{
+            ProductSKU::create([
+                'product_id' => $product->id,
+                'sku' => $request->sku,
+                'price' => Formatter::formatNumberToDatabase($request->price),
+                'inventory' => Formatter::formatNumberToDatabase($request->inventory),
+            ]);
         }
 
         return response()->json([
@@ -515,6 +504,7 @@ class ProductController extends Controller
     function renderTableVari(Request $request)
     {
 
+
         $product = null;
 
         if (!empty($request->product_id)) {
@@ -536,10 +526,11 @@ class ProductController extends Controller
             $values1 = array_filter($values1);
 
             if (is_array($atrributes_id_vari_1)) {
-                foreach ($atrributes_id_vari_1 as $atrribute_id_vari_1) {
-                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
-
-                    $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                foreach ($atrributes_id_vari_1 as $index => $atrribute_id_vari_1) {
+                    if (count($values1) > $index) {
+                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_1);
+                        $productSKUs1[] = optional($productAttributeOption)->productSKU();
+                    }
                 }
             }
         } else {
@@ -551,18 +542,36 @@ class ProductController extends Controller
             $values2 = array_filter($values2);
 
             if (is_array($atrributes_id_vari_2)) {
-                foreach ($atrributes_id_vari_2 as $atrribute_id_vari_2) {
-                    $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+                foreach ($atrributes_id_vari_2 as $index => $atrribute_id_vari_2) {
+                    if (count($values2) > $index) {
+                        $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
+                        $productSKUs2[] = optional($productAttributeOption)->productSKU();
+                    }
 
-                    $productSKUs2[] = optional($productAttributeOption)->productSKU();
                 }
             }
         } else {
             $values2 = [];
         }
 
-        $indexSKU2 = 0;
+        $indexSKU = 0;
 
+        $productSKUs = $product->skus->toArray();
+
+        if (count($productSKUs) > 1) {
+            $array1 = array_slice($productSKUs, 0, count($productSKUs) / 2);
+            $array2 = array_slice($productSKUs, count($productSKUs) / 2, count($productSKUs) / 2);
+
+            while (count($array1) < (count($productSKUs1) * count($productSKUs2)) / 2) {
+                $array1[] = null;
+            }
+
+            while (count($array2) < (count($productSKUs1) * count($productSKUs2)) / 2) {
+                $array2[] = null;
+            }
+
+            $productSKUs = array_merge($array1, $array2);
+        }
 
         $html = View::make(
             'administrator.products.table_vari',
@@ -576,12 +585,13 @@ class ProductController extends Controller
                 'atrributes_id_vari_2',
                 'productSKUs1',
                 'productSKUs2',
-                'indexSKU2'
+                'indexSKU',
+                'productSKUs'
             )
         )->render();
 
         return response()->json([
-            'html' =>$html
+            'html' => $html
         ]);
     }
 }

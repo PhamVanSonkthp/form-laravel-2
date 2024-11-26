@@ -64,55 +64,6 @@ Route::prefix('cache')->group(function () {
     });
 });
 
-Route::prefix('admin')->group(function () {
-
-    Route::prefix('auth')->group(function () {
-
-        Route::post('sign-in', function (Request $request) {
-
-            $request->validate([
-                'user_name' => 'required|string',
-                'password' => 'required|string',
-            ]);
-
-            $user = User::where(function ($query) use ($request) {
-                $query->where('email', $request->user_name)
-                    ->orWhere('phone', $request->user_name);
-            })->where('is_admin', '!=', 0)->first();
-
-            if (empty($user)) {
-                return response()->json(Helper::errorAPI(400, [], "Tài khoản chưa được tạo"), 400);
-            }
-
-            if (!Hash::check($request->password, $user->password)) {
-                return response([
-                    'message' => "Mật khẩu không đúng",
-                    'code' => 400,
-                ], 400);
-            }
-
-
-            if (optional(Setting::first())->is_login_only_one_device) {
-                $user->logoutAllDevices();
-            }
-
-            $token = $user->createToken(env('PLAIN_TOKEN', 'infinity_pham_son'))->plainTextToken;
-
-            $response = [
-                'user' => $user,
-                'token' => $token,
-            ];
-
-            return response()->json($response);
-        });
-    });
-
-    Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'list']);
-        Route::get('/{id}', [UserController::class, 'get']);
-        Route::put('/', [UserController::class, 'update']);
-    });
-});
 
 Route::prefix('public')->group(function () {
 
@@ -187,8 +138,10 @@ Route::prefix('public')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/sign-in', [AuthController::class, 'signIn']);
-        Route::post('/check-exist', [AuthController::class, 'checkExist']);
+        Route::post('/check-exist-email-and-password', [AuthController::class, 'checkExist']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+        Route::post('/request-otp-email', [AuthController::class, 'requestOtpEmail']);
+        Route::post('/check-code-otp-email', [AuthController::class, 'checkCodeOtpEmail']);
     });
 
     Route::prefix('faqs')->group(function () {

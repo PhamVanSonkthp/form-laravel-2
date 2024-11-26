@@ -31,59 +31,71 @@ class Product extends Model implements Auditable
         return $this->hasMany(ProductSKU::class);
     }
 
-    public function attributeOptions($is_group = false, $attribute_id = null)
+    public function attributeOptions($attribute_id = null)
     {
-
         $attributeOptions = [];
 
         $skus = $this->skus;
 
         foreach ($skus as $sku) {
-            $productAttributeOptionSKU = $sku->productAttributeOptionSKU;
+            $attributeOptionSKUs = $sku->productAttributeOptionSKUs;
 
-            if (!empty($productAttributeOptionSKU)) {
-                $productAttributeOption = $productAttributeOptionSKU->productAttributeOption;
+            foreach ($attributeOptionSKUs as $attributeOptionSKU) {
+                $attributeOptionNew = $attributeOptionSKU->productAttributeOption;
 
-                if (!empty($productAttributeOption)) {
-                    $attributeOptions[] = $productAttributeOption;
+                if ($attributeOptionNew) {
+
+                    if ($attribute_id){
+                        if ($attributeOptionNew->attribute_id != $attribute_id) continue;
+                    }
+
+                    $isNew = true;
+                    foreach ($attributeOptions as $attributeOption) {
+                        if ($attributeOption->value == $attributeOptionNew->value) {
+                            $isNew = false;
+                            break;
+                        }
+                    }
+
+                    if ($isNew) $attributeOptions[] = $attributeOptionNew;
                 }
             }
         }
 
-        if ($is_group) {
-            $uniqueItems = [];
-            foreach ($attributeOptions as $attributeOption) {
-                $uniqueItems[$attributeOption->attribute_id] = $attributeOption;
-            }
-            $attributeOptions = $uniqueItems;
-        }
-
-
-        if (!empty($attribute_id)) {
-            $filteredItems = array_filter($attributeOptions, function ($item) use ($attribute_id) {
-                return $item->attribute_id == $attribute_id; // Filter by id for objects
-            });
-
-            return $filteredItems;
-        }
 
         return $attributeOptions;
     }
 
-    public function attributes($is_group = false)
+    public function attributes()
     {
-
         $attributes = [];
 
-        $attributeOptions = $this->attributeOptions($is_group);
+        $skus = $this->skus;
 
-        foreach ($attributeOptions as $attributeOption) {
-            $attribute = $attributeOption->productAttribute;
-            if (!empty($attribute)) {
-                $attributes[] = $attribute;
+        foreach ($skus as $sku) {
+            $attributeOptionSKUs = $sku->productAttributeOptionSKUs;
+
+            foreach ($attributeOptionSKUs as $attributeOptionSKU) {
+                $attributeOption = $attributeOptionSKU->productAttributeOption;
+
+                if ($attributeOption) {
+                    $attributeNew = $attributeOption->productAttribute;
+
+                    if ($attributeNew) {
+                        $isNew = true;
+                        foreach ($attributes as $attribute) {
+                            if ($attribute->id == $attributeNew->id) {
+                                $isNew = false;
+                                break;
+                            }
+                        }
+
+                        if ($isNew) $attributes[] = $attributeNew;
+                    }
+
+                }
             }
         }
-
 
         return $attributes;
     }

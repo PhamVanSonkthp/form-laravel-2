@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use NextApps\VerificationCode\VerificationCode;
 
 class AuthController extends Controller
 {
@@ -33,30 +34,42 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|string|unique:users',
-            'password' => 'required|string',
-            'date_of_birth' => 'date_format:Y-m-d',
-            'firebase_uid' => 'required|string',
-            'city_id' => 'required',
-            'district_id' => 'required',
-            'ward_id' => 'required',
-            'address' => 'required',
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'email:rfc,dns|required',
+            'password' => 'required',
+            'code' => 'required',
+//            'date_of_birth' => 'date_format:Y-m-d',
+//            'firebase_uid' => 'required|string',
+//            'city_id' => 'required',
+//            'district_id' => 'required',
+//            'ward_id' => 'required',
+//            'address' => 'required',
         ]);
 
-        $user = User::updateOrCreate([
+        $user = User::where([
             'phone' => $request->phone,
-        ], [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'password' => Formatter::hash($request->password),
-            'date_of_birth' => $request->date_of_birth,
-            'firebase_uid' => $request->firebase_uid,
-            'city_id' => $request->city_id,
-            'district_id' => $request->district_id,
-            'ward_id' => $request->ward_id,
-            'address' => $request->address,
-        ]);
+            'email' => $request->email,
+        ])->first();
+
+        if (!empty($user)){
+            return response()->json([
+                'code' => 400,
+                'message' => "Email or Phone has used",
+            ], 400);
+        }
+
+        $isLocal = env('APP_ENV') == "local";
+        if (($isLocal && $request->code == "111111")) goto skipOtp;
+
+        if (!(VerificationCode::verify($request->code, $request->email, false) || VerificationCode::verify(strtoupper($request->code), $request->email, false))) {
+            return response()->json([
+                'code' => 400,
+                'message' => "Wrong code",
+            ], 400);
+        }
+
+        skipOtp:
 
         $user->refresh();
 
@@ -170,42 +183,68 @@ class AuthController extends Controller
     {
         $request->validate([
             'phone' => 'required|string',
+            'email' => 'required|string',
         ]);
 
         if (!empty(User::where('phone', $request->phone)->first())) {
             return response()->json([
                 'message' => $request->phone . " is exist",
                 'code' => 200,
-            ]);
-        } else {
-            return response()->json([
-                'message' => $request->phone . " is not exist",
-                'code' => 400,
-            ], 400);
+            ],400);
         }
+
+        if (!empty(User::where('email', $request->email)->first())) {
+            return response()->json([
+                'message' => $request->email . " is exist",
+                'code' => 200,
+            ],400);
+        }
+
+        return response()->json([
+            'message' => "You can't use this email and password",
+            'code' => 200,
+        ]);
+
     }
 
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'phone' => 'required',
-            'firebase_uid' => 'required',
+            'user_name' => 'required',
+            'code' => 'required',
             'password' => 'required',
         ]);
 
-        $user = User::where(['firebase_uid'=> $request->firebase_uid, 'phone'=> $request->phone])->first();
+        $user = User::where(['email'=> $request->user_name])->orWhere('phone', $request->phone)->first();
 
         if (empty($user)) {
             return response()->json([
-                'message' => "phone or firebase_uid is not exist",
+                'message' => "user_name is not exist",
                 'code' => 400,
             ], 400);
         }
+
+
+        $isLocal = env('APP_ENV') == "local";
+
+        if (($isLocal && $request->code == "111111")) goto skipOtp;
+
+        if (!(VerificationCode::verify($request->code, $request->user_name, true))) {
+            return response()->json([
+                'code' => 400,
+                'message' => "Wrong code",
+            ], 400);
+        }
+
+        skipOtp:
+
         $user->update([
-            'password' => Formatter::hash($request->new_password)
+            'password' => Formatter::hash($request->password)
         ]);
 
-        return response($user, 200);
+        $user->refresh();
+
+        return response()->json($user);
     }
 
     public function update(Request $request)
@@ -285,13 +324,47 @@ class AuthController extends Controller
         return auth()->user();
     }
 
-
-    public function delete()
+    public function delete(Request $request)
     {
         auth()->user()->forcedelete();
         return response()->json([
             'message' => 'deleted!',
             'code' => 200,
         ]);
+    }
+
+    public function requestOtpEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'email:rfc,dns|required',
+        ]);
+
+        VerificationCode::send($request->email);
+        return response()->json([
+            'code' => 200,
+            'message' => "Your code is sent",
+        ]);
+    }
+
+    public function checkCodeOtpEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'email:rfc,dns|required',
+            'code' => 'required',
+        ]);
+
+        $isLocal = env('APP_ENV') == "local";
+
+        if (($isLocal && $request->code == "111111") || VerificationCode::verify($request->code, $request->email, false) || VerificationCode::verify(strtoupper($request->code), $request->email, false)) {
+            return response()->json([
+                'code' => 200,
+                'message' => "your code is accept",
+            ]);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'message' => "Wrong code",
+            ], 400);
+        }
     }
 }

@@ -30,13 +30,15 @@
                         </td>
                     @endif
                     <td>
-                        @include('administrator.components.require_input_number' , ['name' => 'prices','value' => optional($productSKUs1[$index1])->price ])
+                        <input name="sku_ids" value="{{!empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['id'] : 0}}" class="d-none" />
+
+                        @include('administrator.components.require_input_number' , ['name' => 'prices','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['price'] : 0])
                     </td>
                     <td>
-                        @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => optional($productSKUs1[$index1])->inventory])
+                        @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['inventory'] : 0 ])
                     </td>
                     <td>
-                        @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => optional($productSKUs1[$index1])->sku])
+                        @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['sku'] : ''])
                     </td>
                 </tr>
 
@@ -46,26 +48,26 @@
                         @if($value2 != '' && $index > 0)
 
                         <tr>
-
                             <td>
                                 {{$value2}}
                             </td>
                             <td>
-                                @include('administrator.components.require_input_number' , ['name' => 'prices','value' => optional($productSKUs2[$indexSKU2])->price])
+                                <input name="sku_ids" value="{{!empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['id'] : 0}}" class="d-none" />
+                                @include('administrator.components.require_input_number' , ['name' => 'prices','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['price'] : 0 ])
 
                             </td>
                             <td>
-                                @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => optional($productSKUs2[$index])->inventory ])
+                                @include('administrator.components.require_input_number' , ['name' => 'inventories','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['inventory'] : 0 ])
                             </td>
                             <td>
-                                @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => optional($productSKUs2[$index])->sku ])
+                                @include('administrator.components.input_text' , ['name' => 'skus','value' => '', 'class' => 'skus','value' => !empty($productSKUs[$indexSKU]) ? $productSKUs[$indexSKU]['sku'] : ''])
                             </td>
                         </tr>
-                        @php
-                            $indexSKU2++;
-                        @endphp
-                        @endif
 
+                        @endif
+                        @php
+                            $indexSKU++;
+                        @endphp
                     @endforeach
                 @endif
 
