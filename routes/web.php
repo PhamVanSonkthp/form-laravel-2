@@ -24,3 +24,17 @@ Route::prefix('/demo')->group(function () {
     Route::get('/', function (Request $request) {
     });
 });
+
+Route::get('/web/robots.txt', function() {
+    $robots = new \Mguinea\Robots\Robots;
+
+    // If on the live server
+    if (env('APP_ENV') == 'production') {
+        $robots->addUserAgent('*')->addSitemap('sitemap.xml');
+    } else {
+        // If you're on any other server, tell everyone to go away.
+        $robots->addDisallow("/");
+    }
+
+    return response($robots->generate(), 200)->header('Content-Type', 'text/plain');
+});

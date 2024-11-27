@@ -32,9 +32,15 @@ class Kernel extends ConsoleKernel
             ->everyMinute();
 
         $schedule->command('cache:clear-expired')
+            ->timezone('Asia/Ho_Chi_Minh')
             ->dailyAt('00:00');
 
-        $schedule->command('backup:run')->timezone('Asia/Ho_Chi_Minh')
+        $schedule->command('schedule:sitemap')
+            ->timezone('Asia/Ho_Chi_Minh')
+            ->dailyAt('00:00');
+
+        $schedule->command('backup:run')
+            ->timezone('Asia/Ho_Chi_Minh')
             ->dailyAt('00:00');
 
         $schedule->command('queue:work --timeout=60')
