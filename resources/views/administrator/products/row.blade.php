@@ -1,108 +1,124 @@
 <tr class="" id="tr_container_index_{{$index}}" data-id="{{$item->id}}">
+
     <td class="text-center">
         <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
     </td>
+{{--    <td>--}}
+{{--        @include('administrator.components.sort_icon_for_table', ['prefixView' => $prefixView])--}}
+{{--    </td>--}}
     <td>
-        @include('administrator.components.sort_icon_for_table', ['prefixView' => $prefixView])
+        <div class="d-flex">
+            <img class="rounded-circle" src="{{$item->avatar("100x100")}}" alt="">
 
-        {{$item->id}}
-    </td>
-    <td>
-        <p>
-            {{\App\Models\Formatter::getShortDescriptionAttribute($item->name, 10)}}
-        </p>
+            <div class="ms-2">
+                <h5>
+                    {{\App\Models\Formatter::getShortDescriptionAttribute($item->name, 10)}}
+                </h5>
 
-        @if(!empty($item->sku))
-            <p>
-                [{{$item->sku}}]
-            </p>
-        @endif
-    </td>
-    <td>
-        <img class="rounded-circle" src="{{$item->avatar()}}" alt="">
-    </td>
-    <td>
-        {{optional($item->category)->name}}
-    </td>
-    <td>
-        <input class="input-product-is-feature" type="checkbox"
-               {{$item->is_feature ? 'checked' : ''}} value="{{$item->id}}">
-    </td>
-    <td>
-        @if($item->isProductVariation())
-            @foreach($item->attributes() as $key => $itemAttribute)
-                <div class="row mt-2" data-id="{{$itemAttribute['id']}}">
-                    <div class="col-4">
-                        <div>
-                            {{$itemAttribute['size']}}, {{$itemAttribute['color']}}
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <input
-                            oninput="onChangeInventory('{{$itemAttribute['id']}}','inventory' ,this.value)"
-                            type="text" autocomplete="off"
-                            class="form-control number"
-                            value="{{\App\Models\Formatter::formatNumber($itemAttribute['inventory'])}}">
-                    </div>
-                    <div class="col-2">
-                        <input
-                            oninput="onChangeInventory('{{$itemAttribute['id']}}','price_client', this.value)"
-                            type="text" autocomplete="off"
-                            class="form-control number"
-                            value="{{\App\Models\Formatter::formatMoney(optional(\App\Models\Product::find($itemAttribute['id']))->price_client)}}">
-                    </div>
-                    <div class="col-2">
-                        <input
-                            oninput="onChangeInventory('{{$itemAttribute['id']}}','price_agent', this.value)"
-                            type="text" autocomplete="off"
-                            class="form-control number"
-                            value="{{\App\Models\Formatter::formatMoney(optional(\App\Models\Product::find($itemAttribute['id']))->price_agent)}}">
-                    </div>
-                    <div class="col-2">
-                        <input
-                            oninput="onChangeInventory('{{$itemAttribute['id']}}','price_partner', this.value)"
-                            type="text" autocomplete="off"
-                            class="form-control number"
-                            value="{{\App\Models\Formatter::formatMoney(optional(\App\Models\Product::find($itemAttribute['id']))->price_partner)}}">
-                    </div>
+                <div class="mt-1" style="color: #999;font-size: 12px;">
+                    SKU sản phẩm:
                 </div>
-            @endforeach
-        @else
-            <div class="row mt-2" data-id="{{$item->id}}">
-                <div class="col-4">
-                    <div>
 
-                    </div>
-                </div>
-                <div class="col-2">
-                    <input
-                        oninput="onChangeInventory('{{$item->id}}','inventory', this.value)"
-                        type="text" autocomplete="off" class="form-control number"
-                        value="{{\App\Models\Formatter::formatNumber($item->inventory)}}">
-                </div>
-                <div class="col-2">
-                    <input
-                        oninput="onChangeInventory('{{$item->id}}','price_client', this.value)"
-                        type="text" autocomplete="off" class="form-control number"
-                        value="{{\App\Models\Formatter::formatMoney($item->price_client)}}">
-                </div>
-                <div class="col-2">
-                    <input
-                        oninput="onChangeInventory('{{$item->id}}','price_agent', this.value)"
-                        type="text" autocomplete="off" class="form-control number"
-                        value="{{\App\Models\Formatter::formatMoney($item->price_agent)}}">
-                </div>
-                <div class="col-2">
-                    <input
-                        oninput="onChangeInventory('{{$item->id}}','price_partner', this.value)"
-                        type="text" autocomplete="off" class="form-control number"
-                        value="{{\App\Models\Formatter::formatMoney($item->price_partner)}}">
+                <div class="mt-1" style="color: #999;font-size: 12px;">
+                    ID sản phẩm: {{$item->id}}
                 </div>
             </div>
-        @endif
+
+        </div>
     </td>
+    <td>
+        {{$item->numberSell()}}
+    </td>
+    <td>
+        <div class="child-edit" onclick="onEditPrice('{{$item->id}}')">
+            <span>
+                {{$item->textRangePrice()}}
+            </span>
+            <i class="fa-regular fa-pen-to-square child-edit-hide"></i>
+        </div>
+    </td>
+    <td>
+        <div class="child-edit" onclick="onEditInventory('{{$item->id}}')">
+            <span>
+                {{$item->numberInventory()}}
+            </span>
+            <i class="fa-regular fa-pen-to-square child-edit-hide"></i>
+        </div>
+    </td>
+
     <td>
         @include('administrator.components.action_table', ['prefixView' => $prefixView, '$item' => $item])
 
     </td>
+
 </tr>
+
+@if($item->is_variant)
+
+    @foreach($item->skus as $indexSKU => $sku)
+        <tr style="border-width: 0 0;" class="{{$indexSKU >= 3 ? 'd-none variant-' . $item->id : ''}}">
+            <td></td>
+            <td style="background-color: #fafafa">
+                @foreach($sku->productAttributeOptionSKUs as $productAttributeOptionSKU)
+                    <span style="color: #999;font-size: 12px;">
+                        {{ optional($productAttributeOptionSKU->productAttributeOption)->value}}
+                    </span>
+                @endforeach
+
+                <div class="d-flex">
+                    <div>
+                        <div>
+                        </div>
+                        <div style="color: #999;font-size: 12px;">
+                            SKU phân loại:
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+            <td style="background-color: #fafafa">
+                {{\App\Models\Formatter::formatNumber($sku->sell)}}
+            </td>
+
+            <td style="background-color: #fafafa">
+                <div class="child-edit" onclick="onEditPrice('{{$item->id}}')">
+                    <span>
+                        {{\App\Models\Formatter::formatMoney($sku->price)}}
+                    </span>
+                    <i class="fa-regular fa-pen-to-square child-edit-hide"></i>
+                </div>
+            </td>
+
+            <td style="background-color: #fafafa">
+                <div class="child-edit" onclick="onEditInventory('{{$item->id}}')">
+                    <span>
+                        {{\App\Models\Formatter::formatMoney($sku->inventory)}}
+                    </span>
+                    <i class="fa-regular fa-pen-to-square child-edit-hide"></i>
+                </div>
+
+            </td>
+
+            <td>
+
+            </td>
+        </tr>
+    @endforeach
+
+    @if($item->skus->count() > 3)
+        <tr>
+            <td></td>
+            <td style="background-color: #fafafa" colspan="4">
+                <div style="cursor: pointer;">
+                    <div id="btn_show_more_{{$item->id}}" onclick="onShowMoreVariant('{{$item->id}}')">
+                        Xem thêm (còn {{$item->skus->count() - 3}} phân loại)<i class="ms-1 fa-solid fa-angle-down"></i>
+                    </div>
+                    <div id="btn_show_less_{{$item->id}}" onclick="onShowLessVariant('{{$item->id}}')" class="d-none">
+                        Đóng <i class="ms-2 fa-solid fa-angle-up"></i>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+    @endif
+@endif

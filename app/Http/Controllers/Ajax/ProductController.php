@@ -503,8 +503,6 @@ class ProductController extends Controller
 
     function renderTableVari(Request $request)
     {
-
-
         $product = null;
 
         if (!empty($request->product_id)) {
@@ -556,7 +554,12 @@ class ProductController extends Controller
 
         $indexSKU = 0;
 
-        $productSKUs = $product->skus->toArray();
+        $productSKUs = [];
+
+        if (!empty($product)){
+            $product->skus->toArray();
+        }
+
 
         if (count($productSKUs) > 1) {
             $array1 = array_slice($productSKUs, 0, count($productSKUs) / 2);
@@ -593,5 +596,67 @@ class ProductController extends Controller
         return response()->json([
             'html' => $html
         ]);
+    }
+
+    function renderContainerInventory(Request $request){
+        $product = $this->model->findOrFail($request->id);
+
+        $html = View::make(
+            'administrator.products.container_inventory',
+            compact(
+                'product'
+            )
+        )->render();
+
+        return response()->json([
+            'html' => $html
+        ]);
+    }
+
+    function renderContainerPrice(Request $request){
+        $product = $this->model->findOrFail($request->id);
+
+        $html = View::make(
+            'administrator.products.container_price',
+            compact(
+                'product'
+            )
+        )->render();
+
+        return response()->json([
+            'html' => $html
+        ]);
+    }
+
+    function updateInventory(Request $request){
+
+        foreach ($request->skus as $index => $sku){
+            $productSKU = ProductSKU::find($sku);
+            if (!empty($productSKU)){
+                $productSKU->inventory = Formatter::formatNumberToDatabase($request->values[$index]);
+                $productSKU->save();
+            }
+        }
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+
+    }
+
+    function updatePrice(Request $request){
+
+        foreach ($request->skus as $index => $sku){
+            $productSKU = ProductSKU::find($sku);
+            if (!empty($productSKU)){
+                $productSKU->price = Formatter::formatNumberToDatabase($request->values[$index]);
+                $productSKU->save();
+            }
+        }
+
+        return response()->json([
+            'message' => 'success'
+        ]);
+
     }
 }

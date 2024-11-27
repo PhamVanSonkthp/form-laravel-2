@@ -26,6 +26,39 @@ class Product extends Model implements Auditable
 
     // begin
 
+    public function textRangePrice(){
+        $skus = $this->skus->pluck('price')->toArray();
+
+        if (count($skus) == 1) return Formatter::formatMoney($skus[0]);
+
+        $min = min($skus);
+        $max = max($skus);
+
+        if ($min != $max) return Formatter::formatMoney($min) . " - " . Formatter::formatMoney($max);
+
+        return Formatter::formatMoney($min);
+    }
+
+    public function numberSell(){
+        $skus = $this->skus;
+
+        $counter = 0;
+        foreach ($skus as $sku){
+            $counter += $sku->sell;
+        }
+        return $counter;
+    }
+
+    public function numberInventory(){
+        $skus = $this->skus;
+
+        $counter = 0;
+        foreach ($skus as $sku){
+            $counter += $sku->inventory;
+        }
+        return $counter;
+    }
+
     public function skus()
     {
         return $this->hasMany(ProductSKU::class);

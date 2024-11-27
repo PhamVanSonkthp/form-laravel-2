@@ -43,10 +43,12 @@ class Kernel extends ConsoleKernel
             ->timezone('Asia/Ho_Chi_Minh')
             ->dailyAt('00:00');
 
+        // duplicate with cores of servers
         $schedule->command('queue:work --timeout=60')
             ->everyMinute()
             ->withoutOverlapping()
             ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
+        //
     }
 
     /**

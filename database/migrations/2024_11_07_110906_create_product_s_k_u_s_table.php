@@ -22,6 +22,7 @@ class CreateProductSKUSTable extends Migration
             $table->bigInteger('price_agent')->default(0);
             $table->bigInteger('price_partner')->default(0);
             $table->bigInteger('inventory')->default(0);
+            $table->bigInteger('sell')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

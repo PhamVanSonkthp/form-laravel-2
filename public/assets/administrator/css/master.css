@@ -91,7 +91,7 @@ tr th:first-child {
 }
 .table td img {
     width: unset !important;
-    border-radius: unset !important;
+    /*border-radius: unset !important;*/
 }
 
 .container-image-input label {

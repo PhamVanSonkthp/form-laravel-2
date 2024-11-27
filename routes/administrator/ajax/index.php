@@ -394,6 +394,30 @@ Route::prefix('ajax/administrator')->group(function () {
                 'middleware' => 'can:products-list',
             ]);
 
+            Route::get('/render-container-inventory', [
+                'as' => 'ajax.administrator.products.render_container_inventory',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@renderContainerInventory',
+                'middleware' => 'can:products-edit',
+            ]);
+
+            Route::get('/render-container-price', [
+                'as' => 'ajax.administrator.products.render_container_price',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@renderContainerPrice',
+                'middleware' => 'can:products-edit',
+            ]);
+
+            Route::put('/update-inventory', [
+                'as' => 'ajax.administrator.products.update_inventory',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@updateInventory',
+                'middleware' => 'can:products-edit',
+            ]);
+
+            Route::put('/update-price', [
+                'as' => 'ajax.administrator.products.update_price',
+                'uses' => 'App\Http\Controllers\Ajax\ProductController@updatePrice',
+                'middleware' => 'can:products-edit',
+            ]);
+
             Route::get('/', [
                 'as' => 'ajax.administrator.products.search',
                 'uses' => 'App\Http\Controllers\Ajax\ProductController@search',
