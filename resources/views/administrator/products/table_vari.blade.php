@@ -2,7 +2,7 @@
     <table class="table table-bordered">
         <thead style="background-color: aliceblue;">
         <tr>
-            <th>{{$header1}}</th>
+            <th style="min-width: 100px;">{{$header1}}</th>
             @if($header2 && count($values2) > 0)
             <th>{{$header2}}</th>
             @endif
@@ -20,8 +20,10 @@
 
                 <tr>
                     <td rowspan="{{count($values2) > 0 ? count($values2) : 1}}">
-                        <div class="text-center">
-                            {{$value}}
+                        <div class="text-center" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+                            <p>{{$value}}</p>
+
+                            @include('administrator.components.input_image', ['name' => 'none'])
                         </div>
                     </td>
                     @if($header2 && count($values2) > 0)

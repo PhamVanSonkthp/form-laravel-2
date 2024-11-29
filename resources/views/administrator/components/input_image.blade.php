@@ -3,11 +3,13 @@
 @endphp
 
 <div class="mt-3 form-group">
+    @if(isset($label))
     <div>
         <label>
-            {{isset($label) ? $label : "Logo"}} @include('administrator.components.lable_require')
+            {{$label}}
         </label>
     </div>
+    @endif
     <div class="container-image-input" id="container_{{$idRandom}}">
         <input type="file" name="{{$name}}"
                id="image-file_{{$idRandom}}"
@@ -33,6 +35,7 @@
 
     #image_placeholder_{{$idRandom}}{
         max-width: 200px;
+        border-radius: 0;
     }
 
     .image-place-houlder {
@@ -49,6 +52,8 @@
     }
 
     #image-label_{{$idRandom}} {
+        padding: 15px;
+        border-radius: 0;
         position: relative;
         width: 200px;
         height: 200px;
@@ -60,17 +65,19 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0px 1px 7px rgba(105, 110, 232, 0.54);
-        border-radius: 10px;
         flex-direction: column;
         gap: 15px;
         user-select: none;
         cursor: pointer;
         color: #207ed1;
         transition: all 1s;
+        border: none !important;
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='1' stroke-dasharray='8' stroke-dashoffset='87' stroke-linecap='square'/%3e%3c/svg%3e");
     }
 
     #image-label_{{$idRandom}}:hover {
         color: #18ac1c;
+        background-color: #dbe9f6;
     }
 </style>
 

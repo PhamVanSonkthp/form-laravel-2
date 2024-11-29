@@ -241,6 +241,10 @@ class Product extends Model implements Auditable
             $results = $results->where('inventory', '<=', $request->max_inventory);
         }
 
+        if ($request->trash) {
+            $results = $results->onlyTrashed();
+        }
+
         $results = $results->latest('updated_at')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         return $results;

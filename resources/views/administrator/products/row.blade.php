@@ -56,7 +56,7 @@
 @if($item->is_variant)
 
     @foreach($item->skus as $indexSKU => $sku)
-        <tr style="border-width: 0 0;" class="{{$indexSKU >= 3 ? 'd-none variant-' . $item->id : ''}}">
+        <tr style="border-width: 0 0;" class="{{$indexSKU >= 3 ? 'd-none variant-' . $item->id : ''}} tr_container_index_{{$index}}">
             <td></td>
             <td style="background-color: #fafafa">
                 @foreach($sku->productAttributeOptionSKUs as $productAttributeOptionSKU)
@@ -106,7 +106,7 @@
     @endforeach
 
     @if($item->skus->count() > 3)
-        <tr>
+        <tr class="tr_container_index_{{$index}}">
             <td></td>
             <td style="background-color: #fafafa" colspan="4">
                 <div style="cursor: pointer;">

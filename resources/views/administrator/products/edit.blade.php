@@ -390,6 +390,33 @@
                     atrributes_id_vari_2.push(element.value); // For elements like input or textarea
                 });
 
+                let counter_1 = 0;
+                for(let i = 0; i < values_1.length; i++){
+                    if(!values_1[i]) counter_1 ++;
+                }
+
+                if (!header_vari_1){
+                    alert('Vui lòng điền biến thể 1')
+                    return;
+                }
+
+                if(counter_1 > 1 || values_1.length == 1){
+                    alert('Vui lòng điền tất cả giá trị của biến thể 1')
+                    return;
+                }
+
+                if (header_vari_2){
+                    let counter_2 = 0;
+                    for(let i = 0; i < values_2.length; i++){
+                        if(!values_2[i]) counter_2 ++;
+                    }
+
+                    if(counter_2 > 1 || values_2.length == 1){
+                        alert('Vui lòng điền tất cả giá trị của biến thể 2')
+                        return;
+                    }
+                }
+
                 callAjax(
                     "PUT",
                     "{{route('ajax.administrator.products.update_v2')}}",
@@ -672,8 +699,23 @@
         var simpleList = document.querySelector("#container_item_vari_1");
         new Sortable(simpleList, {
             animation: 150,
-            ghostClass: 'bg-light'
+            ghostClass: 'bg-light',
+            onEnd: function (/**Event*/evt) {
+                var itemEl = evt.item;  // dragged HTMLElement
+                evt.to;    // target list
+                evt.from;  // previous list
+                evt.oldIndex;  // element's old index within old parent
+                evt.newIndex;  // element's new index within new parent
+                evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+                evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+                evt.clone // the clone element
+                evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving
+
+                onUpdateVari1()
+            },
         });
+
+        onSortVar2();
 
         $('#btn_add_vari').on("click", function () {
             $('#btn_add_vari').hide()
@@ -710,12 +752,29 @@
                                         </ul>
                                     </div>`);
 
+            onSortVar2()
+        });
+
+        function onSortVar2() {
             var simpleList = document.querySelector("#container_item_vari_2");
             new Sortable(simpleList, {
                 animation: 150,
-                ghostClass: 'bg-light'
+                ghostClass: 'bg-light',
+                onEnd: function (/**Event*/evt) {
+                    var itemEl = evt.item;  // dragged HTMLElement
+                    evt.to;    // target list
+                    evt.from;  // previous list
+                    evt.oldIndex;  // element's old index within old parent
+                    evt.newIndex;  // element's new index within new parent
+                    evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+                    evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+                    evt.clone // the clone element
+                    evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving
+
+                    onUpdateVari2()
+                },
             });
-        });
+        }
 
     </script>
 
@@ -896,9 +955,6 @@
                     _attributes.push(value__attributes)
                 }
             }
-
-            console.log(_headers)
-            console.log(_attributes)
 
             $('#_headers').val(JSON.stringify(_headers))
             $('#_attributes').val(JSON.stringify(_attributes))

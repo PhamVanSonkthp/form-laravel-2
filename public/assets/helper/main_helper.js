@@ -139,16 +139,11 @@ function actionDelete(event, url = null, table = null, target_remove = null) {
                 success: function (response) {
                     hideLoading()
                     if (response.code === 200) {
-                        // table
-                        //     .row(target_remove)
-                        //     .remove()
-                        //     .draw();
+                        const parent_remove_id = that.parent().parent().data('id')
+
+                        $('.tr_container_index_' + parent_remove_id).remove()
                         that.parent().parent().remove()
-                        // Swal.fire(
-                        //     'Đã xóa!',
-                        //     'Đã xóa bản ghi.',
-                        //     'success'
-                        // )
+
                     }
                 },
                 error: function (err) {

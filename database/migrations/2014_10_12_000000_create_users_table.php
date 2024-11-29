@@ -44,6 +44,8 @@ class CreateUsersTable extends Migration
             $table->bigInteger('ward_id')->default(0);
             $table->string('address')->nullable();
 
+            $table->integer('level_number')->default(-1);
+
             $table->rememberToken();
             $table->timestamp('last_seen')->nullable();
             $table->timestamps();

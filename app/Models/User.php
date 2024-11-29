@@ -56,6 +56,44 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     // begin
 
+    public function renderChildrenTreeView($parent_id, $old_html = "", $first = false, $end = false, $is_parent = false){
+
+
+        $item = User::find($parent_id);
+
+        if ($is_parent){
+            $old_html .= '<div class="tf-tree" style="font-size: 18px;"><ul>';
+        }
+
+        $children = User::where('referral_id', $parent_id)->get();
+
+        if ($first){
+            $old_html .= '<ul><li>';
+        }else{
+            $old_html .= '<li>';
+        }
+
+
+        $old_html .= '<a href="'.route('administrator.affiliates.index', ['user_id' => $item->id]).'" title="F '.$item->level_number.'" style="color:black;" class="tf-nc">'.$item->name. '</a>';
+
+
+        foreach ($children as $index => $child){
+            $old_html .= $this->renderChildrenTreeView($child->id , "" , $index == 0, count($children) - 1 == $index);
+        }
+        if ($end){
+            $old_html .= '</li></ul>';
+        }else{
+            $old_html .= '</li>';
+        }
+
+        if ($is_parent){
+            $old_html .= '</ul></div>';
+        }
+
+        return $old_html;
+
+    }
+
     public function logoutAllDevices()
     {
         DB::table('sessions')->where('user_id', $this->id)->delete();

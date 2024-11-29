@@ -630,6 +630,8 @@ class ProductController extends Controller
 
     function updateInventory(Request $request){
 
+        $item = $this->model->findOrFail($request->product_id);
+
         foreach ($request->skus as $index => $sku){
             $productSKU = ProductSKU::find($sku);
             if (!empty($productSKU)){
@@ -638,13 +640,17 @@ class ProductController extends Controller
             }
         }
 
+        $html = View::make('administrator.products.row', ['item' => $item, 'index' => $request->index])->render();
+
         return response()->json([
-            'message' => 'success'
+            'html' => $html
         ]);
 
     }
 
     function updatePrice(Request $request){
+
+        $item = $this->model->findOrFail($request->product_id);
 
         foreach ($request->skus as $index => $sku){
             $productSKU = ProductSKU::find($sku);
@@ -654,8 +660,10 @@ class ProductController extends Controller
             }
         }
 
+        $html = View::make('administrator.products.row', ['item' => $item, 'index' => $request->index])->render();
+
         return response()->json([
-            'message' => 'success'
+            'html' => $html
         ]);
 
     }

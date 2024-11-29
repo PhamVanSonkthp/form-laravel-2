@@ -55,7 +55,8 @@ class ReferController extends Controller
         }
 
         auth()->user()->update([
-            'referral_id' => $userRefer->id
+            'referral_id' => $userRefer->id,
+            'level_number' => $userRefer->level_number + 1,
         ]);
 
         return response()->json(Helper::successAPI(200, [], "Đã nhập mã giới thiệu"));

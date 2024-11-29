@@ -24,6 +24,8 @@ class CreateUserSeeder extends Seeder
                 'password' => Hash::make("1111"),
                 'is_admin'=> 2,
                 'role_id'=> 1,
+                'level_number'=> 0,
+                'referral_id'=> 0,
             ],
             [
                 'name' => 'Phạm văn sơn',
@@ -32,6 +34,8 @@ class CreateUserSeeder extends Seeder
                 'password' => Hash::make("1111"),
                 'is_admin'=> 2,
                 'role_id'=> 1,
+                'level_number'=> -1,
+                'referral_id'=> 0,
             ],
             [
                 'name' => 'Khách hàng',
@@ -40,6 +44,8 @@ class CreateUserSeeder extends Seeder
                 'password' => Hash::make("1111"),
                 'is_admin'=> 0,
                 'role_id'=> 0,
+                'level_number'=> 1,
+                'referral_id'=> 1,
             ],
         ]);
     }

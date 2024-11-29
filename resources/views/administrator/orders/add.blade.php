@@ -298,7 +298,7 @@
                 "POST",
                 "{{route('ajax.administrator.orders.store')}}",
                 {
-                    product_ids: product_ids,
+                    product_sku_ids: product_ids,
                     quantities: quantities,
                     user_id: $('select[name="user_id"]').val(),
                     voucher_id: $('#input_voucher').val(),

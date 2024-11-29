@@ -232,6 +232,33 @@
                     inventories.push($(this).val());
                 });
 
+                let counter_1 = 0;
+                for(let i = 0; i < values_1.length; i++){
+                    if(!values_1[i]) counter_1 ++;
+                }
+
+                if (!header_vari_1){
+                    alert('Vui lòng điền biến thể 1')
+                    return;
+                }
+
+                if(counter_1 > 1 || values_1.length == 1){
+                    alert('Vui lòng điền tất cả giá trị của biến thể 1')
+                    return;
+                }
+
+                if (header_vari_2){
+                    let counter_2 = 0;
+                    for(let i = 0; i < values_2.length; i++){
+                        if(!values_2[i]) counter_2 ++;
+                    }
+
+                    if(counter_2 > 1 || values_2.length == 1){
+                        alert('Vui lòng điền tất cả giá trị của biến thể 2')
+                        return;
+                    }
+                }
+
                 callAjax(
                     "POST",
                     "{{route('ajax.administrator.products.store')}}",

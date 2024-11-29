@@ -8,51 +8,73 @@
 
 @foreach($results as $result)
 
-    <div class="d-flex m-3">
+    @if($result->is_variant)
+        <div class="m-3">
+            <div class="d-flex">
+                <img style="height: 45px;" src="{{$result->avatar()}}" class="rounded-circle">
 
-        <img style="height: 45px;" src="{{$result->avatar()}}" class="rounded-circle">
+                <div>
+                    <h4 class="ms-2">
+                        {{\App\Models\Formatter::getShortDescriptionAttribute($result->name)}}
+                    </h4>
+                </div>
 
-        <div class="{{!$result->isProductVariation() ? 'item-product' : ''}}"
-             @if(!$result->isProductVariation())
-             onclick="onAddProduct('{{$result->id}}', '{{ \App\Models\Formatter::getShortDescriptionAttribute($result->name) }}','','{{$result->price_client}}')"
-                 @endif
-
-        >
-            <div>
-                <p class="ms-2">
-                    {{\App\Models\Formatter::getShortDescriptionAttribute($result->name)}}
-                </p>
             </div>
 
-            @if($result->isProductVariation())
-                @foreach($result->attributes() as $key => $itemAttribute)
-                    <div class="ms-4 item-product" onclick="onAddProduct('{{$itemAttribute['id']}}', '{{  \App\Models\Formatter::getShortDescriptionAttribute(optional(optional(\App\Models\Product::find($itemAttribute['id']))->parent)->name) }}', '{{$itemAttribute["size"]}}, {{$itemAttribute["color"]}}','{{\App\Models\Formatter::formatMoney(optional(\App\Models\Product::find($itemAttribute["id"]))->price_client)}}')">
+            <div class="mt-2">
+                @foreach($result->skus as $key => $sku)
+                    <div class="ms-3 mt-1 item-product"
+                         onclick="onAddProduct('{{$sku->id}}','{{$result->name}}','{{$sku->textSKUs()}}','{{$sku->price}}')">
                         <div>
                             <span>
-                                <strong>{{\App\Models\Formatter::formatMoney(optional(\App\Models\Product::find($itemAttribute['id']))->price_client)}}</strong>
-                            </span>
-                            <span>
-                                Phân loại: {{$itemAttribute['size']}}, {{$itemAttribute['color']}}
+                                Phân loại: {{$sku->textSKUs()}}
                             </span>
 
                         </div>
                         <div>
-                            Kho: {{\App\Models\Formatter::formatNumber($itemAttribute['inventory'])}}
+                            <span>
+                                <strong>{{\App\Models\Formatter::formatMoney($sku->price)}}</strong>
+                            </span>
+
+                            Kho: {{\App\Models\Formatter::formatNumber($sku->inventory)}}
                         </div>
                     </div>
 
                 @endforeach
-
-            @else
-
-                <div>
-                    <p class="ms-2">
-                        Tồn kho: {{\App\Models\Formatter::formatNumber($result->inventory)}}
-                    </p>
-                </div>
-
-            @endif
+            </div>
         </div>
 
-    </div>
+    @else
+
+        <div class="m-2">
+            <div>
+                @foreach($result->skus as $key => $sku)
+                    <div class="mt-1 item-product"
+                         onclick="onAddProduct('{{$sku->id}}','{{$result->name}}','{{$sku->textSKUs()}}','{{$sku->price}}')">
+
+                        <div class="d-flex">
+                            <img style="height: 45px;" src="{{$result->avatar()}}" class="rounded-circle">
+
+                            <div>
+                                <h4>
+                                    {{\App\Models\Formatter::getShortDescriptionAttribute($result->name)}}
+                                </h4>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <span>
+                                <strong>{{\App\Models\Formatter::formatMoney($sku->price)}}</strong>
+                            </span>
+
+                            Kho: {{\App\Models\Formatter::formatNumber($sku->inventory)}}
+                        </div>
+                    </div>
+
+                @endforeach
+            </div>
+
+        </div>
+    @endif
 @endforeach

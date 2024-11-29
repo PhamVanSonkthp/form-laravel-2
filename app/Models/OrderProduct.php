@@ -7,7 +7,6 @@ use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Rinvex\Attributes\Traits\Attributable;
 
 class OrderProduct extends Model implements Auditable
 {
@@ -15,17 +14,15 @@ class OrderProduct extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
-    use Attributable;
 
     protected $guarded = [];
 
-    protected $with = ['eav'];
 
     // begin
 
-    public function product()
+    public function productSKU()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasOne(ProductSKU::class,'id','product_sku_id');
     }
 
     // end

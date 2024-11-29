@@ -193,12 +193,16 @@
                 "PUT",
                 "{{route('ajax.administrator.products.update_inventory')}}",
                 {
+                    product_id: current_product_id,
+                    index: $('#tr_container_index_' + current_product_id).data('id'),
                     skus: sku_inventory_ids,
                     values: sku_inventory_values,
                 },
                 (response) => {
                     hideModal('model_change_inventory')
                     showToastSuccess()
+                    $('.tr_container_index_' + current_product_id).remove()
+                    $('#tr_container_index_' + current_product_id).after(response.html).remove();
                 },
                 (error) => {
 
@@ -225,12 +229,16 @@
                 "PUT",
                 "{{route('ajax.administrator.products.update_price')}}",
                 {
+                    product_id: current_product_id,
+                    index: $('#tr_container_index_' + current_product_id).data('id'),
                     skus: sku_price_ids,
                     values: sku_price_values,
                 },
                 (response) => {
                     hideModal('model_change_price')
                     showToastSuccess()
+                    $('.tr_container_index_' + current_product_id).remove()
+                    $('#tr_container_index_' + current_product_id).after(response.html).remove();
                 },
                 (error) => {
 

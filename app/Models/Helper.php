@@ -219,7 +219,6 @@ class Helper extends Model
             }else{
                 $query = $query->where('id', -1);
             }
-
         }
 
         if ($is_custom) {

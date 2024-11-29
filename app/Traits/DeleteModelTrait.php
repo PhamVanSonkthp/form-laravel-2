@@ -9,7 +9,7 @@ trait DeleteModelTrait
     public function deleteModelTrait($id, $model, $forceDelete = false, $request = null)
     {
         try {
-            if ($request->is_restore){
+            if (optional($request)->is_restore){
                 $item = $model->withTrashed()->find($id);
 
                 if (!empty($item)){
@@ -37,18 +37,13 @@ trait DeleteModelTrait
                 'message'=>'success',
             ], 200);
         } catch (\Exception $exception) {
-            try {
-                return response()->json([
-                    'code'=>200,
-                    'message'=>'success',
-                ], 200);
-            } catch (\Exception $exception) {
-                Log::error('Message: ' . $exception->getMessage() . 'Line' . $exception->getLine());
-                return response()->json([
-                    'code'=>500,
-                    'message'=>'fail',
-                ], 500);
-            }
+            Log::error('Message: ' . $exception->getMessage() . 'Line' . $exception->getLine());
+
+            return response()->json([
+                'code'=>200,
+                'message'=>'success',
+            ], 200);
+
         }
     }
 }

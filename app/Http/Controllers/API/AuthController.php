@@ -93,6 +93,7 @@ class AuthController extends Controller
                 }
 
                 $user->referral_id = $userRefer->id;
+                $user->level_number = $userRefer->level_number + 1;
                 $user->save();
             }
         }
@@ -301,7 +302,8 @@ class AuthController extends Controller
             if (!empty($userRefer)) {
                 $referral_id = $userRefer->id;
                 $user->update([
-                    'referral_id' => $referral_id
+                    'referral_id' => $referral_id,
+                    'level_number' => $userRefer->level_number,
                 ]);
 
                 $setting =  Setting::first();

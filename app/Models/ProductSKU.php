@@ -24,9 +24,31 @@ class ProductSKU extends Model implements Auditable
 
     // begin
 
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
     public function productAttributeOptionSKUs()
     {
         return $this->hasMany(ProductAttributeOptionSKU::class, 'sku_id', 'id');
+    }
+
+    public function textSKUs()
+    {
+        $values = [];
+
+        $productAttributeOptionSKUs = $this->productAttributeOptionSKUs;
+
+        foreach ($productAttributeOptionSKUs as $productAttributeOptionSKU){
+            $productAttributeOption = $productAttributeOptionSKU->productAttributeOption;
+
+            if ($productAttributeOption){
+                $values[] = $productAttributeOption->value;
+            }
+        }
+
+        return implode(' - ', $values);
     }
     //
     //    public function multiples(){

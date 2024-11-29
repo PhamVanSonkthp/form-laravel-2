@@ -25,24 +25,17 @@
                     <div>
                         {{\App\Models\Formatter::getShortDescriptionAttribute($productItem->name)}}
                     </div>
-                    @if(!empty($productItem->order_size) || !empty($productItem->order_color))
-                        <div>
-                            Phân loại:
-                            <strong>{{\App\Models\Formatter::getShortDescriptionAttribute($productItem->order_size)}}</strong>,
-                            <strong>{{\App\Models\Formatter::getShortDescriptionAttribute($productItem->order_color)}}</strong>
-                        </div>
-                    @endif
 
+                    @if(optional($productItem->productSKU)->sku)
                     <div>
-                        @if(!empty( optional($productItem->product)->sku))
-                            <p>
-                                [{{optional($productItem->product)->sku}}]
-                            </p>
-                        @endif
+                        <p>
+                            [{{ optional($productItem->productSKU)->sku}}]
+                        </p>
                     </div>
+                        @endif
                 </div>
 
-                <div style="border-bottom: solid 1px aliceblue;border-top: solid 1px aliceblue;">
+                <div class="ms-2" style="border-bottom: solid 1px aliceblue;border-top: solid 1px aliceblue;">
                     x{{\App\Models\Formatter::formatNumber($productItem->quantity)}}
                 </div>
             </div>

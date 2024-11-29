@@ -305,6 +305,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:roles-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.roles.restore',
+            'uses' => 'App\Http\Controllers\Admin\RoleController@restore',
+            'middleware' => 'can:roles-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.roles.delete_many',
             'uses' => 'App\Http\Controllers\Admin\RoleController@deleteManyByIds',
@@ -517,6 +523,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:job_emails-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.job_emails.restore',
+            'uses' => 'App\Http\Controllers\Admin\JobEmailController@restore',
+            'middleware' => 'can:job_emails-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.job_emails.delete_many',
             'uses' => 'App\Http\Controllers\Admin\JobEmailController@deleteManyByIds',
@@ -583,6 +595,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.job_notifications.delete',
             'uses' => 'App\Http\Controllers\Admin\JobNotificationController@delete',
             'middleware' => 'can:job_notifications-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.job_notifications.restore',
+            'uses' => 'App\Http\Controllers\Admin\JobNotificationController@restore',
+            'middleware' => 'can:job_notifications-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -727,6 +745,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:products-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.products.restore',
+            'uses' => 'App\Http\Controllers\Admin\ProductController@restore',
+            'middleware' => 'can:products-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.products.delete_many',
             'uses' => 'App\Http\Controllers\Admin\ProductController@deleteManyByIds',
@@ -801,6 +825,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:settings-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.settings.restore',
+            'uses' => 'App\Http\Controllers\Admin\SettingController@restore',
+            'middleware' => 'can:settings-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.settings.delete_many',
             'uses' => 'App\Http\Controllers\Admin\SettingController@deleteManyByIds',
@@ -867,6 +897,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.category_news.delete',
             'uses' => 'App\Http\Controllers\Admin\CategoryNewController@delete',
             'middleware' => 'can:category_news-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.category_news.restore',
+            'uses' => 'App\Http\Controllers\Admin\CategoryNewController@restore',
+            'middleware' => 'can:category_news-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -937,6 +973,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:system_branches-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.system_branches.restore',
+            'uses' => 'App\Http\Controllers\Admin\SystemBranchController@restore',
+            'middleware' => 'can:system_branches-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.system_branches.delete_many',
             'uses' => 'App\Http\Controllers\Admin\SystemBranchController@deleteManyByIds',
@@ -1003,6 +1045,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.orders.delete',
             'uses' => 'App\Http\Controllers\Admin\OrderController@delete',
             'middleware' => 'can:orders-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.orders.restore',
+            'uses' => 'App\Http\Controllers\Admin\OrderController@restore',
+            'middleware' => 'can:orders-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1083,6 +1131,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.vouchers.delete',
             'uses' => 'App\Http\Controllers\Admin\VoucherController@delete',
             'middleware' => 'can:vouchers-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.vouchers.restore',
+            'uses' => 'App\Http\Controllers\Admin\VoucherController@restore',
+            'middleware' => 'can:vouchers-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1168,6 +1222,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:payment_methods-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.payment_methods.restore',
+            'uses' => 'App\Http\Controllers\Admin\PaymentMethodController@restore',
+            'middleware' => 'can:payment_methods-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.payment_methods.delete_many',
             'uses' => 'App\Http\Controllers\Admin\PaymentMethodController@deleteManyByIds',
@@ -1240,6 +1300,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.user_transactions.delete',
             'uses' => 'App\Http\Controllers\Admin\UserTransactionController@delete',
             'middleware' => 'can:user_transactions-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.user_transactions.restore',
+            'uses' => 'App\Http\Controllers\Admin\UserTransactionController@restore',
+            'middleware' => 'can:user_transactions-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1316,6 +1382,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:user_types-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.user_types.restore',
+            'uses' => 'App\Http\Controllers\Admin\UserTypeController@restore',
+            'middleware' => 'can:user_types-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.user_types.delete_many',
             'uses' => 'App\Http\Controllers\Admin\UserTypeController@deleteManyByIds',
@@ -1388,6 +1460,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.user_points.delete',
             'uses' => 'App\Http\Controllers\Admin\UserPointController@delete',
             'middleware' => 'can:user_points-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.user_points.restore',
+            'uses' => 'App\Http\Controllers\Admin\UserPointController@restore',
+            'middleware' => 'can:user_points-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1464,6 +1542,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:banks-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.banks.restore',
+            'uses' => 'App\Http\Controllers\Admin\BankController@restore',
+            'middleware' => 'can:banks-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.banks.delete_many',
             'uses' => 'App\Http\Controllers\Admin\BankController@deleteManyByIds',
@@ -1536,6 +1620,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.bank_cash_ins.delete',
             'uses' => 'App\Http\Controllers\Admin\BankCashInController@delete',
             'middleware' => 'can:bank_cash_ins-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.bank_cash_ins.restore',
+            'uses' => 'App\Http\Controllers\Admin\BankCashInController@restore',
+            'middleware' => 'can:bank_cash_ins-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1612,6 +1702,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:memberships-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.memberships.restore',
+            'uses' => 'App\Http\Controllers\Admin\MembershipController@restore',
+            'middleware' => 'can:memberships-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.memberships.delete_many',
             'uses' => 'App\Http\Controllers\Admin\MembershipController@deleteManyByIds',
@@ -1684,6 +1780,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.shipping_methods.delete',
             'uses' => 'App\Http\Controllers\Admin\ShippingMethodController@delete',
             'middleware' => 'can:shipping_methods-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.shipping_methods.restore',
+            'uses' => 'App\Http\Controllers\Admin\ShippingMethodController@restore',
+            'middleware' => 'can:shipping_methods-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1760,6 +1862,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:product_comments-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.product_comments.restore',
+            'uses' => 'App\Http\Controllers\Admin\ProductCommentController@restore',
+            'middleware' => 'can:product_comments-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.product_comments.delete_many',
             'uses' => 'App\Http\Controllers\Admin\ProductCommentController@deleteManyByIds',
@@ -1832,6 +1940,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.flash_sales.delete',
             'uses' => 'App\Http\Controllers\Admin\FlashSaleController@delete',
             'middleware' => 'can:flash_sales-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.flash_sales.restore',
+            'uses' => 'App\Http\Controllers\Admin\FlashSaleController@restore',
+            'middleware' => 'can:flash_sales-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -1908,6 +2022,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:history_datas-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.register_cities.restore',
+            'uses' => 'App\Http\Controllers\Admin\RegisterCityController@restore',
+            'middleware' => 'can:register_cities-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.register_cities.delete_many',
             'uses' => 'App\Http\Controllers\Admin\RegisterCityController@deleteManyByIds',
@@ -1980,6 +2100,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.register_districts.delete',
             'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@delete',
             'middleware' => 'can:history_datas-delete',
+        ]);
+
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.register_districts.restore',
+            'uses' => 'App\Http\Controllers\Admin\RegisterDistrictController@restore',
+            'middleware' => 'can:register_districts-edit',
         ]);
 
         Route::delete('/delete-many', [
@@ -2056,6 +2182,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:history_datas-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.register_wards.restore',
+            'uses' => 'App\Http\Controllers\Admin\RegisterWardController@restore',
+            'middleware' => 'can:register_wards-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.register_wards.delete_many',
             'uses' => 'App\Http\Controllers\Admin\RegisterWardController@deleteManyByIds',
@@ -2130,6 +2262,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'middleware' => 'can:history_datas-delete',
         ]);
 
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.calendars.restore',
+            'uses' => 'App\Http\Controllers\Admin\CalendarController@restore',
+            'middleware' => 'can:calendars-edit',
+        ]);
+
         Route::delete('/delete-many', [
             'as' => 'administrator.calendars.delete_many',
             'uses' => 'App\Http\Controllers\Admin\CalendarController@deleteManyByIds',
@@ -2174,11 +2312,23 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
         Route::get('/edit/{id}', ['as' => 'administrator.f_a_q_s.edit', 'uses' => 'App\Http\Controllers\Admin\FAQController@edit', 'middleware' => 'can:f_a_q_s-edit',]);
         Route::put('/update/{id}', ['as' => 'administrator.f_a_q_s.update', 'uses' => 'App\Http\Controllers\Admin\FAQController@update', 'middleware' => 'can:f_a_q_s-edit',]);
         Route::delete('/delete/{id}', ['as' => 'administrator.f_a_q_s.delete', 'uses' => 'App\Http\Controllers\Admin\FAQController@delete', 'middleware' => 'can:f_a_q_s-delete',]);
+        Route::post('/restore/{id}', [
+            'as' => 'administrator.f_a_q_s.restore',
+            'uses' => 'App\Http\Controllers\Admin\FAQController@restore',
+            'middleware' => 'can:f_a_q_s-edit',
+        ]);
         Route::delete('/delete-many', ['as' => 'administrator.f_a_q_s.delete_many', 'uses' => 'App\Http\Controllers\Admin\FAQController@deleteManyByIds', 'middleware' => 'can:f_a_q_s-delete',]);
         Route::get('/export', ['as' => 'administrator.f_a_q_s.export', 'uses' => 'App\Http\Controllers\Admin\FAQController@export', 'middleware' => 'can:f_a_q_s-list',]);
         Route::get('/audit/{id}', ['as' => 'administrator.f_a_q_s.audit', 'uses' => 'App\Http\Controllers\Admin\FAQController@audit', 'middleware' => 'can:f_a_q_s-list',]);
         Route::get('/import', ['as' => 'administrator.f_a_q_s.import', 'uses' => 'App\Http\Controllers\Admin\FAQController@import', 'middleware' => 'can:f_a_q_s-list',]);
         Route::get('/{id}', ['as' => 'administrator.f_a_q_s.get', 'uses' => 'App\Http\Controllers\Admin\FAQController@get', 'middleware' => 'can:f_a_q_s-list',]);
         Route::put('/', ['as' => 'administrator.f_a_q_s.sort', 'uses' => 'App\Http\Controllers\Admin\FAQController@sort', 'middleware' => 'can:f_a_q_s-edit',]);
-    });/*step_1*/
+    });
+
+    Route::prefix('affiliates')->group(function () {
+        Route::get('/', ['as' => 'administrator.affiliates.index', 'uses' => 'App\Http\Controllers\Admin\AffiliateController@index', 'middleware' => 'can:f_a_q_s-list',]);
+
+    });
+
+    /*step_1*/
 });
