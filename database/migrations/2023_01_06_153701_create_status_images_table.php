@@ -16,6 +16,9 @@ class CreateStatusImagesTable extends Migration
         Schema::create('status_images', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->index(['created_at']);
         });

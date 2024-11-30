@@ -129,8 +129,6 @@ class ProductController extends Controller
                 $index = 0;
 
                 foreach ($values1 as $index1 => $value1) {
-
-
                     foreach ($values2 as $index2 => $value2) {
                         $productAttributeOption1 = ProductAttributeOption::create([
                             'attribute_id' => $productAttribute1->id,
@@ -161,10 +159,8 @@ class ProductController extends Controller
 
                         $index++;
                     }
-
                 }
             } else {
-
                 foreach ($values1 as $index => $value) {
                     $productAttributeOption = ProductAttributeOption::create([
                         'attribute_id' => $productAttribute1->id,
@@ -238,7 +234,6 @@ class ProductController extends Controller
         $product->save();
 
         if ($request->is_variant == 1) {
-
             $header1 = $request->header_vari_1;
             $header2 = $request->header_vari_2;
             $values1 = $request->values_1;
@@ -269,8 +264,6 @@ class ProductController extends Controller
                 $index = 0;
 
                 foreach ($values1 as $index1 => $value1) {
-
-
                     foreach ($values2 as $index2 => $value2) {
                         $productAttributeOption1 = ProductAttributeOption::create([
                             'attribute_id' => $productAttribute1->id,
@@ -301,10 +294,8 @@ class ProductController extends Controller
 
                         $index++;
                     }
-
                 }
             } else {
-
                 foreach ($values1 as $index => $value) {
                     $productAttributeOption = ProductAttributeOption::create([
                         'attribute_id' => $productAttribute1->id,
@@ -324,7 +315,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-        }else{
+        } else {
             ProductSKU::create([
                 'product_id' => $product->id,
                 'sku' => $request->sku,
@@ -545,7 +536,6 @@ class ProductController extends Controller
                         $productAttributeOption = ProductAttributeOption::find($atrribute_id_vari_2);
                         $productSKUs2[] = optional($productAttributeOption)->productSKU();
                     }
-
                 }
             }
         } else {
@@ -556,7 +546,7 @@ class ProductController extends Controller
 
         $productSKUs = [];
 
-        if (!empty($product)){
+        if (!empty($product)) {
             $product->skus->toArray();
         }
 
@@ -598,7 +588,8 @@ class ProductController extends Controller
         ]);
     }
 
-    function renderContainerInventory(Request $request){
+    function renderContainerInventory(Request $request)
+    {
         $product = $this->model->findOrFail($request->id);
 
         $html = View::make(
@@ -613,7 +604,8 @@ class ProductController extends Controller
         ]);
     }
 
-    function renderContainerPrice(Request $request){
+    function renderContainerPrice(Request $request)
+    {
         $product = $this->model->findOrFail($request->id);
 
         $html = View::make(
@@ -628,13 +620,14 @@ class ProductController extends Controller
         ]);
     }
 
-    function updateInventory(Request $request){
+    function updateInventory(Request $request)
+    {
 
         $item = $this->model->findOrFail($request->product_id);
 
-        foreach ($request->skus as $index => $sku){
+        foreach ($request->skus as $index => $sku) {
             $productSKU = ProductSKU::find($sku);
-            if (!empty($productSKU)){
+            if (!empty($productSKU)) {
                 $productSKU->inventory = Formatter::formatNumberToDatabase($request->values[$index]);
                 $productSKU->save();
             }
@@ -645,16 +638,16 @@ class ProductController extends Controller
         return response()->json([
             'html' => $html
         ]);
-
     }
 
-    function updatePrice(Request $request){
+    function updatePrice(Request $request)
+    {
 
         $item = $this->model->findOrFail($request->product_id);
 
-        foreach ($request->skus as $index => $sku){
+        foreach ($request->skus as $index => $sku) {
             $productSKU = ProductSKU::find($sku);
-            if (!empty($productSKU)){
+            if (!empty($productSKU)) {
                 $productSKU->price = Formatter::formatNumberToDatabase($request->values[$index]);
                 $productSKU->save();
             }
@@ -665,6 +658,5 @@ class ProductController extends Controller
         return response()->json([
             'html' => $html
         ]);
-
     }
 }

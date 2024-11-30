@@ -19,6 +19,8 @@ class CreateNewsTable extends Migration
             $table->string('slug');
             $table->longText('content');
             $table->bigInteger('category_id')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
             $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();

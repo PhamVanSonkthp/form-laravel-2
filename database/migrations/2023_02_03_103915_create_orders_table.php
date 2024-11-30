@@ -28,6 +28,9 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('shipping_method_id')->default(1);
             $table->bigInteger('payment_method_id')->default(1);
             $table->bigInteger('shipping_fee')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

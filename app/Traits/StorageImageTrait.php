@@ -58,13 +58,12 @@ trait StorageImageTrait
 
 //                self::saveToS3($request, $fieldName);
 
-                if ($is_public){
-
+                if ($is_public) {
                     if (!file_exists(public_path() . $folderName . '/original/')) {
                         mkdir(public_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
                     }
                     $ImageUpload->save(public_path() . $folderName . '/original/' . $fileNameHash);
-                }else{
+                } else {
                     if (!file_exists(storage_path() . $folderName . '/original/')) {
                         mkdir(storage_path() . $folderName . '/original/', config('_images_cut_sizes.permission'), true);
                     }
@@ -78,18 +77,17 @@ trait StorageImageTrait
                     $ImageUpload = Image::make($file->getRealpath())->orientate();
                     $ImageUpload->fit($width, $height);
 
-                    if ($is_public){
+                    if ($is_public) {
                         if (!file_exists(public_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
                             mkdir(public_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
                         }
                         $ImageUpload->save(public_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
-                    }else{
+                    } else {
                         if (!file_exists(storage_path() . $folderName . '/' . $width . 'x' . $height . '/')) {
                             mkdir(storage_path() . $folderName . '/' . $width . 'x' . $height . '/', config('_images_cut_sizes.permission'), true);
                         }
                         $ImageUpload->save(storage_path() . $folderName . '/' . $width . 'x' . $height . '/' . $fileNameHash);
                     }
-
                 }
 
                 foreach (config('_images_cut_sizes.scales') as $scale) {
@@ -98,18 +96,17 @@ trait StorageImageTrait
 
                     $ImageUpload = Image::make($file->getRealpath())->orientate();
                     $ImageUpload->fit($width, $height);
-                    if ($is_public){
+                    if ($is_public) {
                         if (!file_exists(public_path() . $folderName . '/scale_' . $scale . '/')) {
                             mkdir(public_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
                         }
                         $ImageUpload->save(public_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
-                    }else{
+                    } else {
                         if (!file_exists(storage_path() . $folderName . '/scale_' . $scale . '/')) {
                             mkdir(storage_path() . $folderName . '/scale_' . $scale . '/', config('_images_cut_sizes.permission'), true);
                         }
                         $ImageUpload->save(storage_path() . $folderName . '/scale_' . $scale . '/' . $fileNameHash);
                     }
-
                 }
 
                 return $dataUpluadTrait;

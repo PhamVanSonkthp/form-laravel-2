@@ -2327,8 +2327,21 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
 
     Route::prefix('affiliates')->group(function () {
         Route::get('/', ['as' => 'administrator.affiliates.index', 'uses' => 'App\Http\Controllers\Admin\AffiliateController@index', 'middleware' => 'can:f_a_q_s-list',]);
-
     });
 
-    /*step_1*/
+    Route::prefix('posts')->group(function () {
+        Route::get('/', ['as'=>'administrator.posts.index','uses'=>'App\Http\Controllers\Admin\PostController@index','middleware'=>'can:posts-list',]);
+        Route::get('/create', ['as'=>'administrator.posts.create','uses'=>'App\Http\Controllers\Admin\PostController@create','middleware'=>'can:posts-add',]);
+        Route::post('/store', ['as'=>'administrator.posts.store','uses'=>'App\Http\Controllers\Admin\PostController@store','middleware'=>'can:posts-add',]);
+        Route::get('/edit/{id}', ['as'=>'administrator.posts.edit','uses'=>'App\Http\Controllers\Admin\PostController@edit','middleware'=>'can:posts-edit',]);
+        Route::put('/update/{id}', ['as'=>'administrator.posts.update','uses'=>'App\Http\Controllers\Admin\PostController@update','middleware'=>'can:posts-edit',]);
+        Route::delete('/delete/{id}', ['as'=>'administrator.posts.delete','uses'=>'App\Http\Controllers\Admin\PostController@delete','middleware'=>'can:posts-delete',]);
+        Route::delete('/delete-many', ['as'=>'administrator.posts.delete_many','uses'=>'App\Http\Controllers\Admin\PostController@deleteManyByIds','middleware'=>'can:posts-delete',]);
+        Route::post('/restore/{id}', ['as' => 'administrator.posts.restore','uses' => 'App\Http\Controllers\Admin\PostController@restore','middleware' => 'can:posts-edit',]);
+        Route::get('/export', ['as'=>'administrator.posts.export','uses'=>'App\Http\Controllers\Admin\PostController@export','middleware'=>'can:posts-list',]);
+        Route::get('/audit/{id}', ['as'=>'administrator.posts.audit','uses'=>'App\Http\Controllers\Admin\PostController@audit','middleware'=>'can:posts-list',]);
+        Route::get('/import', ['as'=>'administrator.posts.import','uses'=>'App\Http\Controllers\Admin\PostController@import','middleware'=>'can:posts-list',]);
+        Route::get('/{id}', ['as'=>'administrator.posts.get','uses'=>'App\Http\Controllers\Admin\PostController@get','middleware'=>'can:posts-list',]);
+        Route::put('/', ['as'=>'administrator.posts.sort','uses'=>'App\Http\Controllers\Admin\PostController@sort','middleware'=>'can:posts-edit',]);
+    });/*step_1*/
 });

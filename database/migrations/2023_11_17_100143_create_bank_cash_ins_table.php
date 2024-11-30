@@ -21,6 +21,9 @@ class CreateBankCashInsTable extends Migration
             $table->text('account_password')->nullable();
             $table->text('account_token_web2m')->nullable();
             $table->tinyInteger('is_default')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

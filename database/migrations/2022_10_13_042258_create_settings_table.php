@@ -56,6 +56,9 @@ class CreateSettingsTable extends Migration
             $table->integer('number_point_taken_refer_success')->default(1);
 
             $table->tinyInteger('is_show_audit_row')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

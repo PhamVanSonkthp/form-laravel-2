@@ -20,6 +20,9 @@ class CreateUserBanksTable extends Migration
             $table->string('account_name');
             $table->string('account_number');
             $table->tinyInteger('is_default')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

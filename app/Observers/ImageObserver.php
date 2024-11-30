@@ -41,9 +41,9 @@ class ImageObserver
         try {
             $paths = explode("/", $image->image_path);
             $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/" . "original" . "/" . $paths[6];
-            if ($image->is_public){
+            if ($image->is_public) {
                 File::delete(public_path($path));
-            }else{
+            } else {
                 File::delete(storage_path($path));
             }
 
@@ -54,9 +54,9 @@ class ImageObserver
 
             foreach (config('_images_cut_sizes.scales') as $scale) {
                 $path = $paths[1] . "/" . $paths[2] . "/" . $paths[3] . "/" . $paths[4] . "/scale_" . $scale . "/" . $paths[6];
-                if ($image->is_public){
+                if ($image->is_public) {
                     File::delete(public_path($path));
-                }else{
+                } else {
                     File::delete(storage_path($path));
                 }
             }

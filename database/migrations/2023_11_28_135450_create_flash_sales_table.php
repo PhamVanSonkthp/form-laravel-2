@@ -19,6 +19,9 @@ class CreateFlashSalesTable extends Migration
             $table->dateTime('begin');
             $table->dateTime('end');
             $table->boolean('is_active');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

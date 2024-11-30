@@ -19,6 +19,9 @@ class CreateRegisterDistrictsTable extends Migration
             $table->string('name');
             $table->string('lat')->nullable();
             $table->string('long')->nullable();
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

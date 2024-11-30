@@ -138,7 +138,7 @@ class Helper extends Model
                     continue;
                 }
                 if (!empty($item) || strlen($item) > 0) {
-                    $query = $query->where($object->getTableName() . ".".$key, $item);
+                    $query = $query->where($object->getTableName() . "." . $key, $item);
                 }
             }
         }
@@ -216,7 +216,7 @@ class Helper extends Model
         if ($request->trash) {
             if (in_array('deleted_at', $columns)) {
                 $query = $query->onlyTrashed();
-            }else{
+            } else {
                 $query = $query->where('id', -1);
             }
         }
@@ -225,7 +225,7 @@ class Helper extends Model
             return $query;
         }
 
-        $items = $query->orderBy('updated_at', 'DESC')->orderBy('id','DESC')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
+        $items = $query->orderBy('updated_at', 'DESC')->orderBy('id', 'DESC')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         if (!empty($make_hiddens) && is_array($make_hiddens)) {
             foreach ($items as $item) {
@@ -417,7 +417,6 @@ class Helper extends Model
     }
 
 
-
     static function getTokenFirebase()
     {
         try {
@@ -433,6 +432,7 @@ class Helper extends Model
 
         return null;
     }
+
     static function refreshTokenFirebase()
     {
 
@@ -475,7 +475,7 @@ class Helper extends Model
             try {
                 $client = new Client();
                 $client->post(
-                    'https://fcm.googleapis.com/v1/projects/'.env('FIREBASE_PROJECT_NAME').'/messages:send',
+                    'https://fcm.googleapis.com/v1/projects/' . env('FIREBASE_PROJECT_NAME') . '/messages:send',
                     [
                         'headers' => [
                             'Content-Type' => 'application/json',
@@ -602,7 +602,7 @@ class Helper extends Model
         $interval = $datetime1->diff($datetime2);
         $days = $interval->format('%a');
 
-        return (int) $days;
+        return (int)$days;
     }
 
     public static function getUUID()
@@ -615,11 +615,11 @@ class Helper extends Model
         $disktotal = disk_total_space('/'); //DISK usage
         $disktotalsize = $disktotal / 1073741824;
 
-        $diskfree  = disk_free_space('/');
+        $diskfree = disk_free_space('/');
         $used = $disktotal - $diskfree;
 
         $diskusedize = $used / 1073741824;
-        $diskuse1   = round(100 - (($diskusedize / $disktotalsize) * 100));
+        $diskuse1 = round(100 - (($diskusedize / $disktotalsize) * 100));
         $diskuse = round(100 - ($diskuse1)) . '%';
 
         return $diskuse;
@@ -630,7 +630,7 @@ class Helper extends Model
         $disktotal = disk_total_space('/'); //DISK usage
         $disktotalsize = $disktotal / 1073741824;
 
-        $diskfree  = disk_free_space('/');
+        $diskfree = disk_free_space('/');
         $used = $disktotal - $diskfree;
 
         $diskusedize = $used / 1073741824;
@@ -698,8 +698,8 @@ class Helper extends Model
     public static function compareTwoDate($date1, $date2)
     {
 
-        $date1  = Carbon::parse($date1);
-        $date2  = Carbon::parse($date2);
+        $date1 = Carbon::parse($date1);
+        $date2 = Carbon::parse($date2);
 
         return $date1->greaterThan($date2);
     }
@@ -719,14 +719,14 @@ class Helper extends Model
         $oldItem = $model->findOrFail($old_id);
         $newItem = $model->findOrFail($new_id);
 
-        if ($newItem->updated_at == $oldItem->updated_at){
-            if ($newItem->id > $oldItem->id){
+        if ($newItem->updated_at == $oldItem->updated_at) {
+            if ($newItem->id > $oldItem->id) {
                 $newItem->updated_at = Carbon::parse($newItem->updated_at)->addSecond();
             }
         }
 
-        $oldDateUpdate =  $oldItem->updated_at;
-        $newDateUpdate =  $newItem->updated_at;
+        $oldDateUpdate = $oldItem->updated_at;
+        $newDateUpdate = $newItem->updated_at;
 
         $newItem->updated_at = $oldDateUpdate;
         $oldItem->updated_at = $newDateUpdate;
@@ -740,12 +740,64 @@ class Helper extends Model
         if (is_int($position)) {
             array_splice($array, $position, 0, $insert);
         } else {
-            $pos   = array_search($position, array_keys($array));
+            $pos = array_search($position, array_keys($array));
             $array = array_merge(
                 array_slice($array, 0, $pos),
                 $insert,
                 array_slice($array, $pos)
             );
         }
+    }
+
+    public static function convertVariableToModelName($modelName = '', $nameSpace = '')
+    {
+        //if the given name space iin array the implode to string with \\
+        if (is_array($nameSpace)) {
+            $nameSpace = implode('\\', $nameSpace);
+        }
+        //by default laravel ships with name space App so while is $nameSpace is not passed considering the
+        // model namespace as App
+        if (empty($nameSpace) || is_null($nameSpace) || $nameSpace === "") {
+            $modelNameWithNameSpace = "App" . '\\' . $modelName;
+        }
+        //if you are using custom name space such as App\Models\Base\Country.php
+        //$namespce must be ['App','Models','Base']
+        if (is_array($nameSpace)) {
+            $modelNameWithNameSpace = $nameSpace . '\\' . $modelName;
+
+        } //if you are passing Such as App in name space
+        elseif (!is_array($nameSpace) && !empty($nameSpace) && !is_null($nameSpace) && $nameSpace !== "") {
+            $modelNameWithNameSpace = $nameSpace . '\\' . $modelName;
+
+        }
+        //if the class exist with current namespace convert to container instance.
+        if (class_exists($modelNameWithNameSpace)) {
+            // $currentModelWithNameSpace = Container::getInstance()->make($modelNameWithNameSpace);
+            // use Illuminate\Container\Container;
+            $currentModelWithNameSpace = app($modelNameWithNameSpace);
+        } //else throw the class not found exception
+        else {
+            throw new \Exception("Unable to find Model : $modelName With NameSpace $nameSpace", E_USER_ERROR);
+        }
+
+        return $currentModelWithNameSpace;
+    }
+
+    public static function prefixToClassName($prefix){
+        $values = explode( "_", $prefix);
+
+
+        $str = "";
+
+        foreach ($values as $index => $value){
+
+            if (count($values) - 1 == $index){
+                $str .= ucwords(substr($value, 0, -1));
+            }else{
+                $str .= ucwords($value);
+            }
+        }
+
+        return $str;
     }
 }

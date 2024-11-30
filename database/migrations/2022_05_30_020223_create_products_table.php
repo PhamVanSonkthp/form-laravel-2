@@ -27,6 +27,9 @@ class CreateProductsTable extends Migration
             $table->text('seo_description')->nullable();
             $table->tinyInteger('is_feature')->default(0);
             $table->tinyInteger('is_variant')->default(0);
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

@@ -17,6 +17,9 @@ class CreateProductAttributeOptionSKUSTable extends Migration
             $table->id();
             $table->bigInteger('sku_id')->index();
             $table->bigInteger('product_attribute_option_id')->index('idx_pr_att_op_id');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
         });
     }

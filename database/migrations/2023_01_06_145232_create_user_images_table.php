@@ -17,6 +17,9 @@ class CreateUserImagesTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->index();
             $table->bigInteger('image_id')->index();
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->index(['created_at']);
         });

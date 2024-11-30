@@ -9,24 +9,24 @@ trait DeleteModelTrait
     public function deleteModelTrait($id, $model, $forceDelete = false, $request = null)
     {
         try {
-            if (optional($request)->is_restore){
+            if (optional($request)->is_restore) {
                 $item = $model->withTrashed()->find($id);
 
-                if (!empty($item)){
+                if (!empty($item)) {
                     $item->restore();
                 }
-            }else if ($forceDelete) {
+            } else if ($forceDelete) {
                 $item = $model->withTrashed()->find($id);
-                if (!empty($item)){
+                if (!empty($item)) {
                     $item->forceDelete();
                 }
             } else {
                 $item = $model->find($id);
-                if (!empty($item)){
+                if (!empty($item)) {
                     $item->delete();
-                }else{
+                } else {
                     $item = $model->withTrashed()->find($id);
-                    if (!empty($item)){
+                    if (!empty($item)) {
                         $item->forceDelete();
                     }
                 }
@@ -43,7 +43,6 @@ trait DeleteModelTrait
                 'code'=>200,
                 'message'=>'success',
             ], 200);
-
         }
     }
 }

@@ -25,7 +25,7 @@ Route::prefix('/demo')->group(function () {
     });
 });
 
-Route::get('/web/robots.txt', function() {
+Route::get('/web/robots.txt', function () {
     $robots = new \Mguinea\Robots\Robots;
 
     // If on the live server

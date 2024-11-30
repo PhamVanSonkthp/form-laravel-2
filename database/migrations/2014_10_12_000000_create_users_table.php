@@ -48,6 +48,9 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamp('last_seen')->nullable();
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

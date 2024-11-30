@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Events\Order;
 use App\Events\OrderEvent;
 use App\Listeners\OrderListener;
+use App\Models\Helper;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class EventServiceProvider extends ServiceProvider
@@ -37,10 +39,25 @@ class EventServiceProvider extends ServiceProvider
         //
         parent::boot();
 
-//        Event::listen(['eloquent.saved: *', 'eloquent.created: *', 'eloquent.updated: *', 'eloquent.deleted: *'], function ($context) {
-//            // dump($context); ---> $context hold information about concerned model and fired event : e.g "eloquent.created: App\User"
-//            // YOUR CODE GOES HERE
+        Event::listen(['eloquent.created: *', 'eloquent.saved: *', 'eloquent.updated: *', 'eloquent.deleted: *'], function ($context) {
+            // dump($context); ---> $context hold information about concerned model and fired event : e.g "eloquent.created: App\User"
+            // YOUR CODE GOES HERE
 //            ResponseCache::clear();
-//        });
+
+
+            $values = explode("\\", $context);
+
+            $modelClass = $values[count($values) - 1];
+
+            array_pop($values);
+
+            $model = Helper::convertVariableToModelName($modelClass, ['App','Models']);
+
+            $item = $model->latest()->first();
+            if (!empty($item) && !is_null($item->created_by_id) && auth()->id()){
+                $item->created_by_id = auth()->id();
+                $item->save();
+            }
+        });
     }
 }

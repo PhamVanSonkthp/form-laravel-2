@@ -52,7 +52,7 @@ class AuthController extends Controller
             'email' => $request->email,
         ])->first();
 
-        if (!empty($user)){
+        if (!empty($user)) {
             return response()->json([
                 'code' => 400,
                 'message' => "Email or Phone has used",
@@ -60,7 +60,9 @@ class AuthController extends Controller
         }
 
         $isLocal = env('APP_ENV') == "local";
-        if (($isLocal && $request->code == "111111")) goto skipOtp;
+        if (($isLocal && $request->code == "111111")) {
+            goto skipOtp;
+        }
 
         if (!(VerificationCode::verify($request->code, $request->email, false) || VerificationCode::verify(strtoupper($request->code), $request->email, false))) {
             return response()->json([
@@ -191,21 +193,20 @@ class AuthController extends Controller
             return response()->json([
                 'message' => $request->phone . " is exist",
                 'code' => 200,
-            ],400);
+            ], 400);
         }
 
         if (!empty(User::where('email', $request->email)->first())) {
             return response()->json([
                 'message' => $request->email . " is exist",
                 'code' => 200,
-            ],400);
+            ], 400);
         }
 
         return response()->json([
             'message' => "You can't use this email and password",
             'code' => 200,
         ]);
-
     }
 
     public function resetPassword(Request $request)
@@ -228,7 +229,9 @@ class AuthController extends Controller
 
         $isLocal = env('APP_ENV') == "local";
 
-        if (($isLocal && $request->code == "111111")) goto skipOtp;
+        if (($isLocal && $request->code == "111111")) {
+            goto skipOtp;
+        }
 
         if (!(VerificationCode::verify($request->code, $request->user_name, true))) {
             return response()->json([

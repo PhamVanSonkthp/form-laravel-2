@@ -74,7 +74,7 @@ class FAQPolicy
      * @param  \App\Models\  $f_a_qs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user,  $f_a_qs)
+    public function restore(User $user, $f_a_qs)
     {
         //
     }
@@ -86,7 +86,7 @@ class FAQPolicy
      * @param  \App\Models\  $f_a_qs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user,  $f_a_qs)
+    public function forceDelete(User $user, $f_a_qs)
     {
         //
     }

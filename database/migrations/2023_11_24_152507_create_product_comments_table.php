@@ -20,6 +20,9 @@ class CreateProductCommentsTable extends Migration
             $table->bigInteger('product_comment_status_id')->default(1);
             $table->text('content');
             $table->tinyInteger('star');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

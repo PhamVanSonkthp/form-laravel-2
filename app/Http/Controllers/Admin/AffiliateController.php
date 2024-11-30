@@ -33,9 +33,9 @@ class AffiliateController extends Controller
     {
         $queries = ['level_number' => 0];
 
-        if (!empty($request->user_id)){
+        if (!empty($request->user_id)) {
             $items = $this->model->where('id', $request->user_id)->get();
-        }else{
+        } else {
             $items = $this->model->searchByQuery($request, $queries);
         }
 

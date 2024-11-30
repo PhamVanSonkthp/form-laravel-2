@@ -19,6 +19,9 @@ class CreateJobEmailsTable extends Migration
             $table->text('title');
             $table->longText('content');
             $table->dateTime('time_send');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->softDeletes();
             $table->timestamps();
             $table->index(['created_at']);

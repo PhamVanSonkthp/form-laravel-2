@@ -26,34 +26,41 @@ class Product extends Model implements Auditable
 
     // begin
 
-    public function textRangePrice(){
+    public function textRangePrice()
+    {
         $skus = $this->skus->pluck('price')->toArray();
 
-        if (count($skus) == 1) return Formatter::formatMoney($skus[0]);
+        if (count($skus) == 1) {
+            return Formatter::formatMoney($skus[0]);
+        }
 
         $min = min($skus);
         $max = max($skus);
 
-        if ($min != $max) return Formatter::formatMoney($min) . " - " . Formatter::formatMoney($max);
+        if ($min != $max) {
+            return Formatter::formatMoney($min) . " - " . Formatter::formatMoney($max);
+        }
 
         return Formatter::formatMoney($min);
     }
 
-    public function numberSell(){
+    public function numberSell()
+    {
         $skus = $this->skus;
 
         $counter = 0;
-        foreach ($skus as $sku){
+        foreach ($skus as $sku) {
             $counter += $sku->sell;
         }
         return $counter;
     }
 
-    public function numberInventory(){
+    public function numberInventory()
+    {
         $skus = $this->skus;
 
         $counter = 0;
-        foreach ($skus as $sku){
+        foreach ($skus as $sku) {
             $counter += $sku->inventory;
         }
         return $counter;
@@ -77,9 +84,10 @@ class Product extends Model implements Auditable
                 $attributeOptionNew = $attributeOptionSKU->productAttributeOption;
 
                 if ($attributeOptionNew) {
-
-                    if ($attribute_id){
-                        if ($attributeOptionNew->attribute_id != $attribute_id) continue;
+                    if ($attribute_id) {
+                        if ($attributeOptionNew->attribute_id != $attribute_id) {
+                            continue;
+                        }
                     }
 
                     $isNew = true;
@@ -90,7 +98,9 @@ class Product extends Model implements Auditable
                         }
                     }
 
-                    if ($isNew) $attributeOptions[] = $attributeOptionNew;
+                    if ($isNew) {
+                        $attributeOptions[] = $attributeOptionNew;
+                    }
                 }
             }
         }
@@ -123,9 +133,10 @@ class Product extends Model implements Auditable
                             }
                         }
 
-                        if ($isNew) $attributes[] = $attributeNew;
+                        if ($isNew) {
+                            $attributes[] = $attributeNew;
+                        }
                     }
-
                 }
             }
         }

@@ -19,6 +19,7 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ParticipantChatController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PointController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ReferController;
 use App\Http\Controllers\API\RegisterCityController;
@@ -74,6 +75,14 @@ Route::prefix('public')->group(function () {
         Route::prefix('comments')->group(function () {
             Route::get('/{id}', [ProductController::class, 'getProductComment']);
             Route::post('/{id}', [ProductController::class, 'createProductComment']);
+        });
+    });
+
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'list']);
+        Route::get('/{id}', [PostController::class, 'get']);
+        Route::prefix('comments')->group(function () {
+            Route::get('/{id}', [PostController::class, 'getComment']);
         });
     });
 
@@ -272,5 +281,14 @@ Route::prefix('user')->group(function () {
         Route::prefix('payment')->group(function () {
             Route::get('/infor', [PaymentController::class, 'getInforPayment']);
         });
+
+        Route::prefix('posts')->group(function () {
+            Route::get('/', [PostController::class, 'listByUser']);
+            Route::post('/', [PostController::class, 'create']);
+            Route::prefix('comments')->group(function () {
+                Route::post('/', [PostController::class, 'createComment']);
+            });
+        });
+
     });
 });

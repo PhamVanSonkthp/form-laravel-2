@@ -40,10 +40,10 @@ class ProductSKU extends Model implements Auditable
 
         $productAttributeOptionSKUs = $this->productAttributeOptionSKUs;
 
-        foreach ($productAttributeOptionSKUs as $productAttributeOptionSKU){
+        foreach ($productAttributeOptionSKUs as $productAttributeOptionSKU) {
             $productAttributeOption = $productAttributeOptionSKU->productAttributeOption;
 
-            if ($productAttributeOption){
+            if ($productAttributeOption) {
                 $values[] = $productAttributeOption->value;
             }
         }

@@ -18,6 +18,9 @@ class CreateProductFlashSalesTable extends Migration
             $table->bigInteger('product_id')->index();
             $table->bigInteger('flash_sale_id')->index();
             $table->bigInteger('price');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

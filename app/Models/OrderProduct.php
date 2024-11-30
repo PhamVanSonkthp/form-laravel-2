@@ -22,7 +22,7 @@ class OrderProduct extends Model implements Auditable
 
     public function productSKU()
     {
-        return $this->hasOne(ProductSKU::class,'id','product_sku_id');
+        return $this->hasOne(ProductSKU::class, 'id', 'product_sku_id');
     }
 
     // end

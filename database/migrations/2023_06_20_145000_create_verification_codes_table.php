@@ -18,6 +18,9 @@ class CreateVerificationCodesTable extends Migration
             $table->string('code');
             $table->string('verifiable');
             $table->timestamp('expires_at');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->index(['created_at']);
         });

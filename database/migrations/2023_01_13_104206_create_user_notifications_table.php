@@ -21,6 +21,9 @@ class CreateUserNotificationsTable extends Migration
             $table->text('image_path')->nullable();
             $table->text('activity')->nullable();
             $table->timestamp('read_at')->nullable();
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

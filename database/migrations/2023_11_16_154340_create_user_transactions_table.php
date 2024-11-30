@@ -19,6 +19,9 @@ class CreateUserTransactionsTable extends Migration
             $table->bigInteger('amount');
             $table->bigInteger('amount_now')->default(0);
             $table->text('description');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);

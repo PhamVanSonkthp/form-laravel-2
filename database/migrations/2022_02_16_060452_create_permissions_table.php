@@ -19,6 +19,9 @@ class CreatePermissionsTable extends Migration
             $table->string('display_name');
             $table->bigInteger('parent_id')->default(0);
             $table->string('key_code')->nullable();
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->index(['created_at']);
         });

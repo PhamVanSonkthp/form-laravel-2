@@ -18,6 +18,9 @@ class CreateSlidersTable extends Migration
             $table->string('link');
             $table->string('feature_image_name');
             $table->string('feature_image_path');
+
+            $table->bigInteger('priority')->default(0)->index();
+            $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at']);
