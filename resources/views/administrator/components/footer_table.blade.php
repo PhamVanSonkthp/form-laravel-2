@@ -4,7 +4,7 @@
             Không có dữ liệu
         </div>
     @else
-        <div style="padding: 20px;">
+        <div style="padding-top: 10px;">
             {{ $items->links('pagination::bootstrap-4') }}
         </div>
 

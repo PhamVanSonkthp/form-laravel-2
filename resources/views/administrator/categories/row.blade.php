@@ -10,6 +10,9 @@
     <td>
         <img class="rounded-circle" src="{{$item->avatar()}}" alt="">
     </td>
+    <td>
+        {{ optional($item->createdBy)->name}}
+    </td>
     <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
     <td>
         @include('administrator.components.action_table', ['prefixView' => $prefixView, '$item' => $item])

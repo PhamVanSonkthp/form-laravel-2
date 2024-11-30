@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="{{ \App\Models\Helper::logoImagePath() }}">
 
-    @yield('title')
+@yield('title')
 
 <!-- Google font-->
     <!-- Fonts -->
@@ -44,7 +44,8 @@
     <script src="{{asset('/assets/administrator/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('/assets/administrator/js/jquery.ui.min.js')}}"></script>
     {{--    <script src="{{asset('/vendor/jquery-ui-1.13.2/jquery-ui.js')}}"></script>--}}
-    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
+    <script type='text/javascript'
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
 
     <script src="{{asset('/vendor/masknumber/jquery.masknumber.js')}}"></script>
 
@@ -92,6 +93,19 @@
 
             @yield('content')
 
+            <div id="container_action_multiple_item" class="text-start border" style="display: none;position: fixed;bottom: 0;right: 37px;width: 1045px;background-color: aliceblue;padding: 20px;z-index: 90;">
+                <span class="me-3">
+                    <span id="label_number_action_multiple_item">1</span> mục đã được chọn
+                </span>
+                <button class="btn btn-danger" onclick="onDeleteItemByCheckbox()">
+                    Xóa
+                </button>
+
+                <button class="btn btn-success {{request('trash') == true ? '' : 'd-none'}}" onclick="onRestoreItemByCheckbox()">
+                    Khôi phục
+                </button>
+            </div>
+
         </div>
 
         <!-- footer start-->
@@ -100,7 +114,8 @@
     </div>
 
 
-    <div class="container-search-method" id="bg" style="top: 60px;position: absolute;width: 100%;height: 100%;background: #2b3d53;z-index: 999;opacity: 0.95;filter: blur(8px);-webkit-filter: blur(8px);">
+    <div class="container-search-method" id="bg"
+         style="top: 60px;position: absolute;width: 100%;height: 100%;background: #2b3d53;z-index: 999;opacity: 0.95;filter: blur(8px);-webkit-filter: blur(8px);">
 
     </div>
 

@@ -24,6 +24,7 @@
     function onSelectCheckboxDeleteItem(){
         let is_checked = $('#check_box_delete_all').is(":checked")
         $('.checkbox-delete-item').prop('checked', is_checked)
+        $('.checkbox-delete-item').trigger('change')
         showButtonDeleteCheckbox(is_checked)
 
         $('#check_box_delete_all_footer').prop('checked', is_checked)
@@ -32,6 +33,7 @@
     function onSelectCheckboxDeleteItemFooter(){
         let is_checked = $('#check_box_delete_all_footer').is(":checked")
         $('.checkbox-delete-item').prop('checked', is_checked)
+        $('.checkbox-delete-item').trigger('change')
         showButtonDeleteCheckbox(is_checked)
 
         $('#check_box_delete_all').prop('checked', is_checked)
@@ -40,11 +42,13 @@
     function showButtonDeleteCheckbox(is_checked){
 
         if (is_checked){
-            $('#btn_delete_checkbox_item').show(500)
-            $('#btn_restore_checkbox_item').show(500)
+            // $('#btn_delete_checkbox_item').show(500)
+            // $('#btn_restore_checkbox_item').show(500)
+            $('#container_action_multiple_item').show(300)
         }else{
-            $('#btn_delete_checkbox_item').hide(500)
-            $('#btn_restore_checkbox_item').hide(500)
+            // $('#btn_delete_checkbox_item').hide(500)
+            // $('#btn_restore_checkbox_item').hide(500)
+            $('#container_action_multiple_item').hide(300)
         }
     }
 
@@ -135,7 +139,12 @@
             $('#check_box_delete_all_footer').prop('checked', is_checked)
             showButtonDeleteCheckbox(number_check > 0)
 
+            $('#label_number_action_multiple_item').html(number_check)
         });
+
+        const width = $('.page-content').width();
+
+        $('#container_action_multiple_item').width(width - 65)
     });
 
 </script>

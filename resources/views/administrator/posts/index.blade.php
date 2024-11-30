@@ -41,6 +41,11 @@
                                     </th>
                                     <th>Hình ảnh</th>
                                     <th>Trạng thái</th>
+                                    <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Tạo bởi {!! \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
                                         <div>
                                             Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
@@ -71,6 +76,11 @@
                                         </th>
                                         <th>Hình ảnh</th>
                                         <th>Trạng thái</th>
+                                        <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
+                                            <div>
+                                                Tạo bởi {!! \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                            </div>
+                                        </th>
                                         <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
                                             <div>
                                                 Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}

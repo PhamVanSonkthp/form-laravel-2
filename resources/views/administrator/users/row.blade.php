@@ -22,6 +22,9 @@
         </div>
     </td>
     <td>{{$item->textTimeOnline()}}</td>
+    <td>
+        {{ optional($item->createdBy)->name}}
+    </td>
     <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
     <td>
         <a id="editer_status_{{$item->id}}"

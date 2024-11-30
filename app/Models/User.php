@@ -63,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         $item = User::find($parent_id);
 
         if ($is_parent) {
-            $old_html .= '<div class="tf-tree" style="font-size: 18px;"><ul>';
+            $old_html .= '<div class="tf-tree"><ul>';
         }
 
         $children = User::where('referral_id', $parent_id)->get();

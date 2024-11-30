@@ -90,7 +90,10 @@
             </strong>
         @endif
     </td>
-
+    <td>
+        {{ optional($item->createdBy)->name}}
+    </td>
+    <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
     <td>
 
         <a class="btn btn-outline-dark btn-sm" title="In"

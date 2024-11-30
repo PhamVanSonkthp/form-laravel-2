@@ -79,6 +79,11 @@
                                             Hoạt động gần đây {!! \App\Models\Helper::getValueInFilterReuquest('last_seen') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('last_seen') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
                                         </div>
                                     </th>
+                                    <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Tạo bởi {!! \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
                                         <div>
                                             Ngày sử dụng {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
@@ -147,6 +152,11 @@
                                     <th onclick='onSortSearch(`last_seen`, `{{ \App\Models\Helper::getValueInFilterReuquest('last_seen') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('last_seen') != "desc" ? "desc" : "") }}`)'>
                                         <div>
                                             Hoạt động gần đây {!! \App\Models\Helper::getValueInFilterReuquest('last_seen') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('last_seen') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
+                                    <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Tạo bởi {!! \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
                                         </div>
                                     </th>
                                     <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>

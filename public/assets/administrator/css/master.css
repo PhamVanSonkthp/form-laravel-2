@@ -23,6 +23,25 @@
     cursor: pointer;
 }
 
+.table-bordered > thead > tr > th:hover{
+    background-color: aliceblue;
+}
+
+.table-bordered > tfoot > tr > th {
+    cursor: pointer;
+}
+
+th > input{
+    cursor: pointer;
+}
+td > input{
+    cursor: pointer;
+}
+
+.table-bordered > tfoot > tr > th:hover{
+    background-color: aliceblue;
+}
+
 .item-search-method{
     cursor: pointer;
 }

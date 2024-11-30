@@ -53,7 +53,11 @@
                                     </th>
 
                                     <th>Api Web2m</th>
-                                    <th>Thời gian tạo</th>
+                                    <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
@@ -69,13 +73,33 @@
                                 <tfoot>
                                 <tr>
                                     <th><input id="check_box_delete_all_footer" type="checkbox" class="checkbox-parent" onclick="onSelectCheckboxDeleteItemFooter()"></th>
-                                    <th>#</th>
-                                    <th>Tên</th>
-                                    <th>Tên ngắn</th>
+                                    <th onclick='onSortSearch(`id`, `{{ \App\Models\Helper::getValueInFilterReuquest('id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('id') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            # {!! \App\Models\Helper::getValueInFilterReuquest('id') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('id') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
+                                    <th onclick='onSortSearch(`vn_name`, `{{ \App\Models\Helper::getValueInFilterReuquest('vn_name') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('vn_name') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Tên ngắn {!! \App\Models\Helper::getValueInFilterReuquest('vn_name') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('vn_name') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
+                                    <th onclick='onSortSearch(`short_name`, `{{ \App\Models\Helper::getValueInFilterReuquest('short_name') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('short_name') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Tên {!! \App\Models\Helper::getValueInFilterReuquest('short_name') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('short_name') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th>Hình ảnh</th>
-                                    <th>Hoạt động</th>
+                                    <th onclick='onSortSearch(`is_active`, `{{ \App\Models\Helper::getValueInFilterReuquest('is_active') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('is_active') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Hoạt động {!! \App\Models\Helper::getValueInFilterReuquest('is_active') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('is_active') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th>Api Web2m</th>
-                                    <th>Thời gian tạo</th>
+                                    <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                     <th>Hành động</th>
                                 </tr>
                                 </tfoot>

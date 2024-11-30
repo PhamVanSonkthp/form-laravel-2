@@ -26,6 +26,10 @@
         @endif
     </td>
     <td>
+        {{ optional($item->createdBy)->name}}
+    </td>
+    <td>{{\App\Models\Formatter::getDateTime($item->created_at)}}</td>
+    <td>
         @include('administrator.components.action_table', ['prefixView' => $prefixView, '$item' => $item])
     </td>
 </tr>

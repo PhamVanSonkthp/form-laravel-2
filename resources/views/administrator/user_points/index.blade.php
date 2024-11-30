@@ -39,7 +39,11 @@
                                     <th>Tài khoản</th>
                                     <th>Số điểm</th>
                                     <th>Nội dung</th>
-                                    <th>Thời gian tạo</th>
+                                    <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                 </tr>
                                 </thead>
 
@@ -55,17 +59,22 @@
                                     <th>Tài khoản</th>
                                     <th>Số điểm</th>
                                     <th>Nội dung</th>
-                                    <th>Thời gian tạo</th>
+                                    <th onclick='onSortSearch(`created_at`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? "desc" : "") }}`)'>
+                                        <div>
+                                            Thời gian tạo {!! \App\Models\Helper::getValueInFilterReuquest('created_at') == "" ? '<i class="fa-solid fa-sort"></i>' : (\App\Models\Helper::getValueInFilterReuquest('created_at') != "desc" ? '<i class="fa-solid fa-arrow-up-a-z text-success"></i>' : '<i class="fa-solid fa-arrow-down-z-a text-danger"></i>') !!}
+                                        </div>
+                                    </th>
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
+
+                        <div>
+                            @include('administrator.components.footer_table')
+                        </div>
                     </div>
 
 
-                    <div class="card-footer">
-                        @include('administrator.components.footer_table')
-                    </div>
                 </div>
 
             </div>
