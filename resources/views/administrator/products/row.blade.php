@@ -16,7 +16,7 @@
                 </h5>
 
                 <div class="mt-1" style="color: #999;font-size: 12px;">
-                    SKU sản phẩm:
+                    SKU sản phẩm: {{($item->skus->first())->sku}}
                 </div>
 
                 <div class="mt-1" style="color: #999;font-size: 12px;">
@@ -70,7 +70,7 @@
                         <div>
                         </div>
                         <div style="color: #999;font-size: 12px;">
-                            SKU phân loại:
+                            SKU phân loại: {{$sku->sku}}
                         </div>
                     </div>
                 </div>
