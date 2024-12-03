@@ -9,6 +9,7 @@ use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryNewsController;
 use App\Http\Controllers\API\CategoryProductsController;
 use App\Http\Controllers\API\ChatController;
+use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\CountryController;
 use App\Http\Controllers\API\FAQController;
 use App\Http\Controllers\API\MemberShipController;
@@ -157,6 +158,14 @@ Route::prefix('public')->group(function () {
         Route::get('/', [FAQController::class, 'list']);
     });
 
+    Route::prefix('contact')->group(function () {
+        Route::get('/', [ContactController::class, 'get']);
+    });
+
+    Route::prefix('voucher')->group(function () {
+        Route::get('/', [VoucherController::class, 'listPublic']);
+    });
+
     Route::get('/version', function () {
         return response()->json([
             "ios" => [
@@ -288,7 +297,9 @@ Route::prefix('user')->group(function () {
             Route::prefix('comments')->group(function () {
                 Route::post('/', [PostController::class, 'createComment']);
             });
+            Route::prefix('like')->group(function () {
+                Route::post('/', [PostController::class, 'createLike']);
+            });
         });
-
     });
 });

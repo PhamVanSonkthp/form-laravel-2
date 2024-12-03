@@ -26,9 +26,15 @@ class PostComment extends Model implements Auditable
 
     // begin
 
-    //    public function one(){
-    //        return $this->hasOne(Model::class, 'id', 'local_id');
-    //    }
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    public function postCommentStatus()
+    {
+        return $this->belongsTo(PostCommentStatus::class);
+    }
     //
     //    public function multiples(){
     //        return $this->hasMany(Model::class, 'id', 'local_id');
@@ -51,7 +57,7 @@ class PostComment extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-       return Helper::getDefaultIcon($this, $size);
+        return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -64,8 +70,9 @@ class PostComment extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -77,7 +84,7 @@ class PostComment extends Model implements Auditable
     {
         $dataInsert = [
             'name' => $request->name,
-            'content' => $request->contents,
+            'description' => $request->description,
             //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
@@ -90,7 +97,7 @@ class PostComment extends Model implements Auditable
     {
         $dataUpdate = [
             'name' => $request->name,
-            'content' => $request->contents,
+            'description' => $request->description,
             //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
@@ -107,7 +114,8 @@ class PostComment extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id){
+    public function findById($id)
+    {
         $item = $this->find($id);
         return $item;
     }

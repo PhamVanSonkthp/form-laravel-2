@@ -2343,5 +2343,20 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
         Route::get('/import', ['as'=>'administrator.posts.import','uses'=>'App\Http\Controllers\Admin\PostController@import','middleware'=>'can:posts-list',]);
         Route::get('/{id}', ['as'=>'administrator.posts.get','uses'=>'App\Http\Controllers\Admin\PostController@get','middleware'=>'can:posts-list',]);
         Route::put('/', ['as'=>'administrator.posts.sort','uses'=>'App\Http\Controllers\Admin\PostController@sort','middleware'=>'can:posts-edit',]);
+    });
+    Route::prefix('post_comments')->group(function () {
+        Route::get('/', ['as'=>'administrator.post_comments.index','uses'=>'App\Http\Controllers\Admin\PostCommentController@index','middleware'=>'can:post_comments-list',]);
+        Route::get('/create', ['as'=>'administrator.post_comments.create','uses'=>'App\Http\Controllers\Admin\PostCommentController@create','middleware'=>'can:post_comments-add',]);
+        Route::post('/store', ['as'=>'administrator.post_comments.store','uses'=>'App\Http\Controllers\Admin\PostCommentController@store','middleware'=>'can:post_comments-add',]);
+        Route::get('/edit/{id}', ['as'=>'administrator.post_comments.edit','uses'=>'App\Http\Controllers\Admin\PostCommentController@edit','middleware'=>'can:post_comments-edit',]);
+        Route::put('/update/{id}', ['as'=>'administrator.post_comments.update','uses'=>'App\Http\Controllers\Admin\PostCommentController@update','middleware'=>'can:post_comments-edit',]);
+        Route::delete('/delete/{id}', ['as'=>'administrator.post_comments.delete','uses'=>'App\Http\Controllers\Admin\PostCommentController@delete','middleware'=>'can:post_comments-delete',]);
+        Route::delete('/delete-many', ['as'=>'administrator.post_comments.delete_many','uses'=>'App\Http\Controllers\Admin\PostCommentController@deleteManyByIds','middleware'=>'can:post_comments-delete',]);
+        Route::post('/restore/{id}', ['as' => 'administrator.post_comments.restore','uses' => 'App\Http\Controllers\Admin\PostCommentController@restore','middleware' => 'can:post_comments-edit',]);
+        Route::get('/export', ['as'=>'administrator.post_comments.export','uses'=>'App\Http\Controllers\Admin\PostCommentController@export','middleware'=>'can:post_comments-list',]);
+        Route::get('/audit/{id}', ['as'=>'administrator.post_comments.audit','uses'=>'App\Http\Controllers\Admin\PostCommentController@audit','middleware'=>'can:post_comments-list',]);
+        Route::get('/import', ['as'=>'administrator.post_comments.import','uses'=>'App\Http\Controllers\Admin\PostCommentController@import','middleware'=>'can:post_comments-list',]);
+        Route::get('/{id}', ['as'=>'administrator.post_comments.get','uses'=>'App\Http\Controllers\Admin\PostCommentController@get','middleware'=>'can:post_comments-list',]);
+        Route::put('/', ['as'=>'administrator.post_comments.sort','uses'=>'App\Http\Controllers\Admin\PostCommentController@sort','middleware'=>'can:post_comments-edit',]);
     });/*step_1*/
 });

@@ -21,6 +21,12 @@ class VoucherController extends Controller
         $this->model = $model;
     }
 
+    public function listPublic(Request $request)
+    {
+        $results = RestfulAPI::response(new Voucher(), $request);
+        return response()->json($results);
+    }
+
     public function list(Request $request)
     {
         $queries = ['user_id' => auth()->id()];

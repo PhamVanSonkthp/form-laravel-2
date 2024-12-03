@@ -159,7 +159,7 @@ return [
         'user_types-edit' => 'user_types_edit',
         'user_types-delete' => 'user_types_delete',
 
-        'f_a_q_s-list' => 'f_a_q_s_list','f_a_q_s-add' => 'f_a_q_s_add','f_a_q_s-edit' => 'f_a_q_s_edit','f_a_q_s-delete' => 'f_a_q_s_delete','posts-list' => 'posts_list','posts-add' => 'posts_add','posts-edit' => 'posts_edit','posts-delete' => 'posts_delete',/*step_1*/
+        'f_a_q_s-list' => 'f_a_q_s_list','f_a_q_s-add' => 'f_a_q_s_add','f_a_q_s-edit' => 'f_a_q_s_edit','f_a_q_s-delete' => 'f_a_q_s_delete','posts-list' => 'posts_list','posts-add' => 'posts_add','posts-edit' => 'posts_edit','posts-delete' => 'posts_delete','post_comments-list' => 'post_comments_list','post_comments-add' => 'post_comments_add','post_comments-edit' => 'post_comments_edit','post_comments-delete' => 'post_comments_delete',/*step_1*/
 
     ],
     'table_module'=>[
@@ -194,7 +194,7 @@ return [
         'calendars',
         'products',
         'user_types',
-        'f_a_q_s','posts',/*step_2*/
+        'f_a_q_s','posts','post_comments',/*step_2*/
     ],
 
     'table_module_name'=>[
@@ -229,7 +229,7 @@ return [
         'Quản lý lịch làm việc',
         'Quản lý sản phẩm',
         'Quản lý Loại khách hàng',
-        'Manage f_a_q_s','Manage posts',/*step_3*/
+        'Manage f_a_q_s','Manage posts','Manage post_comments',/*step_3*/
     ],
 
     'module_children'=>[

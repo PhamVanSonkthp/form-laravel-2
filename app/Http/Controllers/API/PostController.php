@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Formatter;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\PostLike;
 use App\Models\RestfulAPI;
 use App\Models\Setting;
 use App\Models\UserPoint;
@@ -77,6 +78,25 @@ class PostController extends Controller
         $item = PostComment::create([
             'post_id' => $post->id,
             'description' => $request->description,
+            'user_id' => auth()->id(),
+        ]);
+
+        $item->refresh();
+
+        return response()->json($item);
+    }
+
+    public function createLike(Request $request)
+    {
+
+        $request->validate([
+            'post_id' => 'required',
+        ]);
+
+        $post = $this->model->findOrFail($request->post_id);
+
+        $item = PostLike::firstOrCreate([
+            'post_id' => $post->id,
             'user_id' => auth()->id(),
         ]);
 

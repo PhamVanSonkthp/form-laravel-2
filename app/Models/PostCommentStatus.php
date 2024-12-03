@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Post extends Model implements Auditable
+class PostCommentStatus extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
@@ -26,10 +26,9 @@ class Post extends Model implements Auditable
 
     // begin
 
-    public function postStatus()
-    {
-        return $this->belongsTo(PostStatus::class);
-    }
+    //    public function one(){
+    //        return $this->hasOne(Model::class, 'id', 'local_id');
+    //    }
     //
     //    public function multiples(){
     //        return $this->hasMany(Model::class, 'id', 'local_id');
@@ -47,13 +46,12 @@ class Post extends Model implements Auditable
         $array = parent::toArray();
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
-        $array['post_status'] = $this->postStatus;
         return $array;
     }
 
     public function avatar($size = "100x100")
     {
-        return Helper::getDefaultIcon($this, $size);
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -66,9 +64,8 @@ class Post extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -81,8 +78,6 @@ class Post extends Model implements Auditable
         $dataInsert = [
             'name' => $request->name,
             'description' => $request->description,
-            'user_id' => $request->user_id ?? 1,
-            'post_status_id' => 2,
             //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
@@ -96,7 +91,6 @@ class Post extends Model implements Auditable
         $dataUpdate = [
             'name' => $request->name,
             'description' => $request->description,
-            'user_id' => $request->user_id ?? 1,
             //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
@@ -113,9 +107,9 @@ class Post extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id)
-    {
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }
+
 }

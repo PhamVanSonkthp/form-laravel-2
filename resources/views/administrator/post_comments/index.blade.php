@@ -40,8 +40,6 @@
                                         </div>
                                     </th>
                                     <th>Hình ảnh</th>
-                                    <th>Lượt like</th>
-                                    <th>Lượt comment</th>
                                     <th>Trạng thái</th>
                                     <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
                                         <div>
@@ -77,8 +75,6 @@
                                             </div>
                                         </th>
                                         <th>Hình ảnh</th>
-                                        <th>Lượt like</th>
-                                        <th>Lượt comment</th>
                                         <th>Trạng thái</th>
                                         <th onclick='onSortSearch(`created_by_id`, `{{ \App\Models\Helper::getValueInFilterReuquest('created_by_id') == "" ? "asc" : (\App\Models\Helper::getValueInFilterReuquest('created_by_id') != "desc" ? "desc" : "") }}`)'>
                                             <div>

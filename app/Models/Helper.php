@@ -764,11 +764,9 @@ class Helper extends Model
         //$namespce must be ['App','Models','Base']
         if (is_array($nameSpace)) {
             $modelNameWithNameSpace = $nameSpace . '\\' . $modelName;
-
         } //if you are passing Such as App in name space
         elseif (!is_array($nameSpace) && !empty($nameSpace) && !is_null($nameSpace) && $nameSpace !== "") {
             $modelNameWithNameSpace = $nameSpace . '\\' . $modelName;
-
         }
         //if the class exist with current namespace convert to container instance.
         if (class_exists($modelNameWithNameSpace)) {
@@ -777,23 +775,24 @@ class Helper extends Model
             $currentModelWithNameSpace = app($modelNameWithNameSpace);
         } //else throw the class not found exception
         else {
-            throw new \Exception("Unable to find Model : $modelName With NameSpace $nameSpace", E_USER_ERROR);
+            return null;
+//            throw new \Exception("Unable to find Model : $modelName With NameSpace $nameSpace", E_USER_ERROR);
         }
 
         return $currentModelWithNameSpace;
     }
 
-    public static function prefixToClassName($prefix){
-        $values = explode( "_", $prefix);
+    public static function prefixToClassName($prefix)
+    {
+        $values = explode("_", $prefix);
 
 
         $str = "";
 
-        foreach ($values as $index => $value){
-
-            if (count($values) - 1 == $index){
+        foreach ($values as $index => $value) {
+            if (count($values) - 1 == $index) {
                 $str .= ucwords(substr($value, 0, -1));
-            }else{
+            } else {
                 $str .= ucwords($value);
             }
         }

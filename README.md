@@ -1,20 +1,19 @@
 -- Begin --
-* Chạy cron mỗi phút để gửi email và thông báo
-
-php /var/www/artisan schedule:run 1>> /dev/null 2>&1
-
-run chedule: php artisan schedule:run
--- End --
-
--- Begin --
 ** Create Model, Migration, Seeder, Controller, Policy and View **
 
 * Chạy file batch "mcv.bat"
+Ví dụ bảng posts -> nhập Post và posts
+ví dụ bảng category_news -> nhập CategoryNew và category_news
+* sửa file slidebars.blade.php dấu ' thành dấu "
+* Thêm các trường bảng migration
+* Sau dó chạy
+
+php artisan migrate
+php artisan db:seed --class=CreatePermissionSeeder
 
 php artisan make:model Test -m
 php artisan make:seed CreateTestSeeder
 php artisan make:controller Admin/TestController --model=Test
-
 php artisan make:viewadd Test
 php artisan make:viewedit Test
 php artisan make:viewindex Test
@@ -25,47 +24,30 @@ Thêm quyền vào file "config/permissions"
 Thêm check permission vào file "app/Services/PermissionGateAndPolicyAccess"
 Thêm route và middleware "routes/administrator/index"
 Thêm menu vào view "resources/views/administrator/components/slidebars.blade"
-
-* Thêm các trường bảng migration
-* Sau dó chạy
-
-php artisan migrate
-php artisan db:seed --class=CreatePermissionSeeder
 -- End --
 
 -- Begin --
 * Đối với App có sử dụng thông báo, cần đăng ký topic "app" khi vào app
+--- End ---
 
-* Thư viện Laravel-attribute lỗi, thay đổi ở đây "vendor/rinvex/laravel-attributes/src/Events/EntityWasDeleted"  
-bỏ "&& ($values = $entity->getRelationValue($relation)) && ! $values->isEmpty()) {"
-thay thế && ($values = \Illuminate\Support\Collection::wrap($entity->getRelationValue($relation))) && ! $values->isEmpty()) {
-
-
-* Thư viện Laravel-File-Manager lỗi, thay đổi ở đây "vendor/unisharp/laravel-filemanager/src/Lfm.php". sửa func translateFromUtf8()
-$rInput = [];
-if ($this->isRunningOnWindows()) {
-    // $input = iconv('UTF-8', mb_detect_encoding($input), $input);
-
-    if (is_array($input)) {
-        foreach ($input as $k => $i) {
-            $rInput[] = iconv('UTF-8', mb_detect_encoding($i), $i);
-        }
-    } else {
-        $rInput = $input;
-    }
-} else {
-    $rInput = $input;
-}
-return $rInput;
-// return $input;
-
-
+--- Begin ---
+Quy tắc viết code
+https://docs.google.com/spreadsheets/d/1ZLJQd6VN-aafelsc1GoTX8wZYHcuC4bOd40uNmYQSIQ
+--- End ---
 
 * Thư viện Laravel-File-Manager lỗi, thay đổi ở đây "vendor/unisharp/laravel-filemanager/src/Controllers/DeleteController.php"
 bỏ ở func if ($this->lfm->setName($name_to_delete)->isDirectory()) {...}
 //                    array_push($errors, parent::error('delete-folder'));
 //                    continue;
 
+-- End --
+
+-- Begin --
+* Chạy cron mỗi phút để gửi email và thông báo
+
+php /var/www/artisan schedule:run 1>> /dev/null 2>&1
+
+run chedule: php artisan schedule:run
 -- End --
 
 --- Begin ---
@@ -81,12 +63,6 @@ run schedule on Cpanel
 
 --- End ---
 
---- Begin ---
-
-Quy tắc viết code
-https://docs.google.com/spreadsheets/d/1ZLJQd6VN-aafelsc1GoTX8wZYHcuC4bOd40uNmYQSIQ
-	
---- End ---
 
 --- Begin ---
 

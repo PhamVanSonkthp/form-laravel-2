@@ -53,10 +53,12 @@ class EventServiceProvider extends ServiceProvider
 
             $model = Helper::convertVariableToModelName($modelClass, ['App','Models']);
 
-            $item = $model->latest()->first();
-            if (!empty($item) && !is_null($item->created_by_id) && auth()->id()){
-                $item->created_by_id = auth()->id();
-                $item->save();
+            if ($model){
+                $item = $model->latest()->first();
+                if (!empty($item) && !is_null($item->created_by_id) && auth()->id()) {
+                    $item->created_by_id = auth()->id();
+                    $item->save();
+                }
             }
         });
     }

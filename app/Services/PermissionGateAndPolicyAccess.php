@@ -42,7 +42,8 @@ class PermissionGateAndPolicyAccess
         $this->defineGateCalendars();
         $this->defineGateUserTypes();
         $this->defineGateFAQs();
-        $this->defineGatePosts();/*step_1*/
+        $this->defineGatePosts();
+        $this->defineGatePostComments();/*step_1*/
     }
 
     public function defineGateFAQs()
@@ -57,6 +58,12 @@ class PermissionGateAndPolicyAccess
         Gate::define('posts-add', 'App\Policies\PostPolicy@create');
         Gate::define('posts-edit', 'App\Policies\PostPolicy@update');
         Gate::define('posts-delete', 'App\Policies\PostPolicy@delete');
+    }public function defineGatePostComments()
+    {
+        Gate::define('post_comments-list', 'App\Policies\PostCommentPolicy@view');
+        Gate::define('post_comments-add', 'App\Policies\PostCommentPolicy@create');
+        Gate::define('post_comments-edit', 'App\Policies\PostCommentPolicy@update');
+        Gate::define('post_comments-delete', 'App\Policies\PostCommentPolicy@delete');
     }/*step_2*/
 
     public function defineGateUserTypes()

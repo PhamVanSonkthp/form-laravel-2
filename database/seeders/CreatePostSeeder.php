@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use Illuminate\Database\Seeder;
 
 class CreatePostSeeder extends Seeder
@@ -13,8 +14,11 @@ class CreatePostSeeder extends Seeder
      */
     public function run()
     {
-        Model::firstOrCreate([
-            "field" => "",
+        Post::firstOrCreate([
+            "name" => "title",
+            "description" => "<h1>title</h1>",
+            "user_id" => 1,
+            "post_status_id" => 2,
         ]);
     }
 }

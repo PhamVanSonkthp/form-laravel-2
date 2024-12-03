@@ -35,12 +35,12 @@ Route::prefix('ajax/administrator')->group(function () {
 
         Route::prefix('model')->group(function () {
 
-            Route::put('/update_field', function (Request $request){
+            Route::put('/update_field', function (Request $request) {
 
                 $model = Helper::convertVariableToModelName(Helper::prefixToClassName($request->model), ['App','Models']);
                 $item = $model->findOrFail($request->id);
-                foreach ($request->all() as $field => $value){
-                    if ($field != "id" && $field != "model"){
+                foreach ($request->all() as $field => $value) {
+                    if ($field != "id" && $field != "model") {
                         $item->$field = $value;
                     }
                 }
@@ -49,7 +49,6 @@ Route::prefix('ajax/administrator')->group(function () {
                 return response()->json([
                     'message' => 'saved!'
                 ]);
-
             })->name('ajax.administrator.model.update_field');
         });
 

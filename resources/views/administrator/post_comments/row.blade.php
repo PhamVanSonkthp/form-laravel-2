@@ -7,18 +7,12 @@
 
         {{$item->id}}
     </td>
-    <td>{{$item->title ?? $item->name}}</td>
+    <td>{{$item->title ?? $item->description}}</td>
     <td>
         <img class="rounded-circle" src="{{$item->avatar()}}" alt="">
     </td>
     <td>
-        {{\App\Models\Formatter::formatNumber($item->number_like)}}
-    </td>
-    <td>
-        {{\App\Models\Formatter::formatNumber($item->number_comment)}}
-    </td>
-    <td>
-        @include('administrator.components.modal_change_id', ['item' => $item, 'field' => 'post_status_id', 'label' => optional($item->postStatus)->name, 'select2Items' => \App\Models\PostStatus::all()])
+        @include('administrator.components.modal_change_id', ['item' => $item, 'label' => optional($item->postCommentStatus)->name , 'select2Items' => $postCommentStatuses, 'field' => 'post_comment_status_id'])
     </td>
     <td>
         {{ optional($item->createdBy)->name}}
