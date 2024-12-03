@@ -142,7 +142,7 @@ class ProductController extends Controller
 
                         $productSKU = ProductSKU::create([
                             'product_id' => $product->id,
-//                        'sku' => $request->skus[$index],
+                            'sku' => $request->skus[$index],
                             'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
                             'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                         ]);
@@ -169,7 +169,7 @@ class ProductController extends Controller
 
                     $productSKU = ProductSKU::create([
                         'product_id' => $product->id,
-//                    'sku' => $request->skus[$index],
+                        'sku' => $request->skus[$index],
                         'price' => Formatter::formatNumberToDatabase($request->prices[$index]),
                         'inventory' => Formatter::formatNumberToDatabase($request->inventories[$index]),
                     ]);
@@ -547,9 +547,8 @@ class ProductController extends Controller
         $productSKUs = [];
 
         if (!empty($product)) {
-            $product->skus->toArray();
+            $productSKUs = $product->skus->toArray();
         }
-
 
         if (count($productSKUs) > 1) {
             $array1 = array_slice($productSKUs, 0, count($productSKUs) / 2);

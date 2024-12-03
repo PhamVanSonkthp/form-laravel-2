@@ -16,6 +16,6 @@
     </div>
 @endif
 
-{{--                            @include('administrator.components.textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])--}}
+@include('administrator.components.textarea_description', ['name' => 'description' , 'label' => 'Mô tả'])
 
 @include('administrator.components.button_save')

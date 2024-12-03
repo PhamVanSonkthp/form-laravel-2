@@ -169,28 +169,6 @@ class Product extends Model implements Auditable
             $results = $results->where('category_id', $request->category_id);
         }
 
-        if (isset($request->min_price)) {
-            $results = $results->where(function ($query) use ($request) {
-                $query->where('price_client', '>=', $request->min_price)
-                    ->orWhere('price_agent', '>=', $request->min_price);
-            });
-        }
-
-        if (isset($request->max_price)) {
-            $results = $results->where(function ($query) use ($request) {
-                $query->where('price_client', '<=', $request->max_price)
-                    ->orWhere('price_agent', '<=', $request->max_price);
-            });
-        }
-
-        if (isset($request->empty_inventory) && $request->empty_inventory == 2) {
-            $results = $results->where('inventory', '<=', 0);
-        }
-
-        if (isset($request->empty_inventory) && $request->empty_inventory == 1) {
-            $results = $results->where('inventory', '>', 0);
-        }
-
         if (!empty($request->search_query)) {
             $results = $results->where(function ($query) use ($request) {
                 $words = explode(" ", $request->search_query);
@@ -244,13 +222,13 @@ class Product extends Model implements Auditable
             $results = $results->latest('updated_at');
         }
 
-        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
-            $results = $results->where('inventory', '>=', $request->min_inventory);
-        }
-
-        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
-            $results = $results->where('inventory', '<=', $request->max_inventory);
-        }
+//        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
+//            $results = $results->where('inventory', '>=', $request->min_inventory);
+//        }
+//
+//        if (isset($request->min_inventory) && strlen($request->min_inventory)) {
+//            $results = $results->where('inventory', '<=', $request->max_inventory);
+//        }
 
         if ($request->trash) {
             $results = $results->onlyTrashed();

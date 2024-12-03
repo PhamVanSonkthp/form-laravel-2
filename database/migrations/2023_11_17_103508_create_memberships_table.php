@@ -16,6 +16,7 @@ class CreateMembershipsTable extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->longText('description')->nullable();
             $table->bigInteger('require_number_ticket');
             $table->bigInteger('point_receive');
 

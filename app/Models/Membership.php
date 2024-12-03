@@ -69,6 +69,7 @@ class Membership extends Model implements Auditable
             'name' => $request->name,
             'require_number_ticket' => Formatter::formatNumberToDatabase($request->require_number_ticket),
             'point_receive' => Formatter::formatNumberToDatabase($request->point_receive),
+            'description' => $request->description,
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -82,6 +83,7 @@ class Membership extends Model implements Auditable
             'name' => $request->name,
             'require_number_ticket' => Formatter::formatNumberToDatabase($request->require_number_ticket),
             'point_receive' => Formatter::formatNumberToDatabase($request->point_receive),
+            'description' => $request->description,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
