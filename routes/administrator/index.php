@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 Route::get('/admin', 'App\Http\Controllers\Admin\AdminController@loginAdmin')->name('login');
 Route::post('/admin', 'App\Http\Controllers\Admin\AdminController@postLoginAdmin')->name('postLoginAdmin');
@@ -20,6 +21,10 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
             'as' => 'administrator.password.update',
             'uses' => 'App\Http\Controllers\Admin\AdminController@updatePassword',
         ]);
+    });
+
+    Route::prefix('health')->group(function () {
+        Route::get('/', HealthCheckResultsController::class)->name('administrator.dashboard.health');
     });
 
     Route::prefix('dashboard')->group(function () {

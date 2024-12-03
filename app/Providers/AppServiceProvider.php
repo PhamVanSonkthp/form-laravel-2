@@ -15,6 +15,8 @@ use App\Observers\SingleImageObserver;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Spatie\Health\Facades\Health;
+use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        Health::checks([
+            UsedDiskSpaceCheck::new()
+                ->warnWhenUsedSpaceIsAbovePercentage(70)
+                ->failWhenUsedSpaceIsAbovePercentage(90),
+        ]);
     }
 
     /**

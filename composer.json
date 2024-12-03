@@ -35,6 +35,7 @@
         "roumen/sitemap": "^8.0",
         "spatie/image-optimizer": "^1.7",
         "spatie/laravel-backup": "*",
+        "spatie/laravel-health": "*",
         "spatie/laravel-image-optimizer": "^1.6",
         "spatie/laravel-responsecache": "^6.6",
         "spatie/laravel-sitemap": "*",
