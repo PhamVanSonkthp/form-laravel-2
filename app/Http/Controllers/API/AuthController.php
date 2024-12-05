@@ -39,12 +39,6 @@ class AuthController extends Controller
             'email' => 'email:rfc,dns|required',
             'password' => 'required',
             'code' => 'required',
-//            'date_of_birth' => 'date_format:Y-m-d',
-//            'firebase_uid' => 'required|string',
-//            'city_id' => 'required',
-//            'district_id' => 'required',
-//            'ward_id' => 'required',
-//            'address' => 'required',
         ]);
 
         $user = User::where([
@@ -72,6 +66,16 @@ class AuthController extends Controller
         }
 
         skipOtp:
+
+        $user = User::updateOrCreate([
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ], [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Formatter::hash($request->password),
+        ]);
 
         $user->refresh();
 

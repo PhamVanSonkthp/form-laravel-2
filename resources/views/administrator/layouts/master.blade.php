@@ -130,7 +130,7 @@
 <!--Modal-->
 
 <div class="modal fade" id="modal_audit" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Lịch sử</h5>

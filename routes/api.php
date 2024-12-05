@@ -59,6 +59,7 @@ Route::prefix('cache')->group(function () {
         Artisan::call('config:clear');
         Artisan::call('cache:clear');
         Artisan::call('queue:clear');
+        Artisan::call('queue:restart');
 
         return response()->json([
             'message'=> "all cleared!"

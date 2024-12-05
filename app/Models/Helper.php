@@ -799,4 +799,20 @@ class Helper extends Model
 
         return $str;
     }
+
+
+
+    public static function metToKm($input)
+    {
+        return $input / 1000;
+    }
+
+    public static function timeIsBetweenTwoTimes($sunset, $sunrise, $current_time)
+    {
+        $date1 = DateTime::createFromFormat('h:i a', $current_time);
+        $date2 = DateTime::createFromFormat('h:i a', $sunrise);
+        $date3 = DateTime::createFromFormat('h:i a', $sunset);
+
+        return $date1 > $date2 && $date1 < $date3;
+    }
 }

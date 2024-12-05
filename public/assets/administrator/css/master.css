@@ -126,3 +126,7 @@ tr th:first-child {
     position: unset !important;
     border-radius: 12px;
 }
+
+body{
+    padding-right: 0 !important;
+}
