@@ -77,6 +77,22 @@ class AuthController extends Controller
             'password' => Formatter::hash($request->password),
         ]);
 
+        if ($request->hasFile('front_id_image_path')) {
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'single', $user->id);
+            $user->front_id_image_path = $dataUploadFeatureImage['file_path'];
+        }
+
+        if ($request->hasFile('back_id_image_path')) {
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'single', $user->id);
+            $user->back_id_image_path = $dataUploadFeatureImage['file_path'];
+        }
+
+        if ($request->hasFile('portrait_image_path')) {
+            $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, 'image', 'single', $user->id);
+            $user->portrait_image_path = $dataUploadFeatureImage['file_path'];
+        }
+
+        $user->save();
         $user->refresh();
 
         $token = $user->createToken($this->plainToken)->plainTextToken;
@@ -201,14 +217,14 @@ class AuthController extends Controller
         if (!empty(User::where('phone', $request->phone)->first())) {
             return response()->json([
                 'message' => $request->phone . " is exist",
-                'code' => 200,
+                'code' => 400,
             ], 400);
         }
 
         if (!empty(User::where('email', $request->email)->first())) {
             return response()->json([
                 'message' => $request->email . " is exist",
-                'code' => 200,
+                'code' => 400,
             ], 400);
         }
 

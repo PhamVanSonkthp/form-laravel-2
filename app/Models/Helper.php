@@ -809,10 +809,11 @@ class Helper extends Model
 
     public static function timeIsBetweenTwoTimes($sunset, $sunrise, $current_time)
     {
-        $date1 = DateTime::createFromFormat('h:i a', $current_time);
-        $date2 = DateTime::createFromFormat('h:i a', $sunrise);
-        $date3 = DateTime::createFromFormat('h:i a', $sunset);
+        $start = new DateTime($sunset);
+        $end = new DateTime($sunrise);
+        $current = new DateTime($current_time);
 
-        return $date1 > $date2 && $date1 < $date3;
+        return $current >= $start && $current <= $end;
+
     }
 }
