@@ -19,6 +19,7 @@ use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ParticipantChatController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\PointController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProductController;
@@ -60,6 +61,7 @@ Route::prefix('cache')->group(function () {
         Artisan::call('cache:clear');
         Artisan::call('queue:clear');
         Artisan::call('queue:restart');
+        Artisan::call('view:restart');
 
         return response()->json([
             'message'=> "all cleared!"
@@ -290,6 +292,10 @@ Route::prefix('user')->group(function () {
 
         Route::prefix('payment')->group(function () {
             Route::get('/infor', [PaymentController::class, 'getInforPayment']);
+        });
+
+        Route::prefix('payment-method')->group(function () {
+            Route::get('/', [PaymentMethodController::class, 'list']);
         });
 
         Route::prefix('posts')->group(function () {

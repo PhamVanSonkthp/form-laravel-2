@@ -21,6 +21,12 @@ class CreatePaymentMethodSeeder extends Seeder
         ]);
 
         PaymentMethod::firstOrCreate([
+            "name" => "Ví",
+            "public_token" => "public_token",
+            "private_token" => "private_token",
+        ]);
+
+        PaymentMethod::firstOrCreate([
             "name" => "Chuyển khoản",
             "public_token" => "public_token",
             "private_token" => "private_token",
