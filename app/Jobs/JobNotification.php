@@ -53,6 +53,7 @@ class JobNotification implements ShouldQueue
             $this->isSave,
             $this->userID,
             $this->imagePath,
-            $this->activity);
+            $this->activity
+        );
     }
 }

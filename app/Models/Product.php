@@ -249,32 +249,13 @@ class Product extends Model implements Auditable
         $array = parent::toArray();
         $array['description'] = str_replace("src=\"/storage", "src=\"" . env('APP_URL') . "/storage", $array['description']);
         $array['description'] = str_replace("src=\"//bizweb", "src=\"" . "https://bizweb", $array['description']);
+        $array['skus'] = $this->skus;
 
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
 
         $array['star'] = $this->star();
         $array['category'] = $this->category;
-
-        if ((auth('sanctum')->check() || auth()->check()) && (optional(auth('sanctum')->user())->is_admin != 0 || optional(auth()->user())->is_admin != 0)) {
-            // is admin user
-        } else {
-            unset($array['price_import']);
-            if (auth('sanctum')->check()) {
-                $user_type_id = optional(auth('sanctum')->user())->user_type_id;
-                if ($user_type_id == 2) {
-                    unset($array['price_partner']);
-                } else if ($user_type_id == 3) {
-                    unset($array['price_agent']);
-                } else {
-                    unset($array['price_agent']);
-                    unset($array['price_partner']);
-                }
-            } else {
-                unset($array['price_agent']);
-                unset($array['price_partner']);
-            }
-        }
 
         return $array;
     }

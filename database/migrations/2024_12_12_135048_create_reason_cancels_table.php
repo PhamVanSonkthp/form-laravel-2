@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserCartsTable extends Migration
+class CreateReasonCancelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateUserCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_carts', function (Blueprint $table) {
+        Schema::create('reason_cancels', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->index();
-            $table->bigInteger('product_sku_id')->index();
-            $table->bigInteger('quantity');
+            $table->string('name');
 
             $table->bigInteger('priority')->default(0)->index();
             $table->bigInteger('created_by_id')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['created_at']);
         });
     }
@@ -33,6 +32,6 @@ class CreateUserCartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_carts');
+        Schema::dropIfExists('reason_cancels');
     }
 }

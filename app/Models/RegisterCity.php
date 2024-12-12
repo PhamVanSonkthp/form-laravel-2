@@ -69,9 +69,9 @@ class RegisterCity extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+            'lat' => $request->lat,
+            'long' => $request->long,
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -82,9 +82,9 @@ class RegisterCity extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+            'lat' => $request->lat,
+            'long' => $request->long,
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);

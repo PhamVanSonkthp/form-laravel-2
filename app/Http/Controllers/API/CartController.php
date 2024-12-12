@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Helper;
 use App\Models\Product;
+use App\Models\ProductSKU;
 use App\Models\RestfulAPI;
 use App\Models\UserCart;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|numeric|exists:products,id',
+            'product_sku_id' => 'required',
             'quantity' => 'numeric|min:1',
         ]);
 
@@ -60,8 +61,10 @@ class CartController extends Controller
 
         $item = $this->model->where([
             'user_id' => auth()->id(),
-            'product_id' => $request->product_id,
+            'product_sku_id' => $request->product_sku_id,
         ])->first();
+
+        $product = ProductSKU::findOrFail($request->product_sku_id);
 
         DB::beginTransaction();
 
@@ -70,14 +73,12 @@ class CartController extends Controller
         } else {
             $item = $this->model->create([
                 'user_id' => auth()->id(),
-                'product_id' => $request->product_id,
+                'product_sku_id' => $request->product_sku_id,
                 'quantity' => $request->quantity,
             ]);
         }
 
         $item->refresh();
-
-        $product = Product::find($request->product_id);
 
         if ($item->quantity > $product->inventory) {
             DB::rollback();
@@ -105,13 +106,13 @@ class CartController extends Controller
 
         DB::beginTransaction();
 
+        $product = ProductSKU::findOrFail($item->product_sku_id);
+
         $item->update([
             'quantity' => $request->quantity
         ]);
 
         $item->refresh();
-
-        $product = Product::find($item->product_id);
 
         if ($item->quantity > $product->inventory) {
             DB::rollback();

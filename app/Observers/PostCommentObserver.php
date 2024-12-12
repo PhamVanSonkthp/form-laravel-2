@@ -17,7 +17,7 @@ class PostCommentObserver
         //
         $post = $postComment->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->increment('number_comment');
         }
     }
@@ -30,7 +30,6 @@ class PostCommentObserver
      */
     public function updated(PostComment $postComment)
     {
-
     }
 
     /**
@@ -44,7 +43,7 @@ class PostCommentObserver
         //
         $post = $postComment->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->decrement('number_comment');
         }
     }
@@ -60,7 +59,7 @@ class PostCommentObserver
         //
         $post = $postComment->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->increment('number_comment');
         }
     }

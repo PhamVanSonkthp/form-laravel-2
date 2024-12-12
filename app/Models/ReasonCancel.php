@@ -6,49 +6,33 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class UserCart extends Model implements Auditable
+class ReasonCancel extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 
+    protected $hidden = [];
+
+    protected $casts = [];
+
     // begin
 
-    public function productSKU()
-    {
-        return $this->hasOne(ProductSKU::class, 'id','product_sku_id');
-    }
-
-    public static function calculateAmountByIds($ids, $isCartId = true)
-    {
-
-        $amount = 0;
-
-        if ($isCartId) {
-            foreach ($ids as $id) {
-                $userCart = UserCart::find($id);
-
-                if (!empty($userCart)) {
-                    $amount += optional($userCart->product)->priceByUser() ?? 0;
-                }
-            }
-        } else {
-            foreach ($ids as $id) {
-                $product = Product::find($id);
-
-                if (!empty($product)) {
-                    $amount += $product->priceByUser() ?? 0;
-                }
-            }
-        }
-
-        return $amount;
-    }
+    //    public function one(){
+    //        return $this->hasOne(Model::class, 'id', 'local_id');
+    //    }
+    //
+    //    public function multiples(){
+    //        return $this->hasMany(Model::class, 'id', 'local_id');
+    //    }
 
     // end
 
@@ -60,7 +44,6 @@ class UserCart extends Model implements Auditable
     public function toArray()
     {
         $array = parent::toArray();
-        $array['product'] = $this->product;
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
         return $array;
@@ -68,7 +51,7 @@ class UserCart extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-        return Helper::getDefaultIcon($this, $size);
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -81,22 +64,21 @@ class UserCart extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
-    public function searchByQuery($request, $queries = [])
+    public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
     {
-        return Helper::searchByQuery($this, $request, $queries);
+        return Helper::searchByQuery($this, $request, $queries, $randomRecord, $makeHiddens, $isCustom);
     }
 
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+//            'description' => $request->description,
+            //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -107,9 +89,9 @@ class UserCart extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'title' => $request->title,
-            'content' => $request->contents,
-            'slug' => Helper::addSlug($this, 'slug', $request->title),
+            'name' => $request->name,
+//            'description' => $request->description,
+            //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -120,9 +102,14 @@ class UserCart extends Model implements Auditable
         return Helper::deleteByQuery($this, $request, $id, $forceDelete);
     }
 
-    public function findById($id)
+    public function deleteManyByIds($request, $forceDelete = false)
     {
+        return Helper::deleteManyByIds($this, $request, $forceDelete);
+    }
+
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }
+
 }

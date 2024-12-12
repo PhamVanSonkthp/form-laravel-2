@@ -119,5 +119,4 @@ class PostComment extends Model implements Auditable
         $item = $this->find($id);
         return $item;
     }
-
 }

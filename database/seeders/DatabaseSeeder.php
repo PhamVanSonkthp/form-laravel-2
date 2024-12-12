@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateNewSeeder::class);
         $this->call(CreatePostSeeder::class);
         $this->call(CreatePostCommentSeeder::class);
+        $this->call(CreateReasonCancelSeeder::class);
 
     }
 }

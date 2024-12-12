@@ -2363,5 +2363,20 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
         Route::get('/import', ['as'=>'administrator.post_comments.import','uses'=>'App\Http\Controllers\Admin\PostCommentController@import','middleware'=>'can:post_comments-list',]);
         Route::get('/{id}', ['as'=>'administrator.post_comments.get','uses'=>'App\Http\Controllers\Admin\PostCommentController@get','middleware'=>'can:post_comments-list',]);
         Route::put('/', ['as'=>'administrator.post_comments.sort','uses'=>'App\Http\Controllers\Admin\PostCommentController@sort','middleware'=>'can:post_comments-edit',]);
+    });
+    Route::prefix('reason_cancels')->group(function () {
+        Route::get('/', ['as'=>'administrator.reason_cancels.index','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@index','middleware'=>'can:reason_cancels-list',]);
+        Route::get('/create', ['as'=>'administrator.reason_cancels.create','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@create','middleware'=>'can:reason_cancels-add',]);
+        Route::post('/store', ['as'=>'administrator.reason_cancels.store','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@store','middleware'=>'can:reason_cancels-add',]);
+        Route::get('/edit/{id}', ['as'=>'administrator.reason_cancels.edit','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@edit','middleware'=>'can:reason_cancels-edit',]);
+        Route::put('/update/{id}', ['as'=>'administrator.reason_cancels.update','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@update','middleware'=>'can:reason_cancels-edit',]);
+        Route::delete('/delete/{id}', ['as'=>'administrator.reason_cancels.delete','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@delete','middleware'=>'can:reason_cancels-delete',]);
+        Route::delete('/delete-many', ['as'=>'administrator.reason_cancels.delete_many','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@deleteManyByIds','middleware'=>'can:reason_cancels-delete',]);
+        Route::post('/restore/{id}', ['as' => 'administrator.reason_cancels.restore','uses' => 'App\Http\Controllers\Admin\ReasonCancelController@restore','middleware' => 'can:reason_cancels-edit',]);
+        Route::get('/export', ['as'=>'administrator.reason_cancels.export','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@export','middleware'=>'can:reason_cancels-list',]);
+        Route::get('/audit/{id}', ['as'=>'administrator.reason_cancels.audit','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@audit','middleware'=>'can:reason_cancels-list',]);
+        Route::get('/import', ['as'=>'administrator.reason_cancels.import','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@import','middleware'=>'can:reason_cancels-list',]);
+        Route::get('/{id}', ['as'=>'administrator.reason_cancels.get','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@get','middleware'=>'can:reason_cancels-list',]);
+        Route::put('/', ['as'=>'administrator.reason_cancels.sort','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@sort','middleware'=>'can:reason_cancels-edit',]);
     });/*step_1*/
 });

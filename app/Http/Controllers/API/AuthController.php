@@ -168,7 +168,9 @@ class AuthController extends Controller
             ], 400);
         }
 
-        if (env('APP_ENV') == "local" && $request->password == "1111") goto skipPassword;
+        if (env('APP_ENV') == "local" && $request->password == "1111") {
+            goto skipPassword;
+        }
 
         if (!Hash::check($request->password, $user->password)) {
             return response([

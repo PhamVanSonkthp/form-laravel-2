@@ -17,7 +17,7 @@ class PostLikeObserver
         //
         $post = $postLike->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->increment('number_like');
         }
     }
@@ -30,7 +30,6 @@ class PostLikeObserver
      */
     public function updated(PostLike $postLike)
     {
-
     }
 
     /**
@@ -44,7 +43,7 @@ class PostLikeObserver
         //
         $post = $postLike->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->decrement('number_like');
         }
     }
@@ -60,7 +59,7 @@ class PostLikeObserver
         //
         $post = $postLike->post;
 
-        if (!empty($post)){
+        if (!empty($post)) {
             $post->increment('number_like');
         }
     }

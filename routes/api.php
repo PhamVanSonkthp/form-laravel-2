@@ -23,6 +23,7 @@ use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\PointController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\ReasonCancelController;
 use App\Http\Controllers\API\ReferController;
 use App\Http\Controllers\API\RegisterCityController;
 use App\Http\Controllers\API\RegisterDistrictController;
@@ -159,6 +160,10 @@ Route::prefix('public')->group(function () {
 
     Route::prefix('faqs')->group(function () {
         Route::get('/', [FAQController::class, 'list']);
+    });
+
+    Route::prefix('reason-cancel')->group(function () {
+        Route::get('/', [ReasonCancelController::class, 'list']);
     });
 
     Route::prefix('contact')->group(function () {

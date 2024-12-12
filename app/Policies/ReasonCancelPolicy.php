@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostCommentPolicy
+class ReasonCancelPolicy
 {
     use HandlesAuthorization;
 
@@ -24,12 +24,12 @@ class PostCommentPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $post_comments
+     * @param  \App\Models\  $reason_cancels
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.post_comments-list'));
+        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-list'));
     }
 
     /**
@@ -40,41 +40,41 @@ class PostCommentPolicy
      */
     public function create(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.post_comments-add'));
+        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-add'));
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $post_comments
+     * @param  \App\Models\  $reason_cancels
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.post_comments-edit'));
+        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-edit'));
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $post_comments
+     * @param  \App\Models\  $reason_cancels
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.post_comments-delete'));
+        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-delete'));
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $post_comments
+     * @param  \App\Models\  $reason_cancels
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, $post_comments)
+    public function restore(User $user,  $reason_cancels)
     {
         //
     }
@@ -83,10 +83,10 @@ class PostCommentPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $post_comments
+     * @param  \App\Models\  $reason_cancels
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, $post_comments)
+    public function forceDelete(User $user,  $reason_cancels)
     {
         //
     }

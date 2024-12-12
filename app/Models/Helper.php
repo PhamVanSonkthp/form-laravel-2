@@ -109,7 +109,9 @@ class Helper extends Model
         $searchColumnBanned = ['limit', 'page', 'with_trashed'];
 
         foreach ($request->all() as $key => $item) {
-            $item = trim($item);
+            if (is_string($item)) {
+                $item = trim($item);
+            }
 
             if (in_array($key, $searchColumnBanned)) {
                 continue;
@@ -145,7 +147,9 @@ class Helper extends Model
 
         if (is_array($queries)) {
             foreach ($queries as $key => $item) {
-                $item = trim($item);
+                if (is_string($item)) {
+                    $item = trim($item);
+                }
 
                 if (in_array($key, $searchColumnBanned)) {
                     continue;
@@ -180,7 +184,9 @@ class Helper extends Model
             }
 
             foreach ($queries as $key => $item) {
-                $item = trim($item);
+                if (is_string($item)) {
+                    $item = trim($item);
+                }
 
                 if ($key == 'with_trashed' && $item == true) {
                     $query = $query->withTrashed();
@@ -271,7 +277,9 @@ class Helper extends Model
         $searchColumnBanned = ['limit', 'page', 'with_trashed'];
 
         foreach ($request->all() as $key => $item) {
-            $item = trim($item);
+            if (is_string($item)) {
+                $item = trim($item);
+            }
             if ($key == "search_query") {
                 if (!empty($item) || strlen($item) > 0) {
                     $query = $query->where(function ($query) use ($item, $columns, $searchLikeColumns) {
@@ -298,7 +306,9 @@ class Helper extends Model
         }
 
         foreach ($queries as $key => $item) {
-            $item = trim($item);
+            if (is_string($item)) {
+                $item = trim($item);
+            }
 
             if (in_array($key, $searchColumnBanned)) {
                 continue;
@@ -330,7 +340,9 @@ class Helper extends Model
         }
 
         foreach ($queries as $key => $item) {
-            $item = trim($item);
+            if (is_string($item)) {
+                $item = trim($item);
+            }
 
             if ($key == 'with_trashed' && $item == true) {
                 $query = $query->withTrashed();
@@ -801,7 +813,6 @@ class Helper extends Model
     }
 
 
-
     public static function metToKm($input)
     {
         return $input / 1000;
@@ -814,6 +825,5 @@ class Helper extends Model
         $current = new DateTime($current_time);
 
         return $current >= $start && $current <= $end;
-
     }
 }
