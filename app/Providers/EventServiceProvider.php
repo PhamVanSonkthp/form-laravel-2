@@ -55,8 +55,15 @@ class EventServiceProvider extends ServiceProvider
 
             if ($model) {
                 $item = $model->latest()->first();
-                if (!empty($item) && !is_null($item->created_by_id) && auth()->id()) {
-                    $item->created_by_id = auth()->id();
+                if (!empty($item) && !is_null($item->created_by_id)) {
+                    if (!is_null($item->created_by_id)){
+                        $item->created_by_id = auth()->id() ?? 1;
+                    }
+
+                    if (!is_null($item->priority)){
+                        $item->priority = $item->id;
+                    }
+
                     $item->save();
                 }
             }

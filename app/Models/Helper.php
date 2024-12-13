@@ -231,6 +231,10 @@ class Helper extends Model
             return $query;
         }
 
+        if (in_array("priority", $columns) ) {
+            $query = $query->orderBy('priority', 'DESC');
+        }
+
         $items = $query->orderBy('updated_at', 'DESC')->orderBy('id', 'DESC')->paginate(Formatter::getLimitRequest($request->limit))->appends(request()->query());
 
         if (!empty($make_hiddens) && is_array($make_hiddens)) {
@@ -726,25 +730,16 @@ class Helper extends Model
         ];
     }
 
-    public static function sortTwoModel($model, $old_id, $new_id)
+    public static function sortTwoModel($model, $old_id, $new_ids)
     {
-        $oldItem = $model->findOrFail($old_id);
-        $newItem = $model->findOrFail($new_id);
+        $maxPriority = max($new_ids);
 
-        if ($newItem->updated_at == $oldItem->updated_at) {
-            if ($newItem->id > $oldItem->id) {
-                $newItem->updated_at = Carbon::parse($newItem->updated_at)->addSecond();
-            }
+        foreach ($new_ids as $new_id){
+            $item = $model->findOrFail($new_id);
+            $item->priority = $maxPriority--;
+            $item->save();
         }
 
-        $oldDateUpdate = $oldItem->updated_at;
-        $newDateUpdate = $newItem->updated_at;
-
-        $newItem->updated_at = $oldDateUpdate;
-        $oldItem->updated_at = $newDateUpdate;
-
-        $oldItem->save();
-        $newItem->save();
     }
 
     public static function addItemToPositionArray(&$array, $position, $insert)

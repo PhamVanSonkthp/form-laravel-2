@@ -1,0 +1,21 @@
+// change status
+@include('administrator.components.modal_change_id', ['item' => $item, 'field' => 'post_status_id', 'label' => optional($item->postStatus)->name, 'select2Items' => \App\Models\PostStatus::all()])
+
+// call ajax
+callAjax(
+    "GET",
+    "{{route('ajax.administrator.products.search')}}",
+    {
+        'id': id,
+    },
+    (response) => {
+
+    },
+    (error) => {
+
+    },
+    false,
+)
+
+// select 2
+@include('administrator.components.select2_allow_clear', ['label' => 'Khách hàng', 'name' => 'user_id' , 'select2Items' => \App\Models\User::where('is_admin', 0)->latest()->get()])

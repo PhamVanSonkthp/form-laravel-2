@@ -1,4 +1,4 @@
-<i data-feather="move" class="icon-sm handle me-2"></i>
+<i style="cursor: move;" data-feather="move" class="icon-sm handle me-2"></i>
 
 <script>
 
@@ -26,13 +26,16 @@
 
                 const new_id = $('#tr_container_index_' + evt.newIndex).attr('data-id')
 
+                const new_ids = Array.from(simpleList.querySelectorAll('tr')).map((row) => {
+                    return row.getAttribute('data-id');
+                });
 
                 callAjax(
                     "PUT",
                     "{{route('administrator.'.$prefixView.'.sort')}}",
                     {
-                        'old_id': old_id,
-                        'new_id': new_id,
+                        'old_id': new_ids,
+                        'new_id': new_ids,
                     },
                     (response) => {
 

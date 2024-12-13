@@ -212,8 +212,8 @@ class AuthController extends Controller
     public function checkExist(Request $request)
     {
         $request->validate([
-            'phone' => 'required|string',
-            'email' => 'required|string',
+            'phone' => 'required',
+            'email' => 'required',
         ]);
 
         if (!empty(User::where('phone', $request->phone)->first())) {
