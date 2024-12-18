@@ -31,17 +31,25 @@ class Kernel extends ConsoleKernel
         $schedule->command('schedule:bank_cash_in')
             ->everyMinute();
 
-        $schedule->command('cache:clear-expired')
-            ->timezone('Asia/Ho_Chi_Minh')
-            ->dailyAt('00:00');
+        if (env('APP_ENV') == "local"){
+            $schedule->command('cache:clear-expired')->everyMinute();
+            $schedule->command('schedule:sitemap')->everyMinute();
+            $schedule->command('backup:run')->everyMinute();
 
-        $schedule->command('schedule:sitemap')
-            ->timezone('Asia/Ho_Chi_Minh')
-            ->dailyAt('00:00');
+        }else{
+            $schedule->command('cache:clear-expired')
+                ->timezone('Asia/Ho_Chi_Minh')
+                ->dailyAt('00:00');
 
-        $schedule->command('backup:run')
-            ->timezone('Asia/Ho_Chi_Minh')
-            ->dailyAt('00:00');
+            $schedule->command('schedule:sitemap')
+                ->timezone('Asia/Ho_Chi_Minh')
+                ->dailyAt('00:00');
+
+            $schedule->command('backup:run')
+                ->timezone('Asia/Ho_Chi_Minh')
+                ->dailyAt('00:00');
+        }
+
 
         // duplicate with cores of servers
         $schedule->command('queue:work --timeout=60')

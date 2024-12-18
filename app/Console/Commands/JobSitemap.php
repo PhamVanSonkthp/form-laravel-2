@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\News;
 use App\Notifications\Notifications;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 
 class JobSitemap extends Command

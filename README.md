@@ -61,6 +61,12 @@ php /home/sayalo/domains/sayalo.gover.vn/public_html/artisan schedule:run > /dev
 run schedule on Cpanel
 /usr/local/bin/php /home/gxzrilko/vip.maubuifinance.com/artisan schedule:run >> /dev/null 2>&1	
 
+Xóa cache & restart queue
+
+php /home/sayalo/domains/sayalo.gover.vn/public_html/artisan queue:clear > /dev/null 2>&1
+php /home/sayalo/domains/sayalo.gover.vn/public_html/artisan config:clear > /dev/null 2>&1
+php /home/sayalo/domains/sayalo.gover.vn/public_html/artisan cache:clear > /dev/null 2>&1
+
 --- End ---
 
 

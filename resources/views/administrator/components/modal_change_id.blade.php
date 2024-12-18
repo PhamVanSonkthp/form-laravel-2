@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <label>{{$label}} @include('administrator.components.lable_require') </label>
                 <div>
-                    <select style="with:100%;" id="select_change_{{$randomID}}" name="select_change_{{$randomID}}" class="form-control select2_init">
+                    <select style="with:100%;" id="select_change_{{$randomID}}" name="select_change_{{$randomID}}" class="form-control">
                         @foreach($select2Items as $select2Item)
                             <option value="{{$select2Item->id}}" {{$item->$field == $select2Item->id ? 'selected' : ''}}>{{($select2Item->name ?? $select2Item->title) ?? $select2Item->$field}}</option>
                         @endforeach

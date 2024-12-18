@@ -25,6 +25,13 @@ Route::prefix('/demo')->group(function () {
     });
 });
 
+Route::prefix('/news')->group(function () {
+    Route::get('/{id}', [
+        'as' => 'news.detail',
+        'uses' => 'App\Http\Controllers\NewsController@detail',
+    ]);
+});
+
 Route::get('/web/robots.txt', function () {
     $robots = new \Mguinea\Robots\Robots;
 

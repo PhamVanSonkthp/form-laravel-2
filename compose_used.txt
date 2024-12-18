@@ -1,3 +1,9 @@
+//
+@include('administrator.components.require_input_text' , ['name' => 'title' , 'label' => 'Tiêu đề'])
+
+//
+@include('administrator.components.require_textarea_description', ['name' => 'contents' , 'label' => 'Mô tả'])
+
 // change status
 @include('administrator.components.modal_change_id', ['item' => $item, 'field' => 'post_status_id', 'label' => optional($item->postStatus)->name, 'select2Items' => \App\Models\PostStatus::all()])
 
