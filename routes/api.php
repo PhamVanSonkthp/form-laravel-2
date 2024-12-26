@@ -33,6 +33,7 @@ use App\Http\Controllers\API\SystemBranchController;
 use App\Http\Controllers\API\UserBankController;
 use App\Http\Controllers\API\VoucherController;
 use App\Http\Controllers\API\WalletController;
+use App\Models\AppVersion;
 use App\Models\Helper;
 use App\Models\Setting;
 use App\Models\User;
@@ -121,6 +122,7 @@ Route::prefix('public')->group(function () {
 
     Route::prefix('news')->group(function () {
         Route::get('/', [NewsController::class, 'list']);
+        Route::get('/relate', [NewsController::class, 'relate']);
         Route::get('/{id}', [NewsController::class, 'get']);
     });
 
@@ -175,24 +177,13 @@ Route::prefix('public')->group(function () {
     });
 
     Route::get('/version', function () {
-        return response()->json([
-            "ios" => [
-                [
-                    'version' => "1.0.0",
-                    'is_debug' => true,
-                    'is_update' => true,
-                    'is_require' => true,
-                ],
-            ],
-            "android" => [
-                [
-                    'version' => "1.0.0",
-                    'is_debug' => true,
-                    'is_update' => true,
-                    'is_require' => true,
-                ],
 
-            ],
+        $resultAndroids = AppVersion::where('name', 'Android')->latest()->get();
+        $resultIOSes = AppVersion::where('name', 'IOS')->latest()->get();
+
+        return response()->json([
+            "ios" => $resultIOSes,
+            "android" => $resultAndroids,
         ]);
     });
 });
@@ -241,6 +232,8 @@ Route::prefix('user')->group(function () {
         Route::prefix('order')->group(function () {
             Route::get('/', [OrderController::class, 'list']);
             Route::post('/', [OrderController::class, 'store']);
+            Route::post('/buy-now', [OrderController::class, 'buyNow']);
+            Route::delete('/{id}', [OrderController::class, 'cancel']);
         });
 
         Route::prefix('voucher')->group(function () {

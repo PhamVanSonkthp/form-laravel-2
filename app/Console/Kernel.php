@@ -31,12 +31,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('schedule:bank_cash_in')
             ->everyMinute();
 
-        if (env('APP_ENV') == "local"){
+        if (env('APP_ENV') == "local") {
             $schedule->command('cache:clear-expired')->everyMinute();
             $schedule->command('schedule:sitemap')->everyMinute();
             $schedule->command('backup:run')->everyMinute();
-
-        }else{
+        } else {
             $schedule->command('cache:clear-expired')
                 ->timezone('Asia/Ho_Chi_Minh')
                 ->dailyAt('00:00');

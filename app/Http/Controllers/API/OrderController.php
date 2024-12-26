@@ -7,7 +7,9 @@ use App\Models\Helper;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\ProductSKU;
 use App\Models\RestfulAPI;
+use App\Models\UserAddress;
 use App\Models\UserCart;
 use App\Models\Voucher;
 use App\Models\VoucherUsed;
@@ -37,18 +39,22 @@ class OrderController extends Controller
         $request->validate([
             'cart_ids' => 'required|array|min:1',
             "cart_ids.*" => "required|numeric|min:1",
-            "voucher_id" => "numeric|min:1",
+            "user_address_id" => "required|numeric|min:1",
+            "payment_method_id" => "required|numeric|min:1",
         ]);
 
         DB::beginTransaction();
 
+        $userAddress = UserAddress::findOrFail($request->user_address_id);
+
         $item = $this->model->create([
             'user_id' => auth()->id(),
-            'user_name' => auth()->user()->name,
-            'user_phone' => auth()->user()->phone,
-            'user_address' => auth()->user()->address,
+            'user_name' => $userAddress->name,
+            'user_phone' => $userAddress->phone,
+            'user_address' => $userAddress->address_detail . " - " .  optional($userAddress->ward)->name . " - " . optional($userAddress->district)->name . " - " . optional($userAddress->city)->name,
             'user_email' => auth()->user()->email,
             'note' => $request->note,
+            'payment_method_id' => $request->payment_method_id,
         ]);
 
         $amount = 0;
@@ -71,9 +77,8 @@ class OrderController extends Controller
                 'quantity' => $cartItem->quantity,
                 'price' => $cartItem->productSKU->price,
                 'name' => trim(optional($cartItem->productSKU->product)->name . " " . $cartItem->productSKU->textSKUs()),
-                'product_image' => $cartItem->productSKU->avatar(),
+                'product_image' => $cartItem->productSKU->avatar() ?? optional($cartItem->productSKU->product)->avatar(),
             ]);
-
         }
 
         if (isset($request->voucher_id) && !empty($request->voucher_id)) {
@@ -133,6 +138,104 @@ class OrderController extends Controller
             $cartItem = UserCart::find($cart_id);
             $cartItem->delete();
         }
+
+        DB::commit();
+
+        $item->refresh();
+
+        return response()->json($item);
+    }
+
+
+    public function buyNow(Request $request)
+    {
+
+        $request->validate([
+            'product_sku_id' => 'required',
+            'quantity' => 'required',
+            "user_address_id" => "required",
+            "payment_method_id" => "required",
+        ]);
+
+        DB::beginTransaction();
+
+        $userAddress = UserAddress::findOrFail($request->user_address_id);
+
+        $item = $this->model->create([
+            'user_id' => auth()->id(),
+            'user_name' => $userAddress->name,
+            'user_phone' => $userAddress->phone,
+            'user_address' => $userAddress->address_detail . " - " .  optional($userAddress->ward)->name . " - " . optional($userAddress->district)->name . " - " . optional($userAddress->city)->name,
+            'user_email' => auth()->user()->email,
+            'note' => $request->note,
+            'payment_method_id' => $request->payment_method_id,
+        ]);
+
+        $productSKU = ProductSKU::findOrFail($request->product_sku_id);
+
+        $amount = $productSKU->price * $request->quantity;
+
+        OrderProduct::create([
+            'order_id' => $item->id,
+            'product_sku_id' => $productSKU->id,
+            'quantity' => $request->quantity,
+            'price' => $productSKU->price,
+            'name' => trim(optional($productSKU->product)->name . " " . $productSKU->textSKUs()),
+            'product_image' => $productSKU->avatar() ?? optional($productSKU->product)->avatar(),
+        ]);
+
+        if (isset($request->voucher_id) && !empty($request->voucher_id)) {
+            $voucher = Voucher::find($request->voucher_id);
+
+            if (empty($voucher)) {
+                $voucher = Voucher::where('code', $request->voucher_id)->first();
+            }
+
+            if (empty($voucher)) {
+                return response()->json(Helper::errorAPI(99, [], "voucher_id invalid"), 400);
+            }
+
+            if ($voucher->isLimited()) {
+                return response()->json(Helper::errorAPI(99, [], "voucher is limited"), 400);
+            }
+
+            if ($voucher->isLimitedByUser()) {
+                return response()->json(Helper::errorAPI(99, [], "voucher is limited by user"), 400);
+            }
+
+            if ($voucher->isExpired()) {
+                return response()->json(Helper::errorAPI(99, [], "voucher is is expired"), 400);
+            }
+
+            if ($voucher->isUnavailable()) {
+                return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
+            }
+
+            $amount = UserCart::calculateAmountByIds($request->cart_ids);
+
+            if ($voucher->isAcceptAmount($amount)) {
+                return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
+            }
+
+            $discount = $voucher->amountDiscount($amount);
+
+            $amount = $amount - $discount;
+
+            if ($amount < 0) {
+                $amount = 0;
+            }
+
+            VoucherUsed::create([
+                'user_id' => auth()->id(),
+                'voucher_id' => $voucher->id,
+            ]);
+
+            $voucher->increment('used');
+        }
+
+        $item->update([
+            'amount' => $amount
+        ]);
 
         DB::commit();
 
@@ -246,5 +349,13 @@ class OrderController extends Controller
         return response()->json([
             'message' => 'sorted'
         ]);
+    }
+    public function cancel(Request $request, $id)
+    {
+
+        $item = $this->model->where(['id' => $id, 'user_id' => auth()->id()])->firstOrFail();
+        $item->order_status_id = 4;
+        $item->save();
+        return response()->json($item);
     }
 }

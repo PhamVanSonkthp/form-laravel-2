@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ReasonCancelPolicy
+class AppVersionPolicy
 {
     use HandlesAuthorization;
 
@@ -24,12 +24,12 @@ class ReasonCancelPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $reason_cancels
+     * @param  \App\Models\  $app_versions
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-list'));
+        return $user->checkPermissionAccess(config('permissions.access.app_versions-list'));
     }
 
     /**
@@ -40,41 +40,41 @@ class ReasonCancelPolicy
      */
     public function create(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-add'));
+        return $user->checkPermissionAccess(config('permissions.access.app_versions-add'));
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $reason_cancels
+     * @param  \App\Models\  $app_versions
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-edit'));
+        return $user->checkPermissionAccess(config('permissions.access.app_versions-edit'));
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $reason_cancels
+     * @param  \App\Models\  $app_versions
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.reason_cancels-delete'));
+        return $user->checkPermissionAccess(config('permissions.access.app_versions-delete'));
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $reason_cancels
+     * @param  \App\Models\  $app_versions
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, $reason_cancels)
+    public function restore(User $user,  $app_versions)
     {
         //
     }
@@ -83,10 +83,10 @@ class ReasonCancelPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\  $reason_cancels
+     * @param  \App\Models\  $app_versions
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, $reason_cancels)
+    public function forceDelete(User $user,  $app_versions)
     {
         //
     }

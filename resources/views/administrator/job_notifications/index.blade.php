@@ -150,7 +150,7 @@
 
                                 <div class="mt-3">
                                     <label>Chọn khách hàng (Không chọn sẽ gửi tới tất cả khách hàng)</label>
-                                    <select id="select_user_id" class="form-control select2_init_multiple" name="parent_id" multiple>
+                                    <select id="select_user_id" style="width: 100%;" class="form-control" name="parent_id" multiple>
                                         @foreach(\App\Models\User::where('is_admin', 0)->latest()->get() as $item)
                                             <option value="{{$item->id}}">#{{$item->id}} - {{$item->name}}</option>
                                         @endforeach
@@ -497,6 +497,12 @@
                 event.preventDefault()
                 var tableRow = table.row($(this).parents('tr'));
                 editUser($(this).data('id'), tableRow)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#select_user_id").select2({
+                dropdownParent: $("#modal_add_user")
             });
         });
 

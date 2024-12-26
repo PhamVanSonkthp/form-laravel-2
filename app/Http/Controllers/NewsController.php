@@ -32,7 +32,7 @@ class NewsController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $item = News::where('id' , $id)->orWhere('slug', $id)->first();
+        $item = News::where('id', $id)->orWhere('slug', $id)->first();
 
         return $item;
     }

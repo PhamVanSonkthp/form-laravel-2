@@ -2,10 +2,17 @@
 
 namespace App\Observers;
 
+use App\Models\Helper;
 use App\Models\Order;
 
 class OrderObserver
 {
+
+    public function creating(Order $order)
+    {
+        $order->code = "#" . strtoupper(Helper::randomString(9));
+    }
+
     /**
      * Handle the Order "created" event.
      *

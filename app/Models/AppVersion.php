@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class ReasonCancel extends Model implements Auditable
+class AppVersion extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
@@ -51,7 +51,7 @@ class ReasonCancel extends Model implements Auditable
 
     public function avatar($size = "100x100")
     {
-        return Helper::getDefaultIcon($this, $size);
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -64,9 +64,8 @@ class ReasonCancel extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -77,8 +76,11 @@ class ReasonCancel extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'name' => $request->name,
-//            'description' => $request->description,
+            'name' => $request->type_id == 1 ? "Android" : 'IOS',
+            'version' => $request->version,
+            'is_debug' => $request->is_debug ? 1 : 0,
+            'is_update' => $request->is_update ? 1 : 0,
+            'is_require' => $request->is_require ? 1 : 0,
             //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
@@ -90,8 +92,11 @@ class ReasonCancel extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'name' => $request->name,
-//            'description' => $request->description,
+            'name' => $request->type_id == 1 ? "Android" : 'IOS',
+            'version' => $request->version,
+            'is_debug' => $request->is_debug ? 1 : 0,
+            'is_update' => $request->is_update ? 1 : 0,
+            'is_require' => $request->is_require ? 1 : 0,
             //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
@@ -108,9 +113,9 @@ class ReasonCancel extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id)
-    {
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }
+
 }

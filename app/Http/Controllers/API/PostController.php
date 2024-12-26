@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Formatter;
+use App\Models\Helper;
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\PostLike;
 use App\Models\RestfulAPI;
 use App\Models\Setting;
 use App\Models\UserPoint;
+use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -59,6 +62,25 @@ class PostController extends Controller
             'description' => $request->description,
             'user_id' => auth()->id(),
         ]);
+
+        $files = $request->file('path_images');
+
+        if (is_array($files)) {
+
+            foreach ($request->path_images as $path_image){
+
+                $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $path_image, 'multiple', $item->id);
+
+                Image::create([
+                    'uuid' => Helper::randomString(),
+                    'table' => $item->getTableName(),
+                    'image_path' => $dataUploadFeatureImage['file_path'],
+                    'image_name' => $dataUploadFeatureImage['file_name'],
+                    'relate_id' => $item->id,
+                ]);
+
+            }
+        }
 
         $item->refresh();
 

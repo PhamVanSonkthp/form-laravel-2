@@ -231,7 +231,7 @@ class Helper extends Model
             return $query;
         }
 
-        if (in_array("priority", $columns) ) {
+        if (in_array("priority", $columns)) {
             $query = $query->orderBy('priority', 'DESC');
         }
 
@@ -496,6 +496,7 @@ class Helper extends Model
                         'headers' => [
                             'Content-Type' => 'application/json',
                             'Authorization' => "Bearer " . $token,
+                            'priority' => 'high',
                         ],
                         'json' => [
                             'message' => [
@@ -549,9 +550,9 @@ class Helper extends Model
         ];
     }
 
-    public static function randomString()
+    public static function randomString($length = 10)
     {
-        return Str::random(10);
+        return Str::random($length);
     }
 
     public static function sendEmailToShop($subject, $body)
@@ -734,12 +735,11 @@ class Helper extends Model
     {
         $maxPriority = max($new_ids);
 
-        foreach ($new_ids as $new_id){
+        foreach ($new_ids as $new_id) {
             $item = $model->findOrFail($new_id);
             $item->priority = $maxPriority--;
             $item->save();
         }
-
     }
 
     public static function addItemToPositionArray(&$array, $position, $insert)

@@ -30,6 +30,7 @@ class Product extends Model implements Auditable
     {
         $skus = $this->skus->pluck('price')->toArray();
 
+        if (count($skus) == 0) return "";
         if (count($skus) == 1) {
             return Formatter::formatMoney($skus[0]);
         }
@@ -249,6 +250,7 @@ class Product extends Model implements Auditable
         $array = parent::toArray();
         $array['description'] = str_replace("src=\"/storage", "src=\"" . env('APP_URL') . "/storage", $array['description']);
         $array['description'] = str_replace("src=\"//bizweb", "src=\"" . "https://bizweb", $array['description']);
+        $array['attributes'] = $this->attributes();
         $array['skus'] = $this->skus;
 
         $array['image_path_avatar'] = $this->avatar();

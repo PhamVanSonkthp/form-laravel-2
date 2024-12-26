@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNewsTable extends Migration
+class CreateAppVersionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('app_versions', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index();
-            $table->string('slug');
-            $table->longText('contents');
-            $table->bigInteger('category_id')->default(0);
+            $table->string('name');
+            $table->string('version');
+            $table->boolean('is_debug')->default(true);
+            $table->boolean('is_update')->default(true);
+            $table->boolean('is_require')->default(true);
 
             $table->bigInteger('priority')->default(0)->index();
             $table->bigInteger('created_by_id')->default(0);
@@ -35,6 +36,6 @@ class CreateNewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('app_versions');
     }
 }

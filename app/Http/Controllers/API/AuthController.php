@@ -231,7 +231,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'message' => "You can't use this email and password",
+            'message' => "You can use this email and phone",
             'code' => 200,
         ]);
     }
@@ -281,7 +281,7 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'date_of_birth' => 'date_format:Y-m-d',
+            'date_of_birth' => 'nullable|date_format:Y-m-d',
             'image' => 'nullable|mimes:jpg,jpeg,png',
         ]);
         $user = auth()->user();

@@ -353,12 +353,25 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     public function storeByQuery(Request $request)
     {
+        if (!empty($request->email)) {
+            if (!empty(User::where('email', $request->email)->first())){
+                return back();
+            }
+        }
+
+        if (!empty($request->phone)) {
+
+            if (!empty(User::where('phone', $request->phone)->first())){
+                return back();
+            }
+        }
+
         $dataInsert = [
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            'user_type_id' => $request->user_type_id ?? 0,
+            'user_type_id' => $request->user_type_id ?? 1,
             'date_of_birth' => $request->date_of_birth,
             'gender_id' => $request->gender_id ?? 1,
             'email_verified_at' => now(),
@@ -453,7 +466,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     {
         $dataUpdate = [
             'name' => $request->name,
-            'user_type_id' => $request->user_type_id ?? 0,
         ];
 
         if (!empty($request->date_of_birth)) {
@@ -461,11 +473,16 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         }
 
         if (!empty($request->email)) {
-            $dataUpdate['email'] = $request->email;
+            if (empty(User::where('email', $request->email)->first())){
+                $dataUpdate['email'] = $request->email;
+            }
         }
 
         if (!empty($request->phone)) {
-            $dataUpdate['phone'] = $request->phone;
+
+            if (empty(User::where('phone', $request->phone)->first())){
+                $dataUpdate['phone'] = $request->phone;
+            }
         }
 
         if (!empty($request->gender_id)) {

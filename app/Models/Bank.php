@@ -6,7 +6,6 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Bank extends Model implements Auditable
@@ -15,7 +14,6 @@ class Bank extends Model implements Auditable
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
-    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -32,16 +30,16 @@ class Bank extends Model implements Auditable
     public function toArray()
     {
         $array = parent::toArray();
-//        $array['image_path_avatar'] = $this->avatar();
-//        $array['path_images'] = $this->images;
+        $array['image_path_avatar'] = $this->avatar();
+        $array['path_images'] = $this->images;
         return $array;
     }
 
     public function avatar($size = "100x100")
     {
-        $pathDefault = asset('/assets/administrator/images/bank_images/' . $this->id . ".jpg");
+        $pathDefault = '/assets/administrator/images/bank_images/' . $this->id . ".jpg";
 
-        return Helper::getDefaultIcon($this, $size, $pathDefault);
+        return $pathDefault;
     }
 
     public function image()

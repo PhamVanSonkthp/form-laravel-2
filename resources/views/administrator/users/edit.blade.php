@@ -43,16 +43,16 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                @include('administrator.components.require_input_image', ['name' => 'portrait_image_path', 'label' => 'Ảnh chân dung'])
+                                                @include('administrator.components.input_image', ['name' => 'portrait_image_path', 'label' => 'Ảnh chân dung'])
                                             </div>
 
                                             <div class="col-md-4">
-                                                @include('administrator.components.require_input_image', ['name' => 'front_id_image_path', 'label' => 'Ảnh CCCD mặt trước'])
+                                                @include('administrator.components.input_image', ['name' => 'front_id_image_path', 'label' => 'Ảnh CCCD mặt trước'])
 
                                             </div>
 
                                             <div class="col-md-4">
-                                                @include('administrator.components.require_input_image', ['name' => 'back_id_image_path', 'label' => 'Ảnh CCCD mặt sau'])
+                                                @include('administrator.components.input_image', ['name' => 'back_id_image_path', 'label' => 'Ảnh CCCD mặt sau'])
 
                                             </div>
                                         </div>

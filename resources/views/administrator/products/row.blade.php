@@ -3,9 +3,9 @@
     <td class="text-center">
         <input type="checkbox" class="checkbox-delete-item" value="{{$item->id}}">
     </td>
-{{--    <td>--}}
-{{--        @include('administrator.components.sort_icon_for_table', ['prefixView' => $prefixView])--}}
-{{--    </td>--}}
+    {{--    <td>--}}
+    {{--        @include('administrator.components.sort_icon_for_table', ['prefixView' => $prefixView])--}}
+    {{--    </td>--}}
     <td>
         <div class="d-flex">
             <img class="rounded-circle" src="{{$item->avatar("100x100")}}" alt="">
@@ -16,7 +16,7 @@
                 </h5>
 
                 <div class="mt-1" style="color: #999;font-size: 12px;">
-                    SKU sản phẩm: {{($item->skus->first())->sku}}
+                    SKU sản phẩm: {{ optional($item->skus->first())->sku}}
                 </div>
 
                 <div class="mt-1" style="color: #999;font-size: 12px;">

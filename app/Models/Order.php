@@ -90,6 +90,10 @@ class Order extends Model implements Auditable
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
         $array['products'] = $this->products;
+        $array['shipping_method'] = $this->shippingMethod;
+        $array['payment_method'] = $this->paymentMethod;
+        $array['voucher'] = $this->voucher;
+        $array['order_status'] = $this->orderStatus;
         return $array;
     }
 

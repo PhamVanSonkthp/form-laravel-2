@@ -19,24 +19,18 @@ class NotificationController extends Controller
 
     public function list(Request $request)
     {
-        $queries = [];
-        if (!env('CODE_DEBUG')) {
-            $queries['user_id'] = auth()->id();
-        }
+        $queries['user_id'] = auth()->id();
         $results = RestfulAPI::response($this->model, $request, $queries);
         return response()->json($results);
     }
 
     public function countNotRead(Request $request)
     {
-        $queries = [];
-        if (!env('CODE_DEBUG')) {
-            $queries['user_id'] = auth()->id();
-        }
+        $queries['user_id'] = auth()->id();
         $results = RestfulAPI::response($this->model, $request, $queries, null, null, true)->whereNull('read_at')->count();
         return response()->json([
             'message' => 'sucess',
-            'code' => '200',
+            'code' => 200,
             'data' => $results,
             'number_product_in_cart' => UserCart::where('user_id', auth()->id())->count(),
         ]);

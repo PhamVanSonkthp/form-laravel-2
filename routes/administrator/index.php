@@ -2378,5 +2378,20 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
         Route::get('/import', ['as'=>'administrator.reason_cancels.import','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@import','middleware'=>'can:reason_cancels-list',]);
         Route::get('/{id}', ['as'=>'administrator.reason_cancels.get','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@get','middleware'=>'can:reason_cancels-list',]);
         Route::put('/', ['as'=>'administrator.reason_cancels.sort','uses'=>'App\Http\Controllers\Admin\ReasonCancelController@sort','middleware'=>'can:reason_cancels-edit',]);
+    });
+    Route::prefix('app_versions')->group(function () {
+        Route::get('/', ['as'=>'administrator.app_versions.index','uses'=>'App\Http\Controllers\Admin\AppVersionController@index','middleware'=>'can:app_versions-list',]);
+        Route::get('/create', ['as'=>'administrator.app_versions.create','uses'=>'App\Http\Controllers\Admin\AppVersionController@create','middleware'=>'can:app_versions-add',]);
+        Route::post('/store', ['as'=>'administrator.app_versions.store','uses'=>'App\Http\Controllers\Admin\AppVersionController@store','middleware'=>'can:app_versions-add',]);
+        Route::get('/edit/{id}', ['as'=>'administrator.app_versions.edit','uses'=>'App\Http\Controllers\Admin\AppVersionController@edit','middleware'=>'can:app_versions-edit',]);
+        Route::put('/update/{id}', ['as'=>'administrator.app_versions.update','uses'=>'App\Http\Controllers\Admin\AppVersionController@update','middleware'=>'can:app_versions-edit',]);
+        Route::delete('/delete/{id}', ['as'=>'administrator.app_versions.delete','uses'=>'App\Http\Controllers\Admin\AppVersionController@delete','middleware'=>'can:app_versions-delete',]);
+        Route::delete('/delete-many', ['as'=>'administrator.app_versions.delete_many','uses'=>'App\Http\Controllers\Admin\AppVersionController@deleteManyByIds','middleware'=>'can:app_versions-delete',]);
+        Route::post('/restore/{id}', ['as' => 'administrator.app_versions.restore','uses' => 'App\Http\Controllers\Admin\AppVersionController@restore','middleware' => 'can:app_versions-edit',]);
+        Route::get('/export', ['as'=>'administrator.app_versions.export','uses'=>'App\Http\Controllers\Admin\AppVersionController@export','middleware'=>'can:app_versions-list',]);
+        Route::get('/audit/{id}', ['as'=>'administrator.app_versions.audit','uses'=>'App\Http\Controllers\Admin\AppVersionController@audit','middleware'=>'can:app_versions-list',]);
+        Route::get('/import', ['as'=>'administrator.app_versions.import','uses'=>'App\Http\Controllers\Admin\AppVersionController@import','middleware'=>'can:app_versions-list',]);
+        Route::get('/{id}', ['as'=>'administrator.app_versions.get','uses'=>'App\Http\Controllers\Admin\AppVersionController@get','middleware'=>'can:app_versions-list',]);
+        Route::put('/', ['as'=>'administrator.app_versions.sort','uses'=>'App\Http\Controllers\Admin\AppVersionController@sort','middleware'=>'can:app_versions-edit',]);
     });/*step_1*/
 });

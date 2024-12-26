@@ -52,7 +52,7 @@ class VoucherController extends Controller
 
         $item = $this->model->firstOrCreate([
             'user_id' => auth()->id(),
-            'voucher_id' => $request->voucher_id,
+            'voucher_id' => $voucher->id,
         ]);
 
         $item->refresh();
