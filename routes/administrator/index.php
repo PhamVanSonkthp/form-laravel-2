@@ -2393,5 +2393,20 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['cacheResponse:600']
         Route::get('/import', ['as'=>'administrator.app_versions.import','uses'=>'App\Http\Controllers\Admin\AppVersionController@import','middleware'=>'can:app_versions-list',]);
         Route::get('/{id}', ['as'=>'administrator.app_versions.get','uses'=>'App\Http\Controllers\Admin\AppVersionController@get','middleware'=>'can:app_versions-list',]);
         Route::put('/', ['as'=>'administrator.app_versions.sort','uses'=>'App\Http\Controllers\Admin\AppVersionController@sort','middleware'=>'can:app_versions-edit',]);
+    });
+    Route::prefix('user_withdraws')->group(function () {
+        Route::get('/', ['as'=>'administrator.user_withdraws.index','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@index','middleware'=>'can:user_withdraws-list',]);
+        Route::get('/create', ['as'=>'administrator.user_withdraws.create','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@create','middleware'=>'can:user_withdraws-add',]);
+        Route::post('/store', ['as'=>'administrator.user_withdraws.store','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@store','middleware'=>'can:user_withdraws-add',]);
+        Route::get('/edit/{id}', ['as'=>'administrator.user_withdraws.edit','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@edit','middleware'=>'can:user_withdraws-edit',]);
+        Route::put('/update/{id}', ['as'=>'administrator.user_withdraws.update','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@update','middleware'=>'can:user_withdraws-edit',]);
+        Route::delete('/delete/{id}', ['as'=>'administrator.user_withdraws.delete','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@delete','middleware'=>'can:user_withdraws-delete',]);
+        Route::delete('/delete-many', ['as'=>'administrator.user_withdraws.delete_many','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@deleteManyByIds','middleware'=>'can:user_withdraws-delete',]);
+        Route::post('/restore/{id}', ['as' => 'administrator.user_withdraws.restore','uses' => 'App\Http\Controllers\Admin\UserWithdrawController@restore','middleware' => 'can:user_withdraws-edit',]);
+        Route::get('/export', ['as'=>'administrator.user_withdraws.export','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@export','middleware'=>'can:user_withdraws-list',]);
+        Route::get('/audit/{id}', ['as'=>'administrator.user_withdraws.audit','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@audit','middleware'=>'can:user_withdraws-list',]);
+        Route::get('/import', ['as'=>'administrator.user_withdraws.import','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@import','middleware'=>'can:user_withdraws-list',]);
+        Route::get('/{id}', ['as'=>'administrator.user_withdraws.get','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@get','middleware'=>'can:user_withdraws-list',]);
+        Route::put('/', ['as'=>'administrator.user_withdraws.sort','uses'=>'App\Http\Controllers\Admin\UserWithdrawController@sort','middleware'=>'can:user_withdraws-edit',]);
     });/*step_1*/
 });

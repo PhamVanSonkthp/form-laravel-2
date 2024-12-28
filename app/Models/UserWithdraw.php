@@ -6,19 +6,41 @@ use App\Traits\DeleteModelTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Maatwebsite\Excel\Facades\Excel;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Bank extends Model implements Auditable
+class UserWithdraw extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
     use DeleteModelTrait;
     use StorageImageTrait;
+    use SoftDeletes;
 
     protected $guarded = [];
 
+    protected $hidden = [];
+
+    protected $casts = [];
+
     // begin
 
+    public function status(){
+        return $this->hasOne(UserWithdrawStatus::class,'id','user_withdraw_status_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class,'id','user_id');
+    }
+
+    //    public function one(){
+    //        return $this->hasOne(Model::class, 'id', 'local_id');
+    //    }
+    //
+    //    public function multiples(){
+    //        return $this->hasMany(Model::class, 'id', 'local_id');
+    //    }
 
     // end
 
@@ -32,15 +54,12 @@ class Bank extends Model implements Auditable
         $array = parent::toArray();
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
-        $array['avatar'] = $this->avatar();
         return $array;
     }
 
     public function avatar($size = "100x100")
     {
-        $pathDefault = '/assets/administrator/images/bank_images/' . $this->id . ".jpg";
-
-        return $pathDefault;
+       return Helper::getDefaultIcon($this, $size);
     }
 
     public function image()
@@ -53,9 +72,8 @@ class Bank extends Model implements Auditable
         return Helper::images($this);
     }
 
-    public function createdBy()
-    {
-        return $this->hasOne(User::class, 'id', 'created_by_id');
+    public function createdBy(){
+        return $this->hasOne(User::class,'id','created_by_id');
     }
 
     public function searchByQuery($request, $queries = [], $randomRecord = null, $makeHiddens = null, $isCustom = false)
@@ -66,9 +84,9 @@ class Bank extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'vn_name' => $request->vn_name,
-            'path_api_web2m' => $request->path_api_web2m,
-            'is_active' => $request->is_active ? 1 : 0,
+            'name' => $request->name,
+            'description' => $request->description,
+            //'slug' => Helper::addSlug($this,'slug', $request->title),
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -79,9 +97,9 @@ class Bank extends Model implements Auditable
     public function updateByQuery($request, $id)
     {
         $dataUpdate = [
-            'vn_name' => $request->vn_name,
-            'path_api_web2m' => $request->path_api_web2m,
-            'is_active' => $request->is_active ? 1 : 0,
+            'name' => $request->name,
+            'description' => $request->description,
+            //'slug' => Helper::addSlug($this,'slug', $request->title, $id),
         ];
         $item = Helper::updateByQuery($this, $request, $id, $dataUpdate);
         return $this->findById($item->id);
@@ -97,9 +115,9 @@ class Bank extends Model implements Auditable
         return Helper::deleteManyByIds($this, $request, $forceDelete);
     }
 
-    public function findById($id)
-    {
+    public function findById($id){
         $item = $this->find($id);
         return $item;
     }
+
 }

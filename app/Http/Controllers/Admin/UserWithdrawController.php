@@ -6,72 +6,56 @@ use App\Exports\ModelExport;
 use App\Http\Controllers\Controller;
 use App\Models\Audit;
 use App\Models\Helper;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\UserStatus;
-use App\Models\UserType;
+use App\Models\UserWithdraw;
 use App\Traits\BaseControllerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
+use function redirect;
 use function view;
 
-class UserController extends Controller
+class UserWithdrawController extends Controller
 {
     use BaseControllerTrait;
 
-    public function __construct(User $model, Role $role)
+    public function __construct(UserWithdraw $model)
     {
         $this->initBaseModel($model);
-        $this->isSingleImage = true;
-        $this->isMultipleImages = false;
+        $this->isSingleImage = false;
+        $this->isMultipleImages = true;
         $this->shareBaseModel($model);
-        $this->role = $role;
-        $userTypes = UserType::all();
-        $userStatuses = UserStatus::all();
-        View::share('userTypes', $userTypes);
-        View::share('userStatuses', $userStatuses);
     }
 
     public function index(Request $request)
     {
-        $items = $this->model->searchByQuery($request, ['is_admin' => 0]);
+        $items = $this->model->searchByQuery($request);
         return view('administrator.' . $this->prefixView . '.index', compact('items'));
     }
 
     public function get(Request $request, $id)
     {
-        return $this->model->findById($id);
+        return $this->model->findOrFail($id);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $roles = $this->role->all();
-        return view('administrator.' . $this->prefixView . '.add', compact('roles'));
+        return view('administrator.' . $this->prefixView . '.add');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'phone' => 'required|unique:users',
-            'email' => 'required|unique:users',
-        ]);
         $item = $this->model->storeByQuery($request);
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $item = $this->model->findById($id);
+        $item = $this->model->find($id);
         return view('administrator.' . $this->prefixView . '.edit', compact('item'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'phone' => 'required|unique:users,phone,'.$id,
-            'email' => 'required|unique:users,email,'.$id,
-        ]);
         $item = $this->model->updateByQuery($request, $id);
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }
@@ -99,7 +83,7 @@ class UserController extends Controller
     public function audit(Request $request, $id)
     {
         $auditModel = new Audit();
-        $items = $auditModel->searchByQuery($request, ['auditable_id' => $id, 'auditable_type' => 'App\Models\User'], null, null, true);
+        $items = $auditModel->searchByQuery($request, ['auditable_id' => $id, 'auditable_type' => 'App\Models\UserWithdraw'], null, null, true);
 
         $items = $items->latest()->get();
         $content = [

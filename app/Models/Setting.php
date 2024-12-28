@@ -50,22 +50,7 @@ class Setting extends Model implements Auditable
     public function storeByQuery($request)
     {
         $dataInsert = [
-            'point' => Formatter::formatNumberToDatabase($request->point),
-            'amount' => Formatter::formatNumberToDatabase($request->amount),
-            'bank_name' => $request->bank_name,
-            'bank_number' => $request->bank_number,
-            'bank_image' => $request->bank_image,
-            'phone_contact' => $request->phone_contact,
-            'about_contact' => $request->about_contact,
-            'address_contact' => $request->address_contact,
-            'email_contact' => $request->email_contact,
-            'pusher_app_id' => $request->pusher_app_id,
-            'pusher_app_key' => $request->pusher_app_key,
-            'pusher_app_secret' => $request->pusher_app_secret,
-            'pusher_app_cluster' => $request->pusher_app_cluster,
-            'is_login_only_one_device' => $request->is_login_only_one_device ?? 0,
-            'number_point_refer_success' => $request->number_point_refer_success ?? 0,
-            'number_point_taken_refer_success' => $request->number_point_taken_refer_success ?? 0,
+
         ];
 
         $item = Helper::storeByQuery($this, $request, $dataInsert);
@@ -100,9 +85,9 @@ class Setting extends Model implements Auditable
             'type_ai_id' => $request->type_ai_id ?? 1,
             'token_chat' => $request->token_chat,
             'api_key_weather' => $request->api_key_weather,
-            'number_point_refer_success' => $request->number_point_refer_success ?? 0,
-            'number_point_taken_refer_success' => $request->number_point_taken_refer_success ?? 0,
-            'default_shipping_fee' => $request->default_shipping_fee ?? 0,
+            'number_point_refer_success' => Formatter::formatNumberToDatabase($request->number_point_refer_success),
+            'number_point_taken_refer_success' => Formatter::formatNumberToDatabase($request->number_point_taken_refer_success),
+            'default_shipping_fee' => Formatter::formatNumberToDatabase($request->default_shipping_fee),
             'terms_of_use_html' => $request->terms_of_use_html,
             'privacy_policy_html' => $request->privacy_policy_html,
             'custom_css' => $request->custom_css,

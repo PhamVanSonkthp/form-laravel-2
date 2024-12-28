@@ -66,9 +66,7 @@ class PostController extends Controller
         $files = $request->file('path_images');
 
         if (is_array($files)) {
-
-            foreach ($request->path_images as $path_image){
-
+            foreach ($request->path_images as $path_image) {
                 $dataUploadFeatureImage = StorageImageTrait::storageTraitUpload($request, $path_image, 'multiple', $item->id);
 
                 Image::create([
@@ -78,7 +76,6 @@ class PostController extends Controller
                     'image_name' => $dataUploadFeatureImage['file_name'],
                     'relate_id' => $item->id,
                 ]);
-
             }
         }
 

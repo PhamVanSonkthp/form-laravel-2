@@ -38,6 +38,7 @@ class BankCashIn extends Model implements Auditable
         $array = parent::toArray();
         $array['image_path_avatar'] = $this->avatar();
         $array['path_images'] = $this->images;
+        $array['bank'] = $this->bank;
         return $array;
     }
 

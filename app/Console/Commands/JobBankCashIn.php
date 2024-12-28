@@ -6,6 +6,7 @@ use App\Models\BankCashIn;
 use App\Models\Formatter;
 use App\Models\Helper;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\UserCashIn;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -79,64 +80,69 @@ class JobBankCashIn extends Command
                 $itemJson = json_decode($response, true);
 
                 if (!empty($itemJson) && isset($itemJson['status']) && $itemJson['status'] == 'true') {
-//                    $statusWeb2M->update([
-//                        'is_success' => 1,
-//                        'description' => "Kết nối ổn định",
-//                        'updated_at' => now(),
-//                    ]);
+
 
                     $datas = $itemJson['transactions'];
 
                     foreach ($datas as $itemData) {
+
                         $date = Carbon::parse("2023-12-25 14:11:44");
                         $date2 = Carbon::parse(Formatter::convertDateVNToEng($itemData['transactionDate']));
 
                         if ($date2->gt($date)) {
+
                             $creditAmount = $itemData['amount'];
                             $refNo = $itemData['transactionID'];
                             $content = strtoupper($itemData['description']);
-                            $content = str_replace("  ", " ", $content);
+                            $content = str_replace("  ", " ",$content);
 
                             $content = explode("NAPTIEN", $content);
 
                             if (count($content) > 1) {
+
                                 $content = $content[1];
                                 $content = trim($content);
 
                                 $contents = explode(' ', $content);
 
                                 if (count($contents) > 1) {
-                                    $codeOrder = $contents[0];
+                                    $id = $contents[0];
 
-                                    $order = Order::where('code', $codeOrder);
+                                    $contents[1] = explode('/', $contents[1])[0];
 
-                                    if (!empty($order)) {
-                                        $user = $order->user;
+                                    $amount = Formatter::getOnlyNumber($contents[1]);
 
-                                        if (!empty($user)) {
-                                            $userCashIn = UserCashIn::where('ref_no', $refNo)->first();
-
-
-                                            if (!empty($userCashIn)) {
-                                                continue;
-                                            }
-
-                                            UserCashIn::create([
-                                                'user_id' => $user->id,
-                                                'amount' => $creditAmount,
-                                                'ref_no' => $refNo,
-                                            ]);
-
-                                            $user->addAmount($creditAmount, "Nạp tiền bằng chuyển khoản. Mã GD: " . $refNo);
-
-                                            Helper::sendNotificationToTopic($user->id, "Nạp tiền", "Bạn đã nạp tiền thành công. Số tiền: ". Formatter::formatMoney($creditAmount) . "đ", true, $user->id, null, "wallet");
+                                    if ($amount != $creditAmount){
+                                        if (count($contents) > 2) {
+                                            $amount .= ($contents[2]);
+                                            $amount = Formatter::getOnlyNumber($amount);
                                         }
+                                    }
+
+                                    $user = User::find($id);
+
+                                    if (!empty($user) && $amount == $creditAmount) {
+                                        $userCashIn = UserCashIn::where('ref_no',$refNo)->first();
+
+
+                                        if (!empty($userCashIn)) continue;
+
+                                        UserCashIn::create([
+                                            'user_id' => $id,
+                                            'amount' => $amount,
+                                            'ref_no' => $refNo,
+                                        ]);
+
+                                        $user->addAmount($amount, "Nạp tiền bằng chuyển khoản. Mã GD: " . $refNo);
+
+                                        Helper::sendNotificationToTopic($id, "Nạp tiền", "Bạn đã nạp tiền thành công. Số tiền: ". Formatter::formatMoney($amount) . "đ", true, $id, null, "wallet");
                                     }
                                 }
                             }
                         }
                     }
-                } else {
+
+                }else{
 //                    $statusWeb2M->update([
 //                        'is_success' => 0,
 //                        'description' => $response . "",

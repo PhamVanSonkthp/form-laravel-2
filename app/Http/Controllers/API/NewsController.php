@@ -40,7 +40,7 @@ class NewsController extends Controller
 
         $item = $this->model->findOrFail($request->relate_id);
 
-        $results = RestfulAPI::response($this->model, $request, [],null, null, true);
+        $results = RestfulAPI::response($this->model, $request, [], null, null, true);
 
         $results = $results->where('id', '!=', $item->id)->where('category_id', $item->category_id);
 

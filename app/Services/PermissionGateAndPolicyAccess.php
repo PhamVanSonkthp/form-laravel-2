@@ -45,7 +45,8 @@ class PermissionGateAndPolicyAccess
         $this->defineGatePosts();
         $this->defineGatePostComments();
         $this->defineGateReasonCancels();
-        $this->defineGateAppVersions();/*step_1*/
+        $this->defineGateAppVersions();
+        $this->defineGateUserWithdraws();/*step_1*/
     }
 
     public function defineGateFAQs()
@@ -78,6 +79,12 @@ class PermissionGateAndPolicyAccess
         Gate::define('app_versions-add', 'App\Policies\AppVersionPolicy@create');
         Gate::define('app_versions-edit', 'App\Policies\AppVersionPolicy@update');
         Gate::define('app_versions-delete', 'App\Policies\AppVersionPolicy@delete');
+    }public function defineGateUserWithdraws()
+    {
+        Gate::define('user_withdraws-list', 'App\Policies\UserWithdrawPolicy@view');
+        Gate::define('user_withdraws-add', 'App\Policies\UserWithdrawPolicy@create');
+        Gate::define('user_withdraws-edit', 'App\Policies\UserWithdrawPolicy@update');
+        Gate::define('user_withdraws-delete', 'App\Policies\UserWithdrawPolicy@delete');
     }/*step_2*/
 
     public function defineGateUserTypes()

@@ -30,7 +30,9 @@ class Product extends Model implements Auditable
     {
         $skus = $this->skus->pluck('price')->toArray();
 
-        if (count($skus) == 0) return "";
+        if (count($skus) == 0) {
+            return "";
+        }
         if (count($skus) == 1) {
             return Formatter::formatMoney($skus[0]);
         }

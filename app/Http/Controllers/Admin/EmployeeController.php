@@ -49,6 +49,10 @@ class EmployeeController extends Controller
 
     public function store(EmployeeStoreRequest $request)
     {
+        $request->validate([
+            'phone' => 'required|unique:users',
+            'email' => 'required|unique:users',
+        ]);
         $item = $this->model->storeByQuery($request);
         return redirect()->route('administrator.'.$this->prefixView.'.index');
     }
@@ -62,6 +66,10 @@ class EmployeeController extends Controller
 
     public function update(EmployeeUpdateRequest $request, $id)
     {
+        $request->validate([
+            'phone' => 'required|unique:users,phone,'.$id,
+            'email' => 'required|unique:users,email,'.$id,
+        ]);
         $item = $this->model->updateByQuery($request, $id);
         return redirect()->route('administrator.' . $this->prefixView . '.index');
     }

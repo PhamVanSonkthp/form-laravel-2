@@ -354,14 +354,13 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function storeByQuery(Request $request)
     {
         if (!empty($request->email)) {
-            if (!empty(User::where('email', $request->email)->first())){
+            if (!empty(User::where('email', $request->email)->first())) {
                 return back();
             }
         }
 
         if (!empty($request->phone)) {
-
-            if (!empty(User::where('phone', $request->phone)->first())){
+            if (!empty(User::where('phone', $request->phone)->first())) {
                 return back();
             }
         }
@@ -473,14 +472,13 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         }
 
         if (!empty($request->email)) {
-            if (empty(User::where('email', $request->email)->first())){
+            if (empty(User::where('email', $request->email)->first())) {
                 $dataUpdate['email'] = $request->email;
             }
         }
 
         if (!empty($request->phone)) {
-
-            if (empty(User::where('phone', $request->phone)->first())){
+            if (empty(User::where('phone', $request->phone)->first())) {
                 $dataUpdate['phone'] = $request->phone;
             }
         }
