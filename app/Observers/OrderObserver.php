@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Events\OrderEvent;
+use App\Jobs\JobNotification;
 use App\Models\Helper;
 use App\Models\Order;
 
@@ -22,6 +24,10 @@ class OrderObserver
     public function created(Order $order)
     {
         //
+        $user = $order->user;
+        if (!empty($user)) {
+            JobNotification::dispatch($user->id, "Đơn hàng", "Đơn hàng: " . $order->code . " đang chờ xác nhận", true, $user->id, null, 'order/' . $order->id);
+        }
     }
 
     /**
@@ -32,42 +38,24 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-//        if($order->isDirty('order_status_id')){
-//            // email has changed
-//            $new_order_status_id = $order->order_status_id;
-//            $old_order_status_id = $order->getOriginal('order_status_id');
-//
-//            if ($old_order_status_id == 1 && $new_order_status_id == 2){
-//                // send email
-//                $email = optional($order->user)->email;
-//                if (Formatter::isEmail($email)){
-//
-//                    JobEmail::create([
-//                        'user_id' => $order->user_id,
-//                        'title' => "Thông báo đầu tư đã được chấp nhận. Mã " . $order->code,
-//                        'content' => View::make('administrator.orders.email.confirm_order',
-//                            [
-//                                'order' => $order
-//                            ]
-//                        )->render(),
-//                        'time_send' => Carbon::now()->addMinute()->toDateTimeString(),
-//                    ]);
-//                }
-//
-//                $user = $order->user;
-//
-//                if (!empty($user)){
-//                    Helper::sendNotificationToTopic($user->id, "Đầu tư", "Gói đầu tư của bạn đã được xác nhận", true, $user->id, null, "order/" . $order->id);
-//                }
-//
-//            }else if ($new_order_status_id == 4 || $new_order_status_id == 5){
-//                if (!empty($user)){
-//                    Helper::sendNotificationToTopic($user->id, "Gói đầu tư của bạn đã hoàn thành", "Nhấn để xem lợi nhuận", true, $user->id, null, "order/" . $order->id);
-//                }
-//            }
-//
-//
-//        }
+        $user = $order->user;
+        if ($order->isDirty('order_status_id')) {
+            // email has changed
+            $new_order_status_id = $order->order_status_id;
+            $old_order_status_id = $order->getOriginal('order_status_id');
+
+            if (!empty($user)) {
+                if ($old_order_status_id == 1 && $new_order_status_id == 2) {
+                    JobNotification::dispatch($user->id, "Đơn hàng", "Đơn hàng: " . $order->code . " đang được giao", true, $user->id, null, 'order/' . $order->id);
+                } else if ($old_order_status_id == 2 && $new_order_status_id == 3) {
+                    JobNotification::dispatch($user->id, "Đơn hàng", "Đơn hàng: " . $order->code . " đã hoàn thành", true, $user->id, null, 'order/' . $order->id);
+                    event(new OrderEvent($order));
+
+                } else if ($old_order_status_id == 1 && $new_order_status_id == 4) {
+                    JobNotification::dispatch($user->id, "Đơn hàng", "Đơn hàng: " . $order->code . " đã bị hủy", true, $user->id, null, 'order/' . $order->id);
+                }
+            }
+        }
     }
 
     /**

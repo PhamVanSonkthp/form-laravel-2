@@ -51,10 +51,10 @@ class Kernel extends ConsoleKernel
 
 
         // duplicate with cores of servers
-        $schedule->command('queue:work --timeout=60')
-            ->everyMinute()
-            ->withoutOverlapping()
-            ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
+//        $schedule->command('queue:work --timeout=60')
+//            ->everyMinute()
+//            ->withoutOverlapping()
+//            ->sendOutputTo(storage_path() . '/logs/queue-jobs.log');
         //
     }
 

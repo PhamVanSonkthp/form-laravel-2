@@ -26,6 +26,13 @@ class OrderController extends Controller
         $this->model = $model;
     }
 
+    public function get(Request $request, $id)
+    {
+        $queries = ['id'=> $id,'user_id' => auth()->id()];
+        $result = $this->model->where($queries)->firstOrFail();
+        return response()->json($result);
+    }
+
     public function list(Request $request)
     {
         $queries = ['user_id' => auth()->id()];
@@ -110,7 +117,7 @@ class OrderController extends Controller
 
             $amount = UserCart::calculateAmountByIds($request->cart_ids);
 
-            if ($voucher->isAcceptAmount($amount)) {
+            if (!$voucher->isAcceptAmount($amount)) {
                 return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
             }
 
@@ -211,9 +218,7 @@ class OrderController extends Controller
                 return response()->json(Helper::errorAPI(99, [], "voucher is is unavailable"), 400);
             }
 
-            $amount = UserCart::calculateAmountByIds($request->cart_ids);
-
-            if ($voucher->isAcceptAmount($amount)) {
+            if (!$voucher->isAcceptAmount($amount)) {
                 return response()->json(Helper::errorAPI(99, [], "voucher is is required min amount " . $voucher->min_amount), 400);
             }
 

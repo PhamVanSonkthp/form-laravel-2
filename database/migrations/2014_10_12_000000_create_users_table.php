@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('back_id_image_path')->nullable();
             $table->string('portrait_image_path')->nullable();
             $table->string('password')->nullable()->change();
+            $table->longText('provider_token')->nullable();
 
             $table->integer('user_type_id')->default(1);
             $table->bigInteger('referral_id')->default(0);

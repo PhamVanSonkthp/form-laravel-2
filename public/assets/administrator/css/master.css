@@ -109,7 +109,7 @@ tr th:first-child {
     border-radius: 12px;
 }
 .table td img {
-    width: unset !important;
+    /*width: unset !important;*/
     /*border-radius: unset !important;*/
 }
 

@@ -24,6 +24,6 @@ class OrderListener
      */
     public function handle(OrderEvent $event)
     {
-        //
+        $order = $event->order;
     }
 }

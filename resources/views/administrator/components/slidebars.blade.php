@@ -107,6 +107,12 @@
                             <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         </svg>
                         <span class="link-title">Đơn hàng</span>
+
+                        @if(\App\Models\Order::where('order_status_id', 1)->count())
+                            <div class="badge rounded-pill bg-danger ms-auto">
+                                {{\App\Models\Order::where('order_status_id', 1)->count()}}
+                            </div>
+                        @endif
                     </a>
                 </li>
             @endcan

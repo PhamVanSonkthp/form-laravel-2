@@ -158,6 +158,14 @@ Route::prefix('public')->group(function () {
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
         Route::post('/request-otp-email', [AuthController::class, 'requestOtpEmail']);
         Route::post('/check-code-otp-email', [AuthController::class, 'checkCodeOtpEmail']);
+
+        Route::prefix('social')->group(function () {
+
+            Route::post('/create-info-by-token', [SocialController::class, 'createInforByToken']);
+            Route::get('/get-info-by-token', [SocialController::class, 'getInforByToken']);
+
+        });
+
     });
 
     Route::prefix('faqs')->group(function () {
@@ -231,6 +239,7 @@ Route::prefix('user')->group(function () {
 
         Route::prefix('order')->group(function () {
             Route::get('/', [OrderController::class, 'list']);
+            Route::get('/{id}', [OrderController::class, 'get']);
             Route::post('/', [OrderController::class, 'store']);
             Route::post('/buy-now', [OrderController::class, 'buyNow']);
             Route::delete('/{id}', [OrderController::class, 'cancel']);

@@ -9,6 +9,7 @@ use App\Models\Formatter;
 use App\Models\ParticipantChat;
 use App\Models\Setting;
 use App\Models\SingleImage;
+use App\Models\SocialToken;
 use App\Models\User;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
@@ -154,12 +155,38 @@ class AuthController extends Controller
 
     public function signIn(Request $request)
     {
-        $request->validate([
-            'user_name' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        if (!empty($request->provider_token)){
+            $user = User::where('provider_token', $request->provider_token)->first();
 
-        $user = User::where('email', $request->user_name)->orWhere('phone', $request->user_name)->first();
+            if (empty($user)){
+
+                $socialToken = SocialToken::where('token', $request->provider_token)->first();
+
+                if (empty($socialToken)){
+                    return response([
+                        'message' => "Token không hợp lệ",
+                        'code' => 400,
+                    ], 400);
+                }
+
+                $user = User::create([
+                    'name' => $socialToken->name,
+                    'email' => $socialToken->email,
+                    'password' => $socialToken->token,
+                ]);
+
+                $user->refresh();
+            }
+            goto skipPassword;
+        }else{
+            $request->validate([
+                'user_name' => 'required|string',
+                'password' => 'required|string',
+            ]);
+
+            $user = User::where('email', $request->user_name)->orWhere('phone', $request->user_name)->first();
+
+        }
 
         if (empty($user)) {
             return response([

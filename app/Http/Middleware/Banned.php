@@ -18,7 +18,12 @@ class Banned
     {
 
         if ($request->user()->user_status_id == 2) {
-            return response()->json(['error' => 'Tài khoản của bạn đã bị khóa'], 405);
+            return response()->json(
+                [
+                    'error' => 'Tài khoản của bạn đã bị khóa',
+                    'message' => 'Tài khoản của bạn đã bị khóa',
+                    'code' => 99
+                ], 405);
         }
 
         return $next($request);
