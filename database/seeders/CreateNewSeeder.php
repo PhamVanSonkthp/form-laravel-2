@@ -17,7 +17,7 @@ class CreateNewSeeder extends Seeder
         News::firstOrCreate([
             "title" => "title",
             "slug" => "title",
-            "content" => "<h1>title</h1>",
+            "contents" => "<h1>title</h1>",
             "category_id" => 1,
         ]);
     }
